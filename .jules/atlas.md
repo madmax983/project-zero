@@ -61,3 +61,11 @@
 **[Title] Break Circular Dependency and Fix Blob Anti-pattern with Hack Central Hub Chronicle Bridge**
 **Tangle:** The `hack_hub_chronicle_bridge` was located in `src/layer1/core/integration.rs`, exacerbating the "Blob" anti-pattern in `integration.rs` and distancing the bridging logic from the `administration` domain where `HackCentralHubEvent` is defined. This led to bloated files and poor cohesion.
 **Blueprint:** Moved `hack_hub_chronicle_bridge` from `src/layer1/core/integration.rs` to `src/layer1/administration/edicts.rs` to enforce domain cohesion. Updated references in `src/layer1/systems/observation.rs` and the integration tests (`tests/integration/orphaned_edict_bridge.rs`).
+
+**[Title] Break Up Oversized Bevy System Registration Tuple**
+**Tangle:** In `src/layer1/systems/environment.rs`, a single `schedule.add_systems` call contained a tuple of systems that exceeded Bevy's macro limit for `IntoSystemConfigs` (typically 21 elements). This caused a cryptic `E0599` compiler error where `in_set` could not be resolved because the trait bounds were not satisfied for a tuple of that size.
+**Blueprint:** Split the oversized tuple into two separate `schedule.add_systems` blocks, each chaining into `.in_set(Layer1SystemSet::Environment)`. This resolved the compiler error without changing system execution order or architectural boundaries.
+
+**[Title] Initialize Missing Test Resources to Prevent Execution Panics**
+**Tangle:** Several integration tests (`binge_resources.rs`, `drone_network.rs`, `hauling_execution.rs`, `public_grievances_bridge.rs`) were failing with a panic because `arrival_handler_system` expected `UnequipFailedEvent` to be registered as an event resource (`Events<UnequipFailedEvent>`), but the test dummy worlds lacked this initialization.
+**Blueprint:** Added explicit event resource initialization (`world.init_resource::<Events<scale::layer1::economy::bio_loom::UnequipFailedEvent>>();` or `app.add_event::<...>()`) to the setup phase of the failing integration tests to ensure all expected system parameters were available during execution.

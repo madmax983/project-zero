@@ -25,6 +25,7 @@ mod tests {
         world.insert_resource(scale::layer1::day_night::DayNightCycle::default());
         world.insert_resource(scale::layer1::taboo::TabooState::default());
         world.init_resource::<Events<scale::layer1::items::UnequipEvent>>();
+        world.init_resource::<Events<scale::layer1::economy::bio_loom::UnequipFailedEvent>>();
 
         // Initialize tasks pools for parallel queries
         scale::setup::init_task_pools();

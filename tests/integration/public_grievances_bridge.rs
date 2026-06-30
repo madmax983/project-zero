@@ -21,6 +21,7 @@ mod integration_tests {
         app.insert_resource(scale::layer1::resources::ColonyResources::default());
         app.insert_resource(scale::shared::time::SimulationTime::default());
         app.add_event::<scale::layer1::items::UnequipEvent>();
+        app.add_event::<scale::layer1::economy::bio_loom::UnequipFailedEvent>();
 
         // Spawn a tavern
         let tavern_entity = app
@@ -68,6 +69,7 @@ mod integration_tests {
         app.insert_resource(scale::layer1::resources::ColonyResources::default());
         app.insert_resource(scale::shared::time::SimulationTime::default());
         app.add_event::<scale::layer1::items::UnequipEvent>();
+        app.add_event::<scale::layer1::economy::bio_loom::UnequipFailedEvent>();
 
         // Spawn two pops near each other, friends
         let pop1 = app
@@ -108,6 +110,7 @@ mod integration_tests {
         app.insert_resource(scale::layer1::resources::ColonyResources::default());
         app.insert_resource(scale::shared::time::SimulationTime::default());
         app.add_event::<scale::layer1::items::UnequipEvent>();
+        app.add_event::<scale::layer1::economy::bio_loom::UnequipFailedEvent>();
 
         app.insert_resource(scale::layer1::resources::ColonyResources::default());
 

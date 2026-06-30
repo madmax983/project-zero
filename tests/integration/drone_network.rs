@@ -57,6 +57,7 @@ mod tests {
         world.init_resource::<Events<scale::layer3::silence::HostileSpawnEvent>>();
         world.insert_resource(scale::shared::keyboard::Input::default());
         world.init_resource::<Events<scale::layer1::items::UnequipEvent>>();
+        world.init_resource::<Events<scale::layer1::economy::bio_loom::UnequipFailedEvent>>();
         world.init_resource::<Events<scale::layer1::direct_link::PossessEntityEvent>>();
         world.insert_resource(scale::ui::UiState::default());
         world.insert_resource(scale::layer1::clutter::ClutterGrid::new(10, 10));
