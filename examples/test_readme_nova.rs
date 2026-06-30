@@ -2,9 +2,6 @@
 // This file tests the Oral Tradition example snippet in the README.
 
 fn main() {
-    use comfy_table::presets::UTF8_FULL;
-    use comfy_table::{Cell, Color as TableColor, Table};
-    use crossterm::style::{Color, Stylize};
     use scale::prelude::*;
 
     let mut tradition = OralTradition::default();
@@ -17,47 +14,6 @@ fn main() {
     };
     tradition.add_story(story);
 
-    println!(
-        "\n{}",
-        "╭── Oral Tradition (Stories) ───────────────────╮".with(Color::Cyan)
-    );
-    let text = format!(
-        "{:<45}",
-        format!("{} stories circulating.", tradition.stories.len())
-    );
-    println!("│ {} │", text.with(Color::White));
-    println!(
-        "{}",
-        "╰───────────────────────────────────────────────╯".with(Color::Cyan)
-    );
-
-    let mut table = Table::new();
-    table
-        .load_preset(UTF8_FULL)
-        .apply_modifier(comfy_table::modifiers::UTF8_ROUND_CORNERS)
-        .set_content_arrangement(comfy_table::ContentArrangement::Dynamic)
-        .set_header(vec![
-            Cell::new("Genre").add_attribute(comfy_table::Attribute::Bold),
-            Cell::new("Historical Date").add_attribute(comfy_table::Attribute::Bold),
-            Cell::new("Mutations").add_attribute(comfy_table::Attribute::Bold),
-            Cell::new("Story Text").add_attribute(comfy_table::Attribute::Bold),
-        ]);
-
-    for story in &tradition.stories {
-        let genre_str = format!("{:?}", story.genre);
-        let genre_color = match genre_str.as_str() {
-            "Heroic" => TableColor::Yellow,
-            "Tragedy" => TableColor::Red,
-            "Cautionary" => TableColor::Magenta,
-            _ => TableColor::DarkGrey,
-        };
-
-        table.add_row(vec![
-            Cell::new(&genre_str).fg(genre_color),
-            Cell::new(story.historical_date.to_string()).fg(TableColor::Cyan),
-            Cell::new(story.mutations.to_string()).fg(TableColor::Cyan),
-            Cell::new(&story.text).fg(TableColor::White),
-        ]);
-    }
-    println!("{table}");
+    // Inspect
+    println!("{}", tradition);
 }
