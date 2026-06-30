@@ -6619,7 +6619,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Ablative Logistics
+## Ablative Logistics [SPECCED]
 
 **Layer:** 2 -> 1
 
