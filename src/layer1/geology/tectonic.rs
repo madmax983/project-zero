@@ -1,7 +1,7 @@
+use crate::layer1::architecture::Structure;
 use crate::layer1::environment::volatile::ExplosionEvent;
 use crate::layer1::resources::MiningEvent;
 use crate::layer1::shields::DamageEvent;
-use crate::layer1::architecture::Structure;
 use bevy_ecs::prelude::*;
 
 #[derive(Resource, Debug)]
@@ -41,7 +41,6 @@ pub fn update_stress_system(
     stress.current = (stress.current - stress.dissipation_rate).max(0.0);
 }
 
-
 pub fn apply_mega_quake_damage_system(
     mut events: EventReader<MegaQuakeEvent>,
     mut damage_writer: EventWriter<DamageEvent>,
@@ -79,10 +78,11 @@ pub fn check_quake_system(
 mod tests {
     use crate::layer1::environment::volatile::ExplosionEvent;
     use crate::layer1::geology::tectonic::{
-        apply_mega_quake_damage_system, check_quake_system, update_stress_system, MegaQuakeEvent, TectonicStress,
+        apply_mega_quake_damage_system, check_quake_system, update_stress_system, MegaQuakeEvent,
+        TectonicStress,
     };
-    use crate::layer1::shields::DamageEvent;
     use crate::layer1::resources::MiningEvent;
+    use crate::layer1::shields::DamageEvent;
     use bevy_ecs::prelude::*;
 
     #[test]
