@@ -852,3 +852,4 @@
 - [x] `1211` Tectonic Stress — `specs/1211-tectonic-stress.md` — completed 2026-02-01
 - [x] `INT-1211` Integration: Heavy Industry -> Tectonic Stress — completed 2026-11-01
 - [x] `1273` Gravity Debt — `specs/1273-gravity-debt.md` — completed 2024-07-01
+- [x] `1280` Tectonic Stress — `specs/1280-tectonic-stress.md` — completed 2024-06-30
