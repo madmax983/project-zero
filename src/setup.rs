@@ -1241,6 +1241,7 @@ mod tests {
 
         world.init_resource::<bevy::prelude::Events<crate::layer1::pop_memories::FamineEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer2::weather::StormImpactEvent>>();
+        world.init_resource::<bevy::prelude::Events<crate::layer1::shields::DamageEvent>>();
         *world.resource_mut::<GameState>() = GameState::Running;
 
         for _ in 0..ticks {

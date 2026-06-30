@@ -179,4 +179,39 @@ mod tests {
         // OccupiedTiles should be cleared
         assert!(!world.resource::<OccupiedTiles>().0.contains(&(2, 2)));
     }
+
+    #[test]
+    fn test_ruin_history_recorded() {
+        let mut world = World::new();
+        world.insert_resource(OccupiedTiles::default());
+        world.insert_resource(SimulationTime { tick: 100, ..Default::default() });
+        world.insert_resource(crate::shared::log::MessageLog::default());
+
+        let pos = GridPosition { x: 0, y: 0 };
+        world.spawn((
+            Building { building_type: BuildingType::SolarPanel },
+            Material(MaterialType::Metal),
+            Structure { current_hp: 0.0, max_hp: 100.0 }, // Already dead
+            Flammable::default(),
+            pos,
+        ));
+
+        world.spawn((
+            Fire {
+                intensity: 10.0,
+                lifetime: 10,
+            },
+            pos,
+        ));
+
+        // Trigger system (handles 0 HP check)
+        fire_damage_structure_system(&mut world);
+
+        let mut ruin_query = world.query::<(&crate::layer1::ruins::RuinHistory, &crate::layer1::ruins::Ruin)>();
+        let (history, _) = ruin_query.get_single(&world).unwrap();
+
+        assert_eq!(history.destruction_tick, 100);
+        assert!(history.reason.contains("Fire") || history.reason.contains("Damage"));
+    }
+
 }

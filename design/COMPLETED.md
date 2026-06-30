@@ -850,3 +850,4 @@
 - [x] `INT-1125` Integration: Improvised Tools -> Simulation — completed 2026-06-29
 - [x] `304` The Bio-Loom — `specs/304-bio-loom.md` — completed 2026-02-01
 - [x] `1211` Tectonic Stress — `specs/1211-tectonic-stress.md` — completed 2026-02-01
+- [x] `167` Monuments of Failure — `specs/167-monuments-of-failure.md` — completed 2026-02-01

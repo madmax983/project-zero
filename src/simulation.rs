@@ -1119,6 +1119,7 @@ mod tests {
             crate::layer3::diplomacy::system_sovereignty::FactionRelations::default(),
         );
         world.init_resource::<bevy::prelude::Events<crate::layer1::pop_memories::FamineEvent>>();
+        world.init_resource::<bevy::prelude::Events<crate::layer1::shields::DamageEvent>>();
         world.init_resource::<crate::layer3::digital_detritus::DataMiningQueue>();
         world.init_resource::<crate::layer3::digital_detritus::DiscoveredTechs>();
         world.init_resource::<Events<crate::layer3::digital_detritus::VirusEvent>>();
@@ -1186,6 +1187,7 @@ mod tests {
         );
         world.init_resource::<bevy::prelude::Events<crate::layer2::weather::StormImpactEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::pop_memories::FamineEvent>>();
+        world.init_resource::<bevy::prelude::Events<crate::layer1::shields::DamageEvent>>();
         world.init_resource::<crate::layer3::digital_detritus::DataMiningQueue>();
         world.init_resource::<crate::layer3::digital_detritus::DiscoveredTechs>();
         world.init_resource::<Events<crate::layer3::digital_detritus::VirusEvent>>();
