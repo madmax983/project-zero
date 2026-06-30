@@ -483,3 +483,48 @@ mod tests {
         assert_ne!(story.text, "The colony was founded.");
     }
 }
+
+
+#[cfg(not(feature = "nova"))]
+#[derive(Debug, Clone, Default)]
+pub struct Story {
+    pub text: String,
+    pub historical_date: u64,
+    pub mutations: u32,
+    pub genre: StoryGenre,
+}
+
+#[cfg(not(feature = "nova"))]
+#[derive(Debug, Clone, PartialEq, Default)]
+pub enum StoryGenre {
+    #[default]
+    Trivial,
+    Heroic,
+    Tragedy,
+    Cautionary,
+}
+
+#[cfg(not(feature = "nova"))]
+#[derive(bevy_ecs::prelude::Resource, Debug, Clone)]
+pub struct OralTradition {
+    pub stories: Vec<Story>,
+    pub last_processed_tick: u64,
+}
+
+#[cfg(not(feature = "nova"))]
+impl Default for OralTradition {
+    fn default() -> Self {
+        println!("⚠️ WARNING: The 'nova' feature is not enabled. OralTradition will output dummy data and is disabled.");
+        Self {
+            stories: Vec::new(),
+            last_processed_tick: 0,
+        }
+    }
+}
+
+#[cfg(not(feature = "nova"))]
+impl OralTradition {
+    pub fn add_story(&mut self, story: Story) {
+        self.stories.push(story);
+    }
+}
