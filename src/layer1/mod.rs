@@ -507,3 +507,4 @@ pub mod the_lottery;
 pub mod buildings {
     pub use crate::layer1::architecture::building::*;
 }
+#[cfg(test)] pub mod clothing_tests;
