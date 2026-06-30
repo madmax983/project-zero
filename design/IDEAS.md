@@ -26027,3 +26027,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you let struggling factions and pops fail on their own to preserve their self-sufficiency, or support them and risk creating a fragile, dangerous dependency?
 
 ---
+
+## The Nostalgia Cartel
+
+**Layer:** 1
+
+**Fantasy:** Watching a generation of colonists long for an Earth they never saw, driven to illicitly trade synthesized artifacts of the past.
+
+**Mechanic:** Pops born off-world develop a "Homesickness" need that cannot be fulfilled normally. A black market forms, synthesizing and trading fake Earth artifacts (e.g., "real dirt", "recorded bird songs").
+
+**Emergence:** The cartel gains so much wealth and influence that they begin dictating colony policies or sabotaging terraforming efforts to keep the demand for "Nostalgia" high.
+
+**Tension:** Do you crack down on the cartel and face severe morale penalties from homesick Pops, or allow it to flourish and risk losing control of your economy?
+
+---
+
+## Sub-light Contraband
+
+**Layer:** 2
+
+**Fantasy:** Experiencing the sheer scale of time as decades-long sub-light shipping routes become breeding grounds for unique, isolated subcultures and contraband.
+
+**Mechanic:** Sub-light cargo ships take years to travel between systems. During the journey, the isolated crew develops unique contraband or rare cultural goods that are highly sought after upon arrival.
+
+**Emergence:** A ship arriving from a 50-year journey brings a highly addictive philosophical movement as "contraband", spreading rapidly through your core worlds and destabilizing your political structure.
+
+**Tension:** Do you quarantine long-haul ships upon arrival to protect your culture, or welcome them for the massive economic boost of their unique goods?
+
+---
+
+## Cryo-Sleeper Cults
+
+**Layer:** Cross-layer
+
+**Fantasy:** Dealing with the reverence and fear surrounding the ancient founders who are still asleep in the colony's cryo-vaults.
+
+**Mechanic:** Pops begin to view un-thawed founders in cryo-sleep as deities. Cults form, with their power scaling based on the number of sleepers remaining.
+
+**Emergence:** A cult might attempt to sabotage the awakening sequence to keep their "gods" pure, or demand sacrifices (resources) to appease the sleepers, starving the rest of the colony.
+
+**Tension:** Do you wake the founders to dispel the myth (risking culture shock and losing the cult's massive productivity buffs), or leave them frozen and let the cult's fanaticism grow?
+
+---
