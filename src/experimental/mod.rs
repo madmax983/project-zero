@@ -218,3 +218,6 @@ pub mod tectonic_prophets;
 
 #[cfg(feature = "nova")]
 pub mod feral_foraging;
+
+#[cfg(feature = "nova")]
+pub mod subconscious_computing;
