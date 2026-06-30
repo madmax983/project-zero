@@ -200,3 +200,8 @@
 **Concept:** Added `feral_foraging_system` to `src/experimental/feral_foraging.rs`. Connects `Trait::Feral` and `ActionType::Explore` to `WeatherType::Rain` (and Storm). Feral pops actively generate `Food` for the colony while exploring during bad weather.
 **Fate:** Submitted
 **Lesson:** Connects a negative personality trait to environmental weather, turning it into a specialized niche advantage during specific times, rewarding players for sending feral pops out instead of keeping them indoors.
+
+## [Subconscious Computing]
+**Concept:** Added `subconscious_computing_system` in `src/experimental/subconscious_computing.rs`. Connects `Trait::Intellectual`, `ActionType::SatisfyRest`, and `ColonyResources`. Pops with the Intellectual trait passively generate `knowledge` while they are sleeping (`SatisfyRest`). Because their brain never truly shuts off, their `rest` regeneration is slightly penalized during this time.
+**Fate:** Submitted
+**Lesson:** Provides a unique economic niche for `Intellectual` pops where their utility persists even while sleeping. It balances free resource generation with a physiological penalty, forcing players to manage their burnout or capitalize on the passive trickle of knowledge.

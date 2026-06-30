@@ -1085,6 +1085,8 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         )
             .chain(),
     ));
+    #[cfg(feature = "nova")]
+    crate::experimental::subconscious_computing::register(schedule);
 }
 #[cfg(test)]
 mod tests {
