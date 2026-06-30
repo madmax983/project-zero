@@ -26069,3 +26069,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you wake the founders to dispel the myth (risking culture shock and losing the cult's massive productivity buffs), or leave them frozen and let the cult's fanaticism grow?
 
 ---
+
+## The Great Filter Archive
+
+**Layer:** 3
+
+**Fantasy:** Unearthing terrifying cosmic truths from dead civilizations to boost your own technology, while risking the sanity of your people.
+
+**Mechanic:** You discover ruins of ancient empires that fell to various "Great Filters" (e.g., rogue AI, engineered plagues, self-replicating nanobots). Studying these archives grants massive leaps in specific tech trees but introduces the "Filter Paranoia" trait to your population, decreasing morale and increasing the chance of radical luddite cults forming.
+
+**Emergence:** Your rapid technological advancement using a discovered AI archive causes your Pops to riot and preemptively destroy your own computing infrastructure out of fear, crippling your core worlds just as a rival empire attacks.
+
+**Tension:** Do you risk the social stability of your empire by delving into forbidden knowledge for rapid advancement, or progress slowly and safely while rivals potentially lap you?
+
+---
+
+## Generational Debt Bonds
+
+**Layer:** Cross-layer
+
+**Fantasy:** Funding massive interstellar projects today by selling the future labor of your unborn colonists.
+
+**Mechanic:** To fund expensive Layer 2 or Layer 3 mega-structures (like Orbital Rings or Dyson Swarm segments) immediately, you can issue "Generational Debt Bonds" to a wealthy Layer 3 mercantile faction. This provides instant massive resource injections. However, it imposes a permanent, unremovable "Debt Servitude" tax on the specific Layer 1 colony that issued the bond. This tax reduces all resource output and happiness for that colony for generations until the astronomical debt is paid off (which takes centuries).
+
+**Emergence:** A thriving core world issues bonds to build a defensive fleet during a crisis. Fifty years later, the descendants on that world, crushed by the debt servitude, violently rebel against your empire to default on the bonds, forcing you to fight your own heavily fortified former capital.
+
+**Tension:** Do you mortgage the future of a specific colony to survive a present crisis or build a wonder, knowing it guarantees severe internal strife and economic stagnation for that world decades later?
+
+---
+
+## Sub-orbital Scrap Wars
+
+**Layer:** 2
+
+**Fantasy:** Watching the junk of your civilization become a hazardous, contested battlefield for desperate scavengers.
+
+**Mechanic:** Destroyed ships, obsolete satellites, and orbital construction waste accumulate in a planet's sub-orbital space, creating a "Scrap Ring." This ring provides passive income for specialized scavenger pops (Layer 1) but increases the chance of catastrophic "Kessler Syndrome" events that rain debris on the colony below. Independent scavenger factions may also form in the Scrap Ring, occasionally intercepting legitimate trade ships.
+
+**Emergence:** A massive space battle over your homeworld leaves a colossal Scrap Ring. Your scavengers get extremely wealthy, but the ring becomes so dense that your own newly built reinforcement fleets cannot safely launch without being heavily damaged by the debris, trapping you on your own planet.
+
+**Tension:** Do you spend massive resources to clean up the orbit to ensure safe logistics, or do you let the scrap accumulate to enrich your scavengers and create a natural, albeit hazardous, defensive barrier against invaders?
+
+---
