@@ -4666,3 +4666,32 @@ VACUUM_SHADOW_INCIDENT:
 ## The Hive Mind Integration Chaining (Spec 1022)
 - XENO_INTEGRATION_SURGERY → enables → COLLECTIVE_REFUSAL, HIVE_MIND_SCHISM
 - COLLECTIVE_REFUSAL → increases_chance → HIVE_MIND_SCHISM, REBELLION
+
+## Tectonic Stress Chaining (Spec 1211)
+
+- HEAVY_INDUSTRY → increases_chance → MEGA_QUAKE
+- EXPLOSION_EVENT → increases_chance → MEGA_QUAKE
+- MEGA_QUAKE_STRIKES → enables → RUIN_CREATION, POP_DEATH, ARTIFACT_BURIAL
+- RELIEF_QUAKE_TRIGGERED → decreases_chance → MEGA_QUAKE
+
+## The Slippery Slope Chaining (Spec 1228)
+
+- ATROCITY_COMMITTED → increases_chance → COLONY_NUMBED
+- COLONY_NUMBED → decreases_chance → MORALE_BUFF_EFFECTIVENESS
+- COLONY_NUMBED → decreases_chance → STRESS_PENALTY
+
+## Improvised Tools Chaining (Spec 1125)
+
+- TOOL_SHORTAGE → enables → TOOLS_DEPLETED
+- TOOLS_DEPLETED → increases_chance → TASK_DELAY, ACCIDENT
+
+## Celestial Cemeteries Chaining (Spec 1096)
+
+- ORBITAL_BURIAL_ENACTED → increases_chance → COFFIN_COLLISION
+- COFFIN_COLLISION → enables → SHIP_LOSS, DEBRIS_GENERATION
+
+## Industrial Byproducts Chaining (Spec 354)
+
+- HEAVY_INDUSTRY → enables → WASTE_GENERATION
+- WASTE_GENERATION → enables → WASTE_DUMPING
+- WASTE_DUMPING → increases_chance → HEALTH_PENALTY, BEAUTY_DEGRADATION

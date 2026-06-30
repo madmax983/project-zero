@@ -5799,3 +5799,58 @@
 **Usage:**
 - "The Collective doesn't need sleep."
 - "Speak to the Collective, not the individual."
+
+## Tectonic Stress (Spec 1211)
+
+### The Deep Anger
+**Replaces:** Tectonic stress meter, crust pressure
+**Code reference:** `TectonicStress` component
+**Usage:** "The Deep Anger is rising." / "We must ease the Deep Anger before it breaks us."
+
+### Mega-Quake
+**Replaces:** Critical failure state of tectonic stress
+**Code reference:** `MegaQuakeEvent`
+**Usage:** "The Mega-Quake shattered the foundations."
+
+### Relief Quake
+**Replaces:** Intentional tectonic stress reduction
+**Code reference:** `trigger_relief_quake` system
+**Usage:** "A relief quake was authorized to vent the pressure."
+
+## The Slippery Slope (Spec 1228)
+
+### Desensitization
+**Replaces:** Morale dampening, trauma normalization
+**Code reference:** `Desensitization` resource
+**Usage:** "The colony is suffering from severe Desensitization." / "Desensitization makes them indifferent to the new monuments."
+
+### Hollow
+**Replaces:** Pops with high desensitization
+**Code reference:** N/A (Descriptive state)
+**Usage:** "The survivors are hollow."
+
+## Improvised Tools (Spec 1125)
+
+### Makeshift
+**Replaces:** Fallback tools, missing required tool logic
+**Code reference:** `using_improvised_tool` flag
+**Usage:** "They are using makeshift instruments for the harvest."
+
+## Celestial Cemeteries (Spec 1096)
+
+### Coffin Ring
+**Replaces:** Orbital cemetery, high density debris field
+**Code reference:** `OrbitalCemetery` resource
+**Usage:** "The Coffin Ring grows thicker every year."
+
+### Ancestral Drift
+**Replaces:** Coffin collision hazard
+**Code reference:** `calculate_launch_risk_system` logic
+**Usage:** "Lost to the ancestral drift on launch."
+
+## Industrial Byproducts (Spec 354)
+
+### The Grey
+**Replaces:** Industrial waste, pollution
+**Code reference:** `IndustrialWaste` component
+**Usage:** "The Grey is choking the outer habitats."
