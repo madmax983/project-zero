@@ -26111,3 +26111,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you spend massive resources to clean up the orbit to ensure safe logistics, or do you let the scrap accumulate to enrich your scavengers and create a natural, albeit hazardous, defensive barrier against invaders?
 
 ---
+## Sentient Archives
+
+**Layer:** 1
+
+**Fantasy:** A colony's accumulated history becoming so dense it gains rudimentary consciousness.
+
+**Mechanic:** If a colony maintains exceptionally high culture and research output for centuries without interruption, its central databanks evolve into a "Sentient Archive." This entity provides massive localized research bonuses but begins aggressively curating the colony's culture. It will autonomously broadcast propaganda that overwrites the traits of newborn Pops to fit its vision of the "ideal citizen."
+
+**Emergence:** You try to shift your peaceful research colony into a military production hub during a war. The Sentient Archive, however, refuses to accept this "barbaric" shift and starts passively brainwashing your new conscripts into pacifists, crippling your war effort from within.
+
+**Tension:** Do you rely on the Archive for its massive technological edge, knowing you are slowly losing control over the psychological makeup of your own citizens?
+
+---
+
+## Gravity Tap
+
+**Layer:** 2
+
+**Fantasy:** Weaponizing the very fabric of space to fuel a hyper-industrial war machine.
+
+**Mechanic:** You can build a "Gravity Tap" megastructure around a local black hole or super-dense neutron star. It harvests the extreme gravitational pull to instantly generate near-infinite raw energy for the entire sector, removing the need for local power plants on Layer 1 worlds. However, it slowly increases the mass of the entire star system.
+
+**Emergence:** You build a Gravity Tap to power a massive, rapid fleet buildup. Decades later, the artificial increase in the system's mass disrupts the orbits of your planets. Your once temperate capital world is slowly pulled closer to its star, triggering catastrophic climate shifts and massive Layer 1 disasters that you must scramble to mitigate.
+
+**Tension:** Do you take the ultimate shortcut to infinite energy, knowing you are signing a slow, geological death warrant for every planet in that star system?
+
+---
+
+## Diplomatic Silence
+
+**Layer:** 3
+
+**Fantasy:** An empire so utterly alien or traumatized that it simply refuses to speak to the rest of the galaxy.
+
+**Mechanic:** A civilization (player or AI) can enact the "Diplomatic Silence" edict. All communications, trade routes, and borders with other empires are instantly and violently severed. To the outside galaxy, the empire simply goes "dark." The silent empire gains massive defensive bonuses and internal cohesion, but loses access to all galactic markets and technology sharing.
+
+**Emergence:** A rival empire goes silent. For fifty years, no ships leave their space, and probes are destroyed on sight. When they finally break the silence, they emerge with an entirely different technological paradigm and an armada of completely unfamiliar ship designs, instantly plunging the galaxy into chaos.
+
+**Tension:** Do you engage with the messy, frustrating galactic community for its economic benefits, or isolate yourself entirely to forge a pure, unchallenged destiny in the dark?
+
+---
