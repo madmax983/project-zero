@@ -391,6 +391,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<Events<crate::layer1::social::society::InvestigationEvent>>();
     world.init_resource::<Events<crate::layer1::social::society::SuppressSocietyEvent>>();
     world.init_resource::<Events<crate::layer1::geology::tectonic::MegaQuakeEvent>>();
+    world.init_resource::<Events<crate::layer1::shields::DamageEvent>>();
     world.init_resource::<Events<crate::layer1::ancestral_graves::SacrilegeEvent>>();
     world.init_resource::<Events<crate::layer1::resources::MiningEvent>>();
     world.init_resource::<Events<crate::layer1::shipbreaking::SpawnCrashedShipEvent>>();
