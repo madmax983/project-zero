@@ -30,6 +30,7 @@ pub mod pressure;
 pub mod structural_integrity;
 pub mod suction;
 pub mod vent;
+pub mod gravity_debt;
 
 pub use acoustic::*;
 pub use curvature::*;
@@ -41,6 +42,7 @@ pub use pressure::*;
 pub use structural_integrity::*;
 pub use suction::*;
 pub use vent::*;
+pub use gravity_debt::*;
 
 #[cfg(test)]
 mod acoustic_shadow_tests;
