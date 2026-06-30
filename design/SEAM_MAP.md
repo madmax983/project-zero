@@ -1694,3 +1694,9 @@
 - **Systems connected:** `evaluate_tool_fallback_system` -> `SimulationSchedule` (Execution)
 - **Glue added:** Added `ImprovisedTools` component to `PopBundle` so that all pops can be evaluated. Registered `evaluate_tool_fallback_system` in `Layer1SystemSet::Execution`.
 - **Tests:** `tests/integration/improvised_tools_bridge.rs`
+
+### INT-1288: The Memorial Revolt -> Pet Death Integration
+- **Date:** 2026-10-31
+- **Systems connected:** `Added<Dead>` -> `pet_death_bridge_system` -> `PetDeathEvent`
+- **Glue added:** Added `pet_death_bridge_system` in `src/layer1/core/integration.rs` to generate `PetDeathEvent`s when an entity with `ColonyPet` receives the `Dead` component. Registered the system in `src/layer1/systems/observation.rs`.
+- **Tests:** `tests/integration/memorial_revolt_bridge.rs`
