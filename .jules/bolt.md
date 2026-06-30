@@ -27,3 +27,6 @@
 **[Acoustic Noise Propagation Allocations]**
 **Learning:** The noise propagation system was allocating a VecDeque and a std::collections::HashSet per noise source per frame, causing unnecessary heap allocations. Using std::collections::HashSet on integer tuples also incurs SipHash overhead.
 **Action:** Hoist the allocations out of the loop and reuse them with `.clear()`. Switch to `bevy::utils::HashSet` for AHash to avoid SipHash overhead on coordinate keys.
+**Avoid cloning simple Entity wrappers**
+**Learning:** `MoveToOrder` only contains a single `Entity`. Deriving `Copy` removes the need for explicit `.clone()` calls during event passing and queue processing, saving minimal allocations and making the code more idiomatic.
+**Action:** Always derive `Copy` for structs that wrap primitives or `Entity` to avoid `.clone()` calls.
