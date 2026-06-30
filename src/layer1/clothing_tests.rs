@@ -1,6 +1,6 @@
-use crate::layer1::economy::resources::ColonyResources;
 use crate::layer1::architecture::building::BuildingType;
 use crate::layer1::economy::refining::get_refining_recipe;
+use crate::layer1::economy::resources::ColonyResources;
 
 // 1. Resource Tests
 #[test]

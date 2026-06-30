@@ -854,3 +854,6 @@
 - [x] `1273` Gravity Debt — `specs/1273-gravity-debt.md` — completed 2024-07-01
 - [x] `1280` Tectonic Stress — `specs/1280-tectonic-stress.md` — completed 2024-06-30
 - [x] `040` Clothing and Temperature — `specs/040-clothing-temperature.md` — completed 2026-06-30
+- [x] `306` The Debt Collector — `specs/306-debt-collector.md` — completed 2024-05-31
+- [x] `306` The Debt Collector — `specs/306-debt-collector.md` — completed 2024-05-31
+- [x] `306` The Debt Collector — `specs/306-debt-collector.md` — completed 2024-05-31
