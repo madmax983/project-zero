@@ -644,3 +644,6 @@ mod improvised_tools_bridge;
 mod slippery_slope_bridge;
 #[path = "integration/tectonic_heavy_industry_bridge.rs"]
 pub mod tectonic_heavy_industry_bridge;
+
+#[path = "integration/clothing_temperature.rs"]
+mod clothing_temperature;

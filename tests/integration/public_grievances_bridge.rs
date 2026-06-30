@@ -18,6 +18,7 @@ mod integration_tests {
     #[test]
     fn test_ostracized_pop_cannot_socialize() {
         let mut app = App::new();
+        app.world_mut().init_resource::<bevy_ecs::event::Events<scale::layer1::economy::bio_loom::UnequipFailedEvent>>();
         app.insert_resource(scale::layer1::resources::ColonyResources::default());
         app.insert_resource(scale::shared::time::SimulationTime::default());
         app.add_event::<scale::layer1::items::UnequipEvent>();
@@ -65,6 +66,7 @@ mod integration_tests {
     #[test]
     fn test_ostracized_pop_receives_no_proximity_buffs() {
         let mut app = App::new();
+        app.world_mut().init_resource::<bevy_ecs::event::Events<scale::layer1::economy::bio_loom::UnequipFailedEvent>>();
         app.insert_resource(scale::layer1::resources::ColonyResources::default());
         app.insert_resource(scale::shared::time::SimulationTime::default());
         app.add_event::<scale::layer1::items::UnequipEvent>();
@@ -105,6 +107,7 @@ mod integration_tests {
     #[test]
     fn test_ostracized_pop_work_penalty() {
         let mut app = App::new();
+        app.world_mut().init_resource::<bevy_ecs::event::Events<scale::layer1::economy::bio_loom::UnequipFailedEvent>>();
         app.insert_resource(scale::layer1::resources::ColonyResources::default());
         app.insert_resource(scale::shared::time::SimulationTime::default());
         app.add_event::<scale::layer1::items::UnequipEvent>();
