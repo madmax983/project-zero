@@ -335,10 +335,14 @@ pub fn handle_fetch_clothing(
                 if let Some(old_entity) = eq.body {
                     if let Ok(suit) = bio_suits.get(old_entity) {
                         if suit.attachment_level > 75.0 {
-                            failed_events.send(crate::layer1::economy::bio_loom::UnequipFailedEvent {
-                                entity: pop_entity,
-                                reason: "The Bio-Suit has fused with the host's nervous system.".to_string(),
-                            });
+                            failed_events.send(
+                                crate::layer1::economy::bio_loom::UnequipFailedEvent {
+                                    entity: pop_entity,
+                                    reason:
+                                        "The Bio-Suit has fused with the host's nervous system."
+                                            .to_string(),
+                                },
+                            );
                             return; // Block unequip
                         }
                     }

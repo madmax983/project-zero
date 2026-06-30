@@ -270,9 +270,19 @@ mod tests {
                       mut query: Query<&mut Equipment>,
                       mut unequip_events: EventWriter<crate::layer1::items::UnequipEvent>,
                       bio_suits: Query<&crate::layer1::economy::bio_loom::BioSuit>,
-                      mut failed_events: EventWriter<crate::layer1::economy::bio_loom::UnequipFailedEvent>| {
+                      mut failed_events: EventWriter<
+                    crate::layer1::economy::bio_loom::UnequipFailedEvent,
+                >| {
                     let mut equipment_opt = query.get_mut(pop).ok();
-                    handle_fetch_clothing(&mut commands, &mut res, pop, &mut equipment_opt, &mut unequip_events, &bio_suits, &mut failed_events);
+                    handle_fetch_clothing(
+                        &mut commands,
+                        &mut res,
+                        pop,
+                        &mut equipment_opt,
+                        &mut unequip_events,
+                        &bio_suits,
+                        &mut failed_events,
+                    );
                 },
             )
             .unwrap();

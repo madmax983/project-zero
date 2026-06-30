@@ -3299,7 +3299,6 @@ pub fn subconscious_grid_lockdown_chronicle_bridge(
     }
 }
 
-
 /// INT-1211: Heavy Industry -> Tectonic Stress bridge
 /// Increases tectonic stress based on the smog output of heavy industries.
 pub fn heavy_industry_tectonic_stress_bridge(

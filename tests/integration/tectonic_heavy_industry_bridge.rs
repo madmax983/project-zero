@@ -1,6 +1,6 @@
+use scale::layer1::core::integration::heavy_industry_tectonic_stress_bridge;
 use scale::layer1::environment::atmosphere::HeavyIndustry;
 use scale::layer1::geology::tectonic::TectonicStress;
-use scale::layer1::core::integration::heavy_industry_tectonic_stress_bridge;
 
 #[test]
 fn test_heavy_industry_increases_tectonic_stress() {
