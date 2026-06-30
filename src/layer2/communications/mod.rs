@@ -27,7 +27,7 @@ pub mod signal_latency {
         pub order: MoveToOrder,
     }
 
-    #[derive(Clone, PartialEq, Debug)]
+    #[derive(Clone, Copy, PartialEq, Debug)]
     pub struct MoveToOrder {
         pub target: Entity,
     }
@@ -59,7 +59,7 @@ pub mod signal_latency {
 
                 delayed_orders.queue.push(DelayedOrder {
                     target: event.target,
-                    order: event.order.clone(),
+                    order: event.order,
                     ticks_remaining,
                 });
             }
@@ -74,7 +74,7 @@ pub mod signal_latency {
             if order.ticks_remaining == 0 {
                 execute_events.send(ExecuteOrderEvent {
                     target: order.target,
-                    order: order.order.clone(),
+                    order: order.order,
                 });
                 false
             } else {

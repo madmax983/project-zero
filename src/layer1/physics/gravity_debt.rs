@@ -73,10 +73,16 @@ mod tests {
         app.add_event::<FreighterArrivalEvent>();
         app.add_event::<FreighterDepartureEvent>();
 
-        let planet_entity = app.world_mut().spawn((
-            Planet { base_gravity: 1.0 },
-            GravityDebt { imported_mass: Mass(0.0), exported_mass: Mass(0.0) },
-        )).id();
+        let planet_entity = app
+            .world_mut()
+            .spawn((
+                Planet { base_gravity: 1.0 },
+                GravityDebt {
+                    imported_mass: Mass(0.0),
+                    exported_mass: Mass(0.0),
+                },
+            ))
+            .id();
 
         app.world_mut().send_event(FreighterArrivalEvent {
             destination: planet_entity,
@@ -95,28 +101,43 @@ mod tests {
         let debt = app.world().get::<GravityDebt>(planet_entity).unwrap();
         assert_eq!(debt.imported_mass.0, 5000.0);
         assert_eq!(debt.exported_mass.0, 1000.0);
-        assert!(debt.current_gravity_modifier() > 1.0, "Importing more mass than exporting should increase gravity modifier.");
+        assert!(
+            debt.current_gravity_modifier() > 1.0,
+            "Importing more mass than exporting should increase gravity modifier."
+        );
     }
 
     #[test]
     fn test_launch_cost_scales_with_debt() {
         // Arrange
         let base_cost = 100.0;
-        let planet_debt = GravityDebt { imported_mass: Mass(100000.0), exported_mass: Mass(0.0) };
+        let planet_debt = GravityDebt {
+            imported_mass: Mass(100000.0),
+            exported_mass: Mass(0.0),
+        };
 
         // Act
         let modified_cost = calculate_launch_cost(base_cost, &planet_debt);
 
         // Assert
-        assert!(modified_cost > base_cost, "Launch cost should be significantly higher due to accumulated mass");
+        assert!(
+            modified_cost > base_cost,
+            "Launch cost should be significantly higher due to accumulated mass"
+        );
     }
 
     #[test]
     fn test_launch_failure_chance_increases() {
-         let planet_debt = GravityDebt { imported_mass: Mass(500000.0), exported_mass: Mass(0.0) };
-         let base_chance = 0.01;
+        let planet_debt = GravityDebt {
+            imported_mass: Mass(500000.0),
+            exported_mass: Mass(0.0),
+        };
+        let base_chance = 0.01;
 
-         let failure_chance = calculate_launch_failure_chance(base_chance, &planet_debt);
-         assert!(failure_chance > base_chance, "Failure chance must increase on high gravity debt planets.");
+        let failure_chance = calculate_launch_failure_chance(base_chance, &planet_debt);
+        assert!(
+            failure_chance > base_chance,
+            "Failure chance must increase on high gravity debt planets."
+        );
     }
 }
