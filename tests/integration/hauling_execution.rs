@@ -75,6 +75,7 @@ mod tests {
         world.init_resource::<Events<scale::layer2::events::ShipDestroyedEvent>>();
         world.init_resource::<Events<scale::layer2::events::LaunchEvent>>();
         world.init_resource::<Events<scale::layer1::items::UnequipEvent>>();
+        world.init_resource::<Events<scale::layer1::economy::bio_loom::UnequipFailedEvent>>();
         world.insert_resource(scale::layer1::social_mimicry::Trend::default());
         world.insert_resource(scale::layer1::visitor::VisitorSource::default());
         world.insert_resource(scale::layer1::weather::WeatherState::default());

@@ -183,6 +183,11 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::core::integration::trigger_tectonic_fracking_system,
             crate::layer1::core::integration::heavy_industry_tectonic_stress_bridge,
             crate::layer1::geology::tectonic::update_stress_system,
+        )
+            .in_set(Layer1SystemSet::Environment),
+    );
+    schedule.add_systems(
+        (
             crate::layer1::geology::fracking::tectonic_fracking_system
                 .after(crate::layer1::core::integration::trigger_tectonic_fracking_system),
             crate::layer1::geology::tectonic::trigger_relief_quake_system
