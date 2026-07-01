@@ -26152,3 +26152,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you engage with the messy, frustrating galactic community for its economic benefits, or isolate yourself entirely to forge a pure, unchallenged destiny in the dark?
 
 ---
+## Generational Burnout
+
+**Layer:** 1
+
+**Fantasy:** Watching a colony's relentless drive for perfection break its people over time.
+
+**Mechanic:** Keeping a colony at maximum efficiency and high stress for too long without adequate leisure or celebration periods causes newborn Pops to inherit a "Burned Out" trait, permanently reducing their maximum motivation and making them resistant to utility modifiers.
+
+**Emergence:** A highly optimized mining colony suddenly grinds to a halt after three generations as the youth simply refuse to work the grueling shifts their ancestors did, forcing a massive cultural shift.
+
+**Tension:** Do you push your colony to its limits now for maximum output, or deliberately run sub-optimally to protect the psychological health of future generations?
+
+---
+
+## Stowaway Flora
+
+**Layer:** 2
+
+**Fantasy:** The unintended ecological consequences of interstellar logistics.
+
+**Mechanic:** Cargo ships traveling between colonies can inadvertently carry seeds or spores of local flora from one planet to another. These alien plants begin growing in the destination colony, altering the local terrain grid and potentially disrupting existing agriculture.
+
+**Emergence:** A seemingly harmless decorative plant from a core world is introduced to an outer colony, where the lack of natural predators allows it to become highly invasive, choking out local food crops and causing a famine.
+
+**Tension:** Do you enact strict, expensive bio-security measures on all trade routes, or allow free trade and risk catastrophic ecological contamination?
+
+---
+
+## Ghost Fleets of the Forgotten
+
+**Layer:** 3
+
+**Fantasy:** The haunting return of ships lost to the void.
+
+**Mechanic:** Fleets that go missing due to anomaly events or sub-light travel miscalculations have a small chance to reappear decades or centuries later. These "Ghost Fleets" are hostile, operated by rogue AI or mutated descendants of the original crew, wielding outdated but strange technology.
+
+**Emergence:** An explorer fleet lost during your early expansion phase returns right in the middle of a war with a rival empire, attacking both sides indiscriminately and completely turning the tide of the conflict.
+
+**Tension:** Do you destroy your own long-lost people for security, or attempt to capture and integrate these ancient ships for their unique historical data?
+
+---
