@@ -1,24 +1,12 @@
 import re
-import os
 
-with open("design/BACKLOG.md", "r") as f:
-    backlog_lines = f.readlines()
+with open('src/simulation.rs', 'r') as f:
+    content = f.read()
 
-def get_spec_number_from_backlog(line):
-    match = re.search(r"- \[ \] `(\d+)`", line)
-    if match:
-        return int(match.group(1))
-    return None
-
-max_spec_num = 0
-for filename in os.listdir("specs"):
-    match = re.match(r"^(\d+)-.*\.md$", filename)
-    if match:
-        max_spec_num = max(max_spec_num, int(match.group(1)))
-
-for line in backlog_lines:
-    num = get_spec_number_from_backlog(line)
-    if num:
-        max_spec_num = max(max_spec_num, num)
-
-print(f"Max spec num: {max_spec_num}")
+# We look for the general area where layer1::psychology systems are added to the schedule.
+# Here we find crate::layer1::psychology::stress::stress_decay_system
+match = re.search(r'crate::layer1::psychology::stress::stress_decay_system,\n', content)
+if match:
+    print("Found psychology::stress::stress_decay_system")
+else:
+    print("NOT FOUND")
