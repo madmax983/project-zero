@@ -412,6 +412,11 @@ pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
             crate::layer1::anomalies::cryptid::cryptid_chronicle_bridge_system,
+        )
+            .in_set(Layer1SystemSet::Observation),
+    );
+    schedule.add_systems(
+        (
             crate::layer1::integration::famine_tracking_system,
             crate::layer1::integration::trauma_decay_system,
             pop_death_chronicle_bridge.after(crate::layer1::health::despawn_dead_entities_system),

@@ -183,10 +183,20 @@ pub fn register(schedule: &mut Schedule) {
 
     schedule.add_systems(
         (
+            crate::layer1::physics::gravity_plating::monitor_gravity_generator_power_system,
+            crate::layer1::physics::gravity_plating::apply_zero_g_movement_system
+                .after(crate::layer1::physics::gravity_plating::monitor_gravity_generator_power_system),
+        )
+            .in_set(Layer1SystemSet::Execution),
+    );
+
+    schedule.add_systems(
+        (
             movement_system
                 .after(apply_quirk_modifiers_system)
                 .after(crate::layer1::fauna::fauna_behavior_system)
-                .after(crate::layer1::physics::hit_stop::hit_stop_system),
+                .after(crate::layer1::physics::hit_stop::hit_stop_system)
+                .after(crate::layer1::physics::gravity_plating::apply_zero_g_movement_system),
             crate::layer1::infrastructure::transit_toll_system.after(movement_system),
             handle_direct_movement.after(crate::layer1::physics::hit_stop::hit_stop_system),
             crate::layer1::crowding::crowding_accumulation_system.after(movement_system),
