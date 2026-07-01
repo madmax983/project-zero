@@ -708,6 +708,7 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         update_event_buffer::<crate::layer2::dead_protocols::ViolationEvent>,
     ));
     schedule.add_systems((update_event_buffer::<DetectionEvent>,));
+    schedule.add_systems((crate::layer1::tech::legacy_code::apply_latency_system, crate::layer1::tech::legacy_code::process_reformat_system));
     schedule.add_systems((
         crate::layer2::integration::predecessor_orbital_shield_bridge_system,
         crate::layer2::fleet::fleet_order_system

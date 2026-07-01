@@ -149,7 +149,7 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::nature::atmospheric_empathy::emit_trace_gases),
             crate::layer1::nature::atmospheric_empathy::decay_trace_gases_system
                 .after(crate::layer1::nature::atmospheric_empathy::apply_atmospheric_empathy),
-            crate::layer1::tech::legacy_code::update_bloat_system.after(decay_needs_system),
+            crate::layer1::tech::legacy_code::accumulate_bloat_system.after(decay_needs_system),
             crate::layer1::health::check_health_status_system
                 .after(crate::layer1::needs::starvation_damage_system)
                 .after(crate::layer1::atmosphere::apply_smog_damage_system)

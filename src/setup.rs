@@ -83,6 +83,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<crate::layer1::fungal_network::SporeNetwork>();
     world.init_resource::<Events<crate::layer1::economy::information_black_market::EarlyWarningEvent>>();
     world.init_resource::<bevy_ecs::event::Events<crate::layer1::nature::long_night::StartLongNightEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<crate::layer1::tech::legacy_code::ReformatCommand>>();
     world.init_resource::<bevy_ecs::event::Events<crate::layer1::nature::ecology::HarvestEvent>>();
     world.init_resource::<crate::layer1::culture::celestial_cemeteries::OrbitalCemetery>();
     world.init_resource::<bevy_ecs::event::Events<crate::layer1::nature::ecology::HarvestEvent>>();

@@ -451,7 +451,7 @@ pub fn process_research_system(
     libraries: Query<Entity, With<Library>>,
     mut resources: ResMut<ColonyResources>,
     factions: Option<Res<Factions>>,
-    bloat_query: Query<&self::legacy_code::Bloat>,
+    bloat_query: Query<&self::legacy_code::SystemBloat>,
     archive: Option<Res<self::infinite_archive::Archive>>,
     mut library_workers: Local<bevy::utils::HashMap<Entity, u32>>,
 ) {
