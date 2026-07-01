@@ -15,6 +15,14 @@ pub fn register(schedule: &mut Schedule) {
     );
     schedule.add_systems(
         (
+            crate::layer1::mobile_architecture::transform_building_system,
+            crate::layer1::mobile_architecture::move_mobile_building_system,
+        )
+            .chain()
+            .in_set(super::Layer1SystemSet::Execution),
+    );
+    schedule.add_systems(
+        (
             crate::layer1::tech::rogue_automation_cults::rogue_cult_formation_system,
             crate::layer1::tech::rogue_automation_cults::cult_priority_override_system,
             crate::layer1::core::integration::rogue_cult_chronicle_bridge,
