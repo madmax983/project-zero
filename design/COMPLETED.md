@@ -861,4 +861,5 @@
 - [x] `1271` The Propaganda Graffitists — `specs/1271-the-propaganda-graffitists.md` — completed 2026-06-30
 - [x] `280` Archaeological Layers — `specs/280-archaeological-layers.md` — completed 2026-02-01
 - [x] `1017` Legacy Code — `specs/1017-legacy-code.md` — completed 2026-02-01
+- [x] `INT-1017` Integration: Legacy Code -> Chronicle — completed 2026-11-01
 - [x] `1016` Mobile Architecture — `specs/1016-mobile-architecture.md` — completed 2026-06-25

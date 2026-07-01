@@ -416,6 +416,7 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::integration::trauma_decay_system,
             pop_death_chronicle_bridge.after(crate::layer1::health::despawn_dead_entities_system),
             mega_quake_chronicle_bridge.after(crate::layer1::geology::tectonic::check_quake_system),
+            crate::layer1::core::integration::reformat_chronicle_bridge,
             crate::layer1::core::integration::tectonic_fracking_chronicle_bridge
                 .after(crate::layer1::geology::fracking::tectonic_fracking_system),
             crate::layer1::integration::orbital_drop_chronicle_bridge

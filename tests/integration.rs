@@ -652,3 +652,5 @@ pub mod tectonic_heavy_industry_bridge;
 mod clothing_temperature;
 #[path = "integration/propaganda_graffitists_bridge.rs"]
 mod propaganda_graffitists_bridge;
+#[path = "integration/legacy_code_bridge.rs"]
+mod legacy_code_bridge;
