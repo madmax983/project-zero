@@ -862,3 +862,4 @@
 - [x] `280` Archaeological Layers — `specs/280-archaeological-layers.md` — completed 2026-02-01
 - [x] `1017` Legacy Code — `specs/1017-legacy-code.md` — completed 2026-02-01
 - [x] `1016` Mobile Architecture — `specs/1016-mobile-architecture.md` — completed 2026-06-25
+- [x] `274` Blacksite Penal Colonies — `specs/274-blacksite-penal-colonies.md` — completed 2026-10-31

@@ -411,6 +411,8 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<bevy_ecs::event::Events<crate::layer1::mobile_architecture::MoveCommand>>();
     world.init_resource::<Events<crate::layer1::social::debt::LifeSavedEvent>>();
     world.init_resource::<Events<crate::layer1::social::debt::CallInFavorEvent>>();
+    world.init_resource::<Events<crate::layer1::social::blacksite::PrisonBreakEvent>>();
+    world.init_resource::<Events<crate::layer1::social::blacksite::PayoutEvent>>();
     world.init_resource::<Events<crate::layer1::eureka::EurekaEvent>>();
     world.init_resource::<Events<crate::layer1::items::UnequipEvent>>();
     world.init_resource::<Events<crate::layer1::economy::bio_loom::UnequipFailedEvent>>();
