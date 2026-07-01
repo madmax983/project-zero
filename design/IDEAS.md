@@ -26152,3 +26152,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you engage with the messy, frustrating galactic community for its economic benefits, or isolate yourself entirely to forge a pure, unchallenged destiny in the dark?
 
 ---
+## Quantum Labor Smuggling
+
+**Layer:** Cross-layer
+
+**Fantasy:** Utilizing forbidden theoretical physics to exploit infinite labor loops, risking reality-breaking paradoxes on your colony worlds.
+
+**Mechanic:** A late-game technology allows Pops on Layer 1 to perform work actions across multiple timelines simultaneously. This grants a massive 500% efficiency boost to all industrial sectors. However, it introduces a hidden "Paradox Strain" metric. If it gets too high, Pops randomly despawn entirely as their timelines collapse, causing massive instantaneous localized skill deficits.
+
+**Emergence:** Your bustling forge world is producing fleets at record speeds. Suddenly, the Paradox Strain breaks, and half your master artisans vanish into the quantum foam. Your production grinds to a halt precisely when the enemy armada jumps into the system.
+
+**Tension:** Do you aggressively exploit the timelines to win a rapid war, knowing your workforce might spontaneously cease to exist?
+
+---
+
+## The Genetic Patent Wars
+
+**Layer:** Cross-layer
+
+**Fantasy:** Fighting brutal proxy wars not over territory, but over the intellectual property of a species' DNA.
+
+**Mechanic:** Layer 3 factions can patent specific genetic modifications (traits). If you engineer or breed Pops (Layer 1) with patented traits without paying ruinous licensing fees, the patent holder gains a "Casus Belli" against you. They can initiate surgical blockades or assassinations to "reclaim" their IP.
+
+**Emergence:** You innocently bio-engineer your mining Pops to have "Subterranean Vision" to boost output. Unbeknownst to you, a massive fallen empire holds the patent on that exact sequence. They don't declare open war, but instead send relentless strike teams to assassinate your best miners, paralyzing your economy until you purge the trait yourself.
+
+**Tension:** Do you optimize your Pops with the best traits available, risking the wrath of powerful patent holders, or rely on slower, natural evolution to avoid legal conflict?
+
+---
+
+## Ghost Ships of the Outer Rim
+
+**Layer:** 2
+
+**Fantasy:** The eerie dread of derelict vessels returning from the dark spaces between systems, carrying forgotten technologies and ancient terrors.
+
+**Mechanic:** When ships are lost or destroyed in deep space, there is a small chance they are not deleted but become "Ghost Ships." Decades later, they might drift back into your colonized systems on unpredictable vectors. These ships contain extremely rare salvage and forgotten tech blueprints, but they are often highly irradiated or infested with hostile, mutated remnants of their former crews.
+
+**Emergence:** A Ghost Ship drifts into a core system. Seeking the rare tech, you order an intercept. The ship isn't dead—it's carrying a virulent biological plague that immediately infects your boarding party, who then unwittingly bring it back to your densely populated capital, sparking a colony-wide quarantine crisis.
+
+**Tension:** Do you risk intercepting these haunted derelicts for their unparalleled rewards, or do you blast them out of the sky on sight to protect your colonies from the unknown?
+
+---
