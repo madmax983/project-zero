@@ -858,3 +858,4 @@
 - [x] `306` The Debt Collector — `specs/306-debt-collector.md` — completed 2024-05-31
 - [x] `306` The Debt Collector — `specs/306-debt-collector.md` — completed 2024-05-31
 - [x] `306` The Debt Collector — `specs/306-debt-collector.md` — completed 2024-05-31
+- [x] `INT-306` Integration: Debt Collector -> Simulation Schedule — completed 2026-06-30

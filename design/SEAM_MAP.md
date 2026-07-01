@@ -1700,3 +1700,9 @@
 - **Systems connected:** `Added<Dead>` -> `pet_death_bridge_system` -> `PetDeathEvent`
 - **Glue added:** Added `pet_death_bridge_system` in `src/layer1/core/integration.rs` to generate `PetDeathEvent`s when an entity with `ColonyPet` receives the `Dead` component. Registered the system in `src/layer1/systems/observation.rs`.
 - **Tests:** `tests/integration/memorial_revolt_bridge.rs`
+
+### INT-306: Debt Collector -> Simulation Schedule
+- **Date:** 2026-06-30
+- **Systems connected:** Debt Collector events -> main Simulation
+- **Glue added:** Registered `process_auditor_demand_system` and `execute_auditor_strike_system` in `SimulationSchedule`, and initialized their events.
+- **Tests:** `tests/integration/debt_collector_simulation_bridge.rs`
