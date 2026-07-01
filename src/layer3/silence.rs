@@ -1,7 +1,30 @@
+//! The Silence
+//!
+//! The void is not empty, and it is always listening.
+//! This module governs the "Detection Risk" mechanic. As colonies grow larger, generate more power,
+//! and house more population ([`Pop`]), their electronic and psychic footprint expands into the void.
+//!
+//! Once this footprint exceeds a safety threshold, the silence is broken.
+//! Unknown, hostile entities are drawn to the colony, scaling in severity with the magnitude of the signal.
+
 use crate::layer1::energy::PowerSource;
 use crate::layer1::pop::Pop;
 use bevy_ecs::prelude::*;
 
+/// Tracks the colony's visibility footprint in the void.
+///
+/// Risk naturally accrues as the colony expands its power generation and population.
+/// If `current_risk` exceeds `threshold`, a [`HostileSpawnEvent`] is triggered,
+/// and the threshold is increased for the next wave.
+///
+/// ## Examples
+/// ```
+/// use scale::layer3::silence::DetectionRisk;
+///
+/// let risk = DetectionRisk::default();
+/// assert_eq!(risk.current_risk, 0.0);
+/// assert_eq!(risk.threshold, 100.0);
+/// ```
 #[derive(Resource)]
 pub struct DetectionRisk {
     pub current_risk: f32,
@@ -17,11 +40,19 @@ impl Default for DetectionRisk {
     }
 }
 
+/// Emitted when the colony's [`DetectionRisk`] breaches its threshold.
+///
+/// This event signals that the silence has been broken and hostiles are approaching.
+/// The `severity` dictates the strength and number of the incoming threats.
 #[derive(Event)]
 pub struct HostileSpawnEvent {
     pub severity: u32,
 }
 
+/// Recalculates the colony's footprint based on population and active power generation.
+///
+/// The formula applies a weight of `0.1` per [`Pop`] and `0.05` per unit of active [`PowerSource`] output.
+/// Inactive power sources do not contribute to the risk.
 pub fn update_detection_risk_system(
     mut risk: ResMut<DetectionRisk>,
     pops: Query<(), With<Pop>>,
@@ -39,6 +70,11 @@ pub fn update_detection_risk_system(
     risk.current_risk = (pop_count * 0.1) + (total_power * 0.05);
 }
 
+/// Triggers invasions if the silence is broken.
+///
+/// Checks if the `current_risk` in [`DetectionRisk`] has met or exceeded the `threshold`.
+/// If so, emits a [`HostileSpawnEvent`] and multiplies the threshold by `1.5` to represent
+/// the escalating tolerance or shifting attention of the void entities.
 pub fn check_hostile_spawn_system(
     mut risk: ResMut<DetectionRisk>,
     mut spawn_events: EventWriter<HostileSpawnEvent>,

@@ -22,7 +22,7 @@ fn test_reformat_chronicle_bridge() {
 
     let chronicle_events = app.world().resource::<Events<AddChronicleEvent>>();
     assert_eq!(chronicle_events.len(), 1, "Expected one Chronicle event");
-    let mut reader = chronicle_events.get_reader();
+    let mut reader = chronicle_events.get_cursor();
     let events: Vec<&AddChronicleEvent> = reader.read(chronicle_events).collect();
     assert!(events[0].text.contains("total reformat"));
 }
