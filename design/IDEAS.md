@@ -26277,3 +26277,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you accept the free happiness and cultural boom, knowing it effectively neutralizes the colony's industrial output and binds them to a foreign power, or block the exchange and deal with mundane, unhappy workers?
 
 ---
+
+## Monument to Failure
+
+**Layer:** 1
+
+**Fantasy:** Allowing colonists to process grief and turn past disasters into collective strength.
+
+**Mechanic:** When a catastrophic event occurs (e.g., massive starvation, building collapse killing pops), players can designate the site as a 'Monument to Failure'. Building this monument takes resources but permanently clears local stress debuffs and provides a massive long-term unity boost.
+
+**Emergence:** A massive industrial disaster levels half the colony. You intentionally leave the ruins untouched as a monument, creating a highly efficient but perpetually somber industrial sector built around the crater.
+
+**Tension:** Do you clear the valuable land to rebuild quickly, or sacrifice prime real estate to construct a monument that heals the colony's psychological scars?
+
+---
+
+## Ghost Trade Routes
+
+**Layer:** Cross-layer
+
+**Fantasy:** The eerie persistence of automated logistics long after the civilization that created them has collapsed.
+
+**Mechanic:** Ancient, automated Layer 2 cargo ships occasionally arrive in the system following millennia-old 'Ghost Trade Routes.' They attempt to deliver obsolete but valuable goods to coordinates that no longer have a colony, or demand payment in forgotten currencies.
+
+**Emergence:** You successfully intercept a Ghost Fleet and redirect its massive payload of raw titanium to your starving colony, only to trigger an automated defense protocol from a long-dead empire that blockades your world for 'theft.'
+
+**Tension:** Do you risk intercepting the ghost ships for free resources and risk automated retaliation, or let them harmlessly deliver cargo to empty space?
+
+---
+
+## Planetary Mass Deficit
+
+**Layer:** 1 -> 2
+
+**Fantasy:** The terrifying reality of industrial strip-mining permanently altering a world's physics.
+
+**Mechanic:** Aggressively over-mining high-density resources (like uranium or rare earths) on Layer 1 over centuries reduces the planet's total mass. This slightly lowers gravity, increasing Pop movement speed but destabilizing the atmosphere (faster gas diffusion, thinner air).
+
+**Emergence:** You strip-mine your homeworld to build an invincible armada. The ships are glorious, but back home, the reduced gravity causes the atmosphere to slowly bleed into space, forcing you to constantly build expensive atmospheric generators just to survive.
+
+**Tension:** Do you maximize immediate resource extraction for military power, or carefully manage mining to maintain planetary stability for future generations?
+
+---
+
+## Bureaucratic Collapse
+
+**Layer:** 1 -> 3
+
+**Fantasy:** The suffocating weight of an overly complex administration crushing its own efficiency.
+
+**Mechanic:** As a colony grows, it generates 'Administrative Debt'. If not countered by building specific bureaucratic structures and assigning clerks, the delay between a player issuing an order (like 'build this') and a Pop actually executing it increases significantly.
+
+**Emergence:** You rapidly expand your colony across an entire continent but forget to build administrative hubs. You order an emergency medical center to deal with an outbreak, but the work order takes three months to process, dooming the sector.
+
+**Tension:** Do you dedicate a significant portion of your workforce to non-productive bureaucratic roles to ensure instant response times, or lean the administration and accept crippling delays during crises?
+
+---
+
+## Tectonic Orchestration
+
+**Layer:** Cross-layer
+
+**Fantasy:** Wielding the literal earth as a weapon of mass destruction.
+
+**Mechanic:** By constructing massive 'Tectonic Resonators' deep underground (Layer 1) and syncing them via orbital satellites (Layer 2), you can intentionally trigger targeted, devastating earthquakes in specific regions of the planet.
+
+**Emergence:** An invading army lands on your world. Instead of fighting them, you evacuate a specific continent, lure their armies there, and use tectonic orchestration to sink the entire landmass into the ocean, obliterating the invasion force along with your own infrastructure.
+
+**Tension:** Do you use tectonic weapons to instantly solve an invasion at the cost of permanently destroying your own planetary real estate, or fight a conventional, bloody war?
+
+---
