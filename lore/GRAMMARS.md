@@ -4695,3 +4695,20 @@ VACUUM_SHADOW_INCIDENT:
 - HEAVY_INDUSTRY → enables → WASTE_GENERATION
 - WASTE_GENERATION → enables → WASTE_DUMPING
 - WASTE_DUMPING → increases_chance → HEALTH_PENALTY, BEAUTY_DEGRADATION
+
+## Gene-Banks Chaining (Spec 1034)
+- SPECIES_EXTINCT -> enables -> CLONE_EXTINCT_SPECIES
+- CLONE_EXTINCT_SPECIES -> increases_chance -> MASS_CASUALTY (if carnivorous/aggressive), MORALE_DROP
+
+## Spatial Compression Chaining (Spec 1020)
+- POWER_GRID_FAILURE -> increases_chance -> POCKET_DIMENSION_COLLAPSE
+- POCKET_DIMENSION_COLLAPSE -> enables -> MASS_CASUALTY, MEDICAL_EMERGENCY
+
+## The Propaganda Graffitists Chaining (Spec 1271)
+- HIGH_STRESS -> enables -> GRAFFITI_TAGGED
+- GRAFFITI_TAGGED -> increases_chance -> MORALE_BOOST, EFFICIENCY_DROP
+- GRAFFITI_TAGGED -> enables -> SANITATION_DRONE_DISPATCHED
+
+## Clothing and Temperature Chaining (Spec 040)
+- WINTER_SEASON -> increases_chance -> COLONY_FREEZING (if clothing is low)
+- COLONY_FREEZING -> enables -> POPULATION_CRASH, REBELLION

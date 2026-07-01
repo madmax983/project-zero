@@ -9864,3 +9864,43 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The land around [COLONY] is scarred by [INDUSTRIAL_WASTE_DESCRIPTION]."
 - "Progress has a price. In [COLONY], it looks like [INDUSTRIAL_WASTE_DESCRIPTION]. [YEAR]."
 - "[COLONY], [YEAR]: They dumped the byproducts outside. Now the wind carries [INDUSTRIAL_WASTE_DESCRIPTION]."
+
+## Gene-Banks Templates (Spec 1034)
+
+### Template: CLONE_EXTINCT_SPECIES
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SPECIES_NAME], [GENETIC_DRIFT_OUTCOME]
+**Patterns:**
+- "[YEAR]: [COLONY] opened the Gene-Banks to resurrect the [SPECIES_NAME]. They emerged [GENETIC_DRIFT_OUTCOME]."
+- "The [SPECIES_NAME] was brought back from the dead in [COLONY]. The process left them [GENETIC_DRIFT_OUTCOME]. [YEAR]."
+- "[COLONY], [YEAR]: We cloned the [SPECIES_NAME]. It was a mistake. They are [GENETIC_DRIFT_OUTCOME]."
+
+## Spatial Compression Templates (Spec 1020)
+
+### Template: POCKET_DIMENSION_COLLAPSE
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [POCKET_COLLAPSE_SIGN], [DEATHS]
+**Patterns:**
+- "[YEAR]: The pocket dimension in [COLONY] failed. First came [POCKET_COLLAPSE_SIGN], then the violent ejection. [DEATHS] dead."
+- "Power failed in the compressed sector. [COLONY] saw [POCKET_COLLAPSE_SIGN] before the collapse. [DEATHS] crushed. [YEAR]."
+- "[COLONY], [YEAR]: The dimensional fold snapped back. [DEATHS] lives lost in the sudden expansion."
+
+## The Propaganda Graffitists Templates (Spec 1271)
+
+### Template: GRAFFITI_TAGGED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [BUILDING_NAME], [REBELLIOUS_TAG]
+**Patterns:**
+- "[YEAR]: Someone tagged the [BUILDING_NAME] in [COLONY] with [REBELLIOUS_TAG]."
+- "Morale is up, efficiency is down. [COLONY] workers are laughing at [REBELLIOUS_TAG] painted on the [BUILDING_NAME]. [YEAR]."
+- "[COLONY], [YEAR]: A burst of defiance. [REBELLIOUS_TAG] appeared on the [BUILDING_NAME] overnight."
+
+## Clothing and Temperature Templates (Spec 040)
+
+### Template: COLONY_FREEZING
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [HYPOTHERMIA_SYMPTOM], [DEATHS]
+**Patterns:**
+- "[YEAR]: Winter hit [COLONY] hard. Without proper clothes, people suffered from [HYPOTHERMIA_SYMPTOM]. [DEATHS] froze to death."
+- "The chill claimed [DEATHS] in [COLONY]. They were found with [HYPOTHERMIA_SYMPTOM]. [YEAR]."
+- "[COLONY], [YEAR]: A severe clothing shortage during the freeze. [DEATHS] succumbed to [HYPOTHERMIA_SYMPTOM]."
