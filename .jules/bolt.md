@@ -30,3 +30,7 @@
 **Avoid cloning simple Entity wrappers**
 **Learning:** `MoveToOrder` only contains a single `Entity`. Deriving `Copy` removes the need for explicit `.clone()` calls during event passing and queue processing, saving minimal allocations and making the code more idiomatic.
 **Action:** Always derive `Copy` for structs that wrap primitives or `Entity` to avoid `.clone()` calls.
+
+**[Acoustic Physics Allocation Optimization]**
+**Learning:** Instantiating `Vec`, `VecDeque`, and `HashSet` inside systems running every frame causes excessive heap allocations. Bevy's `Local<T>` allows systems to retain persistent data structures between frames without needing global Resources.
+**Action:** Use `Local<T>` alongside `.clear()` and `.extend()` to reuse capacities for per-system collections, avoiding per-frame allocations.

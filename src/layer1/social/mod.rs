@@ -681,6 +681,6 @@ pub use memory_smugglers::{
 };
 pub mod generational_knowledge;
 pub mod memory_tithe;
-pub mod slippery_slope;
 pub mod propaganda_graffitists;
+pub mod slippery_slope;
 pub use propaganda_graffitists::*;

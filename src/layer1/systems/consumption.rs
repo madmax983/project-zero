@@ -130,8 +130,12 @@ pub fn register(schedule: &mut Schedule) {
             natural_death_system.after(aging_system),
             memory_decay_system.after(decay_needs_system),
             notification_expiration_system.after(decay_needs_system),
-            apply_deferred.after(clothing_wear_system).before(crate::layer1::temperature::thermal_damage_system),
-            crate::layer1::temperature::thermal_damage_system.after(decay_needs_system).after(apply_deferred),
+            apply_deferred
+                .after(clothing_wear_system)
+                .before(crate::layer1::temperature::thermal_damage_system),
+            crate::layer1::temperature::thermal_damage_system
+                .after(decay_needs_system)
+                .after(apply_deferred),
             crate::layer1::radioactive::sickness_damage_system.after(decay_needs_system),
             pressure_damage_system.after(decay_needs_system),
             consume_artifacts_during_famine_system.after(decay_needs_system),

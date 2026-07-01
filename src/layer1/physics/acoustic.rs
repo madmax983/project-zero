@@ -134,31 +134,29 @@ pub struct NoiseSource {
 }
 
 /// System to update the noise map based on sources and terrain.
+#[allow(clippy::too_many_arguments)]
 pub fn update_noise_system(
     mut noise_map: ResMut<NoiseMap>,
     terrain: Res<TerrainGrid>,
     pressure: Option<Res<crate::layer1::pressure::PressureGrid>>,
     sources: Query<(&NoiseSource, &GridPosition)>,
     flora: Query<(&crate::layer1::flora::Flora, &GridPosition)>,
+    mut queue: Local<std::collections::VecDeque<(i32, i32, f32, f32)>>,
+    mut visited: Local<bevy::utils::HashSet<(i32, i32)>>,
+    mut silent_flora_cache: Local<Vec<GridPosition>>,
 ) {
     // Reset to ambient noise
     noise_map.values.fill(0.1);
 
     // Find all SilentFlora positions to nullify noise
-    let silent_flora_positions: Vec<GridPosition> = flora
-        .iter()
-        .filter_map(|(f, p)| {
-            if f.flora_type == crate::layer1::flora::FloraType::SilentFlora {
-                Some(*p)
-            } else {
-                None
-            }
-        })
-        .collect();
-
-    // ⚡ Bolt Optimization: Pre-allocate BFS collections and use AHash
-    let mut queue = std::collections::VecDeque::new();
-    let mut visited = bevy::utils::HashSet::new();
+    silent_flora_cache.clear();
+    silent_flora_cache.extend(flora.iter().filter_map(|(f, p)| {
+        if f.flora_type == crate::layer1::flora::FloraType::SilentFlora {
+            Some(*p)
+        } else {
+            None
+        }
+    }));
 
     for (source, pos) in &sources {
         queue.clear();
@@ -184,7 +182,7 @@ pub fn update_noise_system(
             // Nullify sound if within 5 tiles of SilentFlora
             let mut is_nullified = false;
             let current_pos = GridPosition { x: px, y: py };
-            for flora_pos in &silent_flora_positions {
+            for flora_pos in &*silent_flora_cache {
                 if current_pos.distance_chebyshev(*flora_pos) <= 5 {
                     is_nullified = true;
                     break;

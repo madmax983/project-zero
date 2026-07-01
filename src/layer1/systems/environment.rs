@@ -208,9 +208,7 @@ pub fn register(schedule: &mut Schedule) {
     );
 
     schedule.add_systems(
-        (
-            crate::layer1::social::empty_room::update_sanctuary_system,
-        )
+        (crate::layer1::social::empty_room::update_sanctuary_system,)
             .in_set(Layer1SystemSet::Environment),
     );
 

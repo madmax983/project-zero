@@ -1,10 +1,10 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::architecture::Building;
 use crate::layer1::economy::WorkEfficiency;
 use crate::layer1::map::GridPosition;
 use crate::layer1::morale::{MoodModifier, Morale};
 use crate::layer1::psychology::stress::StressTracker;
 use crate::layer1::traits::{Trait, Traits};
+use bevy_ecs::prelude::*;
 
 #[derive(Component)]
 pub struct RebelliousGraffiti {
@@ -30,7 +30,9 @@ pub fn propaganda_graffiti_system(
 
     for (entity, pos) in buildings.iter() {
         if creative_positions.contains(pos) {
-            commands.entity(entity).insert(RebelliousGraffiti { intensity: 1.0 });
+            commands
+                .entity(entity)
+                .insert(RebelliousGraffiti { intensity: 1.0 });
         }
     }
 }
@@ -155,8 +157,15 @@ mod tests {
         let old_eff = eff.multiplier;
         app.update();
         let eff2 = app.world().get::<WorkEfficiency>(pop_id).unwrap();
-        assert_eq!(eff2.multiplier, old_eff, "Should not re-apply efficiency penalty");
+        assert_eq!(
+            eff2.multiplier, old_eff,
+            "Should not re-apply efficiency penalty"
+        );
         let morale2 = app.world().get::<Morale>(pop_id).unwrap();
-        assert_eq!(morale2.modifiers.len(), 1, "Should not add infinite modifiers");
+        assert_eq!(
+            morale2.modifiers.len(),
+            1,
+            "Should not add infinite modifiers"
+        );
     }
 }
