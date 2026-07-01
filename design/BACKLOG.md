@@ -58,7 +58,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `275` Architectural Sabotage — `specs/275-architectural-sabotage.md`
 - [ ] `276` The Flesh Famine — `specs/276-the-flesh-famine.md`
 - [ ] `277` Orbital Megastructure Deorbiting — `specs/277-orbital-megastructure-deorbiting.md`
-- [ ] `280` Archaeological Layers — `specs/280-archaeological-layers.md`
 
 
 - [ ] `285` Echoes of the Past — `specs/285-echoes-of-the-past.md`

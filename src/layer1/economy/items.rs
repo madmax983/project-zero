@@ -163,6 +163,8 @@ pub enum ItemType {
     VoidAle,
     /// Highly valuable technology from the past.
     LostTech,
+    /// Ancient archaeological artifact.
+    Artifact,
 }
 
 impl ItemType {
