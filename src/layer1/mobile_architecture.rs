@@ -102,8 +102,10 @@ mod tests {
     #[test]
     fn test_mobile_building_consumes_fuel_to_move() {
         let mut app = App::new();
-        let mut resources = ColonyResources::default();
-        resources.fuel = 100.0;
+        let resources = ColonyResources {
+            fuel: 100.0,
+            ..Default::default()
+        };
         app.insert_resource(resources);
         app.add_event::<MoveCommand>();
         app.add_systems(bevy_app::Update, move_mobile_building_system);
