@@ -1,4 +1,3 @@
-
 #[cfg(test)]
 mod tests {
     use bevy_ecs::prelude::*;
@@ -52,6 +51,9 @@ mod tests {
 
         let h1 = world.get::<Health>(pop).unwrap();
         // Since tunic broke and commands applied, pop should take damage
-        assert!(h1.current < 100.0, "Pop should take damage after clothing breaks");
+        assert!(
+            h1.current < 100.0,
+            "Pop should take damage after clothing breaks"
+        );
     }
 }

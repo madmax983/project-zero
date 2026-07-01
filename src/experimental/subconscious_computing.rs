@@ -79,18 +79,22 @@ mod tests {
             ))
             .id();
 
-        world.run_system_once(subconscious_computing_system).unwrap();
+        world
+            .run_system_once(subconscious_computing_system)
+            .unwrap();
 
         let res = world.resource::<ColonyResources>();
         assert!(
             (res.knowledge - (10.0 + SUBCONSCIOUS_KNOWLEDGE_YIELD)).abs() < f32::EPSILON,
-            "Knowledge should increase by {}", SUBCONSCIOUS_KNOWLEDGE_YIELD
+            "Knowledge should increase by {}",
+            SUBCONSCIOUS_KNOWLEDGE_YIELD
         );
 
         let needs = world.get::<Needs>(pop).unwrap();
         assert!(
             (needs.rest - (0.5 - SUBCONSCIOUS_REST_PENALTY)).abs() < f32::EPSILON,
-            "Rest should decrease by {}", SUBCONSCIOUS_REST_PENALTY
+            "Rest should decrease by {}",
+            SUBCONSCIOUS_REST_PENALTY
         );
     }
 
@@ -116,7 +120,9 @@ mod tests {
             },
         ));
 
-        world.run_system_once(subconscious_computing_system).unwrap();
+        world
+            .run_system_once(subconscious_computing_system)
+            .unwrap();
 
         let res = world.resource::<ColonyResources>();
         assert!(
@@ -153,7 +159,9 @@ mod tests {
             },
         ));
 
-        world.run_system_once(subconscious_computing_system).unwrap();
+        world
+            .run_system_once(subconscious_computing_system)
+            .unwrap();
 
         let res = world.resource::<ColonyResources>();
         assert!(

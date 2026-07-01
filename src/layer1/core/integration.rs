@@ -3312,7 +3312,10 @@ pub fn heavy_industry_tectonic_stress_bridge(
 
 /// Bridges the `Dead` component on a `ColonyPet` to a `PetDeathEvent` (Spec 1288).
 pub fn pet_death_bridge_system(
-    query: Query<(Entity, &crate::layer1::culture::memorial_revolt::ColonyPet), Added<crate::layer1::biology::health::Dead>>,
+    query: Query<
+        (Entity, &crate::layer1::culture::memorial_revolt::ColonyPet),
+        Added<crate::layer1::biology::health::Dead>,
+    >,
     mut events: EventWriter<crate::layer1::culture::memorial_revolt::PetDeathEvent>,
 ) {
     for (entity, pet) in query.iter() {
