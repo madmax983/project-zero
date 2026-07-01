@@ -864,3 +864,4 @@
 - [x] `INT-1017` Integration: Legacy Code -> Chronicle — completed 2026-11-01
 - [x] `1016` Mobile Architecture — `specs/1016-mobile-architecture.md` — completed 2026-06-25
 - [x] `1015` Symbiotic Gear — `specs/1015-symbiotic-gear.md` — completed 2026-07-01
+- [x] `INT-1025` Integration: Gravity Plating Failure -> Simulation Schedule — completed 2024-07-01

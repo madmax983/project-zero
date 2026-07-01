@@ -1706,3 +1706,9 @@
 - **Systems connected:** `ReformatCommand` -> `reformat_chronicle_bridge` -> `AddChronicleEvent`
 - **Glue added:** Added `reformat_chronicle_bridge` in `src/layer1/core/integration.rs`. Registered in `src/layer1/systems/observation.rs`.
 - **Tests:** `tests/integration/legacy_code_bridge.rs`
+
+### INT-1025: Gravity Plating Failure -> Simulation Schedule
+- **Date:** 2024-07-01
+- **Systems connected:** `monitor_gravity_generator_power_system` and `apply_zero_g_movement_system` -> `SimulationSchedule`
+- **Glue added:** Initialized `PowerGridEvent` resource in `src/simulation.rs` and registered systems in `src/layer1/systems/execution.rs`.
+- **Tests:** `tests/integration/gravity_plating_bridge.rs`

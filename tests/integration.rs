@@ -654,3 +654,6 @@ mod clothing_temperature;
 mod propaganda_graffitists_bridge;
 #[path = "integration/legacy_code_bridge.rs"]
 mod legacy_code_bridge;
+
+#[path = "integration/gravity_plating_bridge.rs"]
+mod gravity_plating_bridge;
