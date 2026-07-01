@@ -607,7 +607,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1014` Gravity-Well Funerals — `specs/1014-gravity-well-funerals.md`
 - [ ] `1015` Symbiotic Gear — `specs/1015-symbiotic-gear.md`
 - [ ] `1016` Mobile Architecture — `specs/1016-mobile-architecture.md`
-- [ ] `1017` Legacy Code — `specs/1017-legacy-code.md`
 - [ ] `1018` Planetary Scarring — `specs/1018-planetary-scarring.md`
 - [ ] `1019` Ecophagy — `specs/1019-ecophagy.md`
 - [ ] `1020` Spatial Compression — `specs/1020-spatial-compression.md`

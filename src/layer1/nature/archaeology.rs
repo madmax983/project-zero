@@ -1,7 +1,7 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::economy::inventory::{Inventory, InventoryItem};
 use crate::layer1::economy::items::ItemType;
 use crate::layer1::nature::radioactive::RadiationSickness;
+use bevy_ecs::prelude::*;
 use rand::Rng;
 
 #[derive(Component)]
@@ -34,7 +34,9 @@ pub fn handle_excavation_system(
 
                 // Check for malady
                 if rng.gen::<f32>() < ruin.malady_chance {
-                    commands.entity(event.pop).insert(RadiationSickness { severity: 50.0 });
+                    commands
+                        .entity(event.pop)
+                        .insert(RadiationSickness { severity: 50.0 });
                 }
 
                 // Destroy the ruin tile
@@ -60,14 +62,14 @@ mod tests {
     fn test_excavating_ruin_yields_artifact() {
         let mut app = setup_app();
 
-        let pop_id = app.world_mut().spawn((
-            Pop,
-            Inventory::default(),
-        )).id();
+        let pop_id = app.world_mut().spawn((Pop, Inventory::default())).id();
 
-        let ruin_id = app.world_mut().spawn(RuinTile {
-            malady_chance: 0.0, // Force no malady
-        }).id();
+        let ruin_id = app
+            .world_mut()
+            .spawn(RuinTile {
+                malady_chance: 0.0, // Force no malady
+            })
+            .id();
 
         app.world_mut().send_event(ExcavateEvent {
             pop: pop_id,
@@ -85,14 +87,14 @@ mod tests {
     fn test_excavating_ruin_can_trigger_malady() {
         let mut app = setup_app();
 
-        let pop_id = app.world_mut().spawn((
-            Pop,
-            Inventory::default(),
-        )).id();
+        let pop_id = app.world_mut().spawn((Pop, Inventory::default())).id();
 
-        let ruin_id = app.world_mut().spawn(RuinTile {
-            malady_chance: 1.0, // Force malady
-        }).id();
+        let ruin_id = app
+            .world_mut()
+            .spawn(RuinTile {
+                malady_chance: 1.0, // Force malady
+            })
+            .id();
 
         app.world_mut().send_event(ExcavateEvent {
             pop: pop_id,

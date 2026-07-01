@@ -160,7 +160,10 @@ mod tests {
         app.update();
 
         let unrest = app.world().get_resource::<Unrest>().unwrap().level;
-        assert_eq!(unrest, 0.0, "Unrest should not increase when paranoia is below threshold");
+        assert_eq!(
+            unrest, 0.0,
+            "Unrest should not increase when paranoia is below threshold"
+        );
     }
 
     #[test]
@@ -177,6 +180,9 @@ mod tests {
         app.update();
 
         let unrest = app.world().get_resource::<Unrest>().unwrap().level;
-        assert_eq!(unrest, 0.0, "Unrest should not increase if paranoia resource is missing");
+        assert_eq!(
+            unrest, 0.0,
+            "Unrest should not increase if paranoia resource is missing"
+        );
     }
 }

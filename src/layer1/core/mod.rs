@@ -16,3 +16,5 @@ pub use control::*;
 pub use events::*;
 pub use integration::*;
 pub use map::*;
+pub mod colony;
+pub use colony::*;
