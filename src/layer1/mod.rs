@@ -509,3 +509,4 @@ pub mod buildings {
 }
 #[cfg(test)]
 pub mod clothing_tests;
+pub mod mobile_architecture;
