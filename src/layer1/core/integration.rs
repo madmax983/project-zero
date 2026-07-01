@@ -3325,3 +3325,17 @@ pub fn pet_death_bridge_system(
         });
     }
 }
+
+/// INT-1271: The Propaganda Graffitists -> Chronicle bridge
+/// Emits a chronicle event when rebellious graffiti appears.
+pub fn propaganda_graffiti_chronicle_bridge(
+    mut events: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+    query: Query<&crate::layer1::social::propaganda_graffitists::RebelliousGraffiti, Added<crate::layer1::social::propaganda_graffitists::RebelliousGraffiti>>,
+) {
+    for _ in query.iter() {
+        events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            text: "Subversive graffiti has appeared on colony infrastructure, echoing the unrest of its creators.".to_string(),
+            importance: crate::layer1::core::chronicle::EventImportance::Standard,
+        });
+    }
+}
