@@ -207,7 +207,7 @@ pub fn starvation_damage_system(world: &mut World) {
 
 /// 0.1% decay per tick. Pop starves in ~1000 ticks from full (1.0).
 /// (Assuming no traits or rationing).
-const HUNGER_DECAY_PER_TICK: f32 = 0.001;
+pub const HUNGER_DECAY_PER_TICK: f32 = 0.001;
 
 /// 0.1% decay per tick. Pop exhausts in ~1000 ticks from rested (1.0).
 const REST_DECAY_PER_TICK: f32 = 0.001;

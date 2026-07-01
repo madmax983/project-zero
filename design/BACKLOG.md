@@ -605,7 +605,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1012` The Bureaucratic Blackout — `specs/1012-the-bureaucratic-blackout.md`
 - [ ] `1013` The Void Echoes — `specs/1013-the-void-echoes.md`
 - [ ] `1014` Gravity-Well Funerals — `specs/1014-gravity-well-funerals.md`
-- [ ] `1015` Symbiotic Gear — `specs/1015-symbiotic-gear.md`
+
 - [ ] `1018` Planetary Scarring — `specs/1018-planetary-scarring.md`
 - [ ] `1019` Ecophagy — `specs/1019-ecophagy.md`
 - [ ] `1020` Spatial Compression — `specs/1020-spatial-compression.md`

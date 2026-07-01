@@ -68,6 +68,11 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer1::tech::teleporter::psychosis::process_psychosis_system,
         crate::layer1::tech::teleporter::psychosis::hunger_decay_system,
     ));
+    schedule.add_systems((
+        crate::layer1::biology::symbiotic_gear::symbiotic_hunger_modifier_system,
+        crate::layer1::biology::symbiotic_gear::starving_symbiote_damage_system,
+    ));
+
     schedule
 }
 
