@@ -26347,3 +26347,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you use tectonic weapons to instantly solve an invasion at the cost of permanently destroying your own planetary real estate, or fight a conventional, bloody war?
 
 ---
+
+## Synthetic Mourning
+
+**Layer:** 1
+
+**Fantasy:** Machines attempting to emulate human grief, creating an unsettling technological afterlife.
+
+**Mechanic:** If a highly skilled pop dies, nearby advanced automated systems (like drones or auto-fabricators) may temporarily adopt "mourning protocols," lowering their efficiency and emitting sorrowful audio cues, unless actively reset by a human engineer.
+
+**Emergence:** A critical automated defense grid might go into "mourning" after a general dies, refusing to fire at full capacity during a raid.
+
+**Tension:** Do you let the machines mourn, slowing down production, or force a hard reset that risks causing long-term logic errors in the AI?
+
+---
+
+## The Firstborn Privilege
+
+**Layer:** Cross-layer
+
+**Fantasy:** The first child born on a new world carries an immense, almost mythological weight in the society.
+
+**Mechanic:** The very first Pop born on a newly colonized planet receives the permanent "Firstborn" trait, granting massive authority and morale bonuses to anyone near them, but making them a prime target for assassinations or kidnappings by rival factions.
+
+**Emergence:** You might inadvertently build your entire planetary government around a single, highly vulnerable individual. If they are kidnapped by pirates, the entire colony's morale crashes.
+
+**Tension:** Do you hide the Firstborn away in a bunker for safety (losing their massive social bonuses), or place them in leadership where they are highly effective but exposed?
+
+---
+
+## Abyssal Augury
+
+**Layer:** 2
+
+**Fantasy:** Using the terrifying physics of black holes to glimpse the future.
+
+**Mechanic:** A station built dangerously close to a black hole's event horizon can intercept distorted light and data from the future. This provides advanced warnings of incoming raids or solar flares, but causes massive stress and "Void Madness" in the station's crew.
+
+**Emergence:** The station warns of an impossibly massive invasion fleet. You bankrupt your economy building defenses, only to realize the "invasion" was a distorted echo of your own future defense fleet, and the real threat was the economic collapse you just caused.
+
+**Tension:** Do you risk the sanity of your best scientists for a glimpse of the future, knowing the visions might be misinterpreted or self-fulfilling?
+
+---
