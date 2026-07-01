@@ -1700,3 +1700,9 @@
 - **Systems connected:** `Added<Dead>` -> `pet_death_bridge_system` -> `PetDeathEvent`
 - **Glue added:** Added `pet_death_bridge_system` in `src/layer1/core/integration.rs` to generate `PetDeathEvent`s when an entity with `ColonyPet` receives the `Dead` component. Registered the system in `src/layer1/systems/observation.rs`.
 - **Tests:** `tests/integration/memorial_revolt_bridge.rs`
+
+### INT-1017: Legacy Code -> Chronicle
+- **Date:** 2026-11-01
+- **Systems connected:** `ReformatCommand` -> `reformat_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `reformat_chronicle_bridge` in `src/layer1/core/integration.rs`. Registered in `src/layer1/systems/observation.rs`.
+- **Tests:** `tests/integration/legacy_code_bridge.rs`

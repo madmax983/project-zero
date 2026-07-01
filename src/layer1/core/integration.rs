@@ -3339,3 +3339,20 @@ pub fn propaganda_graffiti_chronicle_bridge(
         });
     }
 }
+
+/// INT-1017: Bridges `ReformatCommand` to `AddChronicleEvent`
+pub fn reformat_chronicle_bridge(
+    mut events: bevy_ecs::event::EventReader<
+        crate::layer1::tech::legacy_code::ReformatCommand,
+    >,
+    mut chronicle_events: bevy_ecs::event::EventWriter<
+        crate::layer1::core::chronicle::AddChronicleEvent,
+    >,
+) {
+    for _event in events.read() {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            text: "The Colony's Computer Core has initiated a total reformat. Systems going offline.".to_string(),
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
+        });
+    }
+}
