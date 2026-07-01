@@ -26235,3 +26235,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you allow (or enforce) memory purges to prevent a colony from tearing itself apart in grief, knowing it will reset their technological and industrial capacity by decades?
 
 ---
+
+## Subspace Hauntings
+
+**Layer:** 2 -> Cross-layer
+
+**Fantasy:** Interstellar space isn't empty; it remembers the tragedies of the past.
+
+**Mechanic:** Ships traveling through hyperlanes where massive fleets were destroyed or ancient empires fell have a chance to experience "Subspace Hauntings". The crew's stress spikes, and automated systems might temporarily malfunction, playing back garbled distress signals from the dead.
+
+**Emergence:** A seemingly safe shortcut through an ancient battlefield becomes a psychological gauntlet. Ships arrive physically intact but the crew is severely traumatized, requiring long shore leave and causing unrest when they spread ghost stories on the colony.
+
+**Tension:** Do you take the fast but haunted route, risking crew sanity and minor system glitches, or the long, safe route costing time and fuel?
+
+---
+
+## Planetary Insomnia
+
+**Layer:** 1
+
+**Fantasy:** The environment itself conspires to keep your colonists awake, driving them to the brink.
+
+**Mechanic:** Certain planetary quirks or seasonal events (like a high-frequency tectonic hum or a bizarre atmospheric glow during the night) prevent Pops from fully fulfilling their Rest need. The entire colony slowly accumulates Sleep Debt over weeks.
+
+**Emergence:** You settle a beautiful, resource-rich world, only to discover the entire population goes slowly mad during the "Glowing Season". Exhausted workers start accidentally breaking machinery and fighting in the mess hall, forcing you to research and build heavy, sound-proof sleeping pods just to survive.
+
+**Tension:** Do you invest massive resources into specialized, isolated sleeping quarters, or cycle workers off-planet to recover, constantly stalling your industry?
+
+---
+
+## The Parasitic Utopia
+
+**Layer:** 3 -> 1
+
+**Fantasy:** A neighboring empire seems like a paradise, but their high standard of living is a trap.
+
+**Mechanic:** A seemingly benevolent Layer 3 neighbor offers to "export" a massive aura of Happiness to your border worlds via a cultural exchange. However, Pops under this aura stop producing raw materials and only want to work in "Luxury" or "Art" jobs, becoming utterly dependent on the neighbor for basic survival goods.
+
+**Emergence:** Your border colony becomes the happiest place in your empire, throwing endless festivals. But they stop mining the crucial titanium you need for your fleets. When you try to force them back to the mines, they revolt, demanding to join the neighbor's "Utopia".
+
+**Tension:** Do you accept the free happiness and cultural boom, knowing it effectively neutralizes the colony's industrial output and binds them to a foreign power, or block the exchange and deal with mundane, unhappy workers?
+
+---
