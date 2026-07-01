@@ -428,6 +428,12 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::integration::mass_driver_chronicle_bridge
                 .after(crate::layer1::logistics::mass_driver::package_arrival_system),
             crate::layer1::integration::predatory_weather_emission_bridge_system,
+        )
+            .in_set(Layer1SystemSet::Observation),
+    );
+
+    schedule.add_systems(
+        (
             crate::layer1::integration::predatory_weather_impact_bridge_system,
             crate::layer1::integration::hologram_failure_chronicle_bridge
                 .after(crate::layer1::hologram::update_holograms_system),
