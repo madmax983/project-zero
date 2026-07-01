@@ -482,7 +482,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `849` Generational Wealth — `specs/849-generational-wealth.md`
 - [ ] `850` The Whispering Asteroid — `specs/850-the-whispering-asteroid.md`
 
-- [ ] `851` Subscription Prosthetics — `specs/851-subscription-prosthetics.md`
 - [ ] `852` Volumetric Gas Pockets — `specs/852-volumetric-gas-pockets.md`
 - [ ] `853` Thermal Bloom — `specs/853-thermal-bloom.md`
 - [ ] `854` Cryo-Amnesia — `specs/854-cryo-amnesia.md`

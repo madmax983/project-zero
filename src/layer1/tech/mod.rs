@@ -778,3 +778,5 @@ pub mod rogue_automation_cults;
 pub mod living_archive;
 pub mod symbiotic_habitation;
 pub mod teleporter;
+pub mod subscription_prosthetics;
+pub use subscription_prosthetics::{SubscriptionProsthetic, subscription_prosthetic_system, apply_prosthetic_effects_system};

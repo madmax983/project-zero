@@ -65,6 +65,8 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer1::nature::subterranean_smog::process_subterranean_smog_system,
         crate::layer1::nature::subterranean_smog::apply_smog_penalties_system,
         crate::layer1::tech::teleporter::psychosis::handle_teleport_system,
+        crate::layer1::tech::subscription_prosthetics::subscription_prosthetic_system,
+        crate::layer1::tech::subscription_prosthetics::apply_prosthetic_effects_system,
         crate::layer1::tech::teleporter::psychosis::process_psychosis_system,
         crate::layer1::tech::teleporter::psychosis::hunger_decay_system,
     ));
