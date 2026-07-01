@@ -1700,3 +1700,9 @@
 - **Systems connected:** `Added<Dead>` -> `pet_death_bridge_system` -> `PetDeathEvent`
 - **Glue added:** Added `pet_death_bridge_system` in `src/layer1/core/integration.rs` to generate `PetDeathEvent`s when an entity with `ColonyPet` receives the `Dead` component. Registered the system in `src/layer1/systems/observation.rs`.
 - **Tests:** `tests/integration/memorial_revolt_bridge.rs`
+
+### INT-986: The Last Light -> Chronicle
+- **Date:** 2026-10-31
+- **Systems connected:** `process_civilization_collapse_system` -> `RefugeeFleetArrivalEvent` -> `process_refugee_arrival_system` -> `AddChronicleEvent`
+- **Glue added:** Initialized `CivilizationCollapseEvent` and `RefugeeFleetArrivalEvent` in `src/simulation.rs` and registered the systems in `Layer3SystemSet::Update`.
+- **Tests:** `tests/integration/last_light_bridge.rs` (1 test)

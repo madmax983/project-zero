@@ -50,6 +50,8 @@ pub fn setup_world() -> World {
     world.init_resource::<bevy::prelude::Events<
         crate::layer1::economy::existential_audit::ExistentialAuditCompletedEvent,
     >>();
+    world.init_resource::<Events<crate::layer3::events::collapse::CivilizationCollapseEvent>>();
+    world.init_resource::<Events<crate::layer3::events::collapse::RefugeeFleetArrivalEvent>>();
     world.init_resource::<Events<crate::layer1::economy::black_market::SmugglerArrivalEvent>>();
     world.init_resource::<bevy_ecs::event::Events<crate::layer1::nature::ecology::HarvestEvent>>();
     world.init_resource::<Events<crate::layer1::economy::black_market::ShutdownDropNodeEvent>>();

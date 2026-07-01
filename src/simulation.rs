@@ -46,6 +46,10 @@ pub fn build_simulation_schedule() -> Schedule {
         crate::layer3::guilt::apply_guilt_unrest_system,
     ));
     schedule.add_systems((
+        crate::layer3::events::collapse::process_civilization_collapse_system,
+        crate::layer3::events::collapse::process_refugee_arrival_system,
+    ));
+    schedule.add_systems((
         crate::layer1::biology::symbiotic_insurgency::transmit_mind_spore_infection_system,
         crate::layer1::biology::symbiotic_insurgency::process_mind_spore_infection_system,
         crate::layer1::biology::symbiotic_insurgency::trigger_symbiont_sabotage_system,
@@ -296,6 +300,10 @@ fn init_simulation_resources(world: &mut World) {
         world.init_resource::<Events<crate::layer1::genetics::GeneSplicingEvent>>();
         world.init_resource::<Events<crate::layer1::genetics::GeneSplicingResultEvent>>();
         world.init_resource::<Events<crate::layer2::trade::penal_contracts::PrisonerDiedEvent>>();
+    }
+    if !world.contains_resource::<Events<crate::layer3::events::collapse::CivilizationCollapseEvent>>() {
+        world.init_resource::<Events<crate::layer3::events::collapse::CivilizationCollapseEvent>>();
+        world.init_resource::<Events<crate::layer3::events::collapse::RefugeeFleetArrivalEvent>>();
     }
 
     world.init_resource::<Events<crate::layer2::governance::RebellionEvent>>();
