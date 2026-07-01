@@ -41,3 +41,6 @@ pub mod symbiotic_insurgency;
 pub use symbiotic_insurgency::*;
 pub mod xenoflora_addiction;
 pub use xenoflora_addiction::*;
+
+pub mod symbiotic_gear;
+pub use symbiotic_gear::*;

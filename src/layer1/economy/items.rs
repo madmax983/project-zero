@@ -44,6 +44,7 @@ pub struct Equipment {
     /// The entity ID of the equipped totem.
     pub totem: Option<Entity>,
     pub mask: Option<Entity>,
+    pub has_symbiote: bool,
 }
 
 /// Types of clothing items.
