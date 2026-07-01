@@ -26193,3 +26193,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you risk intercepting these haunted derelicts for their unparalleled rewards, or do you blast them out of the sky on sight to protect your colonies from the unknown?
 
 ---
+
+## Relativistic Tax Haven
+
+**Layer:** 3
+
+**Fantasy:** Exploiting time dilation to dodge galactic taxes and compound interest at absurd rates.
+
+**Mechanic:** You can build financial centers orbiting black holes or neutron stars where time moves slower relative to the rest of the galaxy. Layer 3 factions calculate taxes based on local time, so you pay taxes far less frequently. Meanwhile, investments on fast-moving core worlds compound rapidly relative to the haven.
+
+**Emergence:** You store your empire's treasury in a relativistic haven, but a sudden war breaks out. It takes decades in galactic time to withdraw the funds because the local administrators are experiencing time so slowly, bankrupting your fleets while you technically have infinite money.
+
+**Tension:** Do you maximize your wealth compounding by exploiting extreme time dilation, knowing your treasury becomes incredibly illiquid during rapid galactic crises?
+
+---
+
+## Generational Translation Drift
+
+**Layer:** Cross-layer
+
+**Fantasy:** Over centuries of isolation, your distant colonies speak languages you no longer understand.
+
+**Mechanic:** Colonies that are far from the core and lack high-bandwidth communication relays slowly accumulate "Translation Drift." Their culture and language evolve. Eventually, they become a distinct sub-faction. Orders sent to them from Layer 3 have a high chance of being misinterpreted, resulting in wrong buildings being built or ships moving to the wrong systems.
+
+**Emergence:** You order a drifted frontier world to build defensive platforms, but the translated order is interpreted as a religious mandate, and they build massive, useless monuments instead, just as pirates arrive.
+
+**Tension:** Do you spend massive resources maintaining constant cultural homogenization across your empire, or let the frontier drift and accept that you can only guide them through broad, imprecise suggestions?
+
+---
+
+## The Memory Famine
+
+**Layer:** 1
+
+**Fantasy:** A society so traumatized by recent events that they voluntarily undergo mass amnesia, crippling their skills to save their sanity.
+
+**Mechanic:** If a colony experiences a catastrophic disaster (like a major famine, war, or plague) that maxes out global stress, Pops might initiate a "Memory Purge." They use rudimentary medical tech or psionics to erase the trauma. This instantly resets stress to zero, but also wipes out a significant portion of their accumulated job skills, returning them to novice efficiency.
+
+**Emergence:** Your master engineers survive a horrific orbital bombardment. To cope, they purge their memories. They are perfectly happy the next day, but they no longer remember how to operate the planetary shield generators right before the second wave of attacks hits.
+
+**Tension:** Do you allow (or enforce) memory purges to prevent a colony from tearing itself apart in grief, knowing it will reset their technological and industrial capacity by decades?
+
+---
