@@ -10155,3 +10155,40 @@ How the awakened react to the modern colony.
 - acrid smoke that burns the lungs
 - the toxic cost of progress
 - piles of useless, toxic ash
+
+## Gene-Banks Fragments (Spec 1034)
+
+### Fragment Type: [GENETIC_DRIFT_OUTCOME]
+- horrifyingly carnivorous
+- covered in bioluminescent tumors
+- blind and screeching
+- completely docile
+- weeping a black, viscous fluid
+- structurally unstable
+
+## Spatial Compression Fragments (Spec 1020)
+
+### Fragment Type: [POCKET_COLLAPSE_SIGN]
+- the walls bending inward
+- a high-pitched dimensional whine
+- sparks of non-euclidean light
+- the smell of ozone and burnt copper
+- physics breaking down at the edges
+
+## The Propaganda Graffitists Fragments (Spec 1271)
+
+### Fragment Type: [REBELLIOUS_TAG]
+- a crude drawing of the Overseer with horns
+- 'THE MACHINE IS STARVING' scrawled in bioluminescent paint
+- 'WE ARE NOT DRONES' written in engine grease
+- an intricate, beautiful mural of the homeworld
+- a stylized, mocking caricature of a sanitation drone
+
+## Clothing and Temperature Fragments (Spec 040)
+
+### Fragment Type: [HYPOTHERMIA_SYMPTOM]
+- frostbitten fingers
+- lips turning blue
+- shivering uncontrollably
+- a numbing, sleepy cold
+- the terrible silence of the freezing

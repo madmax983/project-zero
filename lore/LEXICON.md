@@ -5854,3 +5854,51 @@
 **Replaces:** Industrial waste, pollution
 **Code reference:** `IndustrialWaste` component
 **Usage:** "The Grey is choking the outer habitats."
+
+## Gene-Banks (Spec 1034)
+
+### The Vault of Seeds
+**Replaces:** Gene-Bank, DNA storage facility
+**Code reference:** `N/A`
+**Usage:** "The Vault of Seeds was opened to bring back the Grox."
+
+### Genetic Drift
+**Replaces:** Cloning errors, random mutations
+**Code reference:** `N/A`
+**Usage:** "Genetic Drift turned the herbivores into predators."
+
+## Spatial Compression (Spec 1020)
+
+### The Pocket
+**Replaces:** Compressed dimension, folding space
+**Code reference:** `N/A`
+**Usage:** "They live in The Pocket, where space bends."
+
+### Dimensional Spillage
+**Replaces:** Pocket collapse event, spatial ejection
+**Code reference:** `N/A`
+**Usage:** "The Dimensional Spillage crushed the workers."
+
+## The Propaganda Graffitists (Spec 1271)
+
+### Rebellious Ink
+**Replaces:** Graffiti, tag, vandalism
+**Code reference:** `N/A`
+**Usage:** "The Rebellious Ink on the walls brings hope."
+
+### The Cleaners
+**Replaces:** Sanitation drones, graffiti removal
+**Code reference:** `N/A`
+**Usage:** "The Cleaners wiped the mural away."
+
+## Clothing and Temperature (Spec 040)
+
+### The Deep Chill
+**Replaces:** Hypothermia, freezing damage
+**Code reference:** `thermal_damage_system`
+**Usage:** "The Deep Chill took three more souls."
+
+### Fiber-Weave
+**Replaces:** Clothing, cold protection
+**Code reference:** `Clothing`
+**Usage:** "We need more Fiber-Weave before the snow falls."
