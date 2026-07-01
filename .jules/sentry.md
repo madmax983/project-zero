@@ -19,3 +19,6 @@
 ## [Integration Bridge Coverage Gap in Layer 3 - Fashion & Silence]
 **Learning:** Found multiple untested event-driven integration bridges in `src/layer3/integration.rs` (`diplomatic_fashion_chronicle_bridge` and `the_silence_chronicle_bridge`). These bridges are critical for linking internal Layer 3 logic into the `AddChronicleEvent` system, meaning if one silently failed, no global notification would reach the player.
 **Action:** Added basic unit tests instantiating a dummy `App`, pushing the trigger event, running `app.update()`, and verifying the expected `EventWriter` buffer output. Always add these basic tests when creating new integration bridges.
+## [Testing `paranoia_unrest_system`]
+**Learning:** Found a potential panic risk where `.unwrap()` was called on an `Option` inside an `is_some_and` block. While technically guarded by logic, it was an unidiomatic and theoretically unsafe pattern.
+**Action:** Always refactor `is_some_and(..)` followed by `.unwrap()` into an idiomatic `if let Some(val) = option` to cleanly and safely handle destructuring in systems. Also, always add unit tests covering the cases where the resource is missing or conditions are unmet to prevent regression.

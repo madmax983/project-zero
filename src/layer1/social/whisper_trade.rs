@@ -67,9 +67,11 @@ pub fn execute_whisper_trade_system(
 }
 
 pub fn paranoia_unrest_system(paranoia: Option<Res<GlobalParanoia>>, mut unrest: ResMut<Unrest>) {
-    if paranoia.as_ref().is_some_and(|p| p.level > 50.0) {
-        let unrest_increase = (paranoia.unwrap().level - 50.0) * 0.1;
-        unrest.level += unrest_increase;
+    if let Some(par) = paranoia {
+        if par.level > 50.0 {
+            let unrest_increase = (par.level - 50.0) * 0.1;
+            unrest.level += unrest_increase;
+        }
     }
 }
 
@@ -142,5 +144,39 @@ mod tests {
 
         let unrest = app.world().get_resource::<Unrest>().unwrap().level;
         assert!(unrest > 0.0);
+    }
+
+    #[test]
+    fn test_low_paranoia_no_unrest() {
+        let mut app = App::new();
+        app.insert_resource(GlobalParanoia { level: 40.0 });
+        app.add_systems(Update, paranoia_unrest_system);
+
+        app.world_mut().insert_resource(Unrest {
+            level: 0.0,
+            modifiers: vec![],
+        });
+
+        app.update();
+
+        let unrest = app.world().get_resource::<Unrest>().unwrap().level;
+        assert_eq!(unrest, 0.0, "Unrest should not increase when paranoia is below threshold");
+    }
+
+    #[test]
+    fn test_missing_paranoia_resource() {
+        let mut app = App::new();
+        // Do not insert GlobalParanoia resource
+        app.add_systems(Update, paranoia_unrest_system);
+
+        app.world_mut().insert_resource(Unrest {
+            level: 0.0,
+            modifiers: vec![],
+        });
+
+        app.update();
+
+        let unrest = app.world().get_resource::<Unrest>().unwrap().level;
+        assert_eq!(unrest, 0.0, "Unrest should not increase if paranoia resource is missing");
     }
 }
