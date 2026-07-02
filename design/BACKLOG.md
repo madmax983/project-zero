@@ -654,7 +654,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1147` Accidental Terraforming — `specs/1147-accidental-terraforming.md`
 - [ ] `1148` The Biomass Dividend — `specs/1148-the-biomass-dividend.md`
 - [ ] `1149` The Consultant — `specs/1149-the-consultant.md`
-- [ ] `1150` The Doomsday Clock — `specs/1150-the-doomsday-clock.md`
 - [ ] `1151` The Immortal Mascot — `specs/1151-the-immortal-mascot.md`
 - [ ] `1152` Sub-light Arrival Shock — `specs/1152-sub-light-arrival-shock.md`
 - [ ] `1153` Defector's Regret — `specs/1153-defectors-regret.md`

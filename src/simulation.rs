@@ -81,7 +81,9 @@ pub fn build_simulation_schedule() -> Schedule {
 #[allow(clippy::too_many_lines)]
 fn init_simulation_resources(world: &mut World) {
     world.init_resource::<bevy_ecs::event::Events<crate::layer1::physics::gravity_plating::PowerGridEvent>>();
-    world.init_resource::<bevy_ecs::event::Events<crate::layer1::disasters::mega_event::MegaEvent>>();
+    world
+        .init_resource::<bevy_ecs::event::Events<crate::layer1::disasters::mega_event::MegaEvent>>(
+        );
     world.init_resource::<Events<crate::layer3::diplomacy::open_source_science::PublishDiscoveryEvent>>();
     world.init_resource::<crate::layer2::void_leviathan::VoidLeviathan>();
     world.init_resource::<crate::layer2::void_leviathan::LeviathanEclipse>();
@@ -600,6 +602,12 @@ fn register_simulation_core_systems(schedule: &mut Schedule) {
 #[allow(clippy::too_many_lines)]
 fn register_simulation_extended_systems(schedule: &mut Schedule) {
     schedule.add_systems((
+        crate::layer1::psychology::doomsday::apply_doomsday_panic_effects,
+        crate::layer1::psychology::doomsday::resolve_doomsday_event,
+        crate::layer1::psychology::doomsday::cleanup_nihilism_debuffs,
+    ));
+
+    schedule.add_systems((
         crate::layer1::economy::bio_loom::apply_bio_suit_armor,
         crate::layer1::economy::bio_loom::process_bio_suit_parasitism,
     ));
@@ -716,7 +724,10 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         update_event_buffer::<crate::layer2::dead_protocols::ViolationEvent>,
     ));
     schedule.add_systems((update_event_buffer::<DetectionEvent>,));
-    schedule.add_systems((crate::layer1::tech::legacy_code::apply_latency_system, crate::layer1::tech::legacy_code::process_reformat_system));
+    schedule.add_systems((
+        crate::layer1::tech::legacy_code::apply_latency_system,
+        crate::layer1::tech::legacy_code::process_reformat_system,
+    ));
     schedule.add_systems((
         crate::layer2::integration::predecessor_orbital_shield_bridge_system,
         crate::layer2::fleet::fleet_order_system

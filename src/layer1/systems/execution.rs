@@ -184,9 +184,11 @@ pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
             crate::layer1::core::integration::gravity_plating_power_bridge_system,
-            crate::layer1::physics::gravity_plating::monitor_gravity_generator_power_system.after(crate::layer1::core::integration::gravity_plating_power_bridge_system),
-            crate::layer1::physics::gravity_plating::apply_zero_g_movement_system
-                .after(crate::layer1::physics::gravity_plating::monitor_gravity_generator_power_system),
+            crate::layer1::physics::gravity_plating::monitor_gravity_generator_power_system
+                .after(crate::layer1::core::integration::gravity_plating_power_bridge_system),
+            crate::layer1::physics::gravity_plating::apply_zero_g_movement_system.after(
+                crate::layer1::physics::gravity_plating::monitor_gravity_generator_power_system,
+            ),
         )
             .in_set(Layer1SystemSet::Execution),
     );
