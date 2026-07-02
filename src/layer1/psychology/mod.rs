@@ -6,6 +6,8 @@ pub mod cabin_fever;
 pub mod cryo_dreams;
 pub mod dreams;
 pub mod generational_amnesia;
+pub mod generational_spite;
+pub use generational_spite::*;
 #[cfg(feature = "nova")]
 pub mod machine_consciousness;
 pub mod memory;
