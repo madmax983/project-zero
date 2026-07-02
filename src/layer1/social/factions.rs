@@ -89,6 +89,8 @@ pub enum FactionId {
     Stateless,
     /// Hive mind collective that split from the unintegrated pops.
     HiveMind,
+
+    Penitent,
 }
 
 /// Data associated with a faction.
@@ -216,6 +218,15 @@ impl Factions {
                 FactionId::SubLithic,
                 FactionData {
                     name: "The Sub-Lithic Cult".into(),
+                    ..Default::default()
+                },
+            );
+
+            self.map.insert(
+                FactionId::Penitent,
+                FactionData {
+                    name: "Penitent".into(),
+
                     ..Default::default()
                 },
             );

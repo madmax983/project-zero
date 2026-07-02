@@ -37,7 +37,6 @@
 
 
 
-- [ ] `496` The Bureau of Regrets — `specs/496-the-bureau-of-regrets.md`
 
 
 - [ ] `876` The Phantom Tax — `specs/876-the-phantom-tax.md`
