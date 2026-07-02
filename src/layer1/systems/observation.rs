@@ -410,9 +410,7 @@ pub fn register(schedule: &mut Schedule) {
             .in_set(Layer1SystemSet::Observation),
     );
     schedule.add_systems(
-        (
-            crate::layer1::anomalies::cryptid::cryptid_chronicle_bridge_system,
-        )
+        (crate::layer1::anomalies::cryptid::cryptid_chronicle_bridge_system,)
             .in_set(Layer1SystemSet::Observation),
     );
     schedule.add_systems(

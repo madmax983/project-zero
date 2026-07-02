@@ -1,7 +1,7 @@
 use bevy_ecs::prelude::*;
 use scale::layer1::core::chronicle::AddChronicleEvent;
-use scale::layer1::tech::legacy_code::ReformatCommand;
 use scale::layer1::core::integration::reformat_chronicle_bridge;
+use scale::layer1::tech::legacy_code::ReformatCommand;
 
 #[test]
 fn test_reformat_chronicle_bridge() {
@@ -14,9 +14,9 @@ fn test_reformat_chronicle_bridge() {
 
     let core_entity = app.world_mut().spawn_empty().id();
 
-    app.world_mut().resource_mut::<Events<ReformatCommand>>().send(ReformatCommand {
-        core_entity,
-    });
+    app.world_mut()
+        .resource_mut::<Events<ReformatCommand>>()
+        .send(ReformatCommand { core_entity });
 
     app.update();
 
