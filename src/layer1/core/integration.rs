@@ -3356,3 +3356,23 @@ pub fn reformat_chronicle_bridge(
         });
     }
 }
+
+#[allow(clippy::type_complexity)]
+pub fn gravity_plating_power_bridge_system(
+    query: bevy_ecs::prelude::Query<
+        (bevy_ecs::prelude::Entity, &crate::layer1::energy::PowerConsumer),
+        (
+            bevy_ecs::prelude::With<crate::layer1::physics::gravity_plating::GravityGenerator>,
+            bevy_ecs::prelude::Changed<crate::layer1::energy::PowerConsumer>,
+        ),
+    >,
+    mut events: bevy_ecs::prelude::EventWriter<
+        crate::layer1::physics::gravity_plating::PowerGridEvent,
+    >,
+) {
+    for (entity, consumer) in query.iter() {
+        if !consumer.active {
+            events.send(crate::layer1::physics::gravity_plating::PowerGridEvent::NodeFailed(entity));
+        }
+    }
+}
