@@ -684,3 +684,5 @@ pub mod memory_tithe;
 pub mod propaganda_graffitists;
 pub mod slippery_slope;
 pub use propaganda_graffitists::*;
+pub mod faction_diet;
+pub use faction_diet::*;

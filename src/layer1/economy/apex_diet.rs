@@ -30,8 +30,12 @@ pub struct ApexMeatStores {
     pub amount: f32,
 }
 
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub enum FoodType {
     Standard,
+    NutrientPaste,
+    EarthCrop,
+
     ApexMeat,
 }
 
