@@ -105,7 +105,8 @@ The "Nova" feature (Oral Tradition) builds upon the base narrative system to cre
 scale = { version = "0.1.0", features = ["nova"] }
 ```
 
-```rust,ignore
+```rust
+# #![cfg(feature = "nova")]
 use scale::prelude::*;
 
 fn main() {
