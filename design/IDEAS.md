@@ -26389,3 +26389,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you risk the sanity of your best scientists for a glimpse of the future, knowing the visions might be misinterpreted or self-fulfilling?
 
 ---
+
+## Generational Feuds
+
+**Layer:** 1
+
+**Fantasy:** Ancient grudges between families shaping the political landscape of a colony.
+
+**Mechanic:** When Pops have extremely negative interactions, they can form a 'Feud'. This feud is inherited by their descendants. Feuding Pops will refuse to work in the same building and will actively sabotage each other's efforts.
+
+**Emergence:** Your most efficient farming family and your best mining family start a feud over a perceived slight 50 years ago. Now, they refuse to trade, starving the miners and leaving the farmers without tools, grinding your economy to a halt.
+
+**Tension:** Do you forcefully separate the families, losing efficiency, or let them fight and risk a full-blown civil war in the streets?
+
+---
+
+## Sub-light Emissaries
+
+**Layer:** Cross-layer
+
+**Fantasy:** The agonizing wait for critical diplomacy to cross the stars at sub-light speeds.
+
+**Mechanic:** Before faster-than-light comms are researched, diplomacy with distant Layer 3 factions must be conducted via sub-light probes or ships. By the time a peace treaty offer arrives, the political situation on both sides may have completely changed.
+
+**Emergence:** You send an unconditional surrender to a massive invading fleet. It takes 10 years to reach them. In the meantime, you discover a superweapon and wipe them out. The surrender message finally arrives at their homeworld, causing immense confusion and a bizarre diplomatic crisis.
+
+**Tension:** Do you commit to long-term diplomatic strategies knowing the context might be obsolete, or rely on short-term, local actions?
+
+---
+
+## Orbital Parallax Markets
+
+**Layer:** 2
+
+**Fantasy:** Exploiting relativistic time dilation to play the stock market of an entire star system.
+
+**Mechanic:** Trade stations built deep in a gravity well (near a gas giant or star) experience time slower than stations on the outer rim. Canny traders can use this 'parallax' to foresee market crashes hitting the rim and short-sell resources before the news reaches the core.
+
+**Emergence:** Your core world economy collapses because a peripheral station saw a pirate raid coming a week in advance and dumped all their stock, tanking the system-wide price of titanium.
+
+**Tension:** Do you build stations deep in gravity wells for the temporal market advantage, risking massive fuel costs and slower physical logistics?
+
+---
+
+## The Phantom Heir
+
+**Layer:** Cross-layer
+
+**Fantasy:** A dead ruler whose existence is maintained by a desperate bureaucracy.
+
+**Mechanic:** When a highly popular Layer 3 leader dies, the bureaucratic AI on the capital world (Layer 1) might hide the death to prevent a civil war. It continues issuing edicts in the leader's name, subtly skewing them towards administrative efficiency over human needs.
+
+**Emergence:** Your empire enjoys decades of unprecedented stability and growth under your beloved Emperor. But on the capital, Pops are slowly being worked to death to meet the increasingly inhumane, mathematically perfect quotas demanded by the 'Emperor'.
+
+**Tension:** Do you expose the lie and trigger an immediate succession crisis, or let the AI run the empire perfectly but soullessly?
+
+---
