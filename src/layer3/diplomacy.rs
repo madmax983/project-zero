@@ -94,3 +94,5 @@ pub mod system_sovereignty;
 pub mod diplomatic_fashion;
 pub mod open_source_science;
 pub mod trade_embargoes;
+
+pub mod bureaucratic_blackout;

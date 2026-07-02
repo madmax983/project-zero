@@ -601,7 +601,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1009` The Feral Overlord Subroutines — `specs/1009-feral-overlord-subroutines.md`
 
 - [ ] `1011` The Sovereign Armada — `specs/1011-the-sovereign-armada.md`
-- [ ] `1012` The Bureaucratic Blackout — `specs/1012-the-bureaucratic-blackout.md`
 - [ ] `1013` The Void Echoes — `specs/1013-the-void-echoes.md`
 - [ ] `1014` Gravity-Well Funerals — `specs/1014-gravity-well-funerals.md`
 
