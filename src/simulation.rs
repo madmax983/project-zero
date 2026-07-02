@@ -38,6 +38,7 @@ pub struct SimulationSchedule;
 #[must_use]
 pub fn build_simulation_schedule() -> Schedule {
     let mut schedule = Schedule::new(SimulationSchedule);
+    schedule.add_systems(crate::layer2::planetary_scarring::process_planetary_scars_system);
     register_simulation_core_systems(&mut schedule);
     register_simulation_extended_systems(&mut schedule);
     schedule.add_systems(crate::layer2::void_leviathan::update_leviathan_eclipse_system);
@@ -80,6 +81,7 @@ pub fn build_simulation_schedule() -> Schedule {
 #[allow(clippy::too_many_lines)]
 fn init_simulation_resources(world: &mut World) {
     world.init_resource::<bevy_ecs::event::Events<crate::layer1::physics::gravity_plating::PowerGridEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<crate::layer1::disasters::mega_event::MegaEvent>>();
     world.init_resource::<Events<crate::layer3::diplomacy::open_source_science::PublishDiscoveryEvent>>();
     world.init_resource::<crate::layer2::void_leviathan::VoidLeviathan>();
     world.init_resource::<crate::layer2::void_leviathan::LeviathanEclipse>();
