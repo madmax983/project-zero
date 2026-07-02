@@ -64,8 +64,7 @@ mod tests {
     use bevy_ecs::system::RunSystemOnce;
 
     fn setup_app() -> World {
-        let world = World::new();
-        world
+        World::new()
     }
 
     #[test]
@@ -81,8 +80,7 @@ mod tests {
                 original_productivity: 1.0,
             });
 
-        let mut time = crate::shared::time::SimulationTime::default();
-        time.tick = 50;
+        let time = crate::shared::time::SimulationTime { tick: 50, ..Default::default() };
         world.insert_resource(time);
         let _ = world
             .run_system_once(crate::layer1::psychology::doomsday::apply_doomsday_panic_effects);
@@ -109,8 +107,7 @@ mod tests {
             ))
             .id();
 
-        let mut time = crate::shared::time::SimulationTime::default();
-        time.tick = 101;
+        let time = crate::shared::time::SimulationTime { tick: 101, ..Default::default() };
         world.insert_resource(time);
         let _ = world.run_system_once(crate::layer1::psychology::doomsday::resolve_doomsday_event);
 
@@ -143,8 +140,7 @@ mod tests {
             ))
             .id();
 
-        let mut time = crate::shared::time::SimulationTime::default();
-        time.tick = 121;
+        let time = crate::shared::time::SimulationTime { tick: 121, ..Default::default() };
         world.insert_resource(time);
         let _ =
             world.run_system_once(crate::layer1::psychology::doomsday::cleanup_nihilism_debuffs);

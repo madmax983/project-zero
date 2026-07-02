@@ -425,4 +425,17 @@ mod tests {
         // Returns true (safe) because no roof found there (out of bounds)
         assert!(check_stability(&mut world, pos_min));
     }
+
+    #[test]
+    #[should_panic(expected = "Grid size overflow or too large")]
+    fn test_roof_grid_initialization_panic_on_too_large() {
+        // Size exceeds 10_000_000
+        let _ = RoofGrid::new(10_000, 10_000);
+    }
+
+    #[test]
+    #[should_panic(expected = "Grid size overflow or too large")]
+    fn test_roof_grid_initialization_panic_on_overflow() {
+        let _ = RoofGrid::new(usize::MAX, usize::MAX);
+    }
 }

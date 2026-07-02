@@ -181,4 +181,17 @@ mod tests {
 
         assert!(app.world().get::<FugueState>(healthy_pop).is_some());
     }
+
+    #[test]
+    fn test_random_ancestral_job() {
+        let mut rng = rand::thread_rng();
+        let job = random_ancestral_job(&mut rng);
+        assert!(
+            job == AssignmentType::FarmWorker ||
+            job == AssignmentType::Sheriff ||
+            job == AssignmentType::ObservatoryWorker ||
+            job == AssignmentType::Administrator ||
+            job == AssignmentType::LibraryWorker
+        );
+    }
 }
