@@ -1,0 +1,1 @@
+- [ ] `1013` The Void Echoes — `specs/1013-the-void-echoes.md` — claimed 2024-07-02

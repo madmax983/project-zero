@@ -159,3 +159,8 @@ pub fn apply_haunted_mood_penalty_system(
 
 ## 8. Questions
 *Builder: add questions here if spec is unclear.*
+
+## 8. Questions
+- The `crate::layer1::structures::CommsArray` path does not exist. The current codebase uses `BuildingType::CommsRelay` in `crate::layer1::architecture::building::BuildingType`. Should I use that?
+- `crate::layer1::research::ResearchPoints` and `TechCategory` do not exist. Should I map this to `ColonyResources::knowledge`?
+- `crate::layer1::utility_ai::WorkOrder` does not exist. Pops use `PopAction` or `AssignedTo`. How should we track workers at the comms arrays?
