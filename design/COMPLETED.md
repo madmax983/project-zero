@@ -869,3 +869,4 @@
 - [x] `1150` The Doomsday Clock — `specs/1150-the-doomsday-clock.md` — completed 2026-02-01
 - [x] `1012` The Bureaucratic Blackout — `specs/1012-the-bureaucratic-blackout.md` — completed 2026-02-01
 - [x] `297` The Factional Diet — `specs/297-factional-diet.md` — completed 2026-06-12
+- [x] `1007` Generational Spite — `specs/1007-generational-spite.md` — completed 2026-06-11

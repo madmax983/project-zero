@@ -35,6 +35,8 @@ pub mod fleet;
 pub mod generation;
 pub mod governance;
 pub mod integration;
+pub mod leadership;
+pub use leadership::*;
 pub mod mining;
 #[cfg(test)]
 mod mining_tests;

@@ -42,6 +42,7 @@ pub fn assign_faction_diets(
     }
 }
 
+#[allow(clippy::type_complexity)]
 pub fn process_food_consumption(
     mut events: EventReader<ConsumeFoodEvent>,
     mut query: Query<(

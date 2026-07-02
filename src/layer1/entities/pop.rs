@@ -110,6 +110,14 @@ pub struct PopBorn {
     pub source: String,
 }
 
+/// Event triggered when pops reproduce.
+#[derive(Event, Debug, Clone)]
+pub struct ReproductionEvent {
+    pub parent_a: Entity,
+    pub parent_b: Entity,
+    pub child: Entity,
+}
+
 const POP_NAMES: &[&str] = &[
     "Ada", "Bryn", "Cole", "Dara", "Eli", "Fern", "Gale", "Hana", "Iris", "Joss", "Kael", "Luna",
     "Milo", "Neva", "Orin", "Pax", "Quinn", "Rhea", "Sable", "Tarn", "Uma", "Vale", "Wren", "Xia",
