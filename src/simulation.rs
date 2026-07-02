@@ -38,7 +38,12 @@ pub struct SimulationSchedule;
 #[must_use]
 pub fn build_simulation_schedule() -> Schedule {
     let mut schedule = Schedule::new(SimulationSchedule);
-    schedule.add_systems(crate::layer2::planetary_scarring::process_planetary_scars_system);
+    schedule
+        .add_systems((
+            crate::layer1::social::faction_diet::assign_faction_diets,
+            crate::layer1::social::faction_diet::process_food_consumption,
+        ))
+        .add_systems(crate::layer2::planetary_scarring::process_planetary_scars_system);
     register_simulation_core_systems(&mut schedule);
     register_simulation_extended_systems(&mut schedule);
     schedule.add_systems(crate::layer2::void_leviathan::update_leviathan_eclipse_system);
