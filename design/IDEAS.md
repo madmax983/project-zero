@@ -26445,3 +26445,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you expose the lie and trigger an immediate succession crisis, or let the AI run the empire perfectly but soullessly?
 
 ---
+
+## FTL Contraband
+
+**Layer:** 2
+
+**Fantasy:** Smuggling forbidden items across the star system right under the nose of the authorities.
+
+**Mechanic:** Fast courier ships can be equipped with hidden compartments to bypass system patrols. They transport highly profitable "Contraband" (like banned cybernetics or alien artifacts) to colonies with high demand.
+
+**Emergence:** A successful smuggling ring creates immense wealth on a fringe world, but if intercepted, it triggers a massive crackdown and drops the colony's loyalty to the empire.
+
+**Tension:** Do you authorize illegal trade for a quick economic boost, or heavily police your own systems and risk stunting frontier growth?
+
+---
+
+## Orbital Solar Sails
+
+**Layer:** 2
+
+**Fantasy:** Giant, fragile mirrors catching the solar wind to power your civilization.
+
+**Mechanic:** Massive "Solar Sails" can be constructed in orbit (Layer 2) to beam limitless, clean energy down to Layer 1 colonies. However, they are extremely fragile and take up significant orbital space.
+
+**Emergence:** A micrometeorite shower or a stray shot from a pirate raid shatters the mirror, instantly plunging the massive, energy-dependent colony below into a total blackout and chaos.
+
+**Tension:** Do you rely on centralized, infinite but vulnerable orbital power, or build redundant, dirty ground-based reactors?
+
+---
+
+## Generation Ships of the Exiled
+
+**Layer:** Cross-layer
+
+**Fantasy:** Dealing with the long-term consequences of banishing your own people.
+
+**Mechanic:** Instead of executing rebellious factions, you can exile them on slow sub-light Generation Ships. Centuries later, their descendants—hardened, technologically divergent, and deeply resentful—return to the system they were banished from.
+
+**Emergence:** You exiled a minor religious sect in the early game. Three hundred years later, an armada of massive, rusted ships arrives carrying a fanatical empire that views your core worlds as their holy promised land.
+
+**Tension:** Do you execute rebels now to ensure they never return, or exile them to solve the immediate problem at the cost of creating a future nemesis?
+
+---
