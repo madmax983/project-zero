@@ -80,7 +80,10 @@ mod tests {
                 original_productivity: 1.0,
             });
 
-        let time = crate::shared::time::SimulationTime { tick: 50, ..Default::default() };
+        let time = crate::shared::time::SimulationTime {
+            tick: 50,
+            ..Default::default()
+        };
         world.insert_resource(time);
         let _ = world
             .run_system_once(crate::layer1::psychology::doomsday::apply_doomsday_panic_effects);
@@ -107,7 +110,10 @@ mod tests {
             ))
             .id();
 
-        let time = crate::shared::time::SimulationTime { tick: 101, ..Default::default() };
+        let time = crate::shared::time::SimulationTime {
+            tick: 101,
+            ..Default::default()
+        };
         world.insert_resource(time);
         let _ = world.run_system_once(crate::layer1::psychology::doomsday::resolve_doomsday_event);
 
@@ -140,7 +146,10 @@ mod tests {
             ))
             .id();
 
-        let time = crate::shared::time::SimulationTime { tick: 121, ..Default::default() };
+        let time = crate::shared::time::SimulationTime {
+            tick: 121,
+            ..Default::default()
+        };
         world.insert_resource(time);
         let _ =
             world.run_system_once(crate::layer1::psychology::doomsday::cleanup_nihilism_debuffs);

@@ -187,11 +187,11 @@ mod tests {
         let mut rng = rand::thread_rng();
         let job = random_ancestral_job(&mut rng);
         assert!(
-            job == AssignmentType::FarmWorker ||
-            job == AssignmentType::Sheriff ||
-            job == AssignmentType::ObservatoryWorker ||
-            job == AssignmentType::Administrator ||
-            job == AssignmentType::LibraryWorker
+            job == AssignmentType::FarmWorker
+                || job == AssignmentType::Sheriff
+                || job == AssignmentType::ObservatoryWorker
+                || job == AssignmentType::Administrator
+                || job == AssignmentType::LibraryWorker
         );
     }
 }
