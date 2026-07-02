@@ -26445,3 +26445,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you expose the lie and trigger an immediate succession crisis, or let the AI run the empire perfectly but soullessly?
 
 ---
+
+## The Sentient Byproduct
+
+**Layer:** 1
+
+**Fantasy:** The horrifying realization that your colony's industrial waste has started thinking for itself.
+
+**Mechanic:** If a colony produces too much industrial waste and fails to process it, the waste pools can slowly develop 'Proto-Consciousness.' These pools will passively absorb nearby resources and eventually attempt to communicate with Pops, offering bizarre, highly efficient technological blueprints in exchange for more pollution.
+
+**Emergence:** You ignore a growing sludge pit to focus on a war. Years later, the pit provides you with the schematic for a plasma drive, but demands you vent reactor coolant directly into the water supply to 'feed' it. Your pristine agricultural world is slowly becoming a toxic, hyper-advanced wasteland run by sentient trash.
+
+**Tension:** Do you clean up the pollution and lose access to miraculous, albeit terrifying, technological shortcuts, or embrace the toxic symbiosis?
+
+---
+
+## Generational Drift
+
+**Layer:** Cross-layer
+
+**Fantasy:** Watching the culture of a distant colony drift so far from the core worlds that they become entirely alien.
+
+**Mechanic:** Colonies far from the capital (Layer 2 distance) slowly accumulate 'Cultural Drift' over generations (Layer 1 time). This drift randomly mutates their social needs, aesthetic preferences, and even acceptable ethics. Eventually, their needs become fundamentally incompatible with core world laws.
+
+**Emergence:** Your oldest, most profitable mining colony on the outer rim suddenly stops exporting titanium. You send an envoy and discover they have developed a religion that considers titanium sacred and mining it a sin. They demand you tear down the mines you built centuries ago.
+
+**Tension:** Do you violently enforce core world culture on a distant colony, sparking a brutal rebellion, or grant them autonomy and lose their vital resource output?
+
+---
+
+## Orbital Debris Tithing
+
+**Layer:** 2
+
+**Fantasy:** The cynical, desperate economy of a star system choked by the wreckage of past wars.
+
+**Mechanic:** In systems with heavy past conflict, a massive 'Debris Ring' forms in orbit. Scavenger factions demand a 'Tithe' to safely guide your ships through the ring. If you refuse, your ships take heavy attrition. Alternatively, you can task your own Pops (Layer 1) to build specialized, highly dangerous scavenger ships to harvest the debris for rare alloys.
+
+**Emergence:** You refuse to pay the tithe and try to clear the debris yourself. The scavengers attack your clearance fleets, creating *more* debris. Eventually, the ring becomes so dense that the entire planet is functionally blockaded by its own trash, cutting off all Layer 3 trade.
+
+**Tension:** Do you pay extortionate fees to criminals for safe passage, or risk the lives of your own Pops in highly dangerous salvage operations to reclaim the orbit?
+
+---
