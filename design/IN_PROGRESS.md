@@ -1,0 +1,1 @@
+- [ ] `1007` Generational Spite — `specs/1007-generational-spite.md` — claimed 2026-06-11

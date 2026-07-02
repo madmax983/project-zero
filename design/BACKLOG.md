@@ -597,7 +597,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1004` The Orbital Secession — `specs/1004-orbital-secession.md`
 - [ ] `1005` Subterranean Biosphere Inversion — `specs/1005-subterranean-biosphere-inversion.md`
 - [ ] `1006` The Terraforming Rejection — `specs/1006-the-terraforming-rejection.md`
-- [ ] `1007` Generational Spite — `specs/1007-generational-spite.md`
 - [ ] `1008` The Refugee Archipelago — `specs/1008-the-refugee-archipelago.md`
 - [ ] `1009` The Feral Overlord Subroutines — `specs/1009-feral-overlord-subroutines.md`
 
