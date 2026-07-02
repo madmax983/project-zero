@@ -12,3 +12,9 @@
 ## 2026-07-01 - [Added Missing Module Documentation for Silence (Layer 3)]
 **Confusion:** The `src/layer3/silence.rs` module lacked module-level `//!` documentation, detailed struct/event `///` comments, and executable examples, leaving the DetectionRisk mechanic as a "Black Box" for developers integrating stealth or power mechanics.
 **Clarification:** Added a comprehensive module-level summary explaining the thematic purpose (void entities detecting power/population). Detailed `DetectionRisk` and `HostileSpawnEvent` with examples and formula explanations to remove the mystery.
+## 2026-07-02 - [README Formatting]
+**Confusion:** I attempted to make the `Cargo.toml` example in the README a doctest. But it's actually just meant to show the `Cargo.toml` config, and making it a doctest means it is visible as rust code.
+**Clarification:** Use `toml` instead of `rust,ignore` for Cargo.toml config snippets to prevent rustdoc from processing them while maintaining readability.
+## 2026-07-02 - [Oral Tradition Doctest Feature Gate]
+**Confusion:** I attempted to make the `Cargo.toml` example in the README a doctest by removing `ignore`. But it's actually just meant to show the `Cargo.toml` config, and making it a doctest means it is visible as rust code. Also, attempting to bypass feature gates by inserting dummy `#[deprecated]` structs into the main codebase was a bad idea and pollutes the API.
+**Clarification:** Use `toml` instead of `rust,ignore` for `Cargo.toml` config snippets to prevent rustdoc from processing them while maintaining readability. Leave the feature-dependent example as `rust,ignore`.
