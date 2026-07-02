@@ -189,4 +189,17 @@ mod tests {
         // Assert: no panic
         assert_eq!(fsg.values[0], 0.0);
     }
+
+    #[test]
+    #[should_panic(expected = "Grid size overflow or too large")]
+    fn test_foundation_soil_grid_initialization_panic_on_too_large() {
+        // Size exceeds 10_000_000
+        let _ = FoundationSoilGrid::new(10_000, 10_000);
+    }
+
+    #[test]
+    #[should_panic(expected = "Grid size overflow or too large")]
+    fn test_foundation_soil_grid_initialization_panic_on_overflow() {
+        let _ = FoundationSoilGrid::new(usize::MAX, usize::MAX);
+    }
 }

@@ -272,4 +272,38 @@ mod tests {
             "Pop should remain in place if initially out of bounds"
         );
     }
+
+    #[test]
+    fn test_suction_avoids_negative_coordinate_panic() {
+        let mut world = World::new();
+        let mut grid = PressureGrid::new(10, 10);
+        grid.fill(1.0);
+
+        grid.set(0, 0, 0.0);
+        world.insert_resource(grid);
+
+        let pop = world
+            .spawn((
+                Pop,
+                GridPosition {
+                    x: i32::MIN,
+                    y: i32::MIN,
+                },
+            ))
+            .id();
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems(super::suction_system);
+        schedule.run(&mut world);
+
+        let pos = world.get::<GridPosition>(pop).unwrap();
+        assert_eq!(
+            *pos,
+            GridPosition {
+                x: i32::MIN,
+                y: i32::MIN
+            },
+            "Pop should remain in place if initially out of bounds in negatives"
+        );
+    }
 }

@@ -22,3 +22,10 @@
 ## [Testing `paranoia_unrest_system`]
 **Learning:** Found a potential panic risk where `.unwrap()` was called on an `Option` inside an `is_some_and` block. While technically guarded by logic, it was an unidiomatic and theoretically unsafe pattern.
 **Action:** Always refactor `is_some_and(..)` followed by `.unwrap()` into an idiomatic `if let Some(val) = option` to cleanly and safely handle destructuring in systems. Also, always add unit tests covering the cases where the resource is missing or conditions are unmet to prevent regression.
+## [Testing Grid Initializations]
+**Learning:** Found missing tests covering `.expect()` error handling during struct initializations of `RoofGrid` and `FoundationSoilGrid` on extreme max values representing size overflow.
+**Action:** Always verify enum variants are exhausted by unit tests. If a variant like `Lockdown` is evaluated dynamically without test coverage, it's a silent failure risk. I will prioritize `match` and state evaluations during coverage audits. Adding `#[should_panic]` test block allows these `expect()` statements to be hit and verified.
+
+## [Testing Edge Cases in Physics and AI Logic]
+**Learning:** Found gaps in testing negative bounds on pressure checks inside `suction_system`, and missing coverage for fallback logic on job assignments.
+**Action:** Adding assertions or using test setups targeting edge cases or fallback branch allows you to verify that no logic goes untested.
