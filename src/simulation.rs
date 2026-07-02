@@ -602,6 +602,12 @@ fn register_simulation_core_systems(schedule: &mut Schedule) {
 #[allow(clippy::too_many_lines)]
 fn register_simulation_extended_systems(schedule: &mut Schedule) {
     schedule.add_systems((
+        crate::layer1::psychology::doomsday::apply_doomsday_panic_effects,
+        crate::layer1::psychology::doomsday::resolve_doomsday_event,
+        crate::layer1::psychology::doomsday::cleanup_nihilism_debuffs,
+    ));
+
+    schedule.add_systems((
         crate::layer1::economy::bio_loom::apply_bio_suit_armor,
         crate::layer1::economy::bio_loom::process_bio_suit_parasitism,
     ));
