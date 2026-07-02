@@ -14,17 +14,17 @@ The "Phantom Tax" represents a glitch in the galactic banking system where a min
 #[test]
 fn test_market_trades_accumulate_phantom_tax() {
     let mut app = App::new();
-    // Setup Galactic Market and Slush Fund resource
-    // Execute a trade
-    // Assert trade value is taxed and Slush Fund increases appropriately
+    // Setup Galactic Market and SlushFund resource
+    // Execute a trade using MarketTradeEvent
+    // Assert Slush Fund increases appropriately
 }
 
 #[test]
 fn test_hacker_pop_can_drain_slush_fund() {
     let mut app = App::new();
-    // Setup Hacker Pop and Slush Fund with credits
+    // Setup Hacker Pop (Traits::has(Trait::Hacker)) and SlushFund with artifacts
     // Trigger hack event
-    // Assert Slush Fund is 0 and Colony Credits increased
+    // Assert SlushFund is 0 and global ColonyResources.artifacts increased
 }
 
 #[test]
@@ -45,9 +45,6 @@ fn test_hack_triggers_repo_fleet_spawn() {
 pub struct SlushFund(pub u32);
 
 #[derive(Component)]
-pub struct HackerTrait;
-
-#[derive(Component)]
 pub struct RepoFleet {
     pub target_colony: Entity,
 }
@@ -60,11 +57,11 @@ pub struct HackSlushFundEvent {
 
 pub fn accumulate_phantom_tax_system(
     mut slush_fund: ResMut<SlushFund>,
-    mut trade_events: EventReader<MarketTradeEvent>,
+    mut trade_events: EventReader<crate::layer3::market::ephemeral_market::MarketTradeEvent>,
 ) {
-    for event in trade_events.read() {
-        let tax = (event.value as f32 * 0.01) as u32; // 1% tax
-        slush_fund.0 += tax;
+    for _event in trade_events.read() {
+        // Simplified tax logic based on number of trades
+        slush_fund.0 += 1;
     }
 }
 
@@ -72,19 +69,17 @@ pub fn execute_hack_system(
     mut commands: Commands,
     mut hack_events: EventReader<HackSlushFundEvent>,
     mut slush_fund: ResMut<SlushFund>,
-    mut colony_resources: Query<&mut ColonyResources>,
+    mut colony_resources: ResMut<crate::layer1::economy::resources::ColonyResources>,
 ) {
     for event in hack_events.read() {
-        if let Ok(mut resources) = colony_resources.get_mut(event.colony_entity) {
-            resources.credits += slush_fund.0;
-            slush_fund.0 = 0;
+        colony_resources.artifacts += slush_fund.0 as f32; // Using artifacts as proxy for wealth
+        slush_fund.0 = 0;
 
-            // Spawn Repo Fleet (simplified logic for green phase)
-            commands.spawn((
-                RepoFleet { target_colony: event.colony_entity },
-                Transform::default(), // Spawned somewhere in Layer 2
-            ));
-        }
+        // Spawn Repo Fleet (simplified logic for green phase)
+        commands.spawn((
+            RepoFleet { target_colony: event.colony_entity },
+            Transform::default(), // Spawned somewhere in Layer 2
+        ));
     }
 }
 ```
@@ -110,3 +105,6 @@ pub fn execute_hack_system(
 *Builder: add questions here if spec is unclear.*- **Architectural Contradictions:** `MarketTradeEvent` doesn't seem to exist. `ColonyResources` is mostly generic items, not `credits` in `execute_hack_system`.
 
 - **Architectural Contradictions:** `HackerTrait` is not an existing component. Traits are implemented using the `Traits` component and `Trait` enum in `src/layer1/psychology/traits.rs`. The test uses a component `HackerTrait` directly. The `Hacker` trait does not exist in the `Trait` enum. The spec does not explain where `ColonyResources` is coming from, because the `MarketTradeEvent` does not have a reference to a `ColonyResources` entity, but the `execute_hack_system` receives `mut colony_resources: Query<&mut ColonyResources>`. The `ColonyResources` is a global resource in `layer1`, not a component on a `colony_entity`. Therefore `colony_resources.get_mut(event.colony_entity)` is invalid code in the current architecture. Moving to next task.
+
+
+*Architect:* The RED and GREEN phases have been updated to properly use `Traits` with a new `Trait::Hacker` (Builder will need to add this variant to the enum), treat `ColonyResources` as a global resource modifying `artifacts`, and use the existing `MarketTradeEvent` structure.
