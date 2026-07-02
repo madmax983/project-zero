@@ -1,3 +1,4 @@
+
 //! Layer 1: Colony Simulation.
 //!
 //! This is the "Dwarf Fortress" or "RimWorld" layer of the game. It simulates the daily life
@@ -30,6 +31,7 @@
 //! - **Environment:** [`crate::layer1::nature::terrain`], [`crate::layer1::core::map`], [`crate::layer1::nature::weather`], [`crate::layer1::lighting`]
 //! - **Economy:** [`crate::layer1::economy::resources`], [`crate::layer1::economy::trade`]
 
+pub mod disasters;
 pub mod mycelial;
 pub use mycelial::*;
 
