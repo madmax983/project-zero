@@ -1,5 +1,3 @@
-
-
 //! Layer 2: System/Planetary Simulation.
 //!
 //! This layer abstractly models the wider planetary and star system context surrounding the colony.
@@ -8,9 +6,9 @@
 //!
 //! Layer 2.
 //!
+pub mod memorial_fleet;
 pub mod planet;
 pub mod planetary_scarring;
-pub mod memorial_fleet;
 pub use memorial_fleet::*;
 pub mod barnacles;
 pub mod binary_star;

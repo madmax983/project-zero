@@ -1,6 +1,6 @@
-use bevy::prelude::*;
 use crate::layer1::disasters::mega_event::MegaEvent;
 use crate::layer2::planet::{PlanetNode, PlanetTexture};
+use bevy::prelude::*;
 
 pub fn process_planetary_scars_system(
     mut events: EventReader<MegaEvent>,
@@ -31,21 +31,32 @@ mod tests {
         app.add_event::<MegaEvent>();
         app.add_systems(Update, process_planetary_scars_system);
 
-        let planet = app.world_mut().spawn((
-            PlanetNode,
-            PlanetTexture { id: "pristine_earth".to_string(), scars: vec![] },
-        )).id();
+        let planet = app
+            .world_mut()
+            .spawn((
+                PlanetNode,
+                PlanetTexture {
+                    id: "pristine_earth".to_string(),
+                    scars: vec![],
+                },
+            ))
+            .id();
 
-        app.world_mut().resource_mut::<Events<MegaEvent>>().send(MegaEvent {
-            planet_entity: planet,
-            event_type: "NuclearBlast".to_string(),
-            intensity: 100.0,
-        });
+        app.world_mut()
+            .resource_mut::<Events<MegaEvent>>()
+            .send(MegaEvent {
+                planet_entity: planet,
+                event_type: "NuclearBlast".to_string(),
+                intensity: 100.0,
+            });
 
         app.update();
 
         let texture = app.world().get::<PlanetTexture>(planet).unwrap();
-        assert!(texture.scars.contains(&"Crater".to_string()), "A nuclear blast should add a Crater scar to the planet texture.");
+        assert!(
+            texture.scars.contains(&"Crater".to_string()),
+            "A nuclear blast should add a Crater scar to the planet texture."
+        );
     }
 
     #[test]
@@ -54,21 +65,32 @@ mod tests {
         app.add_event::<MegaEvent>();
         app.add_systems(Update, process_planetary_scars_system);
 
-        let planet = app.world_mut().spawn((
-            PlanetNode,
-            PlanetTexture { id: "pristine_earth".to_string(), scars: vec![] },
-        )).id();
+        let planet = app
+            .world_mut()
+            .spawn((
+                PlanetNode,
+                PlanetTexture {
+                    id: "pristine_earth".to_string(),
+                    scars: vec![],
+                },
+            ))
+            .id();
 
-        app.world_mut().resource_mut::<Events<MegaEvent>>().send(MegaEvent {
-            planet_entity: planet,
-            event_type: "MegaFire".to_string(),
-            intensity: 80.0,
-        });
+        app.world_mut()
+            .resource_mut::<Events<MegaEvent>>()
+            .send(MegaEvent {
+                planet_entity: planet,
+                event_type: "MegaFire".to_string(),
+                intensity: 80.0,
+            });
 
         app.update();
 
         let texture = app.world().get::<PlanetTexture>(planet).unwrap();
-        assert!(texture.scars.contains(&"AshCloud".to_string()), "A mega-fire should add an Ash Cloud scar to the planet texture.");
+        assert!(
+            texture.scars.contains(&"AshCloud".to_string()),
+            "A mega-fire should add an Ash Cloud scar to the planet texture."
+        );
     }
 
     #[test]
@@ -77,20 +99,31 @@ mod tests {
         app.add_event::<MegaEvent>();
         app.add_systems(Update, process_planetary_scars_system);
 
-        let planet = app.world_mut().spawn((
-            PlanetNode,
-            PlanetTexture { id: "pristine_earth".to_string(), scars: vec![] },
-        )).id();
+        let planet = app
+            .world_mut()
+            .spawn((
+                PlanetNode,
+                PlanetTexture {
+                    id: "pristine_earth".to_string(),
+                    scars: vec![],
+                },
+            ))
+            .id();
 
-        app.world_mut().resource_mut::<Events<MegaEvent>>().send(MegaEvent {
-            planet_entity: planet,
-            event_type: "MegaFire".to_string(),
-            intensity: 49.9,
-        });
+        app.world_mut()
+            .resource_mut::<Events<MegaEvent>>()
+            .send(MegaEvent {
+                planet_entity: planet,
+                event_type: "MegaFire".to_string(),
+                intensity: 49.9,
+            });
 
         app.update();
 
         let texture = app.world().get::<PlanetTexture>(planet).unwrap();
-        assert!(!texture.scars.contains(&"AshCloud".to_string()), "An event below intensity 50 should not apply a scar.");
+        assert!(
+            !texture.scars.contains(&"AshCloud".to_string()),
+            "An event below intensity 50 should not apply a scar."
+        );
     }
 }

@@ -1,6 +1,6 @@
-use bevy_ecs::prelude::*;
-use crate::layer1::map::GridPosition;
 use crate::layer1::economy::resources::ColonyResources;
+use crate::layer1::map::GridPosition;
+use bevy_ecs::prelude::*;
 
 #[derive(Clone, PartialEq, Debug)]
 pub enum MobilityMode {
@@ -70,8 +70,8 @@ pub fn move_mobile_building_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy_app::App;
     use crate::layer1::architecture::building::Building;
+    use bevy_app::App;
 
     #[test]
     fn test_mobile_building_transforms_state() {
@@ -79,24 +79,41 @@ mod tests {
         app.add_event::<TransformCommand>();
         app.add_systems(bevy_app::Update, transform_building_system);
 
-        let building = app.world_mut().spawn((
-            Building { building_type: crate::layer1::architecture::building::BuildingType::Housing },
-            MobileChassis { mode: MobilityMode::Stationary },
-            BuildingState::Operational,
-        )).id();
+        let building = app
+            .world_mut()
+            .spawn((
+                Building {
+                    building_type: crate::layer1::architecture::building::BuildingType::Housing,
+                },
+                MobileChassis {
+                    mode: MobilityMode::Stationary,
+                },
+                BuildingState::Operational,
+            ))
+            .id();
 
-        app.world_mut().resource_mut::<Events<TransformCommand>>().send(TransformCommand {
-            target: building,
-            new_mode: MobilityMode::Mobile,
-        });
+        app.world_mut()
+            .resource_mut::<Events<TransformCommand>>()
+            .send(TransformCommand {
+                target: building,
+                new_mode: MobilityMode::Mobile,
+            });
 
         app.update();
 
         let chassis = app.world().get::<MobileChassis>(building).unwrap();
         let state = app.world().get::<BuildingState>(building).unwrap();
 
-        assert_eq!(chassis.mode, MobilityMode::Mobile, "Building chassis should change to Mobile mode.");
-        assert_eq!(*state, BuildingState::Offline, "Building must go Offline while mobile.");
+        assert_eq!(
+            chassis.mode,
+            MobilityMode::Mobile,
+            "Building chassis should change to Mobile mode."
+        );
+        assert_eq!(
+            *state,
+            BuildingState::Offline,
+            "Building must go Offline while mobile."
+        );
     }
 
     #[test]
@@ -110,23 +127,35 @@ mod tests {
         app.add_event::<MoveCommand>();
         app.add_systems(bevy_app::Update, move_mobile_building_system);
 
-        let building = app.world_mut().spawn((
-            Building { building_type: crate::layer1::architecture::building::BuildingType::Housing },
-            GridPosition { x: 0, y: 0 },
-            MobileChassis { mode: MobilityMode::Mobile },
-        )).id();
+        let building = app
+            .world_mut()
+            .spawn((
+                Building {
+                    building_type: crate::layer1::architecture::building::BuildingType::Housing,
+                },
+                GridPosition { x: 0, y: 0 },
+                MobileChassis {
+                    mode: MobilityMode::Mobile,
+                },
+            ))
+            .id();
 
-        app.world_mut().resource_mut::<Events<MoveCommand>>().send(MoveCommand {
-            entity: building,
-            destination: GridPosition { x: 1, y: 0 },
-        });
+        app.world_mut()
+            .resource_mut::<Events<MoveCommand>>()
+            .send(MoveCommand {
+                entity: building,
+                destination: GridPosition { x: 1, y: 0 },
+            });
 
         app.update();
 
         let resources = app.world().resource::<ColonyResources>();
         let pos = app.world().get::<GridPosition>(building).unwrap();
 
-        assert_eq!(resources.fuel, 90.0, "Moving a building should consume fuel (MVP cost 10).");
+        assert_eq!(
+            resources.fuel, 90.0,
+            "Moving a building should consume fuel (MVP cost 10)."
+        );
         assert_eq!(pos.x, 1, "Building should have moved to the destination.");
     }
 }

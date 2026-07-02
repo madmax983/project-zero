@@ -1,4 +1,3 @@
-
 //! Layer 1: Colony Simulation.
 //!
 //! This is the "Dwarf Fortress" or "RimWorld" layer of the game. It simulates the daily life

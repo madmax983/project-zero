@@ -3014,7 +3014,10 @@ pub fn track_negative_events_bridge_system(
 ) {
     use crate::layer1::architecture_superstition::NegativeEvent;
 
-    let mut negative_locations = Vec::new();
+    // ⚡ Bolt Optimization: Pre-allocate vector capacity to avoid reallocation overhead during event processing.
+    let capacity =
+        pop_died_events.len() + building_removed_events.len() + pop_died_accident_events.len();
+    let mut negative_locations = Vec::with_capacity(capacity);
 
     for event in pop_died_events.read() {
         if let Ok(pos) = pops_query.get(event.entity) {
@@ -3330,7 +3333,10 @@ pub fn pet_death_bridge_system(
 /// Emits a chronicle event when rebellious graffiti appears.
 pub fn propaganda_graffiti_chronicle_bridge(
     mut events: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
-    query: Query<&crate::layer1::social::propaganda_graffitists::RebelliousGraffiti, Added<crate::layer1::social::propaganda_graffitists::RebelliousGraffiti>>,
+    query: Query<
+        &crate::layer1::social::propaganda_graffitists::RebelliousGraffiti,
+        Added<crate::layer1::social::propaganda_graffitists::RebelliousGraffiti>,
+    >,
 ) {
     for _ in query.iter() {
         events.send(crate::layer1::core::chronicle::AddChronicleEvent {
@@ -3342,16 +3348,16 @@ pub fn propaganda_graffiti_chronicle_bridge(
 
 /// INT-1017: Bridges `ReformatCommand` to `AddChronicleEvent`
 pub fn reformat_chronicle_bridge(
-    mut events: bevy_ecs::event::EventReader<
-        crate::layer1::tech::legacy_code::ReformatCommand,
-    >,
+    mut events: bevy_ecs::event::EventReader<crate::layer1::tech::legacy_code::ReformatCommand>,
     mut chronicle_events: bevy_ecs::event::EventWriter<
         crate::layer1::core::chronicle::AddChronicleEvent,
     >,
 ) {
     for _event in events.read() {
         chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
-            text: "The Colony's Computer Core has initiated a total reformat. Systems going offline.".to_string(),
+            text:
+                "The Colony's Computer Core has initiated a total reformat. Systems going offline."
+                    .to_string(),
             importance: crate::layer1::core::chronicle::EventImportance::Major,
         });
     }
@@ -3360,7 +3366,10 @@ pub fn reformat_chronicle_bridge(
 #[allow(clippy::type_complexity)]
 pub fn gravity_plating_power_bridge_system(
     query: bevy_ecs::prelude::Query<
-        (bevy_ecs::prelude::Entity, &crate::layer1::energy::PowerConsumer),
+        (
+            bevy_ecs::prelude::Entity,
+            &crate::layer1::energy::PowerConsumer,
+        ),
         (
             bevy_ecs::prelude::With<crate::layer1::physics::gravity_plating::GravityGenerator>,
             bevy_ecs::prelude::Changed<crate::layer1::energy::PowerConsumer>,
@@ -3372,7 +3381,8 @@ pub fn gravity_plating_power_bridge_system(
 ) {
     for (entity, consumer) in query.iter() {
         if !consumer.active {
-            events.send(crate::layer1::physics::gravity_plating::PowerGridEvent::NodeFailed(entity));
+            events
+                .send(crate::layer1::physics::gravity_plating::PowerGridEvent::NodeFailed(entity));
         }
     }
 }
