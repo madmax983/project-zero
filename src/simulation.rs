@@ -50,6 +50,11 @@ pub fn build_simulation_schedule() -> Schedule {
     schedule.add_systems(
         crate::layer1::social::bureau_of_regrets::check_penitent_faction_formation_system,
     );
+
+    schedule.add_systems((
+        crate::layer1::biology::chromotaxis::chromotaxis_attraction_system,
+        crate::layer1::biology::chromotaxis::chromotaxis_aggro_system,
+    ));
     schedule.add_systems((
         crate::layer3::guilt::process_guilt_generation_system,
         crate::layer3::guilt::apply_guilt_unrest_system,
