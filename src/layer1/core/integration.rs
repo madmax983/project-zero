@@ -2868,7 +2868,7 @@ pub fn invasive_xeno_aesthetics_chronicle_bridge(
 
 /// INT-1277: Bridges GhostCode infection to AddChronicleEvent (Chronicle).
 pub fn ghost_code_chronicle_bridge(
-    mut events: bevy_ecs::event::EventReader<crate::layer1::events::BuildingCompletedEvent>,
+    mut events: bevy_ecs::event::EventReader<crate::layer1::core::events::BuildingCompletedEvent>,
     query: bevy_ecs::system::Query<&crate::layer1::tech::ghost_code::GhostCode>,
     mut chronicle_events: bevy_ecs::event::EventWriter<AddChronicleEvent>,
 ) {

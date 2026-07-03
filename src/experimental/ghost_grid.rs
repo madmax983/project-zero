@@ -1,4 +1,4 @@
-use crate::layer1::events::BuildingRemovedEvent;
+use crate::layer1::core::events::BuildingRemovedEvent;
 use bevy_ecs::prelude::*;
 use bevy_utils::HashMap;
 

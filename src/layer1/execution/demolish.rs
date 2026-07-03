@@ -111,7 +111,7 @@ fn try_demolish_building(world: &mut World, designation_pos: GridPosition) {
 
     // Send removal event (for Ghost Code, etc)
     if let Some(btype) = building_type {
-        world.send_event(crate::layer1::events::BuildingRemovedEvent {
+        world.send_event(crate::layer1::core::events::BuildingRemovedEvent {
             entity,
             position: designation_pos,
             building_type: btype,

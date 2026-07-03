@@ -3,7 +3,7 @@ use bevy_time::{Time, Timer, TimerMode};
 use rand::seq::IteratorRandom;
 
 use crate::layer1::building::{BuildingMap, BuildingType, OccupiedTiles};
-use crate::layer1::events::BuildingRemovedEvent;
+use crate::layer1::core::events::BuildingRemovedEvent;
 use crate::layer1::map::GridPosition;
 use crate::layer1::terrain::TerrainGrid;
 

@@ -7,7 +7,7 @@
 //! However, if the colony expands recklessly and builds over an existing grave,
 //! it triggers a `SacrilegeEvent`, representing the defilement of sacred ground.
 
-use crate::layer1::events::BuildingCompletedEvent;
+use crate::layer1::core::events::BuildingCompletedEvent;
 use crate::layer1::funeral::Grave;
 use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
