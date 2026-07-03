@@ -88,6 +88,7 @@ pub fn build_simulation_schedule() -> Schedule {
 /// Run one simulation tick: all game systems via schedule, then increment tick counter.
 #[allow(clippy::too_many_lines)]
 fn init_simulation_resources(world: &mut World) {
+    world.init_resource::<crate::layer1::social::blacksite::BlacksiteContract>();
     world.init_resource::<bevy_ecs::event::Events<crate::layer1::physics::gravity_plating::PowerGridEvent>>();
     world.init_resource::<crate::layer1::social::bureau_of_regrets::AtrocityScore>();
     world
@@ -614,6 +615,11 @@ fn register_simulation_core_systems(schedule: &mut Schedule) {
 
 #[allow(clippy::too_many_lines)]
 fn register_simulation_extended_systems(schedule: &mut Schedule) {
+    schedule.add_systems((
+        crate::layer1::social::blacksite::blacksite_payout_system,
+        crate::layer1::social::blacksite::prisoner_radicalization_system,
+        crate::layer1::social::blacksite::prison_break_system,
+    ));
     schedule.add_systems((
         crate::layer1::psychology::doomsday::apply_doomsday_panic_effects,
         crate::layer1::psychology::doomsday::resolve_doomsday_event,
