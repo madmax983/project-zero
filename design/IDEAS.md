@@ -26594,3 +26594,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you rotate your invasion routes, slowing down the war effort and exposing vulnerable flanks, or push through a single corridor until the fabric of space itself turns against you?
 
 ---
+
+## Holographic Sky Rot
+
+**Layer:** 1
+
+**Fantasy:** The illusion of a perfect homeworld begins to glitch, driving the populace to madness.
+
+**Mechanic:** On harsh, uninhabitable planets, you can build a massive "Holographic Skybox" over your domes to simulate a perfect, Earth-like environment, permanently maxing out the colonists' morale and eliminating their "Claustrophobia" need. However, as the colony ages, if you fail to supply ultra-rare quantum processors to maintain the array, the sky begins to "Rot." Dead pixels the size of mountains appear, the sun stutters, and terrifying, random images from the galactic net flash across the sky.
+
+**Emergence:** You forget to maintain the skybox while focused on a Layer 3 war. A giant, glitching advertisement for a rival empire's consumer goods flashes across the sky for three days straight. The colonists, suffering from "Simulation Sickness," form a cult around the advertisement and attempt to overthrow the governor to join the rival empire.
+
+**Tension:** Do you rely on the powerful but fragile illusion of a perfect world, or force your colonists to face the grim reality of their environment?
+
+---
+
+## The Cryosleep Repossession
+
+**Layer:** Cross-layer (1 & 2)
+
+**Fantasy:** A colony's original investors wake up centuries late, expecting compound interest.
+
+**Mechanic:** Sometimes, early colony seed-ships (Layer 2) launched by long-dead megacorporations get lost in transit. If they arrive at your now-thriving, fully developed world (Layer 1), the corporate board wakes from cryosleep. They hold the original, legally binding charter to the planet and demand retro-active taxes and compound interest for the last 300 years, instantly creating massive "Debt" debuffs.
+
+**Emergence:** You just stabilized a difficult industrial world. A ragged seed-ship arrives. Fifty cryo-frozen accountants wake up and use their ancient access codes to legally lock down your fusion reactors until you pay a fine larger than the GDP of your entire empire.
+
+**Tension:** Do you recognize their ancient, legal authority to maintain galactic credit rating (Layer 3), or execute the frozen board members and deal with the internal guilt and external diplomatic fallout?
+
+---
+
+## Xenoflora Trojan
+
+**Layer:** 1
+
+**Fantasy:** Weaponizing the local ecosystem to destroy your enemies from the inside.
+
+**Mechanic:** A seemingly generous Layer 3 empire offers a highly valuable diplomatic "gift" (e.g., an exotic, beautiful monument or a rare xenoflora garden) that you place in your Layer 1 colony. However, the gift secretly houses a subtle, mind-altering parasite or memetic transmitter. Pops exposed to it slowly shift their ethics and loyalties towards the donor empire, ultimately demanding to secede and join them.
+
+**Emergence:** You accept a beautiful garden from a powerful neighbor to boost your capital's morale. Fifty years later, your core population peacefully votes to secede and join that neighbor, and you have to decide whether to violently suppress a democratic vote or lose your capital.
+
+**Tension:** Do you accept dangerous gifts from rivals for the short-term buffs, or risk insulting them by rejecting their "generosity"?
+
+---
+
+## Sentient Waste
+
+**Layer:** 1
+
+**Fantasy:** Your colony's pollution becomes so advanced it develops a survival instinct.
+
+**Mechanic:** If a highly industrialized colony ignores pollution and waste management for generations, the accumulated chemical sludge and industrial runoff begins to interact with abandoned nano-tech. It forms a slow-moving, semi-sentient sludge entity on the map. It doesn't actively attack, but it slowly consumes nearby low-tier buildings to "grow" and aggressively defends itself if attacked by cleaning crews.
+
+**Emergence:** You ignore the waste runoff from your massive alloy foundries for decades. Eventually, the waste forms a localized ecosystem that produces a highly efficient, clean-burning fuel byproduct. Now you have a symbiotic relationship with a terrifying, toxic blob that eats your old warehouses in exchange for premium fuel.
+
+**Tension:** Do you expend massive resources to eradicate the horrifying pollution entity, or do you carefully "feed" it obsolete infrastructure to harvest its valuable byproducts?
+
+---
+
+## The Forgotten Treaty Enforcer
+
+**Layer:** Cross-layer (1 & 3)
+
+**Fantasy:** An ancient, forgotten peace treaty enforced by an AI that doesn't understand context.
+
+**Mechanic:** A layer 3 empire leaves behind automated defense grids governed by strict "Ghost Code" treaties from a war fought thousands of years ago. These grids remain dormant until a layer 1 colony unintentionally violates the exact, arcane parameters of the treaty (e.g., "No unshielded plasma exhaust during the month of Zorb"). The grid activates and begins surgically destroying only the offending infrastructure, ignoring all other targets.
+
+**Emergence:** You expand your mining operation using cheap, unshielded plasma drills to hit a quota. The ancient Ghost Code activates. It doesn't attack your cities or your military; it just systematically vaporizes every single plasma drill on the planet and then goes back to sleep, completely crippling your economy without firing a single shot at a civilian.
+
+**Tension:** Do you spend decades reverse-engineering the ancient, nonsensical legal code to avoid angering the automated peacekeepers, or do you dedicate massive military resources to destroying an enemy that only ever attacks when you break a rule you didn't know existed?
+
+---
