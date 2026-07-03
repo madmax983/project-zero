@@ -26487,3 +26487,68 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you pay extortionate fees to criminals for safe passage, or risk the lives of your own Pops in highly dangerous salvage operations to reclaim the orbit?
 
 ---
+## The Propaganda Graveyard
+
+**Layer:** 2
+
+**Fantasy:** A silent orbit littered with the broken promises of a desperate empire.
+
+**Mechanic:** During periods of high unrest or war, governments launch "Propaganda Satellites" into orbit to broadcast calming messages or patriotic anthems. Over centuries, these satellites become obsolete and power down, forming a literal ring of dead propaganda around the planet.
+
+**Emergence:** Your colony uncovers ancient broadcasting codes and reactivates a 300-year-old satellite. It begins broadcasting archaic, highly aggressive war propaganda for a conflict that ended centuries ago. The population is confused and slightly agitated, but military recruitment spikes unexpectedly.
+
+**Tension:** Do you expend resources to clean up the orbital junk, or risk the unpredictable psychological effects of ancient broadcasts randomly reactivating during solar flares?
+
+---
+## Biometric Passports and Identity Smuggling
+
+**Layer:** Cross-layer
+
+**Fantasy:** Pops desperate to escape a failing world steal the identities of the deceased to board refugee ships.
+
+**Mechanic:** Inter-planetary travel (Layer 2) requires a Biometric Passport. On worlds with extreme suffering (Layer 1), pops might secretly harvest biometric data from the dead to create forged passports. They then smuggle themselves onto trade ships.
+
+**Emergence:** You receive a shipment of rare minerals from a dying mining world, only to discover fifty "ghost pops" hidden in the cargo hold, all using the identities of people registered as dead ten years ago. They carry new skills but also unknown diseases and political radicalization.
+
+**Tension:** Do you enforce strict biometric scanning on all imports (slowing trade massively) to catch refugees, or accept the risk of undocumented, potentially dangerous pops flooding your core worlds?
+
+---
+## The Oracle Subroutine
+
+**Layer:** 2
+
+**Fantasy:** A predictive algorithm that is so accurate it becomes an object of religious devotion.
+
+**Mechanic:** You build a massive, power-hungry supercomputer to predict market fluctuations and pirate raids. It is incredibly accurate. However, Pops who work near it begin to view its readouts as divine prophecy. They form a cult around the "Oracle," abandoning their normal needs to interpret its data, and will violently protest if you ever try to turn it off or upgrade it.
+
+**Emergence:** You need to shut down the Oracle to reroute power to planetary defenses during an invasion. The cultists, believing the shutdown is a sign of the apocalypse, sabotage the planetary shields to fulfill the "prophecy" they think you are trying to avert.
+
+**Tension:** Do you rely on the incredibly useful predictions of the Oracle, knowing that you are slowly surrendering your colony's culture to a cult that worships a spreadsheet?
+
+---
+## Architectural Vandalism as Subversive Art
+
+**Layer:** 1
+
+**Fantasy:** The physical environment becomes a canvas for political dissent.
+
+**Mechanic:** When unrest is high but not yet at open rebellion, dissident Pops will covertly alter the colony's infrastructure during the night shift. They might reroute colored heating pipes to form massive anti-government symbols across the ceiling of the biodome, or hack the hydroponics to grow crops in insulting patterns. These "artworks" significantly lower the authority of the player and boost the morale of the dissidents.
+
+**Emergence:** You spend an hour designing a perfectly efficient, mathematically beautiful factory floor. The next day, the workers have rearranged the assembly line to spell out a massive expletive visible from orbit. Removing the "art" causes a massive strike.
+
+**Tension:** Do you expend resources and anger the populace by constantly "cleaning up" their subversive art, or let them deface your pristine colony to keep open rebellion at bay?
+
+---
+## The Generational Echo Chamber
+
+**Layer:** Cross-layer
+
+**Fantasy:** A colony isolated from the wider galaxy slowly descends into a bizarre, self-reinforcing delusion.
+
+**Mechanic:** A colony (Layer 1) that has no contact or trade with Layer 2/3 for several generations begins to suffer from "Echo Chamber Syndrome." Their culture becomes hyper-focused on a single, randomly chosen aspect of their history (e.g., a specific founder, a specific food, or a specific past trauma). All new art, politics, and social interactions revolve around this obsession.
+
+**Emergence:** A forgotten mining outpost is re-discovered after 200 years. You find that they have developed a complex theology entirely centered around "The Sacred Turnip," the only crop that survived their initial famine. They refuse to export their titanium unless you publicly acknowledge the divinity of the Turnip.
+
+**Tension:** Do you aggressively re-educate the isolated colony (causing massive trauma and resistance) to integrate them back into your empire, or humor their bizarre obsessions to keep the resources flowing?
+
+---
