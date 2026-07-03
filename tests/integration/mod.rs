@@ -87,3 +87,4 @@ pub mod phantom_commutes_bridge;
 pub mod symbiotic_insurgency_bridge;
 pub mod diplomatic_fashion_bridge;
 pub mod sartorial_rebellion_bridge;
+pub mod scrap_code_cult_bridge;
