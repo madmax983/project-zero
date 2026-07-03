@@ -26552,3 +26552,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you aggressively re-educate the isolated colony (causing massive trauma and resistance) to integrate them back into your empire, or humor their bizarre obsessions to keep the resources flowing?
 
 ---
+
+## The Counterfeit Aristocracy
+
+**Layer:** 1
+
+**Fantasy:** A colony's social hierarchy is subverted by a fake noble lineage.
+
+**Mechanic:** A group of low-status Pops discovers a cache of ancient, corrupted historical records and uses them to forge a claim that they are the descendants of the sector's original founders. They demand luxury goods and exemption from manual labor, starting a cult of personality.
+
+**Emergence:** The counterfeit nobles successfully convince a large portion of the colony, drastically lowering industrial output as their "followers" do their work for them. When a real envoy from the core worlds arrives, the fake nobles attempt to assassinate them to protect the secret.
+
+**Tension:** Do you violently dismantle the fake aristocracy and risk a massive uprising from their believers, or do you legitimize them to maintain social order at the cost of continuous luxury demands?
+
+---
+
+## The Contraband Slingshot
+
+**Layer:** 2
+
+**Fantasy:** Smugglers use orbital mechanics to bypass planetary blockades with dangerous kinetic packages.
+
+**Mechanic:** To avoid tight customs and blockades, black market syndicates in a system's asteroid belt use railguns to launch reinforced pods of contraband on precise, high-velocity trajectories toward a planet. Sympathetic Pops on the ground must catch or retrieve these pods. If the trajectory is slightly off, the pod becomes a kinetic weapon that damages the colony.
+
+**Emergence:** A smuggling syndicate miscalculates a delivery of illegal narcotics, and the pod obliterates your colony's main power reactor. The surviving Pops then become addicted to the scattered drugs, creating a catastrophic downward spiral.
+
+**Tension:** Do you invest heavily in orbital defense grids to shoot down the pods, risking the destruction of the valuable contraband inside, or do you let them fall and hope your Pops can intercept them safely?
+
+---
+
+## Hyperlane Exhaustion
+
+**Layer:** 3
+
+**Fantasy:** The very fabric of space begins to tear from overuse by massive war fleets.
+
+**Mechanic:** Heavily trafficked hyperlanes, especially those used continuously by massive military armadas, suffer from "Hyperlane Exhaustion." Travel times increase exponentially, and ships have a chance to take structural damage or get temporarily lost in transit. Exhausted hyperlanes require decades of disuse to "heal."
+
+**Emergence:** Your invincible grand armada uses the same optimal route to invade a rival empire. Halfway through the campaign, the hyperlane collapses. Your fleet is stranded deep in enemy territory without reinforcements or supply lines, turning a blitzkrieg into a desperate survival scenario.
+
+**Tension:** Do you rotate your invasion routes, slowing down the war effort and exposing vulnerable flanks, or push through a single corridor until the fabric of space itself turns against you?
+
+---
