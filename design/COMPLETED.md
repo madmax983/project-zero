@@ -871,3 +871,4 @@
 - [x] `1012` The Bureaucratic Blackout — `specs/1012-the-bureaucratic-blackout.md` — completed 2026-02-01
 - [x] `297` The Factional Diet — `specs/297-factional-diet.md` — completed 2026-06-12
 - [x] `1007` Generational Spite — `specs/1007-generational-spite.md` — completed 2026-06-11
+- [x] `1011` The Sovereign Armada — `specs/1011-the-sovereign-armada.md` — completed 2026-02-01
