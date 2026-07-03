@@ -88,6 +88,10 @@ pub fn build_simulation_schedule() -> Schedule {
 /// Run one simulation tick: all game systems via schedule, then increment tick counter.
 #[allow(clippy::too_many_lines)]
 fn init_simulation_resources(world: &mut World) {
+    world.init_resource::<Events<crate::layer1::cassandra_syndrome::DoomsdayWarningEvent>>();
+    world.init_resource::<Events<crate::layer3::market::phantom_tax::HackSlushFundEvent>>();
+    world.init_resource::<crate::layer3::market::phantom_tax::SlushFund>();
+
     world.init_resource::<bevy_ecs::event::Events<crate::layer1::physics::gravity_plating::PowerGridEvent>>();
     world.init_resource::<crate::layer1::social::bureau_of_regrets::AtrocityScore>();
     world
@@ -712,6 +716,8 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         crate::layer3::intellectual_property_wars::detect_ip_piracy_system,
         crate::layer3::integration::ip_piracy_diplomacy_bridge,
         crate::layer3::intellectual_property_wars::process_espionage_system,
+        crate::layer3::market::phantom_tax::accumulate_phantom_tax_system,
+        crate::layer3::market::phantom_tax::execute_hack_system,
     ));
 
     // --- Layer 2 Integration ---
