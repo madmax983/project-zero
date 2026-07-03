@@ -1,7 +1,7 @@
-use bevy::prelude::*;
-use crate::layer1::psychology::traits::{Trait, Traits};
 use crate::layer1::economy::resources::ColonyResources;
+use crate::layer1::psychology::traits::{Trait, Traits};
 use crate::layer3::market::ephemeral_market::MarketTradeEvent;
+use bevy::prelude::*;
 
 #[derive(Resource, Default)]
 pub struct SlushFund(pub u32);
@@ -40,7 +40,9 @@ pub fn execute_hack_system(
                 slush_fund.0 = 0;
 
                 commands.spawn((
-                    RepoFleet { target_colony: event.colony_entity },
+                    RepoFleet {
+                        target_colony: event.colony_entity,
+                    },
                     Transform::default(),
                 ));
             }
@@ -51,8 +53,8 @@ pub fn execute_hack_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::psychology::traits::{Trait, Traits};
     use crate::layer1::economy::resources::ColonyResources;
+    use crate::layer1::psychology::traits::{Trait, Traits};
     use crate::layer3::market::ephemeral_market::MarketTradeEvent;
 
     fn setup_app() -> App {
@@ -127,7 +129,11 @@ mod tests {
 
         app.update();
 
-        let repo_fleets = app.world_mut().query::<&RepoFleet>().iter(app.world()).count();
+        let repo_fleets = app
+            .world_mut()
+            .query::<&RepoFleet>()
+            .iter(app.world())
+            .count();
         assert_eq!(repo_fleets, 1);
     }
 }

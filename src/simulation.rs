@@ -52,6 +52,9 @@ pub fn build_simulation_schedule() -> Schedule {
     );
 
     schedule.add_systems((
+        crate::layer1::social::blacksite::process_blacksite_payout_system,
+        crate::layer1::social::blacksite::prisoner_radicalization_system,
+        crate::layer1::social::blacksite::prison_break_system,
         crate::layer1::biology::chromotaxis::chromotaxis_attraction_system,
         crate::layer1::biology::chromotaxis::chromotaxis_aggro_system,
     ));
@@ -93,6 +96,7 @@ pub fn build_simulation_schedule() -> Schedule {
 /// Run one simulation tick: all game systems via schedule, then increment tick counter.
 #[allow(clippy::too_many_lines)]
 fn init_simulation_resources(world: &mut World) {
+    world.init_resource::<bevy_ecs::event::Events<crate::layer1::social::blacksite::PrisonBreakEvent>>();
     world.init_resource::<Events<crate::layer1::cassandra_syndrome::DoomsdayWarningEvent>>();
     world.init_resource::<Events<crate::layer3::market::phantom_tax::HackSlushFundEvent>>();
     world.init_resource::<crate::layer3::market::phantom_tax::SlushFund>();
