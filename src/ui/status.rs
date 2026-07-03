@@ -164,7 +164,6 @@ pub fn render_status_bar(frame: &mut Frame, area: Rect, world: &World) {
 #[must_use]
 #[allow(
     clippy::too_many_arguments,
-    clippy::too_many_lines,
     clippy::cast_possible_truncation,
     clippy::cast_sign_loss
 )]

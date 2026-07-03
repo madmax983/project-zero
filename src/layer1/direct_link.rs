@@ -101,7 +101,6 @@ type BuildingsQuery<'a> = (
 );
 
 #[allow(clippy::too_many_arguments)]
-#[allow(clippy::too_many_lines)]
 pub fn handle_direct_movement(
     input: Res<Input>,
     mut query: Query<DirectMovementQuery, DirectMovementFilter>,

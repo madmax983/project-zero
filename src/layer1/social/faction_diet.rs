@@ -130,7 +130,6 @@ mod tests {
                 },
                 StressTracker {
                     accumulated_stress: 0.0,
-                    ..Default::default()
                 },
                 UnrestFactor { value: 0.0 },
             ))

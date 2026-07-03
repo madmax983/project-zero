@@ -3389,8 +3389,12 @@ pub fn gravity_plating_power_bridge_system(
 
 /// INT-664: Bridges CultFormationEvent to AddChronicleEvent
 pub fn scrap_code_cult_formation_chronicle_bridge(
-    mut events: bevy_ecs::event::EventReader<crate::layer1::social::scrap_code_prophets::CultFormationEvent>,
-    mut chronicle_events: bevy_ecs::event::EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+    mut events: bevy_ecs::event::EventReader<
+        crate::layer1::social::scrap_code_prophets::CultFormationEvent,
+    >,
+    mut chronicle_events: bevy_ecs::event::EventWriter<
+        crate::layer1::core::chronicle::AddChronicleEvent,
+    >,
 ) {
     for _event in events.read() {
         chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {

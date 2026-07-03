@@ -92,6 +92,7 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<Events<crate::layer3::diplomacy::open_source_science::PublishDiscoveryEvent>>();
     world.init_resource::<crate::layer2::void_leviathan::VoidLeviathan>();
     world.init_resource::<crate::layer2::void_leviathan::LeviathanEclipse>();
+    world.init_resource::<bevy_ecs::event::Events<crate::layer1::social::scrap_code_prophets::CultFormationEvent>>();
 
     #[cfg(feature = "nova")]
     world.init_resource::<crate::experimental::ghost_grid::GhostGrid>();

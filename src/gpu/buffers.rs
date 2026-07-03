@@ -175,7 +175,7 @@ pub fn extract_pop_inputs(
 ///
 /// Combines multiple building types into a single array.
 /// Populates `entities` and `inputs` vectors, clearing them first.
-#[allow(clippy::cast_possible_truncation, clippy::too_many_lines)]
+#[allow(clippy::cast_possible_truncation)]
 pub fn extract_building_inputs(
     world: &mut World,
     entities: &mut Vec<Entity>,

@@ -34,3 +34,6 @@
 **[Refactoring Inline Bounds Checking Pyramids]**
 **Learning:** Monolithic simulation methods (like `step` in `TemperatureGrid`) that manually perform bounds checking and array indexing to fetch neighbor values create massive Pyramids of Doom. This logic is usually an exact duplicate of safe helper methods (like `get(x, y)`).
 **Action:** Replace nested inline bounds-checking and coordinate math with direct calls to the existing safe `get` helper method, casting positive coordinates to `usize` after a simple `>= 0` check. Use Guard Clauses (`let Some(x) = y else { return };`) in the helper methods to keep them flat.
+**[Removing Stale Clippy Allow Directives]**
+**Learning:** Sometimes files contain `#[allow(clippy::too_many_lines)]` directives from when they were larger, but subsequent refactors have reduced their size, making the directive stale. These stale directives hide future bloat.
+**Action:** Identify and remove stale `#[allow(clippy::too_many_lines)]` directives from functions that have naturally become shorter over time, ensuring the linter continues to enforce readability constraints going forward.
