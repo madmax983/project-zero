@@ -1,6 +1,6 @@
-use bevy::prelude::*;
-use crate::layer3::galaxy::FleetTravelEvent;
 use crate::layer1::diplomacy::TributeDemandEvent;
+use crate::layer3::galaxy::FleetTravelEvent;
+use bevy::prelude::*;
 
 pub const MASSIVE_TRIBUTE: u32 = 5000;
 
@@ -29,9 +29,9 @@ pub fn armada_arrival_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer3::galaxy::{GalaxyNode, FleetTravelEvent};
-    use crate::layer2::fleet::Fleet;
     use crate::layer1::diplomacy::TributeDemandEvent;
+    use crate::layer2::fleet::Fleet;
+    use crate::layer3::galaxy::{FleetTravelEvent, GalaxyNode};
 
     #[test]
     fn test_armada_entry_triggers_tribute_demand() {
@@ -41,16 +41,18 @@ mod tests {
         app.add_systems(Update, armada_arrival_system);
 
         let system_node = app.world_mut().spawn(GalaxyNode).id();
-        let armada = app.world_mut().spawn((
-            Fleet,
-            Armada { strength: 10000 },
-        )).id();
+        let armada = app
+            .world_mut()
+            .spawn((Fleet, Armada { strength: 10000 }))
+            .id();
 
         // Armada arrives in the system
-        app.world_mut().resource_mut::<Events<FleetTravelEvent>>().send(FleetTravelEvent {
-            fleet: armada,
-            destination: system_node,
-        });
+        app.world_mut()
+            .resource_mut::<Events<FleetTravelEvent>>()
+            .send(FleetTravelEvent {
+                fleet: armada,
+                destination: system_node,
+            });
 
         app.update();
 
@@ -64,6 +66,9 @@ mod tests {
             }
         }
 
-        assert!(found, "Armada entering a system should immediately trigger a Tribute Demand.");
+        assert!(
+            found,
+            "Armada entering a system should immediately trigger a Tribute Demand."
+        );
     }
 }

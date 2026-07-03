@@ -1,5 +1,6 @@
 # Completed
 
+- [x] `496` The Bureau of Regrets — `specs/496-the-bureau-of-regrets.md` — completed 2026-07-03
 - [x] `634` The Petrification Sickness — `specs/634-petrification-sickness.md` — completed 2024-05-31
 - [x] `167` Monuments of Failure — `specs/167-monuments-of-failure.md` — completed 2026-05-25
 - [x] `120` Crop Diversity — `specs/120-crop-diversity.md` — completed 2026-10-31

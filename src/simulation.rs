@@ -47,6 +47,9 @@ pub fn build_simulation_schedule() -> Schedule {
     register_simulation_core_systems(&mut schedule);
     register_simulation_extended_systems(&mut schedule);
     schedule.add_systems(crate::layer2::void_leviathan::update_leviathan_eclipse_system);
+    schedule.add_systems(
+        crate::layer1::social::bureau_of_regrets::check_penitent_faction_formation_system,
+    );
     schedule.add_systems((
         crate::layer3::guilt::process_guilt_generation_system,
         crate::layer3::guilt::apply_guilt_unrest_system,
@@ -86,6 +89,7 @@ pub fn build_simulation_schedule() -> Schedule {
 #[allow(clippy::too_many_lines)]
 fn init_simulation_resources(world: &mut World) {
     world.init_resource::<bevy_ecs::event::Events<crate::layer1::physics::gravity_plating::PowerGridEvent>>();
+    world.init_resource::<crate::layer1::social::bureau_of_regrets::AtrocityScore>();
     world
         .init_resource::<bevy_ecs::event::Events<crate::layer1::disasters::mega_event::MegaEvent>>(
         );
@@ -374,7 +378,7 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<Events<crate::layer1::environment::ignition::ExplosionEvent>>();
 
     world.init_resource::<Events<crate::layer1::environment::events::DebrisFallEvent>>();
-        world.init_resource::<Events<crate::layer1::social::scrap_code_prophets::CultFormationEvent>>();
+    world.init_resource::<Events<crate::layer1::social::scrap_code_prophets::CultFormationEvent>>();
 
     world.init_resource::<crate::layer3::intellectual_property_wars::PatentRegistry>();
 
@@ -418,8 +422,8 @@ fn init_simulation_resources(world: &mut World) {
 
     world.init_resource::<crate::layer3::map::MapData>();
     world.init_resource::<Events<crate::layer3::map::FleetArrivalEvent>>();
-        world.init_resource::<Events<crate::layer1::diplomacy::TributeDemandEvent>>();
-        world.init_resource::<Events<crate::layer3::galaxy::FleetTravelEvent>>();
+    world.init_resource::<Events<crate::layer1::diplomacy::TributeDemandEvent>>();
+    world.init_resource::<Events<crate::layer3::galaxy::FleetTravelEvent>>();
     world.init_resource::<Events<crate::layer3::map::AnomalyDiscoveredEvent>>();
     world.init_resource::<Events<crate::layer3::diplomacy_reflection::EntityKilledEvent>>();
     world.init_resource::<Events<crate::layer3::diplomacy_reflection::FloraPlantedEvent>>();
