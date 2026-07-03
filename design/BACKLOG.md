@@ -771,3 +771,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1314` The Sentient Commute — `specs/1314-the-sentient-commute.md`
 - [ ] `1315` The Martyr's Ledger — `specs/1315-the-martyrs-ledger.md`
 - [ ] `1316` Ablative Logistics — `specs/1316-ablative-logistics.md`
+- [ ] `1317` The 'Good' War — `specs/1317-the-good-war.md`
