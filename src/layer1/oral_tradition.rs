@@ -227,25 +227,32 @@ impl OralTradition {
     }
 }
 
-/// Evaluates the [`crate::layer1::core::chronicle::Chronicle`] each tick and seeds the [`OralTradition`] with new events.
+/// Evaluates the colony's historical `Chronicle` and converts notable events into new legends within the `OralTradition`.
+///
+/// This system looks for important events that have occurred since the last time it ran,
+/// and turns them into `Story` structs, assigning them an appropriate `StoryGenre` based on
+/// the event's importance and description.
 ///
 /// # Examples
 ///
 /// ```
 /// use bevy_ecs::prelude::*;
 /// use scale::layer1::oral_tradition::{OralTradition, collect_chronicles_system};
-/// use scale::layer1::core::chronicle::Chronicle;
+/// use scale::layer1::core::chronicle::{Chronicle, EventImportance};
 ///
 /// let mut world = World::new();
 /// world.insert_resource(OralTradition::default());
-/// world.insert_resource(Chronicle::default());
 ///
-/// // Provide the event queue that the system queries
-/// world.insert_resource(bevy_ecs::event::Events::<scale::layer1::core::chronicle::AddChronicleEvent>::default());
+/// let mut chronicle = Chronicle::default();
+/// chronicle.add_event(100, "The colony survived the Great Frost.".to_string(), EventImportance::Legendary);
+/// world.insert_resource(chronicle);
 ///
 /// let mut schedule = Schedule::default();
 /// schedule.add_systems(collect_chronicles_system);
 /// schedule.run(&mut world);
+///
+/// let tradition = world.resource::<OralTradition>();
+/// assert_eq!(tradition.stories.len(), 1);
 /// ```
 #[cfg(feature = "nova")]
 pub fn collect_chronicles_system(mut tradition: ResMut<OralTradition>, chronicle: Res<Chronicle>) {
