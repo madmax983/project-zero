@@ -1585,6 +1585,13 @@
 - **Glue added:** Modified `phantom_commutes_bridge_system` in `src/layer1/core/integration.rs` to generate Chronicle records when a phantom commute is triggered.
 - **Tests:** `tests/integration/phantom_commutes_bridge.rs`
 
+### INT-1305: The Cassandra Syndrome -> Chronicle
+- **Date:** 2026-10-31
+- **Systems connected:** `DoomsdayWarningEvent` and `Added<CultLeader>` -> `cassandra_syndrome_chronicle_bridge` and `cassandra_cult_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `cassandra_syndrome_chronicle_bridge` and `cassandra_cult_chronicle_bridge` in `src/layer1/core/integration.rs` to generate Chronicle records when a prophet issues a warning and when a warning comes true.
+- **Schedule:** Registered the systems in `src/layer1/systems/observation.rs`.
+- **Tests:** Added tests in `tests/integration/cassandra_syndrome_bridge.rs`.
+
 ### INT-1036: Institutional Memory -> Chronicle
 - **Date:** 2026-10-31
 - **Systems connected:** `Added<Manual>` -> `institutional_memory_chronicle_bridge` -> `AddChronicleEvent`
