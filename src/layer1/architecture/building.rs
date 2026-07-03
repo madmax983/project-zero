@@ -2425,7 +2425,7 @@ fn apply_post_placement_effects(
         log.add(format!("Construction started: {}", building_type.label()));
     }
 
-    world.send_event(crate::layer1::events::BuildingCompletedEvent { entity });
+    world.send_event(crate::layer1::core::events::BuildingCompletedEvent { entity });
 }
 
 /// Places a building in the world at the given coordinates.
@@ -3325,8 +3325,8 @@ mod tests {
         world.insert_resource(OccupiedTiles::default());
         world.insert_resource(BuildingMap::default());
         world.init_resource::<Events<crate::layer1::ancestral_graves::SacrilegeEvent>>();
-        world.init_resource::<Events<crate::layer1::events::BuildingRemovedEvent>>();
-        world.init_resource::<Events<crate::layer1::events::BuildingCompletedEvent>>();
+        world.init_resource::<Events<crate::layer1::core::events::BuildingRemovedEvent>>();
+        world.init_resource::<Events<crate::layer1::core::events::BuildingCompletedEvent>>();
         world.insert_resource(ColonyResources {
             wood: 100.0,
             stone: 100.0,
@@ -3378,8 +3378,8 @@ mod tests {
         world.insert_resource(OccupiedTiles::default());
         world.insert_resource(BuildingMap::default());
         world.init_resource::<Events<crate::layer1::ancestral_graves::SacrilegeEvent>>();
-        world.init_resource::<Events<crate::layer1::events::BuildingRemovedEvent>>();
-        world.init_resource::<Events<crate::layer1::events::BuildingCompletedEvent>>();
+        world.init_resource::<Events<crate::layer1::core::events::BuildingRemovedEvent>>();
+        world.init_resource::<Events<crate::layer1::core::events::BuildingCompletedEvent>>();
         world.insert_resource(ColonyResources {
             wood: 0.0,
             stone: 0.0,

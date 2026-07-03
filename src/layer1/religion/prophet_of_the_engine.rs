@@ -1,5 +1,5 @@
 use crate::layer1::building::Building;
-use crate::layer1::events::BuildingRemovedEvent;
+use crate::layer1::core::events::BuildingRemovedEvent;
 use crate::layer1::needs::Needs;
 use crate::layer1::traits::{Trait, Traits};
 use crate::layer1::unrest::{Unrest, UnrestModifier};
@@ -224,7 +224,7 @@ pub fn protest_on_dismantle_system(
 mod tests {
     use super::*;
     use crate::layer1::building::{Building, BuildingType};
-    use crate::layer1::events::BuildingRemovedEvent;
+    use crate::layer1::core::events::BuildingRemovedEvent;
     use crate::layer1::map::GridPosition;
     use crate::layer1::needs::Needs;
     use crate::layer1::traits::get_trait_work_speed_modifier;

@@ -1,7 +1,7 @@
 use bevy_ecs::prelude::*;
 
 use crate::layer1::architecture::building::{Building, BuildingMap, OccupiedTiles};
-use crate::layer1::events::BuildingRemovedEvent;
+use crate::layer1::core::events::BuildingRemovedEvent;
 use crate::layer1::map::GridPosition;
 use crate::layer1::morale::{MoodModifier, Morale};
 use crate::layer1::pop::Pop;

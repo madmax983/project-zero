@@ -372,9 +372,9 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<Events<crate::layer2::orbit::asteroid_claims::AttackColonyEvent>>();
     world.init_resource::<Events<crate::layer1::systems::dead_hand::DoomsdayTriggeredEvent>>();
     world.init_resource::<Events<PopBorn>>();
-    world.init_resource::<Events<crate::layer1::events::BuildingCompletedEvent>>();
+    world.init_resource::<Events<crate::layer1::core::events::BuildingCompletedEvent>>();
     world.init_resource::<Events<crate::layer1::parasitic_architecture::BuildingConsumedEvent>>();
-    world.init_resource::<Events<crate::layer1::events::BuildingRemovedEvent>>();
+    world.init_resource::<Events<crate::layer1::core::events::BuildingRemovedEvent>>();
     world.init_resource::<Events<crate::layer1::architecture::BiomimeticShiftEvent>>();
     world.init_resource::<Events<crate::layer1::structural_integrity::StructureCollapsed>>();
     world.init_resource::<Events<RetrogradeEngineeringEvent>>();
