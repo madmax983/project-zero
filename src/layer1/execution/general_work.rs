@@ -700,75 +700,55 @@ pub fn get_status_modifiers(world: &World, pop_entity: Entity) -> f32 {
     if let Some(efficiency) = world.get::<crate::layer1::economy::WorkEfficiency>(pop_entity) {
         modifier *= efficiency.multiplier;
     }
-    let neural_buff = if world
+
+    if world
         .get::<crate::layer1::tech::neural_leech::NeuralLinked>(pop_entity)
         .is_some()
     {
-        2.0
-    } else {
-        1.0
-    };
+        modifier *= 2.0;
+    }
 
-    let infection_modifier = if world
+    if world
         .get::<crate::layer1::memetics::MemeticInfection>(pop_entity)
         .is_some()
     {
-        0.5
-    } else {
-        1.0
-    };
+        modifier *= 0.5;
+    }
 
-    let ghost_shift_modifier = if world
+    if world
         .get::<crate::layer1::social::ghost_shift_strike::GhostShiftState>(pop_entity)
         .is_some()
     {
-        0.0
-    } else {
-        1.0
-    };
+        modifier *= 0.0;
+    }
 
-    let hallucinating_modifier = if world
+    if world
         .get::<crate::layer1::agriculture::gastronomy::Hallucinating>(pop_entity)
         .is_some()
     {
-        0.0
-    } else {
-        1.0
-    };
+        modifier *= 0.0;
+    }
 
-    let somnambulist_modifier = if world
+    if world
         .get::<crate::layer1::somnambulism::Somnambulist>(pop_entity)
         .is_some()
     {
-        5.0
-    } else {
-        1.0
-    };
+        modifier *= 5.0;
+    }
 
-    let gravity_nightmare_modifier = if world
+    if world
         .get::<crate::layer1::psychology::void_sleep::GravityNightmare>(pop_entity)
         .is_some()
     {
-        0.8 // 20% efficiency penalty due to nightmares
-    } else {
-        1.0
-    };
+        modifier *= 0.8; // 20% efficiency penalty due to nightmares
+    }
 
-    let temporal_fugue_modifier = if world
+    if world
         .get::<crate::layer1::mind::temporal_fugue::TemporalFugue>(pop_entity)
         .is_some()
     {
-        3.0
-    } else {
-        1.0
-    };
+        modifier *= 3.0;
+    }
 
     modifier
-        * temporal_fugue_modifier
-        * neural_buff
-        * infection_modifier
-        * ghost_shift_modifier
-        * hallucinating_modifier
-        * somnambulist_modifier
-        * gravity_nightmare_modifier
 }
