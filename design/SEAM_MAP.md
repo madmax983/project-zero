@@ -1712,3 +1712,10 @@
 - **Systems connected:** `monitor_gravity_generator_power_system` and `apply_zero_g_movement_system` -> `SimulationSchedule`
 - **Glue added:** Initialized `PowerGridEvent` resource in `src/simulation.rs` and registered systems in `src/layer1/systems/execution.rs`.
 - **Tests:** `tests/integration/gravity_plating_bridge.rs`
+
+### INT-664: Scrap Code Evangelists -> Chronicle
+- **Date:** 2026-10-31
+- **Systems connected:** `CultFormationEvent` -> `scrap_code_cult_formation_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `scrap_code_cult_formation_chronicle_bridge` in `src/layer1/core/integration.rs` to generate Chronicle records when a new member joins the Cult of the Broken Machine.
+- **Schedule:** Registered the system in `src/layer1/systems/observation.rs`.
+- **Tests:** `tests/integration/scrap_code_cult_bridge.rs`
