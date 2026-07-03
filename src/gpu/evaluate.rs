@@ -125,7 +125,7 @@ fn ensure_buffer(
 }
 
 /// Upload data, dispatch the compute shader, and read back results.
-#[allow(clippy::cast_possible_truncation, clippy::too_many_lines)]
+#[allow(clippy::cast_possible_truncation)]
 fn dispatch_and_readback(
     gpu: &GpuContext,
     cache: &mut GpuPersistentBuffers,

@@ -65,7 +65,6 @@ impl PlanetType {
 /// - Assigns one Rocky/Ice planet as the Colony Location
 /// - Propagates traits from the colony planet to the global `PlanetaryTraits` resource.
 #[allow(clippy::cast_precision_loss)]
-#[allow(clippy::too_many_lines)]
 pub fn generate_system(
     mut commands: Commands,
     mut global_traits: ResMut<PlanetaryTraits>,
