@@ -655,5 +655,7 @@ mod legacy_code_bridge;
 #[path = "integration/propaganda_graffitists_bridge.rs"]
 mod propaganda_graffitists_bridge;
 
+#[path = "integration/cassandra_syndrome_bridge.rs"]
+mod cassandra_syndrome_bridge;
 #[path = "integration/gravity_plating_bridge.rs"]
 mod gravity_plating_bridge;
