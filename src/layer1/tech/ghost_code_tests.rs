@@ -7,8 +7,8 @@ mod tests {
     use crate::layer1::architecture::turret::Turret;
     use crate::layer1::building::{Building, BuildingType};
     use crate::layer1::combat::AttackProperties;
-    use crate::layer1::energy::PowerConsumer;
     use crate::layer1::core::events::{BuildingCompletedEvent, BuildingRemovedEvent};
+    use crate::layer1::energy::PowerConsumer;
     use crate::layer1::map::GridPosition;
     use crate::layer1::resources::ResourceType;
     use crate::layer1::utility_types::{ActionType, PopAction, StartPlan};
