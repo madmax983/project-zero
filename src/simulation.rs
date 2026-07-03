@@ -373,6 +373,7 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<Events<crate::layer1::environment::ignition::ExplosionEvent>>();
 
     world.init_resource::<Events<crate::layer1::environment::events::DebrisFallEvent>>();
+        world.init_resource::<Events<crate::layer1::social::scrap_code_prophets::CultFormationEvent>>();
 
     world.init_resource::<crate::layer3::intellectual_property_wars::PatentRegistry>();
 
@@ -416,6 +417,8 @@ fn init_simulation_resources(world: &mut World) {
 
     world.init_resource::<crate::layer3::map::MapData>();
     world.init_resource::<Events<crate::layer3::map::FleetArrivalEvent>>();
+        world.init_resource::<Events<crate::layer1::diplomacy::TributeDemandEvent>>();
+        world.init_resource::<Events<crate::layer3::galaxy::FleetTravelEvent>>();
     world.init_resource::<Events<crate::layer3::map::AnomalyDiscoveredEvent>>();
     world.init_resource::<Events<crate::layer3::diplomacy_reflection::EntityKilledEvent>>();
     world.init_resource::<Events<crate::layer3::diplomacy_reflection::FloraPlantedEvent>>();
@@ -1065,6 +1068,7 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         crate::layer3::map::map_data_rot_system,
         crate::layer3::map::scout_ship_scan_system,
         crate::layer3::map::fleet_arrival_anomaly_system,
+        crate::layer3::sovereign_armada::armada_arrival_system,
         crate::layer3::physics::relativity::process_time_dilation_system,
         crate::layer3::physics::relativity::update_fleet_local_time_system
             .after(crate::layer3::physics::relativity::process_time_dilation_system),

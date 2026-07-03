@@ -35,3 +35,6 @@ pub mod intellectual_property_wars;
 pub mod auditor;
 pub mod guilt;
 pub mod zoo_hypothesis;
+
+pub mod galaxy;
+pub mod sovereign_armada;

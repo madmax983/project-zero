@@ -11,3 +11,12 @@
 pub mod wards;
 pub use wards::*;
 pub mod factions;
+
+use bevy::prelude::*;
+
+#[derive(Event, Debug)]
+pub struct TributeDemandEvent {
+    pub aggressor: Entity,
+    pub system: Entity,
+    pub amount: u32,
+}
