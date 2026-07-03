@@ -874,3 +874,4 @@
 - [x] `1011` The Sovereign Armada — `specs/1011-the-sovereign-armada.md` — completed 2026-02-01
 - [x] `INT-1305` Integration: The Cassandra Syndrome -> Chronicle - completed 2026-10-31
 - [x] `274` Blacksite Penal Colonies — `specs/274-blacksite-penal-colonies.md` — completed 2026-10-31
+- [x] `INT-1305` Integration: The Cassandra Syndrome -> Chronicle - completed 2026-10-31

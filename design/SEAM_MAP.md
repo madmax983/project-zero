@@ -1726,3 +1726,10 @@
 - **Glue added:** Added `scrap_code_cult_formation_chronicle_bridge` in `src/layer1/core/integration.rs` to generate Chronicle records when a new member joins the Cult of the Broken Machine.
 - **Schedule:** Registered the system in `src/layer1/systems/observation.rs`.
 - **Tests:** `tests/integration/scrap_code_cult_bridge.rs`
+
+### INT-1305: The Cassandra Syndrome -> Chronicle
+- **Date:** 2026-10-31
+- **Systems connected:** `DoomsdayWarningEvent` -> `cassandra_syndrome_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** `cassandra_syndrome_chronicle_bridge` and `cassandra_cult_chronicle_bridge` in `src/layer1/core/integration.rs`
+- **Schedule:** Registered the Cassandra systems in `src/layer1/systems/execution.rs` and initialized `DisasterOccurredEvent` in `simulation.rs`.
+- **Tests:** `tests/integration/cassandra_syndrome_bridge.rs`

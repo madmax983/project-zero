@@ -37,6 +37,15 @@ pub fn register(schedule: &mut Schedule) {
     );
     schedule.add_systems(
         (
+            crate::layer1::cassandra_syndrome::generate_doomsday_warning,
+            crate::layer1::cassandra_syndrome::handle_ignored_warning,
+            crate::layer1::cassandra_syndrome::validate_prophecy,
+        )
+            .in_set(super::Layer1SystemSet::Execution),
+    );
+
+    schedule.add_systems(
+        (
             crate::layer1::social::protest_crowds::form_mob_system,
             crate::layer1::mind::sleep_debt::process_sleep_debt_system,
             crate::layer1::mind::sleep_debt::check_critical_sleep_debt_system,
