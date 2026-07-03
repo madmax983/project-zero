@@ -88,6 +88,7 @@ pub enum FactionId {
     /// Pops living in redlined/dezoned areas who stop paying taxes.
     Stateless,
     /// Hive mind collective that split from the unintegrated pops.
+    Penitent,
     HiveMind,
 }
 
@@ -216,6 +217,13 @@ impl Factions {
                 FactionId::SubLithic,
                 FactionData {
                     name: "The Sub-Lithic Cult".into(),
+                    ..Default::default()
+                },
+            );
+            self.map.insert(
+                FactionId::Penitent,
+                FactionData {
+                    name: "The Penitent".into(),
                     ..Default::default()
                 },
             );
