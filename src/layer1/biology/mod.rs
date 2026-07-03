@@ -44,3 +44,6 @@ pub use xenoflora_addiction::*;
 
 pub mod symbiotic_gear;
 pub use symbiotic_gear::*;
+
+pub mod chromotaxis;
+pub use chromotaxis::*;

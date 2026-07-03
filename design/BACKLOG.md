@@ -640,7 +640,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1139` Magnetic Reversal — `specs/1139-magnetic-reversal.md`
 - [ ] `1142` The Scapegoat — `specs/1142-the-scapegoat.md`
 - [ ] `1143` Pulsar Timing — `specs/1143-pulsar-timing.md`
-- [ ] `1146` Chromotaxis — `specs/1146-chromotaxis.md`
+
 - [ ] `1147` Accidental Terraforming — `specs/1147-accidental-terraforming.md`
 - [ ] `1148` The Biomass Dividend — `specs/1148-the-biomass-dividend.md`
 - [ ] `1149` The Consultant — `specs/1149-the-consultant.md`

@@ -1,3 +1,4 @@
+- [x] `1146` Chromotaxis — `specs/1146-chromotaxis.md` — completed 2024-05-24
 # Completed
 
 - [x] `496` The Bureau of Regrets — `specs/496-the-bureau-of-regrets.md` — completed 2026-07-03
