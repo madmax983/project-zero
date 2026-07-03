@@ -686,3 +686,9 @@ pub mod slippery_slope;
 pub use propaganda_graffitists::*;
 pub mod faction_diet;
 pub use faction_diet::*;
+pub mod gravity_funerals;
+
+
+pub fn register_gravity_funerals(app: &mut bevy_app::App) {
+    app.add_plugins(gravity_funerals::GravityFuneralsPlugin);
+}

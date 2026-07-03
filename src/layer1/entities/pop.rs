@@ -1047,3 +1047,10 @@ mod security_tests {
         );
     }
 }
+
+
+#[derive(Component, Debug, Clone, PartialEq, Eq)]
+pub enum StatusLevel {
+    Worker,
+    Elite,
+}
