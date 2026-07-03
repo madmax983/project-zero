@@ -265,7 +265,8 @@ fn init_simulation_resources(world: &mut World) {
     {
         world
             .init_resource::<Events<crate::layer1::nature::biosphere_empathy::FloraDamagedEvent>>();
-        world.init_resource::<Events<crate::layer1::nature::long_night::StartLongNightEvent>>();
+        world.init_resource::<Events<crate::layer1::blackout_bazaars::PlayerTradeEvent>>();
+    world.init_resource::<Events<crate::layer1::nature::long_night::StartLongNightEvent>>();
     }
     world.init_resource::<crate::layer1::nature::biosphere_empathy::GlobalFloraHealth>();
     world.init_resource::<Events<crate::layer1::nature::long_night::StartLongNightEvent>>();
@@ -628,6 +629,11 @@ fn register_simulation_core_systems(schedule: &mut Schedule) {
 #[allow(clippy::too_many_lines)]
 fn register_simulation_extended_systems(schedule: &mut Schedule) {
     schedule.add_systems((
+        crate::layer1::blackout_bazaars::spawn_blackout_bazaars_system,
+        crate::layer1::blackout_bazaars::despawn_blackout_bazaars_system,
+        crate::layer1::blackout_bazaars::bazaar_trading_system,
+    ));
+    schedule.add_systems((
         crate::layer1::psychology::doomsday::apply_doomsday_panic_effects,
         crate::layer1::psychology::doomsday::resolve_doomsday_event,
         crate::layer1::psychology::doomsday::cleanup_nihilism_debuffs,
@@ -737,6 +743,7 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
     ));
     schedule.add_systems((
         // Cleanup events
+        update_event_buffer::<crate::layer1::blackout_bazaars::PlayerTradeEvent>,
         update_event_buffer::<crate::layer1::administration::edicts::TogglePolicyEvent>,
         update_event_buffer::<crate::layer1::administration::edicts::AccessDeniedEvent>,
         update_event_buffer::<crate::layer1::administration::edicts::HackCentralHubEvent>,

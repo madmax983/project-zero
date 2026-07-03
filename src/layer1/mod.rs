@@ -511,3 +511,6 @@ pub mod buildings {
 #[cfg(test)]
 pub mod clothing_tests;
 pub mod mobile_architecture;
+
+pub mod blackout_bazaars;
+pub use blackout_bazaars::{BazaarInventory, BlackoutBazaar, PlayerTradeEvent, RareItem, SocialArea, spawn_blackout_bazaars_system, despawn_blackout_bazaars_system, bazaar_trading_system};
