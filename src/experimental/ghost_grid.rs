@@ -33,19 +33,11 @@ pub fn ghost_grid_system(
 
 /// Slowly decays the "memory" of destroyed buildings over time.
 pub fn ghost_grid_decay_system(mut ghost_grid: ResMut<GhostGrid>) {
-    // Collect keys to remove to avoid mutable borrow issues
-    let mut to_remove = Vec::new();
-
-    for (pos, penalty) in ghost_grid.grid.iter_mut() {
+    // ⚡ Bolt Optimization: Use `retain` to avoid intermediate Vec allocation
+    ghost_grid.grid.retain(|_, penalty| {
         *penalty = penalty.saturating_sub(1);
-        if *penalty == 0 {
-            to_remove.push(*pos);
-        }
-    }
-
-    for pos in to_remove {
-        ghost_grid.grid.remove(&pos);
-    }
+        *penalty > 0
+    });
 }
 
 #[cfg(test)]
