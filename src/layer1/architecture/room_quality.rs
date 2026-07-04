@@ -81,6 +81,31 @@ pub fn apply_waking_thoughts_system(world: &mut World) {
 /// world.insert_resource(ZoneGrid::new(10, 10));
 /// let quality = calculate_room_quality(&mut world, GridPosition { x: 1, y: 1 });
 /// ```
+fn is_boundary_enclosed(
+    world: &World,
+    terrain: &TerrainGrid,
+    building_map: Option<&crate::layer1::building::BuildingMap>,
+    nx: i32,
+    ny: i32,
+) -> bool {
+    let (Ok(ux), Ok(uy)) = (usize::try_from(nx), usize::try_from(ny)) else {
+        return true;
+    };
+
+    let is_rock = terrain.get(ux, uy) == Some(TerrainType::Rock);
+
+    let is_wall = building_map.is_some_and(|map| {
+        map.0.get(&(nx, ny)).is_some_and(|&entity| {
+            world.get::<Building>(entity)
+                .is_some_and(|b| b.building_type == BuildingType::Wall)
+        })
+    });
+
+    let is_walkable = terrain.get(ux, uy).is_some_and(TerrainType::is_walkable);
+
+    is_rock || is_wall || !is_walkable
+}
+
 pub fn calculate_room_quality(world: &mut World, pos: GridPosition) -> f32 {
     // Cap room size to prevent infinite loops or massive CPU spikes
     const MAX_ROOM_SIZE: usize = 100;
@@ -144,38 +169,8 @@ pub fn calculate_room_quality(world: &mut World, pos: GridPosition) -> f32 {
                 if !visited.contains(&GridPosition { x: nx, y: ny }) {
                     queue.push(GridPosition { x: nx, y: ny });
                 }
-            } else {
-                // Boundary check: Is it a wall or rock?
-                let is_rock = if let (Ok(ux), Ok(uy)) = (usize::try_from(nx), usize::try_from(ny)) {
-                    terrain.get(ux, uy) == Some(TerrainType::Rock)
-                } else {
-                    false
-                };
-
-                let is_wall = if let Some(map) = building_map {
-                    if let Some(&entity) = map.0.get(&(nx, ny)) {
-                        if let Some(building) = world.get::<Building>(entity) {
-                            building.building_type == BuildingType::Wall
-                        } else {
-                            false
-                        }
-                    } else {
-                        false
-                    }
-                } else {
-                    false
-                };
-
-                let is_walkable =
-                    if let (Ok(ux), Ok(uy)) = (usize::try_from(nx), usize::try_from(ny)) {
-                        terrain.get(ux, uy).is_some_and(TerrainType::is_walkable)
-                    } else {
-                        false
-                    };
-
-                if !is_rock && !is_wall && is_walkable {
-                    enclosed = false;
-                }
+            } else if !is_boundary_enclosed(world, terrain, building_map, nx, ny) {
+                enclosed = false;
             }
         }
 
