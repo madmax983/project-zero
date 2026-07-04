@@ -30,3 +30,25 @@ The method `to_table()` returns a `comfy_table::Table`. If a user wants to inter
 
 ## 💡 The Fix
 Consider returning a formatted `String` instead to keep the API surface simple and decoupled from `comfy-table`.
+
+---
+
+## 🤦 The Confusion
+I tried to extract the headless logic into a helper function that takes `&mut World`, but the compiler said `World` was not found.
+
+## 🕵️ The Reality
+The `scale::prelude::*` provides `setup_world_with_config` which returns a `World`, but it doesn't export the `World` type itself. If a user wants to pass `&mut World` around, they have to figure out that they need `use bevy_ecs::prelude::World`. Same goes for standard types like `Query` or `Commands`.
+
+## 💡 The Fix
+Re-export basic `bevy_ecs` types (e.g., `World`, `Query`, `Commands`) in `scale::prelude` so users don't have to hunt down the exact version of `bevy_ecs` SCALE is using.
+
+---
+
+## 🤦 The Confusion
+The README explicitly claims the project uses "Rust Edition 2024". I spent time trying to update my rustup toolchain to find a 2024 edition, but stable rust doesn't support edition 2024 yet!
+
+## 🕵️ The Reality
+I checked `Cargo.toml` and it clearly says `edition = "2021"`.
+
+## 💡 The Fix
+Update the README to say `Rust Edition 2021` so people don't go chasing phantom rustc versions.
