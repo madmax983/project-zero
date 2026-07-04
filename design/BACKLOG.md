@@ -52,7 +52,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `277` Orbital Megastructure Deorbiting — `specs/277-orbital-megastructure-deorbiting.md`
 
 
-- [ ] `285` Echoes of the Past — `specs/285-echoes-of-the-past.md`
 - [ ] `288` The Memory Black Market — `specs/288-memory-black-market.md`
 
 - [ ] `290` The Phantom Shift — `specs/290-phantom-shift.md`

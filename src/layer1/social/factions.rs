@@ -77,6 +77,8 @@ pub enum FactionId {
     LoggersGuild,
     /// Faction for crafters (`SkillType::Crafting`).
     ArtisansGuild,
+    /// Faction for researchers (`SkillType::Science`).
+    ScholarsGuild,
     /// Faction for those with no specific skill focus or balanced skills.
     Unaligned,
     /// Faction for criminals from neighboring empire bailing out debt.
@@ -280,6 +282,7 @@ pub fn update_faction_membership_system(
             Some(SkillType::Construction | SkillType::Engineering) => FactionId::MasonsGuild,
             Some(SkillType::Forestry) => FactionId::LoggersGuild,
             Some(SkillType::Crafting) => FactionId::ArtisansGuild,
+            Some(SkillType::Science) => FactionId::ScholarsGuild,
             None => FactionId::Unaligned,
         };
 
