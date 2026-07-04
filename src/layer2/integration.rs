@@ -1100,3 +1100,21 @@ pub fn observe_forge_crush_event(
         });
     }
 }
+
+/// INT-312: Bridges `Added<MutineerPop>` to `AddChronicleEvent`
+pub fn cryo_mutiny_chronicle_bridge(
+    query: bevy_ecs::system::Query<(), bevy_ecs::query::Added<crate::layer2::cryo_mutiny::MutineerPop>>,
+    mut chronicle_events: bevy_ecs::event::EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+) {
+    let mut new_mutineers = 0;
+    for _ in query.iter() {
+        new_mutineers += 1;
+    }
+
+    if new_mutineers > 0 {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            text: "The Cryo-Mutiny has begun! Ancients from a falling cryo-ship have awoken and are disgusted by our society.".to_string(),
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
+        });
+    }
+}

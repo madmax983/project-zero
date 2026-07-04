@@ -1726,3 +1726,10 @@
 - **Glue added:** Added `scrap_code_cult_formation_chronicle_bridge` in `src/layer1/core/integration.rs` to generate Chronicle records when a new member joins the Cult of the Broken Machine.
 - **Schedule:** Registered the system in `src/layer1/systems/observation.rs`.
 - **Tests:** `tests/integration/scrap_code_cult_bridge.rs`
+
+### INT-312: Cryo-Mutiny -> Chronicle
+- **Date:** 2026-11-01
+- **Systems connected:** `Added<MutineerPop>` -> `cryo_mutiny_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `cryo_mutiny_chronicle_bridge` in `src/layer2/integration.rs`.
+- **Schedule:** Registered in `src/simulation.rs`.
+- **Tests:** Added `tests/integration/cryo_mutiny_bridge.rs`.
