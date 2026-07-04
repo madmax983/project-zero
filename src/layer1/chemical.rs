@@ -660,16 +660,19 @@ mod tests {
         assert!(state.active_effects.is_empty());
     }
 
-
     #[test]
     fn test_apply_chemical_speed_modifiers_system() {
         use bevy::prelude::*;
 
         let mut app = App::new();
-        app.add_systems(Update, crate::layer1::chemical::apply_chemical_speed_modifiers_system);
+        app.add_systems(
+            Update,
+            crate::layer1::chemical::apply_chemical_speed_modifiers_system,
+        );
 
         // 1. No modifiers -> stays same
-        let pop_normal = app.world_mut()
+        let pop_normal = app
+            .world_mut()
             .spawn((
                 crate::layer1::pop::Pop,
                 ChemicalState::default(),
@@ -682,7 +685,8 @@ mod tests {
             .id();
 
         // 2. Withdrawal -> halves speed
-        let pop_withdrawal = app.world_mut()
+        let pop_withdrawal = app
+            .world_mut()
             .spawn((
                 crate::layer1::pop::Pop,
                 ChemicalState {
@@ -704,7 +708,8 @@ mod tests {
             .id();
 
         // 3. Stims -> multiples speed
-        let pop_stims = app.world_mut()
+        let pop_stims = app
+            .world_mut()
             .spawn((
                 crate::layer1::pop::Pop,
                 ChemicalState {
@@ -724,7 +729,8 @@ mod tests {
             .id();
 
         // 4. Over clamp limits
-        let pop_extreme_slow = app.world_mut()
+        let pop_extreme_slow = app
+            .world_mut()
             .spawn((
                 crate::layer1::pop::Pop,
                 ChemicalState {
@@ -743,7 +749,8 @@ mod tests {
             ))
             .id();
 
-        let pop_extreme_fast = app.world_mut()
+        let pop_extreme_fast = app
+            .world_mut()
             .spawn((
                 crate::layer1::pop::Pop,
                 ChemicalState {

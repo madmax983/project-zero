@@ -1,6 +1,6 @@
+use scale::layer1::core::chronicle::{Chronicle, EventImportance};
 #[allow(unused_imports)]
 use scale::prelude::*;
-use scale::layer1::core::chronicle::{Chronicle, EventImportance};
 
 fn main() {
     let mut chronicle = Chronicle::default();

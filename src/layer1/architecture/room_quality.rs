@@ -96,7 +96,8 @@ fn is_boundary_enclosed(
 
     let is_wall = building_map.is_some_and(|map| {
         map.0.get(&(nx, ny)).is_some_and(|&entity| {
-            world.get::<Building>(entity)
+            world
+                .get::<Building>(entity)
                 .is_some_and(|b| b.building_type == BuildingType::Wall)
         })
     });

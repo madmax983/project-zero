@@ -522,7 +522,7 @@ fn init_simulation_resources_more(world: &mut World) {
     }
     if !world.contains_resource::<Events<crate::layer2::communications::signal_decay::CommsMessageEvent>>() {
         world.init_resource::<Events<crate::layer2::communications::signal_decay::CommsMessageEvent>>();
-    }
+            }
     if !world
         .contains_resource::<Events<crate::layer1::tech::teleporter::psychosis::TeleportEvent>>()
     {
@@ -772,6 +772,7 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         crate::layer2::dead_protocols::protocol_violation_system,
         crate::layer2::integration::dead_protocol_chronicle_bridge,
         crate::layer2::communications::signal_decay::calculate_signal_decay_system,
+        crate::layer2::communications::radio_broadcasts::process_comms_broadcasts,
         crate::layer2::integration::signal_decay_chronicle_bridge
             .after(crate::layer2::communications::signal_decay::calculate_signal_decay_system),
         crate::layer2::integration::orbital_drydock_fleet_bridge_system
