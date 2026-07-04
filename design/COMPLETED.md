@@ -879,3 +879,4 @@
 - [x] `352` Stellar Drift — `specs/352-stellar-drift.md` — completed 2026-07-04
 
 - [x] `909` Radio Broadcasts — `specs/909-radio-broadcasts.md` — completed 2026-06-30
+- [x] `1318` The Infinite Archive — `specs/1318-the-infinite-archive.md` — completed 2026-07-04
