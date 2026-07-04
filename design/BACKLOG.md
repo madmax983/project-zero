@@ -34,7 +34,6 @@
 
 
 
-- [ ] `876` The Phantom Tax — `specs/876-the-phantom-tax.md`
 
 
 See `design/IDEAS.md` for unspecced concepts.
