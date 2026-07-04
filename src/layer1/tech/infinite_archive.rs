@@ -56,3 +56,80 @@ pub fn purge_tech(world: &mut World, tech_label: &str) {
         }
     }
 }
+
+#[derive(Component)]
+pub struct ServerRack { pub capacity: u32 }
+
+#[derive(Component, Default)]
+pub struct DataStorage { pub used: u32 }
+
+#[derive(Resource, Default)]
+pub struct TotalData(pub u32);
+
+#[derive(PartialEq, Eq, Clone, Copy, Debug, Hash)]
+pub enum TechId {
+    Laser,
+    SteamEngine,
+}
+
+#[derive(Resource, Default)]
+pub struct UnlockedTechs(pub Vec<TechId>);
+
+#[derive(Resource)]
+pub struct ResearchProgress {
+    pub current_tech: TechId,
+    pub progress: f32,
+}
+
+#[derive(Event)]
+pub struct DeleteTechDataEvent(pub TechId);
+
+pub fn research_tick_system(
+    progress: Option<ResMut<ResearchProgress>>,
+    total_data: Option<Res<TotalData>>,
+) {
+    if let Some(mut prog) = progress {
+        let data_val = total_data.map(|d| d.0).unwrap_or(0);
+        let penalty = 1.0 - (data_val as f32 / 1000.0).clamp(0.0, 0.9);
+        prog.progress += 1.0 * penalty;
+    }
+}
+
+pub fn update_storage_system(mut query: Query<(Entity, &ServerRack, Option<&mut DataStorage>)>, mut commands: Commands) {
+    for (entity, _rack, storage) in query.iter_mut() {
+        if let Some(mut s) = storage {
+            s.used += 1;
+        } else {
+            commands.entity(entity).insert(DataStorage { used: 1 });
+        }
+    }
+}
+
+pub fn delete_tech_observer(
+    trigger: Trigger<DeleteTechDataEvent>,
+    unlocked: Option<ResMut<UnlockedTechs>>,
+    total_data: Option<ResMut<TotalData>>,
+) {
+    let event = trigger.event();
+    if let (Some(mut unl), Some(mut td)) = (unlocked, total_data) {
+        if let Some(pos) = unl.0.iter().position(|t| *t == event.0) {
+            unl.0.remove(pos);
+            td.0 = td.0.saturating_sub(100);
+        }
+    }
+}
+
+pub fn delete_tech_system(
+    mut events: EventReader<DeleteTechDataEvent>,
+    unlocked: Option<ResMut<UnlockedTechs>>,
+    total_data: Option<ResMut<TotalData>>,
+) {
+    if let (Some(mut unl), Some(mut td)) = (unlocked, total_data) {
+        for event in events.read() {
+            if let Some(pos) = unl.0.iter().position(|t| *t == event.0) {
+                unl.0.remove(pos);
+                td.0 = td.0.saturating_sub(100);
+            }
+        }
+    }
+}
