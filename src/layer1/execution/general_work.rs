@@ -64,16 +64,15 @@ pub fn work_execution_system(world: &mut World) {
 
     // Fetch Factions for strike check
     // We collect striking factions into a set to avoid borrowing conflicts with world
-    let striking_factions: std::collections::HashSet<crate::layer1::factions::FactionId> = world
-        .get_resource::<crate::layer1::factions::Factions>()
-        .map(|f| {
-            f.map
-                .iter()
-                .filter(|(_, d)| d.state == crate::layer1::factions::FactionState::Striking)
-                .map(|(id, _)| *id)
-                .collect()
-        })
-        .unwrap_or_default();
+    let mut striking_factions =
+        bevy_utils::HashSet::<crate::layer1::factions::FactionId>::default();
+    if let Some(factions) = world.get_resource::<crate::layer1::factions::Factions>() {
+        for (id, d) in &factions.map {
+            if d.state == crate::layer1::factions::FactionState::Striking {
+                striking_factions.insert(*id);
+            }
+        }
+    }
 
     // Spec 218: Calculate Improvised Efficiency (Global Fallback)
     let (improvised_efficiency, consumed_resource_type) = world
@@ -114,7 +113,7 @@ pub fn work_execution_system(world: &mut World) {
 fn collect_workers_by_target(
     world: &mut World,
     policies: Option<&ColonyPolicies>,
-    striking_factions: &std::collections::HashSet<crate::layer1::factions::FactionId>,
+    striking_factions: &bevy_utils::HashSet<crate::layer1::factions::FactionId>,
     cycle: Option<crate::layer1::day_night::TimeOfDay>,
 ) -> bevy::utils::HashMap<Entity, Vec<WorkerData>> {
     let mut workers_by_target: bevy::utils::HashMap<Entity, Vec<WorkerData>> =
