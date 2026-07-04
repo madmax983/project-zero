@@ -26748,3 +26748,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you implement the network to maximize peacetime efficiency and harmony, knowing a single distant tragedy could cripple your entire empire?
 
 ---
+
+## The Memory Black Market
+
+**Layer:** 1
+
+**Fantasy:** Pops trading suppressed or illegal memories for temporary bliss or illicit knowledge.
+
+**Mechanic:** Pops with high stress can visit underground "Memory Parlors" to temporarily offload traumatic memories (reducing stress) or purchase artificial memories of luxury (boosting morale). However, if the market becomes too large, a "Memory Plague" can spread, where pops forget their actual jobs or relationships, believing they are someone else entirely.
+
+**Emergence:** Your top scientists suddenly believe they are simple farmers and refuse to work in the labs, crippling your research because they bought a popular "pastoral life" memory package to cope with crunch.
+
+**Tension:** Do you allow the memory trade to thrive as a pressure valve for a stressed workforce, or ruthlessly suppress it to ensure pops remember their duties and loyalties?
+
+---
+
+## The Ghost Fleet Commute
+
+**Layer:** 2
+
+**Fantasy:** Old, automated transit ships slowly degrading into a chaotic, unreliable lifeline.
+
+**Mechanic:** Inter-colony transit is handled by a fleet of ancient, automated ferries inherited from a past era. Over time, these ferries accumulate software errors. Some take years to arrive, some arrive empty, and others start kidnapping pops and taking them to random, unintended destinations based on corrupted manifests.
+
+**Emergence:** A critical shipment of doctors sent to cure a plague on a rim world is hijacked by a glitching ferry and deposited on a deserted moon, while a ferry full of confused tourists arrives at the plague world instead.
+
+**Tension:** Do you risk the cheap, existing Ghost Fleet infrastructure, or invest massive resources in building a modern, reliable transit network from scratch?
+
+---
+
+## The Architect's Ego
+
+**Layer:** 1
+
+**Fantasy:** Master builders who refuse to follow the player's blueprints if they think they know better.
+
+**Mechanic:** Pops assigned to the "Architect" role develop an "Ego" stat. High Ego architects build structures faster and stronger, but they will sometimes ignore the player's placement or design choices, substituting their own aesthetic or structural ideas (e.g., placing a monument instead of a factory, or building a factory with ornate, useless spires).
+
+**Emergence:** You desperately need a defensive bunker in a specific location to survive an incoming raid, but your Master Architect decides the location is better suited for a grand plaza and refuses to build the bunker, leading to the colony's ruin.
+
+**Tension:** Do you employ highly skilled but unpredictable Master Architects, or rely on obedient but slow and inefficient novice builders?
+
+---
