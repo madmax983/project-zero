@@ -26790,3 +26790,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you employ highly skilled but unpredictable Master Architects, or rely on obedient but slow and inefficient novice builders?
 
 ---
+## The Debt of the Ancestors
+
+**Layer:** Cross-layer
+
+**Fantasy:** Older, established colonies feel exploited to subsidize the relentless expansion of the frontier.
+
+**Mechanic:** Core worlds (Layer 2) that constantly export resources to new colonies develop an "Exploitation Score." When this score gets too high, Pops on the core worlds (Layer 1) start identifying as "Subsidizers" and demand to keep their output, drastically reducing their productivity for export.
+
+**Emergence:** A vital, highly-productive core world suddenly strikes, causing a massive logistical cascade failure that starves three newly established frontier outposts simultaneously.
+
+**Tension:** Do you rapidly expand your empire by heavily taxing your core worlds, or slow down expansion to maintain the happiness and stability of your established populations?
+
+---
+
+## Phantom Infrastructure
+
+**Layer:** 1
+
+**Fantasy:** Building over the ruins of past mistakes is cheaper, but the ghosts of the past remain.
+
+**Mechanic:** If a building is destroyed (by disaster, riot, or intentionally bulldozed), its foundation remains. Building a new structure on this foundation is significantly cheaper and faster, but the new building inherits a "Phantom Flaw" based on what used to be there (e.g., a hospital built on a ruined factory might occasionally leak toxins).
+
+**Emergence:** You quickly rebuild a vital power plant on the ruins of a failed hydroponics bay to save a starving colony, but the resulting power surges randomly cause the food synthesizers to over-produce and explode.
+
+**Tension:** Do you spend massive time and resources to completely clear the land, or risk the unpredictable flaws of building on cheap foundations to survive an immediate crisis?
+
+---
+
+## Information Quarantine
+
+**Layer:** Cross-layer
+
+**Fantasy:** Suppressing news of a massive failure to prevent empire-wide panic, only for the truth to leak out and cause an even bigger crisis.
+
+**Mechanic:** When a disaster occurs on a colony (Layer 1), the player can enact an "Information Quarantine" using Layer 3 influence points. This prevents the event from propagating as news/rumors to other colonies, suppressing immediate empire-wide unrest. However, there's a chance a "Whistleblower" Pop escapes the colony.
+
+**Emergence:** You cover up a horrific famine on a mining world to prevent a general strike on your forge worlds. Five years later, a smuggled datapad from the mining world makes its way to the capital, triggering a massive, sudden revolution that destroys the government center.
+
+**Tension:** Do you let the painful truth spread naturally and deal with the immediate fallout, or cover it up and pray a whistleblower doesn't trigger a worse catastrophe later?
+
+---
