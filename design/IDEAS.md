@@ -6438,7 +6438,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Infinite Archive
+## The Infinite Archive [SPECCED]
 
 **Layer:** 1
 
