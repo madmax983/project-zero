@@ -97,7 +97,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `344` Seasonal Rhythms — `specs/344-seasonal-rhythms.md`
 - [ ] `345` Planetary Quirks — `specs/345-planetary-quirks.md`
 - [ ] `351` The Long-Haulers — `specs/351-the-long-haulers.md`
-- [ ] `352` Stellar Drift — `specs/352-stellar-drift.md`
 - [ ] `353` Alien Domestication — `specs/353-alien-domestication.md`
 - [ ] `354` Industrial Byproducts — `specs/354-industrial-byproducts.md`
 
