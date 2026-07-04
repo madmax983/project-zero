@@ -123,6 +123,7 @@ pub fn register(schedule: &mut Schedule) {
         (
             update_event_buffer::<crate::layer3::market::ephemeral_market::MarketSpawnEvent>,
             update_event_buffer::<crate::layer3::market::ephemeral_market::MarketTradeEvent>,
+            update_event_buffer::<crate::layer3::market::phantom_tax::HackSlushFundEvent>,
             update_event_buffer::<crate::layer3::market::ephemeral_market::MarketTradeFailedEvent>,
             update_event_buffer::<crate::layer1::nature::megafauna_terrain::AwakenTitanEvent>,
             update_event_buffer::<crate::layer1::environment::impact::ImpactWarningEvent>,
@@ -140,6 +141,11 @@ pub fn register(schedule: &mut Schedule) {
             update_event_buffer::<crate::layer1::orphaned_swarm::DerelictArrivalEvent>,
             update_event_buffer::<crate::layer1::orphaned_swarm::SwarmArrivalEvent>,
             update_event_buffer::<crate::layer1::orphaned_swarm::SwarmHostileEvent>,
+        )
+            .in_set(Layer1SystemSet::EventCleanup),
+    );
+    schedule.add_systems(
+        (
             update_event_buffer::<crate::layer1::culture::celestial_cemeteries::ClearCemeteryEvent>,
         )
             .in_set(Layer1SystemSet::EventCleanup),
