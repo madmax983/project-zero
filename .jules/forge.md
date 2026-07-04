@@ -37,3 +37,7 @@
 **[Removing Stale Clippy Allow Directives]**
 **Learning:** Sometimes files contain `#[allow(clippy::too_many_lines)]` directives from when they were larger, but subsequent refactors have reduced their size, making the directive stale. These stale directives hide future bloat.
 **Action:** Identify and remove stale `#[allow(clippy::too_many_lines)]` directives from functions that have naturally become shorter over time, ensuring the linter continues to enforce readability constraints going forward.
+
+**Refactoring `calculate_room_quality`**
+**Learning:** Found a function over 100 lines with 7 levels of nesting checking grid boundaries. Deep nesting makes the logic extremely hard to follow and modify. Also need to be careful when converting `if let (Ok... = TryFrom)` constructs into early returns: the original code effectively treated failure to convert (negative values) as non-walkable and non-rock, resulting in `enclosed` remaining unchanged.
+**Action:** Extract nested blocks dealing with discrete logical steps (like boundary enclosure checking) into separate helper functions. Use early returns (guard clauses) to flatten structure. When converting `if let` blocks that return `false` on failure and are part of a larger negated condition (`!is_rock && !is_wall && is_walkable`), make sure the early return yields `true` so the negated final evaluation remains consistent.
