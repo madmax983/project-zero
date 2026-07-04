@@ -10192,3 +10192,33 @@ How the awakened react to the modern colony.
 - shivering uncontrollably
 - a numbing, sleepy cold
 - the terrible silence of the freezing
+
+## Blacksite Penal Colonies Fragments (Spec 274)
+
+## Fragment Type: [BLACKSITE_NAME]
+Names for the high-security blacksite facilities.
+- The Pit
+- The Oubliette
+- Sector 7G
+- The Deep Block
+- The Silent Ward
+- The Iron Cage
+- The Void-Cell
+
+## Fragment Type: [WARDEN_TITLE]
+Titles for the individual managing the blacksite.
+- Chief Jailer
+- The Keeper
+- Warden-Commander
+- The Silent Guard
+- The Watcher
+- Blacksite Director
+
+## Fragment Type: [PRISONER_IDEOLOGY]
+Dangerous ideologies spread by the inmates.
+- Radical Collectivism
+- Anti-Substrate Zealousy
+- Void Worship
+- Total Anarchy
+- Corporate Supremacy
+- Anti-Colonial Separatism
