@@ -26706,3 +26706,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you rely on sleep-deprived zombie workers to meet impossible deadlines and risk catastrophic, delayed accidents, or accept the production loss to let them sleep?
 
 ---
+
+## The Gravity Well Cartel
+
+**Layer:** 2
+
+**Fantasy:** Criminals weaponizing orbital mechanics for slow-burn extortion.
+
+**Mechanic:** Smugglers build unregulated mass drivers in the asteroid belt. Firing these slightly alters orbital trajectories. Over decades, this creates artificial meteor swarms that the cartel uses to anonymously bombard rival Layer 1 colonies, extorting them for "protection."
+
+**Emergence:** You ignore a minor smuggling ring for fifty years. Suddenly, a massive, un-interceptable asteroid swarm they inadvertently created by launching contraband annihilates your capital.
+
+**Tension:** Do you expend massive fleet resources policing minor smugglers in the belt, or risk the long-term mathematical certainty of kinetic bombardment?
+
+---
+
+## Chronological Architecture
+
+**Layer:** 1
+
+**Fantasy:** Buildings that demand strict routine, melting down when chaos strikes.
+
+**Mechanic:** A unique building material only hardens when exposed to specific temporal frequencies (e.g., repeating the exact same shift schedule). If the colony's routine is disrupted by a crisis (like a draft or invasion), the buildings begin to liquify, meaning you must maintain rigid peacetime routines during wartime.
+
+**Emergence:** Your colony is invaded. You draft your workers into a militia, breaking the shift schedule. Within a week, your defensive bunkers melt into sludge, leaving you defenseless.
+
+**Tension:** Do you sacrifice military flexibility to maintain the integrity of your infrastructure, or fight a dynamic war while your cities dissolve around you?
+
+---
+
+## The Empathic Network Overload
+
+**Layer:** Cross-layer (1 & 3)
+
+**Fantasy:** The utopian dream of shared emotions turning into a galactic vulnerability.
+
+**Mechanic:** A neural implant perfectly shares emotions between pops, eliminating violent crime. However, if a massive tragedy occurs on a frontier world, the sudden spike of absolute grief instantly transmits across the entire empire, paralyzing your entire economy with shared depression.
+
+**Emergence:** A minor mining colony on the edge of the galaxy suffers a catastrophic cave-in. Because everyone is connected, your core forge worlds thousands of lightyears away instantly stop producing warships as billions of pops collapse in shared mourning, losing the war.
+
+**Tension:** Do you implement the network to maximize peacetime efficiency and harmony, knowing a single distant tragedy could cripple your entire empire?
+
+---
