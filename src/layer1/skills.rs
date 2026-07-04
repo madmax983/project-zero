@@ -193,6 +193,8 @@ pub enum SkillType {
     Husbandry,
     /// Tinkering, maintaining, and upgrading machinery.
     Engineering,
+    /// Scientific research and study.
+    Science,
 }
 
 /// Component storing experience points for various skills.
@@ -327,5 +329,6 @@ mod tests {
         let _ = SkillType::Farming;
         let _ = SkillType::Construction;
         let _ = SkillType::Crafting;
+        let _ = SkillType::Science;
     }
 }
