@@ -509,10 +509,7 @@ impl std::fmt::Display for Chronicle {
             )?;
             return Ok(());
         } else {
-            let text = format!(
-                "{:<47}",
-                format!("{} events recorded.", self.events.len())
-            );
+            let text = format!("{:<47}", format!("{} events recorded.", self.events.len()));
             writeln!(f, "│ {} │", text.with(Color::White))?;
             writeln!(
                 f,

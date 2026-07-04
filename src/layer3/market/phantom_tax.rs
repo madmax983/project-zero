@@ -17,7 +17,6 @@ pub struct HackSlushFundEvent {
     pub colony_entity: Entity,
 }
 
-
 pub const PHANTOM_TAX_RATE: u32 = 1;
 
 pub fn accumulate_phantom_tax_system(
@@ -28,7 +27,6 @@ pub fn accumulate_phantom_tax_system(
         slush_fund.0 = slush_fund.0.saturating_add(PHANTOM_TAX_RATE);
     }
 }
-
 
 pub fn execute_hack_system(
     mut commands: Commands,
@@ -115,7 +113,6 @@ mod tests {
         let colony_resources = app.world().resource::<ColonyResources>();
         assert_eq!(colony_resources.credits, 100.0);
     }
-
 
     #[test]
     fn test_non_hacker_pop_cannot_drain_slush_fund() {

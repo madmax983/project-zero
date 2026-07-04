@@ -16,7 +16,10 @@ fn test_blackout_bazaar_chronicle_bridge() {
     let mut app = App::new();
     app.init_resource::<Events<AddChronicleEvent>>();
 
-    app.add_systems(Update, (blackout_bazaar_chronicle_bridge, verify_event).chain());
+    app.add_systems(
+        Update,
+        (blackout_bazaar_chronicle_bridge, verify_event).chain(),
+    );
 
     app.world_mut().spawn(BlackoutBazaar { active: true });
 
