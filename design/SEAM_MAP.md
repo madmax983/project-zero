@@ -1726,3 +1726,10 @@
 - **Glue added:** Added `scrap_code_cult_formation_chronicle_bridge` in `src/layer1/core/integration.rs` to generate Chronicle records when a new member joins the Cult of the Broken Machine.
 - **Schedule:** Registered the system in `src/layer1/systems/observation.rs`.
 - **Tests:** `tests/integration/scrap_code_cult_bridge.rs`
+
+### INT-1308: Blackout Bazaars -> Chronicle
+- **Date:** 2026-11-01
+- **Systems connected:** `Added<BlackoutBazaar>` -> `blackout_bazaar_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `blackout_bazaar_chronicle_bridge` in `src/layer1/core/integration.rs` to generate Chronicle records when a Blackout Bazaar forms.
+- **Schedule:** Registered the system in `src/layer1/systems/observation.rs`.
+- **Tests:** Added tests in `tests/integration/blackout_bazaars_bridge.rs`.

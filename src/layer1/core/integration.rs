@@ -3439,3 +3439,20 @@ pub fn cassandra_cult_chronicle_bridge(
         });
     }
 }
+/// INT-1308: Bridges `Added<BlackoutBazaar>` to `AddChronicleEvent`
+pub fn blackout_bazaar_chronicle_bridge(
+    query: bevy_ecs::system::Query<
+        (),
+        bevy_ecs::query::Added<crate::layer1::blackout_bazaars::BlackoutBazaar>,
+    >,
+    mut chronicle_events: bevy_ecs::event::EventWriter<
+        crate::layer1::core::chronicle::AddChronicleEvent,
+    >,
+) {
+    for _ in query.iter() {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            text: "A Blackout Bazaar has formed in the unpowered social areas.".to_string(),
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
+        });
+    }
+}

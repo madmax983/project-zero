@@ -659,3 +659,6 @@ mod propaganda_graffitists_bridge;
 mod cassandra_syndrome_bridge;
 #[path = "integration/gravity_plating_bridge.rs"]
 mod gravity_plating_bridge;
+
+#[path = "integration/blackout_bazaars_bridge.rs"]
+mod blackout_bazaars_bridge;
