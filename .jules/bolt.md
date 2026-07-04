@@ -34,3 +34,11 @@
 **[Acoustic Physics Allocation Optimization]**
 **Learning:** Instantiating `Vec`, `VecDeque`, and `HashSet` inside systems running every frame causes excessive heap allocations. Bevy's `Local<T>` allows systems to retain persistent data structures between frames without needing global Resources.
 **Action:** Use `Local<T>` alongside `.clear()` and `.extend()` to reuse capacities for per-system collections, avoiding per-frame allocations.
+
+**Optimization Insight (Bolt/Bevy)**
+**Learning:** When dealing with `HashSets` or `HashMaps` using small integer keys or enums (like `FactionId`), prefer `bevy_utils::HashSet` / `bevy_utils::HashMap`. They use AHash, which avoids the significant overhead of Rust's default SipHash found in `std::collections`.
+**Action:** Replace `std::collections::HashSet` with `bevy_utils::HashSet` (or `HashMap`) for coordinate keys, `Entity` keys, and enum/integer keys.
+
+**Architecture Insight (Bevy Borrow Checker)**
+**Learning:** When iterating a query to perform operations that require exclusive `&mut World` access (e.g., despawning entities or invoking sub-functions taking `&mut World`), you cannot mutate the world while the query iterator is active. In these cases, collecting the required entity IDs into a temporary `Vec` via `.collect()` is a necessary pattern and should not be removed as a "performance optimization".
+**Action:** Be extremely cautious about removing `.collect()` chains when the subsequent loop iterates over the results and passes `&mut World` to another function.
