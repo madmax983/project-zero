@@ -9904,3 +9904,32 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Winter hit [COLONY] hard. Without proper clothes, people suffered from [HYPOTHERMIA_SYMPTOM]. [DEATHS] froze to death."
 - "The chill claimed [DEATHS] in [COLONY]. They were found with [HYPOTHERMIA_SYMPTOM]. [YEAR]."
 - "[COLONY], [YEAR]: A severe clothing shortage during the freeze. [DEATHS] succumbed to [HYPOTHERMIA_SYMPTOM]."
+
+## Blacksite Penal Colonies Templates (Spec 274)
+
+### Template: BLACKSITE_ESTABLISHED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [BLACKSITE_NAME]
+
+**Patterns:**
+- "[YEAR]: We took their worst to fund our future. [BLACKSITE_NAME] is operational in [COLONY]."
+- "The credits flow, but so does the fear. [COLONY] opens the doors to [BLACKSITE_NAME]. [YEAR]."
+- "[COLONY], [YEAR]: [BLACKSITE_NAME] established. A prison for those the Core Worlds wish to forget."
+
+### Template: WARDEN_RADICALIZED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [WARDEN_TITLE], [PRISONER_IDEOLOGY]
+
+**Patterns:**
+- "[YEAR]: The whispers took root. The [WARDEN_TITLE] at [COLONY] now preaches [PRISONER_IDEOLOGY]."
+- "They were supposed to guard them, not listen to them. The [WARDEN_TITLE] has embraced [PRISONER_IDEOLOGY]. [YEAR]."
+- "[COLONY], [YEAR]: A dangerous shift. The [WARDEN_TITLE] sympathizes with the inmates' [PRISONER_IDEOLOGY]."
+
+### Template: PRISON_BREAK
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [BLACKSITE_NAME]
+
+**Patterns:**
+- "[YEAR]: The alarms scream across [COLONY]. The inmates of [BLACKSITE_NAME] are free and armed."
+- "Containment failure at [BLACKSITE_NAME]. Our own weapons turned against us. [COLONY] is a warzone. [YEAR]."
+- "[COLONY], [YEAR]: The [BLACKSITE_NAME] has fallen to the prisoners. The worst of the galaxy now walk our halls."
