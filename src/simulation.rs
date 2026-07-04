@@ -116,6 +116,7 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<crate::layer1::environment::atmosphere::GlobalAtmosphere>();
     world.init_resource::<Events<crate::layer1::economy::information_black_market::EarlyWarningEvent>>();
     world.init_resource::<Events<crate::layer1::economy::black_market::SmugglerArrivalEvent>>();
+    world.init_resource::<Events<crate::layer1::economy::storage::StoreResourceEvent>>();
     world.init_resource::<Events<crate::layer1::economy::black_market::ShutdownDropNodeEvent>>();
     world.init_resource::<Events<crate::layer1::architecture::chrono_vault::SealVaultEvent>>();
     world.init_resource::<Events<crate::layer2::auction::VaultOpenedEvent>>();
@@ -154,6 +155,7 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<Events<crate::layer1::memetics::memetic_hazards::ConversationEvent>>();
 
     world.init_resource::<Events<crate::layer1::economy::black_market::SmugglerArrivalEvent>>();
+    world.init_resource::<Events<crate::layer1::economy::storage::StoreResourceEvent>>();
     world.init_resource::<Events<crate::layer1::economy::black_market::ShutdownDropNodeEvent>>();
     world.init_resource::<Events<crate::layer1::economy::apex_diet::ConsumeFoodEvent>>();
     world.init_resource::<crate::layer1::economy::apex_diet::ApexMeatStores>();
@@ -1307,6 +1309,7 @@ mod tests {
             .init_resource::<Events<crate::layer1::memetics::memetic_hazards::ConversationEvent>>();
 
         world.init_resource::<Events<crate::layer1::economy::black_market::SmugglerArrivalEvent>>();
+        world.init_resource::<Events<crate::layer1::economy::storage::StoreResourceEvent>>();
         world
             .init_resource::<Events<crate::layer1::economy::black_market::ShutdownDropNodeEvent>>();
         world.init_resource::<Events<crate::layer1::economy::apex_diet::ConsumeFoodEvent>>();

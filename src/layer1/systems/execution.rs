@@ -378,4 +378,8 @@ pub fn register(schedule: &mut Schedule) {
         crate::layer1::improvised_tools::evaluate_tool_fallback_system
             .in_set(Layer1SystemSet::Execution),
     );
+    schedule.add_systems(
+        crate::layer1::economy::storage::process_storage_insertion_system
+            .in_set(Layer1SystemSet::Execution),
+    );
 }

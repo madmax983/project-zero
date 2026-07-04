@@ -208,6 +208,7 @@ pub mod resources;
 pub mod shadow_market;
 /// Physical storage of resources.
 pub mod stockpile;
+pub mod storage;
 /// Regular trade with off-world merchants.
 pub mod trade;
 
@@ -221,6 +222,7 @@ pub use remittances::*;
 pub use resources::*;
 pub use shadow_market::*;
 pub use stockpile::*;
+pub use storage::*;
 pub use trade::*;
 
 /// Colony distress beacon mechanics.

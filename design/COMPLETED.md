@@ -877,3 +877,4 @@
 - [x] `274` Blacksite Penal Colonies — `specs/274-blacksite-penal-colonies.md` — completed 2026-10-31
 - [x] `1308` The Blackout Bazaars — `specs/1308-the-blackout-bazaars.md` — completed 2026-11-01
 - [x] `352` Stellar Drift — `specs/352-stellar-drift.md` — completed 2026-07-04
+- [x] `360` Resource Capacities — `specs/360-resource-capacities.md` — completed 2026-02-01

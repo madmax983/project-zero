@@ -108,6 +108,13 @@ impl Needs {
     /// let needs = Needs { hunger: 0.9, rest: 0.2, leisure: 0.5, hygiene: 1.0 };
     /// assert_eq!(needs.worst(), 0.2); // Rest is the lowest
     /// ```
+    pub fn clamp(&mut self) {
+        self.hunger = self.hunger.clamp(0.0, 1.0);
+        self.rest = self.rest.clamp(0.0, 1.0);
+        self.leisure = self.leisure.clamp(0.0, 1.0);
+        self.hygiene = self.hygiene.clamp(0.0, 1.0);
+    }
+
     #[must_use]
     pub fn get(&self, need_type: NeedType) -> f32 {
         match need_type {
@@ -340,6 +347,23 @@ mod tests {
             hygiene: 0.1,
         };
         assert!((needs3.worst() - 0.1).abs() < f32::EPSILON);
+    }
+
+    #[test]
+    fn test_needs_clamped_to_one() {
+        let mut needs = Needs {
+            hunger: 0.99,
+            rest: 0.99,
+            leisure: 0.99,
+            hygiene: 0.99,
+        };
+        needs.hunger += 0.1;
+        needs.rest += 0.1;
+
+        needs.clamp();
+
+        assert!(needs.hunger <= 1.0);
+        assert!(needs.rest <= 1.0);
     }
 
     #[test]

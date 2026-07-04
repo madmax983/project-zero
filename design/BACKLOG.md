@@ -104,7 +104,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `357` Graffiti & Signage — `specs/357-graffiti-and-signage.md`
 - [ ] `358` Stress Breakdowns — `specs/358-stress-breakdowns.md`
 - [ ] `359` Shift Work — `specs/359-shift-work.md`
-- [ ] `360` Resource Capacities — `specs/360-resource-capacities.md`
 - [ ] `361` The Posthumous Work Shift — `specs/361-the-posthumous-work-shift.md`
 - [ ] `362` The Nostalgia Plague — `specs/362-the-nostalgia-plague.md`
 - [ ] `363` Architectural Spite — `specs/363-architectural-spite.md`
