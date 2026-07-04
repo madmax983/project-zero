@@ -1,5 +1,5 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::energy::PowerConsumer;
+use bevy_ecs::prelude::*;
 
 #[derive(Component)]
 pub struct SocialArea;
@@ -35,7 +35,9 @@ pub fn spawn_blackout_bazaars_system(
 ) {
     for (entity, power) in query.iter() {
         if !power.active {
-            commands.entity(entity).insert(BlackoutBazaar { active: true });
+            commands
+                .entity(entity)
+                .insert(BlackoutBazaar { active: true });
         }
     }
 }
@@ -75,10 +77,16 @@ mod tests {
         let mut app = App::new();
         app.add_systems(Update, spawn_blackout_bazaars_system);
 
-        let social_area = app.world_mut().spawn((
-            SocialArea,
-            PowerConsumer { demand: 5.0, active: false },
-        )).id();
+        let social_area = app
+            .world_mut()
+            .spawn((
+                SocialArea,
+                PowerConsumer {
+                    demand: 5.0,
+                    active: false,
+                },
+            ))
+            .id();
 
         app.update();
 
@@ -90,11 +98,17 @@ mod tests {
         let mut app = App::new();
         app.add_systems(Update, despawn_blackout_bazaars_system);
 
-        let social_area = app.world_mut().spawn((
-            SocialArea,
-            PowerConsumer { demand: 5.0, active: true },
-            BlackoutBazaar { active: true },
-        )).id();
+        let social_area = app
+            .world_mut()
+            .spawn((
+                SocialArea,
+                PowerConsumer {
+                    demand: 5.0,
+                    active: true,
+                },
+                BlackoutBazaar { active: true },
+            ))
+            .id();
 
         app.update();
 
@@ -107,13 +121,16 @@ mod tests {
         app.add_event::<PlayerTradeEvent>();
         app.add_systems(Update, bazaar_trading_system);
 
-        let bazaar = app.world_mut().spawn((
-            BlackoutBazaar { active: true },
-            BazaarInventory {
-                rare_items: vec![RareItem::FounderRifle],
-                required_trade: RareItem::FuelCell,
-            }
-        )).id();
+        let bazaar = app
+            .world_mut()
+            .spawn((
+                BlackoutBazaar { active: true },
+                BazaarInventory {
+                    rare_items: vec![RareItem::FounderRifle],
+                    required_trade: RareItem::FuelCell,
+                },
+            ))
+            .id();
 
         let player_trade_event = PlayerTradeEvent {
             bazaar_entity: bazaar,

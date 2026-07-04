@@ -659,4 +659,145 @@ mod tests {
         // Duration 0 -> else branch -> removed.
         assert!(state.active_effects.is_empty());
     }
+
+
+    #[test]
+    fn test_apply_chemical_speed_modifiers_system() {
+        use bevy::prelude::*;
+
+        let mut app = App::new();
+        app.add_systems(Update, crate::layer1::chemical::apply_chemical_speed_modifiers_system);
+
+        // 1. No modifiers -> stays same
+        let pop_normal = app.world_mut()
+            .spawn((
+                crate::layer1::pop::Pop,
+                ChemicalState::default(),
+                crate::layer1::pop::Speed {
+                    base: 1.0,
+                    current: 1.0,
+                    accumulator: 0.0,
+                },
+            ))
+            .id();
+
+        // 2. Withdrawal -> halves speed
+        let pop_withdrawal = app.world_mut()
+            .spawn((
+                crate::layer1::pop::Pop,
+                ChemicalState {
+                    active_effects: vec![],
+                    addictions: vec![crate::layer1::chemical::Addiction {
+                        chemical: ChemicalType::Stim,
+                        severity: 0.5,
+                        in_withdrawal: true,
+                        last_consumed_tick: 0,
+                        withdrawal_threshold: 100,
+                    }],
+                },
+                crate::layer1::pop::Speed {
+                    base: 1.0,
+                    current: 1.0,
+                    accumulator: 0.0,
+                },
+            ))
+            .id();
+
+        // 3. Stims -> multiples speed
+        let pop_stims = app.world_mut()
+            .spawn((
+                crate::layer1::pop::Pop,
+                ChemicalState {
+                    active_effects: vec![crate::layer1::chemical::ActiveEffect {
+                        chemical: ChemicalType::Stim,
+                        duration: 10,
+                        magnitude: 2.0,
+                    }],
+                    addictions: vec![],
+                },
+                crate::layer1::pop::Speed {
+                    base: 1.0,
+                    current: 1.0,
+                    accumulator: 0.0,
+                },
+            ))
+            .id();
+
+        // 4. Over clamp limits
+        let pop_extreme_slow = app.world_mut()
+            .spawn((
+                crate::layer1::pop::Pop,
+                ChemicalState {
+                    active_effects: vec![crate::layer1::chemical::ActiveEffect {
+                        chemical: ChemicalType::Sedative,
+                        duration: 10,
+                        magnitude: 0.05,
+                    }],
+                    addictions: vec![],
+                },
+                crate::layer1::pop::Speed {
+                    base: 1.0,
+                    current: 1.0,
+                    accumulator: 0.0,
+                },
+            ))
+            .id();
+
+        let pop_extreme_fast = app.world_mut()
+            .spawn((
+                crate::layer1::pop::Pop,
+                ChemicalState {
+                    active_effects: vec![crate::layer1::chemical::ActiveEffect {
+                        chemical: ChemicalType::Stim,
+                        duration: 10,
+                        magnitude: 10.0,
+                    }],
+                    addictions: vec![],
+                },
+                crate::layer1::pop::Speed {
+                    base: 1.0,
+                    current: 1.0,
+                    accumulator: 0.0,
+                },
+            ))
+            .id();
+
+        app.update();
+
+        assert_eq!(
+            app.world()
+                .get::<crate::layer1::pop::Speed>(pop_normal)
+                .unwrap()
+                .current,
+            1.0
+        );
+        assert_eq!(
+            app.world()
+                .get::<crate::layer1::pop::Speed>(pop_withdrawal)
+                .unwrap()
+                .current,
+            0.5
+        );
+        assert_eq!(
+            app.world()
+                .get::<crate::layer1::pop::Speed>(pop_stims)
+                .unwrap()
+                .current,
+            2.0
+        );
+        assert_eq!(
+            app.world()
+                .get::<crate::layer1::pop::Speed>(pop_extreme_slow)
+                .unwrap()
+                .current,
+            0.1
+        );
+        assert_eq!(
+            app.world()
+                .get::<crate::layer1::pop::Speed>(pop_extreme_fast)
+                .unwrap()
+                .current,
+            5.0
+        );
+    }
 }

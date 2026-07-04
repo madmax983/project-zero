@@ -513,4 +513,7 @@ pub mod clothing_tests;
 pub mod mobile_architecture;
 
 pub mod blackout_bazaars;
-pub use blackout_bazaars::{BazaarInventory, BlackoutBazaar, PlayerTradeEvent, RareItem, SocialArea, spawn_blackout_bazaars_system, despawn_blackout_bazaars_system, bazaar_trading_system};
+pub use blackout_bazaars::{
+    bazaar_trading_system, despawn_blackout_bazaars_system, spawn_blackout_bazaars_system,
+    BazaarInventory, BlackoutBazaar, PlayerTradeEvent, RareItem, SocialArea,
+};

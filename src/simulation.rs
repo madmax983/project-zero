@@ -266,7 +266,7 @@ fn init_simulation_resources(world: &mut World) {
         world
             .init_resource::<Events<crate::layer1::nature::biosphere_empathy::FloraDamagedEvent>>();
         world.init_resource::<Events<crate::layer1::blackout_bazaars::PlayerTradeEvent>>();
-    world.init_resource::<Events<crate::layer1::nature::long_night::StartLongNightEvent>>();
+        world.init_resource::<Events<crate::layer1::nature::long_night::StartLongNightEvent>>();
     }
     world.init_resource::<crate::layer1::nature::biosphere_empathy::GlobalFloraHealth>();
     world.init_resource::<Events<crate::layer1::nature::long_night::StartLongNightEvent>>();
