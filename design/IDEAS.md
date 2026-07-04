@@ -26664,3 +26664,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you spend decades reverse-engineering the ancient, nonsensical legal code to avoid angering the automated peacekeepers, or do you dedicate massive military resources to destroying an enemy that only ever attacks when you break a rule you didn't know existed?
 
 ---
+
+## Kessler Debris Belt
+
+**Layer:** 2
+
+**Fantasy:** A dense ring of destroyed ships and obsolete satellites traps a planet, making space travel a deadly gamble.
+
+**Mechanic:** Destroyed ships and abandoned orbital structures turn into "Debris Clouds." Over time, these clouds expand and increase in density. Ships moving through Debris Clouds take random structural damage, and attempting to launch colony ships from a planet surrounded by debris has a high failure rate.
+
+**Emergence:** A long, drawn-out war over a strategically vital planet creates so much debris that the planet becomes completely cut off from the galaxy, turning a valuable asset into an isolated tomb world.
+
+**Tension:** Do you invest heavily in slow, expensive "Debris Sweeper" ships to clear the lanes, or weaponize the debris by intentionally destroying cheap ships to trap your enemies?
+
+---
+
+## The Nostalgia Trade
+
+**Layer:** Cross-layer
+
+**Fantasy:** Ancient cultural artifacts become highly valued commodities, driving colonies to strip-mine their own history.
+
+**Mechanic:** Layer 3 empires will pay astronomical prices for authentic artifacts from specific historical eras. Layer 1 colonies can bulldoze their own ancient, legacy buildings (which provide passive stability and cultural grounding) to "harvest" these artifacts for export.
+
+**Emergence:** A struggling colony sells off all its historical architecture to fund a short-term defense grid, only to suffer a massive generational identity crisis and depression because the pops have no connection to their past.
+
+**Tension:** Do you preserve your colony's cultural heritage for long-term stability, or sell your history to the highest bidder to survive an immediate crisis?
+
+---
+
+## Somnambulist Work Shifts
+
+**Layer:** 1
+
+**Fantasy:** Pushing pops past their breaking point results in them unconsciously continuing to work, but with terrifying, unpredictable results.
+
+**Mechanic:** If a pop's "Rest" need drops to absolute zero but they are forced to keep working (via extreme policy or crisis), they enter a "Somnambulist" state. They continue to produce output, but their actions become detached from reality—they might build walls in the wrong places, harvest poisonous crops, or refine highly volatile materials incorrectly.
+
+**Emergence:** You force your factory workers to stay awake to meet a wartime quota. They meet the quota, but you discover they've secretly wired the newly built weapons to target your own administration buildings because they were hallucinating during assembly.
+
+**Tension:** Do you rely on sleep-deprived zombie workers to meet impossible deadlines and risk catastrophic, delayed accidents, or accept the production loss to let them sleep?
+
+---
