@@ -29,3 +29,7 @@
 ## [Testing Edge Cases in Physics and AI Logic]
 **Learning:** Found gaps in testing negative bounds on pressure checks inside `suction_system`, and missing coverage for fallback logic on job assignments.
 **Action:** Adding assertions or using test setups targeting edge cases or fallback branch allows you to verify that no logic goes untested.
+
+**[Clamping Edge Case in apply_chemical_speed_modifiers_system]**
+**Learning:** Found an unchecked edge case in `apply_chemical_speed_modifiers_system` where clamping was tested but using default component values.
+**Action:** Wrote tests specifically targeting the clamping behaviour to ensure it matches the 0.1 to 5.0 range expected, increasing test coverage.
