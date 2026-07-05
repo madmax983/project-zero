@@ -1217,12 +1217,15 @@ fn print_map(world: &mut World, center_x: i32, center_y: i32) {
     map_content.push('\n');
     map_content.push_str(&legend);
 
-    print_dashboard_panel(
-        &format!("=== Map around ({center_x}, {center_y}) ==="),
-        &map_content,
-        None,
-        None,
-    );
+
+    let mut table = Table::new();
+    table.load_preset(comfy_table::presets::UTF8_FULL)
+         .apply_modifier(comfy_table::modifiers::UTF8_ROUND_CORNERS)
+         .set_header(vec![comfy_table::Cell::new(format!("=== Map around ({center_x}, {center_y}) ===")).add_attribute(comfy_table::Attribute::Bold).fg(comfy_table::Color::Cyan)])
+         .add_row(vec![comfy_table::Cell::new(map_content)]);
+
+    print_dashboard_table("", table);
+
 }
 
 fn build_at(world: &mut World, building_type: BuildingType, x: i32, y: i32) {
