@@ -4,7 +4,7 @@
 //! These massive kinetic projectiles deliver bulk resources to the colony, but cause localized
 //! destruction (craters) and trigger seismic events upon impact.
 //!
-//! # Examples
+//! ## Examples
 //!
 //! ```
 //! use bevy_ecs::prelude::*;
@@ -26,6 +26,18 @@ use crate::layer1::geology::GeologicalEvent;
 use crate::layer1::nature::terrain::{TerrainGrid, TerrainType};
 use bevy_ecs::prelude::*;
 
+/// Represents an incoming orbital harpoon payload that will impact the surface.
+///
+/// Contains the physical location of the impact, the type of resource being delivered,
+/// and the total amount of that resource. Used to trigger the [`process_harpoon_impact_system`].
+///
+/// ## Examples
+/// ```
+/// use scale::layer1::physics::harpoon::HarpoonImpact;
+/// use scale::layer1::core::map::GridPosition;
+/// use scale::layer1::economy::resources::ResourceType;
+/// let impact = HarpoonImpact { position: GridPosition { x: 5, y: 5 }, resource_type: ResourceType::Metal, amount: 100.0 };
+/// ```
 #[derive(Component)]
 pub struct HarpoonImpact {
     pub position: GridPosition,
@@ -33,6 +45,22 @@ pub struct HarpoonImpact {
     pub amount: f32,
 }
 
+/// Processes `HarpoonImpact` entities, delivering resources and applying environmental effects.
+///
+/// Upon resolving an impact, this system:
+/// 1. Spawns a `ResourceItem` at the impact location.
+/// 2. Alters the local terrain into a `Crater`.
+/// 3. Emits a `GeologicalEvent` representing the seismic quake of the impact.
+/// 4. Despawns the original `HarpoonImpact` entity.
+///
+/// ## Examples
+/// ```
+/// use bevy_ecs::prelude::*;
+/// use scale::layer1::physics::harpoon::process_harpoon_impact_system;
+/// use bevy_app::Update;
+/// let mut app = bevy_app::App::new();
+/// app.add_systems(Update, process_harpoon_impact_system);
+/// ```
 pub fn process_harpoon_impact_system(
     mut commands: Commands,
     impacts: Query<(Entity, &HarpoonImpact)>,

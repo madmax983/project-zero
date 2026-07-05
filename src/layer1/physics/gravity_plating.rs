@@ -1,29 +1,87 @@
+//! Artificial Gravity Management
+//!
+//! This module manages artificial gravity generation across different zones in the colony.
+//! It tracks the power state of gravity generators and determines if a `Zone` loses gravity,
+//! transitioning into a `ZeroG` state. Pops and Items in `ZeroG` zones have their movement
+//! drastically altered.
+//!
+//! ## Examples
+//!
+//! ```
+//! use bevy_ecs::prelude::*;
+//! use scale::layer1::physics::gravity_plating::{GravityState, Zone};
+//!
+//! let mut world = World::new();
+//! // Spawn a zone with normal gravity
+//! world.spawn((
+//!     Zone { id: 1 },
+//!     GravityState::Normal,
+//! ));
+//! ```
 use crate::layer1::entities::pop::Pop;
 use bevy_ecs::prelude::*;
 
 // GREEN Phase Minimal Implementation
+/// Represents a node within the colony's power grid.
+///
+/// Tracks the current power supplied versus the required power for the attached system to function.
+///
+/// ## Examples
+/// ```
+/// use scale::layer1::physics::gravity_plating::PowerNode;
+/// let node = PowerNode { current_power: 10, required_power: 50 };
+/// ```
 #[derive(Component)]
 pub struct PowerNode {
     pub current_power: i32,
     pub required_power: i32,
 }
 
+/// Events related to changes in the power grid's status.
+///
+/// ## Examples
+/// ```
+/// use bevy_ecs::prelude::*;
+/// use scale::layer1::physics::gravity_plating::PowerGridEvent;
+/// let event = PowerGridEvent::NodeFailed(Entity::from_raw(1));
+/// ```
 #[derive(Event)]
 pub enum PowerGridEvent {
     NodeFailed(Entity),
 }
 
+/// A distinct spatial area within the colony that shares environmental properties.
+///
+/// ## Examples
+/// ```
+/// use scale::layer1::physics::gravity_plating::Zone;
+/// let zone = Zone { id: 42 };
+/// ```
 #[derive(Component)]
 pub struct Zone {
     pub id: i32,
 }
 
+/// The current gravitational condition of a `Zone`.
+///
+/// ## Examples
+/// ```
+/// use scale::layer1::physics::gravity_plating::GravityState;
+/// let state = GravityState::ZeroG;
+/// ```
 #[derive(Component, PartialEq, Eq, Debug)]
 pub enum GravityState {
     Normal,
     ZeroG,
 }
 
+/// Defines how an entity traverses space.
+///
+/// ## Examples
+/// ```
+/// use scale::layer1::physics::gravity_plating::MovementType;
+/// let movement = MovementType::Drifting;
+/// ```
 #[derive(Component, PartialEq, Eq, Debug)]
 pub enum MovementType {
     Walking,
@@ -31,27 +89,71 @@ pub enum MovementType {
     ZeroGControlled,
 }
 
+/// The physical vector representing the entity's speed and direction.
+///
+/// ## Examples
+/// ```
+/// use scale::layer1::physics::gravity_plating::Velocity;
+/// let velocity = Velocity { x: 0.5, y: -0.2 };
+/// ```
 #[derive(Component)]
 pub struct Velocity {
     pub x: f32,
     pub y: f32,
 }
 
+/// A collection of traits possessed by a Pop, such as 'ZeroGTraining'.
+///
+/// ## Examples
+/// ```
+/// use scale::layer1::physics::gravity_plating::TraitList;
+/// let traits = TraitList { traits: vec!["ZeroGTraining".to_string()] };
+/// ```
 #[derive(Component)]
 pub struct TraitList {
     pub traits: Vec<String>,
 }
 
+/// A building component that provides artificial gravity to a specific `target_zone`.
+///
+/// ## Examples
+/// ```
+/// use bevy_ecs::prelude::*;
+/// use scale::layer1::physics::gravity_plating::GravityGenerator;
+/// let generator = GravityGenerator { target_zone: Entity::from_raw(2) };
+/// ```
 #[derive(Component)]
 pub struct GravityGenerator {
     pub target_zone: Entity,
 }
 
+/// Indicates which `Zone` an entity currently occupies.
+///
+/// ## Examples
+/// ```
+/// use bevy_ecs::prelude::*;
+/// use scale::layer1::physics::gravity_plating::CurrentZone;
+/// let zone = CurrentZone { zone: Entity::from_raw(3) };
+/// ```
 #[derive(Component)]
 pub struct CurrentZone {
     pub zone: Entity,
 }
 
+/// Monitors the power grid for failing nodes and disables gravity in affected zones.
+///
+/// Listens for `PowerGridEvent::NodeFailed`. If the failing node belongs to a `GravityGenerator`,
+/// the corresponding `target_zone` is placed into a `GravityState::ZeroG`.
+///
+/// ## Examples
+/// ```
+/// use bevy_ecs::prelude::*;
+/// use scale::layer1::physics::gravity_plating::{PowerGridEvent, monitor_gravity_generator_power_system};
+/// use bevy_app::Update;
+/// let mut app = bevy_app::App::new();
+/// app.add_event::<PowerGridEvent>();
+/// app.add_systems(Update, monitor_gravity_generator_power_system);
+/// ```
 pub fn monitor_gravity_generator_power_system(
     mut events: EventReader<PowerGridEvent>,
     generator_query: Query<&GravityGenerator>,
@@ -70,6 +172,13 @@ pub fn monitor_gravity_generator_power_system(
 // Import Item
 use crate::layer1::economy::Item;
 
+/// Penalties applied to an entity's combat effectiveness due to environmental hazards (like Zero-G).
+///
+/// ## Examples
+/// ```
+/// use scale::layer1::physics::gravity_plating::CombatModifier;
+/// let penalty = CombatModifier { aim_penalty: 0.8, melee_penalty: 0.8 };
+/// ```
 #[derive(Component)]
 pub struct CombatModifier {
     pub aim_penalty: f32,
@@ -84,6 +193,21 @@ type ItemQueryComponents<'a> = (
     Option<&'a mut Velocity>,
 );
 
+/// Updates entity movement and combat states based on the gravity of their current zone.
+///
+/// - Pops without `ZeroGTraining` transition to `MovementType::Drifting` and receive combat penalties.
+/// - Pops with `ZeroGTraining` transition to `MovementType::ZeroGControlled`.
+/// - Items without gravity enter `MovementType::Drifting` and gain random initial velocity.
+/// - Entities returning to `GravityState::Normal` have penalties removed and return to `Walking`.
+///
+/// ## Examples
+/// ```
+/// use bevy_ecs::prelude::*;
+/// use scale::layer1::physics::gravity_plating::apply_zero_g_movement_system;
+/// use bevy_app::Update;
+/// let mut app = bevy_app::App::new();
+/// app.add_systems(Update, apply_zero_g_movement_system);
+/// ```
 pub fn apply_zero_g_movement_system(
     mut commands: Commands,
     zone_query: Query<&GravityState>,
