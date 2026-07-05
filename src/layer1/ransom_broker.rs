@@ -90,6 +90,28 @@ pub fn process_ransom_decisions_system(
     }
 }
 
+use crate::layer1::core::chronicle::{AddChronicleEvent, EventImportance};
+
+pub fn ransom_broker_chronicle_bridge(
+    mut ransomed_events: EventReader<PopRansomedEvent>,
+    mut lost_events: EventReader<PopLostToPiratesEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for _ in ransomed_events.read() {
+        chronicle_events.send(AddChronicleEvent {
+            text: "A colonist was successfully ransomed from pirates.".to_string(),
+            importance: EventImportance::Major,
+        });
+    }
+
+    for _ in lost_events.read() {
+        chronicle_events.send(AddChronicleEvent {
+            text: "A colonist was permanently lost to pirates.".to_string(),
+            importance: EventImportance::Major,
+        });
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

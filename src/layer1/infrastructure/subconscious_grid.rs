@@ -166,6 +166,39 @@ pub fn apply_lockdown_system(
     }
 }
 
+#[derive(Component, Clone, Copy)]
+pub struct BaseMachineStats {
+    pub base_efficiency: f32,
+    pub base_burnout_risk: f32,
+}
+
+#[allow(clippy::type_complexity)]
+pub fn apply_subconscious_grid_machine_effects_system(
+    mut commands: Commands,
+    mut machines: Query<(
+        Entity,
+        &mut Machine,
+        &SubconsciousGridEffect,
+        Option<&BaseMachineStats>,
+    )>,
+) {
+    for (entity, mut machine, effect, base_stats_opt) in machines.iter_mut() {
+        let base_stats = if let Some(stats) = base_stats_opt {
+            *stats
+        } else {
+            let stats = BaseMachineStats {
+                base_efficiency: machine.efficiency,
+                base_burnout_risk: machine.burnout_risk,
+            };
+            commands.entity(entity).insert(stats);
+            stats
+        };
+
+        machine.efficiency = base_stats.base_efficiency * effect.efficiency_multiplier;
+        machine.burnout_risk = base_stats.base_burnout_risk + effect.burnout_risk_modifier;
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

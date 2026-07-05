@@ -549,7 +549,7 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::administration::edicts::hack_hub_chronicle_bridge,
             crate::layer1::integration::smuggler_arrival_event_bridge
                 .before(crate::layer1::void_weed::process_void_weed_trade_system),
-            crate::layer1::core::integration::ransom_broker_chronicle_bridge,
+            crate::layer1::ransom_broker::ransom_broker_chronicle_bridge,
         )
             .in_set(Layer1SystemSet::Observation),
     );
@@ -593,7 +593,7 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::core::integration::crop_mutation_mycelial_bridge,
             crate::layer1::core::integration::mycelial_chronicle_bridge,
             crate::layer1::core::integration::scrap_code_cult_formation_chronicle_bridge,
-            crate::layer1::core::integration::fungal_network_chronicle_bridge,
+            crate::layer1::fungal_network::fungal_network_chronicle_bridge,
             crate::layer1::core::integration::dead_hand_chronicle_bridge,
             crate::layer1::core::integration::lottery_chronicle_bridge,
             crate::layer1::core::integration::early_warning_chronicle_bridge,

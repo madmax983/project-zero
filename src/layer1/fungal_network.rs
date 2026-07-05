@@ -28,6 +28,23 @@ pub fn process_spore_taps_system(
     }
 }
 
+use crate::layer1::core::chronicle::{AddChronicleEvent, EventImportance};
+
+/// INT-313: Bridges the Fungal Network to the Chronicle when the first SporeTap is constructed.
+pub fn fungal_network_chronicle_bridge(
+    mut has_emitted: Local<bool>,
+    tap_query: Query<Entity, Added<SporeTap>>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    if !*has_emitted && tap_query.iter().next().is_some() {
+        *has_emitted = true;
+        chronicle_events.send(AddChronicleEvent {
+            text: "The Fungal Network wakes up. The subterranean mycelial network is now connected to our colony. We feel a strange new urge...".to_string(),
+            importance: EventImportance::Major,
+        });
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
