@@ -517,3 +517,7 @@ pub use blackout_bazaars::{
     bazaar_trading_system, despawn_blackout_bazaars_system, spawn_blackout_bazaars_system,
     BazaarInventory, BlackoutBazaar, PlayerTradeEvent, RareItem, SocialArea,
 };
+pub mod terraforming;
+pub mod terraforming_rejection;
+pub use terraforming::*;
+pub use terraforming_rejection::*;

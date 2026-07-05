@@ -889,3 +889,5 @@
 
 - [x] `1310` The Feral Administration — `specs/1310-the-feral-administration.md` — completed 2026-10-31
 - [x] `1309` The Asteroid Hermits — `specs/1309-the-asteroid-hermits.md` — completed 2024-05-31
+
+- [x] `1006` The Terraforming Rejection — `specs/1006-the-terraforming-rejection.md` — completed 2026-02-01
