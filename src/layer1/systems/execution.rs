@@ -320,6 +320,9 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::tech::hypno_learning::update_mental_fog_system.after(movement_system),
             crate::layer1::culture::linguistics::apply_linguistic_drift
                 .after(arrival_handler_system),
+            crate::layer1::psychology::dreaming_sickness::spread_dreaming_sickness,
+            crate::layer1::psychology::dreaming_sickness::dreaming_sickness_effects,
+            crate::layer1::psychology::dreaming_sickness::spontaneous_sleep,
         )
             .in_set(Layer1SystemSet::Execution),
     );
