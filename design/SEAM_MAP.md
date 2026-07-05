@@ -1733,3 +1733,10 @@
 - **Glue added:** Added `blackout_bazaar_chronicle_bridge` in `src/layer1/core/integration.rs` to generate Chronicle records when a Blackout Bazaar forms.
 - **Schedule:** Registered the system in `src/layer1/systems/observation.rs`.
 - **Tests:** Added tests in `tests/integration/blackout_bazaars_bridge.rs`.
+
+### INT-1018: Planetary Scarring -> Chronicle
+- **Date:** 2026-10-31
+- **Systems connected:** `MegaEvent` -> `planetary_scarring_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `planetary_scarring_chronicle_bridge` in `src/layer1/core/integration.rs` to generate Chronicle records when a significant planetary scarring event happens.
+- **Schedule:** Registered the system in `src/layer1/systems/observation.rs`.
+- **Tests:** Added tests in `tests/integration/planetary_scarring_chronicle.rs`.

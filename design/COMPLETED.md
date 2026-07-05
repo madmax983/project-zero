@@ -1,3 +1,5 @@
+
+- [x] `INT-1018` Integration: Planetary Scarring -> Chronicle - completed 2026-10-31
 - [x] `INT-664` Integration: Scrap Code Evangelists -> Chronicle — completed 2026-10-31
 - [x] `312` The Cryo-Mutiny — `specs/312-cryo-mutiny.md` — completed 2026-06-27
 - [x] `282` Cultural Drift — `specs/282-cultural-drift.md` — completed 2026-06-25
