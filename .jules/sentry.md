@@ -33,3 +33,7 @@
 **[Clamping Edge Case in apply_chemical_speed_modifiers_system]**
 **Learning:** Found an unchecked edge case in `apply_chemical_speed_modifiers_system` where clamping was tested but using default component values.
 **Action:** Wrote tests specifically targeting the clamping behaviour to ensure it matches the 0.1 to 5.0 range expected, increasing test coverage.
+
+**[layer1::tech::rhythm] Added Table-Driven Tests for Sync Logistics**
+**Learning:** Using table-driven test patterns in Rust for checking Bevy ECS queries (like distance calculations and tick windows) is extremely helpful for covering integer edge cases without massive code duplication.
+**Action:** Always prefer table-driven vectors of tuples `(input1, input2, expected)` when dealing with spatial or temporal radius checks in isolated systems.
