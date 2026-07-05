@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use scale::layer1::core::integration::{
+use scale::layer1::infrastructure::subconscious_grid::{
     apply_subconscious_grid_machine_effects_system, BaseMachineStats,
 };
 use scale::layer1::infrastructure::subconscious_grid::{Machine, SubconsciousGridEffect};

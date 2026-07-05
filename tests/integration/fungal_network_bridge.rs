@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 use scale::layer1::core::chronicle::AddChronicleEvent;
-use scale::layer1::core::integration::fungal_network_chronicle_bridge;
+use scale::layer1::fungal_network::fungal_network_chronicle_bridge;
 use scale::layer1::fungal_network::SporeTap;
 
 #[test]
