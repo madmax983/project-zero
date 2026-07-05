@@ -26872,3 +26872,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you detach the parasitic structures, sending thousands plummeting to their deaths to save the tether, or do you allow the structural decay and risk the entire elevator collapsing and wiping out your colony?
 
 ---
+## The Scavenger Kings
+
+**Layer:** 2
+
+**Fantasy:** Watching discarded ships and orbital debris slowly turn into an independent, jury-rigged civilization.
+
+**Mechanic:** Decommissioned ships, failed stations, and destroyed fleet debris accumulate in a system's "Scrap Orbit". Over time, desperate or exiled pops from Layer 1 colonies migrate to this orbit, turning the scrap into functional, albeit fragile, habitats and rogue fleets.
+
+**Emergence:** A forgotten battle site becomes a thriving, unregulated trade hub that eventually demands sovereignty, or a massive scrap-fleet accidentally triggers an invasion by attempting to salvage an active defense platform.
+
+**Tension:** Do you continuously spend resources to clean up orbital debris, or let the Scavenger Kings grow into a potentially useful but uncontrollable buffer state?
+
+---
+
+## The Nostalgia Plague
+
+**Layer:** 1
+
+**Fantasy:** A cultural obsession with the "good old days" that paralyzes progress and innovation.
+
+**Mechanic:** When a colony reaches a certain high tier of development after a period of prolonged hardship, pops can develop a "Nostalgia" trait. They begin demanding the reconstruction of primitive, inefficient buildings (like original drop-pod shelters) and refuse to work in high-tech facilities, believing the past was purer.
+
+**Emergence:** Your hyper-advanced research sector completely shuts down because the scientists insist on living in dirt hovels and eating basic nutrient paste to honor the founders, causing a massive tech deficit during a crucial war.
+
+**Tension:** Do you indulge the nostalgia by wasting space and resources on useless legacy infrastructure to keep morale high, or force them into modern facilities and risk a massive, culture-driven revolt?
+
+---
+
+## The Diplomatic Hostage Exchange
+
+**Layer:** Cross-layer
+
+**Fantasy:** The fraught, personal stakes of sending your best people to live among your enemies to ensure peace.
+
+**Mechanic:** To secure truces or trade deals with rival civilizations (Layer 3), you must physically send high-level pops (Layer 1) to live in their colonies as "Cultural Exchange Envoys." While there, they gather intelligence and boost relations, but are entirely at the mercy of the rival's events and whims.
+
+**Emergence:** You send your best Master Architect to a rival empire to secure a peace treaty. Ten years later, a local disaster on their capital kills the architect. Your home colony, where the architect was a beloved hero, erupts in fury and demands immediate war, overriding your strategic plans.
+
+**Tension:** Do you send your most valuable, influential pops to guarantee peace (knowing you might lose them to random events), or send useless pops and risk the treaty collapsing from perceived insult?
+
+---
