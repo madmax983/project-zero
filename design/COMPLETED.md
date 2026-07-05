@@ -888,3 +888,4 @@
 - [x] `1310` The Feral Administration — `specs/1310-the-feral-administration.md` — completed 2026-10-31
 
 - [x] `1310` The Feral Administration — `specs/1310-the-feral-administration.md` — completed 2026-10-31
+- [x] `1309` The Asteroid Hermits — `specs/1309-the-asteroid-hermits.md` — completed 2024-05-31
