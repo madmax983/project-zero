@@ -3456,3 +3456,35 @@ pub fn blackout_bazaar_chronicle_bridge(
         });
     }
 }
+
+
+/// INT-1022: Bridges `SurgeryEvent` to `AddChronicleEvent` for the Hive Mind Integration.
+pub fn hive_mind_chronicle_bridge(
+    mut events: bevy_ecs::event::EventReader<crate::layer1::hive_mind_integration::SurgeryEvent>,
+    mut chronicle_events: bevy_ecs::event::EventWriter<
+        crate::layer1::core::chronicle::AddChronicleEvent,
+    >,
+) {
+    for event in events.read() {
+        if event.procedure == "XenoIntegration" {
+            chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+                text: "A colonist has undergone Xeno-Integration and joined the Collective.".to_string(),
+                importance: crate::layer1::core::chronicle::EventImportance::Major,
+            });
+        }
+    }
+}
+
+/// INT-1022: Bridges `IntegratedCollective` to Needs system
+#[allow(clippy::type_complexity)]
+pub fn integrated_collective_needs_bridge(
+    mut query: Query<
+        &mut crate::layer1::psychology::needs::Needs,
+        With<crate::layer1::hive_mind_integration::IntegratedCollective>,
+    >,
+) {
+    for mut needs in query.iter_mut() {
+        needs.rest = 1.0;
+        needs.leisure = 1.0;
+    }
+}

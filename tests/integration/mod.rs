@@ -89,3 +89,4 @@ pub mod diplomatic_fashion_bridge;
 pub mod sartorial_rebellion_bridge;
 pub mod scrap_code_cult_bridge;
 pub mod blackout_bazaars_bridge;
+pub mod hive_mind_integration_bridge;
