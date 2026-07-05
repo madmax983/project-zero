@@ -38,6 +38,14 @@ pub fn register(schedule: &mut Schedule) {
             advance_season_system,
             crate::layer1::core::integration::predecessor_weather_array_bridge_system
                 .after(advance_season_system),
+        )
+            .in_set(Layer1SystemSet::Economy),
+    );
+    schedule.add_systems(
+        (
+            crate::layer1::administration::feral_administration::spawn_unprocessed_forms_system,
+            crate::layer1::administration::feral_administration::process_impassable_terrain_system,
+
             update_taboo_duration_system,
             update_water_system,
             update_weather_system,
