@@ -102,6 +102,7 @@ pub struct PlanetarySpinUpPlugin;
 impl Plugin for PlanetarySpinUpPlugin {
     fn build(&self, app: &mut App) {
         app.add_event::<planetary_spin_up::PlanetaryTorqueEvent>()
+            .add_event::<crate::layer2::stolen_fleet::WarDeclarationEvent>()
             .add_systems(
                 Update,
                 (
@@ -121,3 +122,5 @@ pub mod refugees;
 pub mod solar_sail_migration;
 pub mod void_leviathan;
 pub mod asteroid_hermits;
+pub mod stolen_fleet;
+pub use stolen_fleet::*;
