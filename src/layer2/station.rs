@@ -1,3 +1,4 @@
+use bevy::hierarchy::BuildChildren;
 use crate::layer1::resources::ResourceType;
 pub use crate::layer2::fleet::StationType;
 use crate::layer2::fleet::{Fleet, FleetOrder, InOrbit};
@@ -497,5 +498,63 @@ pub fn process_deep_forges(
             // Success
             resources.hyper_alloys += forge.production_rate;
         }
+    }
+}
+
+#[derive(Component)]
+pub struct Unrest { pub level: f32, pub threshold: f32 }
+
+#[derive(Component)]
+pub struct OrbitalHousingModule {
+    pub tier: u32,
+    pub is_attached: bool,
+}
+
+#[derive(Component)]
+pub struct MobileStation;
+
+pub fn process_rogue_module_system(
+    mut commands: Commands,
+    mut modules: Query<(Entity, &mut OrbitalHousingModule, &Unrest)>,
+) {
+    for (entity, mut module, unrest) in modules.iter_mut() {
+        if module.tier >= 3 && module.is_attached && unrest.level >= unrest.threshold {
+            module.is_attached = false;
+            commands.entity(entity).insert(MobileStation);
+            commands.entity(entity).remove_parent();
+        }
+    }
+}
+
+#[cfg(test)]
+mod tests_rogue {
+    use super::*;
+    use bevy_app::{App, Update};
+
+    use bevy::hierarchy::{BuildChildren, Parent};
+
+    #[test]
+    fn test_high_unrest_triggers_module_decoupling() {
+        let mut app = App::new();
+        app.add_systems(Update, process_rogue_module_system);
+
+        let parent_station = app.world_mut().spawn_empty().id();
+
+        let module = app.world_mut().spawn((
+            OrbitalHousingModule { tier: 3, is_attached: true }, // High tier
+            Unrest { level: 90.0, threshold: 80.0 }, // Past threshold
+        )).id();
+
+        app.world_mut().entity_mut(parent_station).add_child(module);
+
+        app.update();
+
+        // The module should detach and become its own station
+        let updated_module = app.world().get::<OrbitalHousingModule>(module).unwrap();
+        assert!(!updated_module.is_attached);
+        assert!(app.world().get::<MobileStation>(module).is_some());
+
+        // Ensure it has been detached from parent
+        assert!(app.world().get::<Parent>(module).is_none());
     }
 }

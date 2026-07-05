@@ -882,3 +882,4 @@
 - [x] `1318` The Infinite Archive — `specs/1318-the-infinite-archive.md` — completed 2026-07-04
 
 - [x] `285` Echoes of the Past — `specs/285-echoes-of-the-past.md` — completed 2026-10-31
+- [x] `931` Rogue Habitation Modules — `specs/931-rogue-habitation-modules.md` — completed 2026-07-04
