@@ -241,6 +241,70 @@ pub const fn format_event_prefix(importance: EventImportance) -> &'static str {
     }
 }
 
+
+impl std::fmt::Display for Chronicle {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        use comfy_table::{presets::UTF8_FULL, Cell, Color as TableColor, Table};
+        use crossterm::style::{Color, Stylize};
+
+        writeln!(
+            f,
+            "{}",
+            "╭── Colony Chronicle (History) ───────────────────╮".with(Color::Cyan)
+        )?;
+
+        if self.events.is_empty() {
+            let text = format!("{:<47}", "No events currently recorded.");
+            writeln!(f, "│ {} │", text.with(Color::DarkGrey))?;
+            writeln!(
+                f,
+                "{}",
+                "╰─────────────────────────────────────────────────╯".with(Color::Cyan)
+            )?;
+            return Ok(());
+        } else {
+            let text = format!("{:<47}", format!("{} events recorded.", self.events.len()));
+            writeln!(f, "│ {} │", text.with(Color::White))?;
+            writeln!(
+                f,
+                "{}",
+                "╰─────────────────────────────────────────────────╯".with(Color::Cyan)
+            )?;
+        }
+
+        let mut table = Table::new();
+        table
+            .load_preset(UTF8_FULL)
+            .apply_modifier(comfy_table::modifiers::UTF8_ROUND_CORNERS)
+            .set_content_arrangement(comfy_table::ContentArrangement::Dynamic)
+            .set_header(vec![
+                Cell::new("Tick").add_attribute(comfy_table::Attribute::Bold),
+                Cell::new("Year").add_attribute(comfy_table::Attribute::Bold),
+                Cell::new("Importance").add_attribute(comfy_table::Attribute::Bold),
+                Cell::new("Event Description").add_attribute(comfy_table::Attribute::Bold),
+            ]);
+
+        for event in &self.events {
+            let importance_str = format!("{:?}", event.importance);
+            let importance_color = match event.importance {
+                EventImportance::Legendary => TableColor::Yellow,
+                EventImportance::Major => TableColor::Red,
+                EventImportance::Standard => TableColor::White,
+                EventImportance::Minor => TableColor::DarkGrey,
+            };
+
+            table.add_row(vec![
+                Cell::new(event.tick.to_string()).fg(TableColor::DarkGrey),
+                Cell::new(event.year.to_string()).fg(TableColor::Cyan),
+                Cell::new(&importance_str).fg(importance_color),
+                Cell::new(&event.text).fg(importance_color),
+            ]);
+        }
+
+        write!(f, "{}", table)
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -485,68 +549,5 @@ mod tests {
         assert_eq!(format_event_prefix(EventImportance::Major), "!");
         assert_eq!(format_event_prefix(EventImportance::Standard), " ");
         assert_eq!(format_event_prefix(EventImportance::Minor), " ");
-    }
-}
-
-impl std::fmt::Display for Chronicle {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        use comfy_table::{presets::UTF8_FULL, Cell, Color as TableColor, Table};
-        use crossterm::style::{Color, Stylize};
-
-        writeln!(
-            f,
-            "{}",
-            "╭── Colony Chronicle (History) ───────────────────╮".with(Color::Cyan)
-        )?;
-
-        if self.events.is_empty() {
-            let text = format!("{:<47}", "No events currently recorded.");
-            writeln!(f, "│ {} │", text.with(Color::DarkGrey))?;
-            writeln!(
-                f,
-                "{}",
-                "╰─────────────────────────────────────────────────╯".with(Color::Cyan)
-            )?;
-            return Ok(());
-        } else {
-            let text = format!("{:<47}", format!("{} events recorded.", self.events.len()));
-            writeln!(f, "│ {} │", text.with(Color::White))?;
-            writeln!(
-                f,
-                "{}",
-                "╰─────────────────────────────────────────────────╯".with(Color::Cyan)
-            )?;
-        }
-
-        let mut table = Table::new();
-        table
-            .load_preset(UTF8_FULL)
-            .apply_modifier(comfy_table::modifiers::UTF8_ROUND_CORNERS)
-            .set_content_arrangement(comfy_table::ContentArrangement::Dynamic)
-            .set_header(vec![
-                Cell::new("Tick").add_attribute(comfy_table::Attribute::Bold),
-                Cell::new("Year").add_attribute(comfy_table::Attribute::Bold),
-                Cell::new("Importance").add_attribute(comfy_table::Attribute::Bold),
-                Cell::new("Event Description").add_attribute(comfy_table::Attribute::Bold),
-            ]);
-
-        for event in &self.events {
-            let importance_str = format!("{:?}", event.importance);
-            let importance_color = match event.importance {
-                EventImportance::Legendary => TableColor::Yellow,
-                EventImportance::Major => TableColor::Red,
-                EventImportance::Standard => TableColor::White,
-                EventImportance::Minor => TableColor::DarkGrey,
-            };
-
-            table.add_row(vec![
-                Cell::new(event.tick.to_string()).fg(TableColor::DarkGrey),
-                Cell::new(event.year.to_string()).fg(TableColor::Cyan),
-                Cell::new(&importance_str).fg(importance_color),
-                Cell::new(&event.text).fg(importance_color),
-            ]);
-        }
-
-        write!(f, "{}", table)
     }
 }

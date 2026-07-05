@@ -21,3 +21,6 @@
 ## 2026-07-03 - [Nova Feature Missing Types Confusion]
 **Confusion:** Users attempting to run the Oral Tradition 'nova' feature snippet from the README without enabling the `nova` feature in their Cargo.toml expected helpful deprecation warnings, but instead encountered raw `E0422` compiler panics because the fallback struct stubs were missing from `src/prelude.rs`.
 **Clarification:** Dummy `#[deprecated]` stubs must not be added to the main codebase just to force compilation for feature-gated code examples. Instead, we explicitly document the requirement by placing a large `⚠️ REQUIRES FEATURE NOVA` banner in the README right above the snippet and hiding the feature gate in the Rust snippet using `# #![cfg(feature = "name")]`.
+## 2026-07-04 - [Fix Beauty doctest]
+**Confusion:** The compile_fail test in `src/layer1/beauty.rs` was still throwing `E0308: mismatched types` during `cargo test --doc` because a specific compiler error code (`E0308`) needed to be specified in the doc block to pass successfully as an expected compile fail test.
+**Clarification:** Modified the code block to ````rust,compile_fail,E0308` to properly capture the type mismatch error and satisfy the doctest.

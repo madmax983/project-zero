@@ -32,11 +32,11 @@ use bevy_ecs::prelude::*;
 /// };
 /// ```
 ///
-/// ```compile_fail
+/// ```rust,compile_fail,E0308
 /// use scale::layer1::beauty::BeautySource;
 /// // Fails because value must be a float
 /// let invalid = BeautySource {
-///     value: "very pretty",
+///     value: "very pretty", // This causes a type mismatch error
 ///     radius: 1.0,
 /// };
 /// ```
