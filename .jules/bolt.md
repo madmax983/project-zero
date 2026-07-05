@@ -42,3 +42,7 @@
 **Architecture Insight (Bevy Borrow Checker)**
 **Learning:** When iterating a query to perform operations that require exclusive `&mut World` access (e.g., despawning entities or invoking sub-functions taking `&mut World`), you cannot mutate the world while the query iterator is active. In these cases, collecting the required entity IDs into a temporary `Vec` via `.collect()` is a necessary pattern and should not be removed as a "performance optimization".
 **Action:** Be extremely cautious about removing `.collect()` chains when the subsequent loop iterates over the results and passes `&mut World` to another function.
+
+**Avoiding Allocations with `Local<T>` and `HashSet` in Bevy queries**
+**Learning:** `mentorship_mood_system` allocated a `Vec<Entity>` every frame to collect unique masters who received a buff. When replacing it with `get_many_mut([apprentice, master])`, we realized that `get_many_mut` fails entirely if either entity lacks the queried component.
+**Action:** Instead of allocating a `Vec` or using brittle `get_many_mut`, we can use `mut master_set: Local<bevy_utils::HashSet<Entity>>` in the system signature, `clear()` it at the start, and `drain()` it at the end to collect and process unique masters without per-frame heap allocations or breaking logic.
