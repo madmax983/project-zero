@@ -22,3 +22,12 @@
 🤦 **The Confusion:** "Tried to run the `nova` demo by copy-pasting the exact code block from `README.md` and running the provided instruction: `cargo run`. The compiler screamed at me with `error[E0432]: unresolved import OralTradition`."
 🕵️ **The Reality:** "Turns out I needed to add the `--features nova` flag to `cargo run`. The README has a big warning about enabling it, but the explicit 'Usage' instruction immediately below it just says `Run with: cargo run` which is misleading."
 💡 **The Fix:** "Change the usage instruction in the README from `**Run with:** cargo run` to `**Run with:** cargo run --features nova`."
+
+## 202X-XX-XX - DX Audit Report
+🤦 **The Confusion:** "I ran the Headless Simulation example exactly as provided in the README. It compiled and ran! But then I wanted to extract the headless logic into a helper function that takes `&mut World`, but the compiler said `World` was not found."
+🕵️ **The Reality:** "The `scale::prelude::*` provides `setup_world_with_config` which returns a `World`, but it doesn't export the `World` type itself! Users have to manually hunt down `bevy_ecs` version."
+💡 **The Fix:** "Re-export basic `bevy_ecs::prelude::*` types (or at least `World`, `Query`, `Commands`, `Res`, `ResMut`, `Entity`, `Component`) in `scale::prelude`."
+
+🤦 **The Confusion:** "I triggered an error on purpose with the `NarrativeGenerator` and used `.to_table()`. It printed a beautiful table! But when I tried to pattern match it with `Option` or use it elsewhere, the compiler yelled at me. It turns out it returns a `comfy_table::Table`."
+🕵️ **The Reality:** "The method `to_table()` returns `comfy_table::Table` directly, exposing an internal dependency and forcing users to use `comfy_table` in their own code to handle it."
+💡 **The Fix:** "Return a `String` instead of `comfy_table::Table` to decouple the public API from internal rendering crates."
