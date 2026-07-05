@@ -1,112 +1,104 @@
-1. **Develop the Tests (RED/GREEN Phase)**
-   - Run `run_in_bash_session` to append table-driven tests to `src/layer1/tech/rhythm_tests.rs`:
-   ```bash
-   cat << 'TESTEOF' >> src/layer1/tech/rhythm_tests.rs
+1. **Setup Test Environment**:
+   - Write integration tests using a heredoc: `cat << 'EOF' > tests/integration/feral_admin_chronicle.rs`
+   ```rust
+   use bevy::prelude::*;
+   use scale::layer1::administration::feral_administration::{FeralColony, AdministrativeBuilding, UnprocessedForms};
+   use scale::layer1::core::chronicle::{AddChronicleEvent, EventImportance};
 
-    #[test]
-    fn test_rhythm_sync_distances() {
-        let test_cases = vec![
-            (GridPosition { x: 0, y: 0 }, GridPosition { x: 1, y: 1 }, true, "Adjacent (1) should sync"),
-            (GridPosition { x: 0, y: 0 }, GridPosition { x: 2, y: 0 }, false, "Distance 2 should not sync"),
-            (GridPosition { x: 0, y: 0 }, GridPosition { x: 0, y: 0 }, false, "Same position (self) handled gracefully/ignored based on other_pos == pos"),
-        ];
+   fn verify_event(mut events: EventReader<AddChronicleEvent>) {
+       let emitted: Vec<_> = events.read().collect();
+       assert_eq!(emitted.len(), 1);
+       assert!(emitted[0].text.contains("A mountain of Unprocessed Forms has collapsed"));
+   }
 
-        for (pos_a, pos_b, expected_sync, msg) in test_cases {
-            let mut world = World::new();
-            world.insert_resource(crate::shared::time::SimulationTime {
-                tick: 100,
-                ..Default::default()
-            });
+   #[test]
+   fn test_feral_admin_chronicle_bridge() {
+       let mut app = App::new();
+       app.add_plugins(MinimalPlugins);
+       app.add_event::<AddChronicleEvent>();
+       app.add_systems(Update, (
+           scale::layer1::administration::feral_administration::feral_admin_chronicle_bridge,
+           verify_event
+       ).chain());
 
-            let entity_a = world.spawn((
-                pos_a,
-                MachineRhythm {
-                    cycle_end_tick: 100,
-                    last_sync_bonus: 0.0,
-                },
-            )).id();
+       // Act: Spawn an UnprocessedForm that crosses the impassable threshold
+       app.world_mut().spawn((
+           UnprocessedForms { stack_size: 15 },
+       ));
 
-            world.spawn((
-                pos_b,
-                MachineRhythm {
-                    cycle_end_tick: 100,
-                    last_sync_bonus: 0.0,
-                },
-            ));
-
-            let mut schedule = Schedule::default();
-            schedule.add_systems(update_rhythm_system);
-            schedule.run(&mut world);
-
-            let rhythm_a = world.get::<MachineRhythm>(entity_a).unwrap();
-            if expected_sync {
-                assert!(rhythm_a.last_sync_bonus > 0.0, "{}", msg);
-            } else {
-                assert_eq!(rhythm_a.last_sync_bonus, 0.0, "{}", msg);
-            }
-        }
-    }
-
-    #[test]
-    fn test_rhythm_sync_time_windows() {
-        let test_cases = vec![
-            (100, 100, true, "Exact match should sync"),
-            (100, 102, true, "Diff 2 (ahead) should sync"),
-            (100, 98, true, "Diff 2 (behind) should sync"),
-            (100, 103, false, "Diff 3 (ahead) should not sync"),
-            (100, 97, false, "Diff 3 (behind) should not sync"),
-        ];
-
-        for (tick_a, tick_b, expected_sync, msg) in test_cases {
-            let mut world = World::new();
-            world.insert_resource(crate::shared::time::SimulationTime {
-                tick: tick_a,
-                ..Default::default()
-            });
-
-            let entity_a = world.spawn((
-                GridPosition { x: 0, y: 0 },
-                MachineRhythm {
-                    cycle_end_tick: tick_a,
-                    last_sync_bonus: 0.0,
-                },
-            )).id();
-
-            world.spawn((
-                GridPosition { x: 1, y: 0 },
-                MachineRhythm {
-                    cycle_end_tick: tick_b,
-                    last_sync_bonus: 0.0,
-                },
-            ));
-
-            let mut schedule = Schedule::default();
-            schedule.add_systems(update_rhythm_system);
-            schedule.run(&mut world);
-
-            let rhythm_a = world.get::<MachineRhythm>(entity_a).unwrap();
-            if expected_sync {
-                assert!(rhythm_a.last_sync_bonus > 0.0, "{}", msg);
-            } else {
-                assert_eq!(rhythm_a.last_sync_bonus, 0.0, "{}", msg);
-            }
-        }
-    }
-TESTEOF
+       app.update();
+   }
    ```
-2. **Verify Changes**
-   - Run `cat src/layer1/tech/rhythm_tests.rs` to ensure the file was correctly modified and no syntax errors were introduced.
+   - Update `tests/integration.rs` to include the file using: `echo '#[path = "integration/feral_admin_chronicle.rs"]\nmod feral_admin_chronicle;' >> tests/integration.rs`.
 
-3. **Verify Functionality**
-   - Run `cargo fmt --all`, `cargo clippy --all-targets --all-features -- -D warnings`, and `cargo test --test layer1::tech::rhythm_tests` to ensure tests compile and pass.
+2. **Write the Glue**:
+   - Add the new system directly to `src/layer1/administration/feral_administration.rs` by using python string replacement:
+   ```bash
+   cat << 'EOF' > update_glue.py
+   with open("src/layer1/administration/feral_administration.rs", "r") as f:
+       content = f.read()
 
-4. **Prepare Commit**
-   - Use `git checkout -b sentry-rhythm-coverage`.
-   - Use `git add src/layer1/tech/rhythm_tests.rs`.
-   - Use `git commit -m "🛡️ Sentry: [test coverage improvement] layer1::tech::rhythm"`
+   new_system = """pub fn feral_admin_chronicle_bridge(
+       query: Query<(Entity, &UnprocessedForms), Changed<UnprocessedForms>>,
+       mut recorded: Local<bevy_utils::HashSet<Entity>>,
+       mut chronicle_events: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+   ) {
+       for (entity, forms) in query.iter() {
+           if forms.stack_size >= 10 && !recorded.contains(&entity) {
+               recorded.insert(entity);
+               chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+                   text: "A mountain of Unprocessed Forms has collapsed, rendering a section of the colony impassable!".to_string(),
+                   importance: crate::layer1::core::chronicle::EventImportance::Major,
+               });
+           }
+       }
+   }
 
-5. **Complete pre-commit steps to ensure proper testing, verification, review, and reflection are done.**
-   - Use `pre_commit_instructions`.
+   pub fn process_impassable_terrain_system(
+   """
+   content = content.replace("pub fn process_impassable_terrain_system(", new_system)
 
-6. **Submit**
-   - Call the `submit` tool with `branch_name`, `commit_message`, `description`, and `title`.
+   with open("src/layer1/administration/feral_administration.rs", "w") as f:
+       f.write(content)
+   EOF
+   python3 update_glue.py
+   rm update_glue.py
+   ```
+
+   - Register the system in `src/layer1/systems/economy.rs` using a targeted `sed` command:
+   ```bash
+   sed -i '/crate::layer1::administration::feral_administration::process_impassable_terrain_system,/a \            crate::layer1::administration::feral_administration::feral_admin_chronicle_bridge,' src/layer1/systems/economy.rs
+   ```
+
+3. **Verify the Replacements**:
+   - Check the file contents to ensure they were written successfully.
+   ```bash
+   grep -C 5 "pub fn feral_admin_chronicle_bridge" src/layer1/administration/feral_administration.rs
+   grep -C 2 "feral_admin_chronicle_bridge" src/layer1/systems/economy.rs
+   ```
+
+4. **Verify Tests**:
+   - Run `cargo test --test integration`
+   - Run `cargo clippy -- -D warnings` to verify
+
+5. **Update State Files**:
+   - Append to `design/SEAM_MAP.md`:
+   ```bash
+   cat << 'EOF' >> design/SEAM_MAP.md
+
+   ### INT-1310: The Feral Administration -> Chronicle
+   - **Date:** 2024-05-31
+   - **Systems connected:** `UnprocessedForms` -> `feral_admin_chronicle_bridge` -> `AddChronicleEvent`
+   - **Glue added:** `feral_admin_chronicle_bridge` in `src/layer1/administration/feral_administration.rs`.
+   - **Schedule:** Registered in Layer 1 Economy schedule (`src/layer1/systems/economy.rs`).
+   - **Tests:** `tests/integration/feral_admin_chronicle.rs`
+   EOF
+   ```
+   - Append to `design/COMPLETED.md`:
+   ```bash
+   echo '- [x] `INT-1310` Integration: The Feral Administration -> Chronicle — completed 2024-05-31' >> design/COMPLETED.md
+   ```
+
+6. **Complete pre-commit steps to ensure proper testing, verification, review, and reflection are done.**
+
+7. **Submit Changes** with commit title `feat(integration): connect feral administration to chronicle`.

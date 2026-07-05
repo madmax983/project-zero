@@ -1740,3 +1740,10 @@
 - **Glue added:** Added `planetary_scarring_chronicle_bridge` in `src/layer1/core/integration.rs` to generate Chronicle records when a significant planetary scarring event happens.
 - **Schedule:** Registered the system in `src/layer1/systems/observation.rs`.
 - **Tests:** Added tests in `tests/integration/planetary_scarring_chronicle.rs`.
+
+### INT-1310: The Feral Administration -> Chronicle
+- **Date:** 2024-05-31
+- **Systems connected:** `UnprocessedForms` -> `feral_admin_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** `feral_admin_chronicle_bridge` in `src/layer1/administration/feral_administration.rs`.
+- **Schedule:** Registered in Layer 1 Economy schedule (`src/layer1/systems/economy.rs`).
+- **Tests:** `tests/integration/feral_admin_chronicle.rs`
