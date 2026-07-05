@@ -26831,3 +26831,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you let the painful truth spread naturally and deal with the immediate fallout, or cover it up and pray a whistleblower doesn't trigger a worse catastrophe later?
 
 ---
+## Sublight Cultural Drift
+
+**Layer:** Cross-layer
+
+**Fantasy:** Experiencing how time and distance distort a unified empire's culture until colonists no longer recognize their ancestors.
+
+**Mechanic:** When a colony ship is sent without FTL capabilities, the journey takes decades or centuries. During transit, the population's cultural values, language, and aesthetics randomly mutate. Upon arrival, they establish a colony that is technically part of your empire but culturally alien.
+
+**Emergence:** You send a ship of pacifist farmers to a distant star. Two centuries later, you finally develop FTL and visit them, only to discover they have evolved into a highly militaristic, isolationist society that views your "core world" culture as a myth—and they refuse to pay taxes.
+
+**Tension:** Do you force integration and risk a devastating rebellion, or do you treat your own descendants as an autonomous, potentially hostile foreign power?
+
+---
+
+## Black Market Genetics
+
+**Layer:** 1
+
+**Fantasy:** Witnessing the desperate, unregulated modification of a population striving to survive a harsh environment.
+
+**Mechanic:** If a colony's environment is highly hostile (e.g., toxic atmosphere, extreme gravity) and official terraforming or protective gear is inadequate, Pops will begin seeking illegal, rudimentary gene-modifications from underground clinics. These mods provide immediate environmental resistance but carry severe, compounding long-term health penalties and aesthetic mutations.
+
+**Emergence:** To save money on atmospheric processors, you ignore the toxic smog on your industrial world. Years later, you realize your entire workforce has mutated to breathe the smog, but they now violently riot if you try to clean the air because pure oxygen is toxic to them.
+
+**Tension:** Do you crack down on the illegal clinics (causing immediate deaths from the environment) or let the mutations spread (permanently altering the Pop species and limiting their ability to live on other worlds)?
+
+---
+
+## Tether Hijacking
+
+**Layer:** Cross-layer
+
+**Fantasy:** The chaotic intersection of high-concept orbital infrastructure and low-level desperation.
+
+**Mechanic:** Space elevators (Orbital Tethers) are highly efficient for transferring resources between Layer 1 (Colony) and Layer 2 (Orbit). However, if unrest or poverty is high near the tether's base, desperate Pops or criminal syndicates will physically attach unauthorized cargo pods or even living quarters to the outside of the tether.
+
+**Emergence:** Your pristine orbital trade hub starts receiving shipments of black-market goods and desperate refugees because a massive, parasitic shantytown has slowly grown up the side of the space elevator, siphoning power and structural integrity.
+
+**Tension:** Do you detach the parasitic structures, sending thousands plummeting to their deaths to save the tether, or do you allow the structural decay and risk the entire elevator collapsing and wiping out your colony?
+
+---
