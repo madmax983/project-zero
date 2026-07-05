@@ -129,38 +129,25 @@ pub fn apply_mentorship_xp_system(
 /// System to apply a small mood/leisure buff to both Master and Apprentice
 /// while they are engaged in a Mentorship relationship.
 pub fn mentorship_mood_system(
-    mut query: Query<(
-        Entity,
-        &mut crate::layer1::needs::Needs,
-        Option<&Mentorship>,
-    )>,
+    mentorship_query: Query<(Entity, &Mentorship)>,
+    mut needs_query: Query<&mut crate::layer1::needs::Needs>,
+    mut master_set: Local<bevy_utils::HashSet<Entity>>,
 ) {
-    let mut mood_buffs: Vec<Entity> = Vec::new();
-
-    // Identify all pairs and collect entities receiving buffs
-    for (_, _, mentorship_opt) in query.iter() {
-        if let Some(mentorship) = mentorship_opt {
-            // Apply to Apprentice
-            // mood_buffs.push(entity); // Handled directly in the next pass since we are iterating
-
-            // Apply to Master
-            mood_buffs.push(mentorship.master_entity);
-        }
-    }
-
     let mood_buff = 0.5; // From spec: MOOD_BUFF: f32 = 0.5;
 
-    // We do a two-pass approach to avoid mutable aliasing issues in queries
-    // Pass 1: Add buffs for apprentices
-    for (_, mut needs, mentorship_opt) in query.iter_mut() {
-        if mentorship_opt.is_some() {
+    master_set.clear();
+
+    // Pass 1: Apply to apprentices and collect unique masters
+    for (apprentice_entity, mentorship) in mentorship_query.iter() {
+        if let Ok(mut needs) = needs_query.get_mut(apprentice_entity) {
             needs.leisure += mood_buff;
         }
+        master_set.insert(mentorship.master_entity);
     }
 
-    // Pass 2: Add buffs for masters
-    for (entity, mut needs, _) in query.iter_mut() {
-        if mood_buffs.contains(&entity) {
+    // Pass 2: Apply to unique masters (prevents buff stacking if master has multiple apprentices)
+    for master_entity in master_set.drain() {
+        if let Ok(mut needs) = needs_query.get_mut(master_entity) {
             needs.leisure += mood_buff;
         }
     }

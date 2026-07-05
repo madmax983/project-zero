@@ -241,8 +241,6 @@ pub const fn format_event_prefix(importance: EventImportance) -> &'static str {
     }
 }
 
-
-
 impl std::fmt::Display for Chronicle {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         use comfy_table::{presets::UTF8_FULL, Cell, Color as TableColor, Table};

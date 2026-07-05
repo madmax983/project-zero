@@ -58,10 +58,14 @@ pub fn purge_tech(world: &mut World, tech_label: &str) {
 }
 
 #[derive(Component)]
-pub struct ServerRack { pub capacity: u32 }
+pub struct ServerRack {
+    pub capacity: u32,
+}
 
 #[derive(Component, Default)]
-pub struct DataStorage { pub used: u32 }
+pub struct DataStorage {
+    pub used: u32,
+}
 
 #[derive(Resource, Default)]
 pub struct TotalData(pub u32);
@@ -95,7 +99,10 @@ pub fn research_tick_system(
     }
 }
 
-pub fn update_storage_system(mut query: Query<(Entity, &ServerRack, Option<&mut DataStorage>)>, mut commands: Commands) {
+pub fn update_storage_system(
+    mut query: Query<(Entity, &ServerRack, Option<&mut DataStorage>)>,
+    mut commands: Commands,
+) {
     for (entity, _rack, storage) in query.iter_mut() {
         if let Some(mut s) = storage {
             s.used += 1;

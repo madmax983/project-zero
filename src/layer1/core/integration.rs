@@ -3460,7 +3460,9 @@ pub fn blackout_bazaar_chronicle_bridge(
 /// INT-1018: Bridges `MegaEvent` to `AddChronicleEvent`
 pub fn planetary_scarring_chronicle_bridge(
     mut events: bevy_ecs::event::EventReader<crate::layer1::disasters::mega_event::MegaEvent>,
-    mut chronicle_events: bevy_ecs::event::EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+    mut chronicle_events: bevy_ecs::event::EventWriter<
+        crate::layer1::core::chronicle::AddChronicleEvent,
+    >,
 ) {
     for event in events.read() {
         if event.intensity >= 50.0 {
