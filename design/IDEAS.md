@@ -6591,7 +6591,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Shadow Ecosystems
+## Shadow Ecosystems [SPECCED]
 
 **Layer:** 1
 
