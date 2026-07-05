@@ -145,7 +145,10 @@ pub fn register(schedule: &mut Schedule) {
             .in_set(Layer1SystemSet::EventCleanup),
     );
     schedule.add_systems(
-        (update_event_buffer::<crate::layer1::culture::celestial_cemeteries::ClearCemeteryEvent>,)
+        (
+            update_event_buffer::<crate::layer1::culture::celestial_cemeteries::ClearCemeteryEvent>,
+            update_event_buffer::<crate::layer2::stolen_fleet::WarDeclarationEvent>,
+        )
             .in_set(Layer1SystemSet::EventCleanup),
     );
 }

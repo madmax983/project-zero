@@ -891,3 +891,4 @@
 - [x] `1309` The Asteroid Hermits — `specs/1309-the-asteroid-hermits.md` — completed 2024-05-31
 
 - [x] `1006` The Terraforming Rejection — `specs/1006-the-terraforming-rejection.md` — completed 2026-02-01
+- [x] `318` The Stolen Fleet — `specs/318-stolen-fleet.md` — completed 2026-10-31
