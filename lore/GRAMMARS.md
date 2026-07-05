@@ -4712,3 +4712,19 @@ VACUUM_SHADOW_INCIDENT:
 ## Clothing and Temperature Chaining (Spec 040)
 - WINTER_SEASON -> increases_chance -> COLONY_FREEZING (if clothing is low)
 - COLONY_FREEZING -> enables -> POPULATION_CRASH, REBELLION
+
+## The Blackout Bazaars Chaining (Spec 1308)
+- GRID_FAILURE → enables → BAZAAR_FORMED
+- BAZAAR_FORMED → enables → BAZAAR_TRADE_SUCCESS, BAZAAR_RAIDED
+- BAZAAR_FORMED → increases_chance → CONTRABAND_ACQUIRED, SECRET_SHARED
+- GRID_RESTORED → causes → BAZAAR_DISPERSED
+
+## Stellar Drift Chaining (Spec 352)
+- DRIFT_EVENT → enables → HYPERLANE_SNAPPED, HYPERLANE_FORMED
+- HYPERLANE_SNAPPED → increases_chance → COLONY_ISOLATED, TRADE_ROUTE_COLLAPSE
+- HYPERLANE_FORMED → increases_chance → FIRST_CONTACT, NEW_TRADE_ROUTE
+
+## Radio Broadcasts Chaining (Spec 909)
+- SIGNAL_BROADCAST → increases_chance → THREAT_ATTRACTED, TRADE_OFFER
+- THREAT_ATTRACTED → enables → SYSTEM_INVASION, COLONY_SIEGE
+- SIGNAL_BROADCAST (Distress) → increases_chance → ALLIED_FLEET_ARRIVES

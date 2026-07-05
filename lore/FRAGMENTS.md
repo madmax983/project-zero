@@ -10222,3 +10222,44 @@ Dangerous ideologies spread by the inmates.
 - Total Anarchy
 - Corporate Supremacy
 - Anti-Colonial Separatism
+
+## The Blackout Bazaars Fragments (Spec 1308)
+
+## Fragment Type: [BAZAAR_NAME]
+- the Dark Market
+- the Whisper Exchange
+- the Lantern Bazaar
+- the Shadow Market
+- the Blind Trade
+
+## Fragment Type: [CONTRABAND_ITEM]
+- a Founder's Rifle
+- unrefined fuel cells
+- redacted chronicles
+- restricted AI cores
+- illegal gene-mods
+
+## Stellar Drift Fragments (Spec 352)
+
+## Fragment Type: [DRIFT_DIRECTION]
+- deeper into the Void
+- towards the Wound
+- out of the local cluster
+- away from the galactic core
+- into uncharted space
+
+## Radio Broadcasts Fragments (Spec 909)
+
+## Fragment Type: [SIGNAL_TYPE]
+- a distress beacon
+- an automated trade broadcast
+- an intimidation loop
+- a cry for help
+- a warning of approaching hostiles
+
+## Fragment Type: [UNWANTED_ATTENTION]
+- a pirate scouting party
+- a Reaver warfleet
+- automated defense drones
+- an unknown hostile signature
+- opportunistic scavengers
