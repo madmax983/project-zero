@@ -68,3 +68,5 @@ pub use void_sleep::*;
 pub mod artifact_diet;
 pub mod doomsday;
 pub use doomsday::*;
+pub mod dreaming_sickness;
+pub use dreaming_sickness::*;
