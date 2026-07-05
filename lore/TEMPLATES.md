@@ -9933,3 +9933,63 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The alarms scream across [COLONY]. The inmates of [BLACKSITE_NAME] are free and armed."
 - "Containment failure at [BLACKSITE_NAME]. Our own weapons turned against us. [COLONY] is a warzone. [YEAR]."
 - "[COLONY], [YEAR]: The [BLACKSITE_NAME] has fallen to the prisoners. The worst of the galaxy now walk our halls."
+
+## The Blackout Bazaars Templates (Spec 1308)
+
+### BAZAAR_FORMED
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [BAZAAR_NAME]
+**Patterns:**
+- "[YEAR]: The power grid failed at [COLONY]. In the darkness, [BAZAAR_NAME] took root."
+- "When the lights died in [YEAR], the people of [COLONY] didn't panic. They opened [BAZAAR_NAME]."
+- "A blackout at [COLONY]. The perfect cover for [BAZAAR_NAME] to open its stalls. [YEAR]."
+
+### BAZAAR_TRADE_SUCCESS
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [CONTRABAND_ITEM]
+**Patterns:**
+- "A quiet exchange in the dark. [YEAR]. [COLONY] acquired [CONTRABAND_ITEM]."
+- "[YEAR]: The Substrate guided the trade. [CONTRABAND_ITEM] secured while the cameras were blind."
+
+### BAZAAR_DISPERSED
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR]
+**Patterns:**
+- "Power restored to [COLONY]. [YEAR]. The market scattered before the lights came on."
+- "[YEAR]: The grid hums again. The bazaar vanishes into the shadows of [COLONY]."
+
+## Stellar Drift Templates (Spec 352)
+
+### HYPERLANE_SNAPPED
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [LOST_SYSTEM], [DRIFT_DIRECTION]
+**Patterns:**
+- "[YEAR]: The stars shift. The route to [LOST_SYSTEM] snapped as it drifted [DRIFT_DIRECTION]."
+- "We are further from them now. [YEAR]. The hyperlane to [LOST_SYSTEM] broke."
+- "The map is rewritten. [LOST_SYSTEM] is lost to us, drifting [DRIFT_DIRECTION]. [YEAR]."
+
+### HYPERLANE_FORMED
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [NEW_SYSTEM]
+**Patterns:**
+- "[YEAR]: A new star enters our sky. The drift brings a hyperlane to [NEW_SYSTEM]."
+- "The void shifts, opening a path. We can reach [NEW_SYSTEM]. [YEAR]."
+- "[YEAR]: A connection established. [NEW_SYSTEM] has drifted into range."
+
+## Radio Broadcasts Templates (Spec 909)
+
+### SIGNAL_BROADCAST
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [SIGNAL_TYPE]
+**Patterns:**
+- "[YEAR]: The comms array at [COLONY] fired into the dark. [SIGNAL_TYPE]."
+- "[COLONY] broke the silence. [YEAR]. Broadcasting [SIGNAL_TYPE] to the void."
+- "We sent [SIGNAL_TYPE] out from [COLONY] in [YEAR]. And we waited."
+
+### THREAT_ATTRACTED
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [UNWANTED_ATTENTION]
+**Patterns:**
+- "The void answered. [YEAR]. Our broadcast drew [UNWANTED_ATTENTION] to [COLONY]."
+- "[YEAR]: The signal was heard. Now [UNWANTED_ATTENTION] descends upon [COLONY]."
+- "We spoke too loudly. [UNWANTED_ATTENTION] is tracking our signal to [COLONY]. [YEAR]."
