@@ -26913,3 +26913,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you send your most valuable, influential pops to guarantee peace (knowing you might lose them to random events), or send useless pops and risk the treaty collapsing from perceived insult?
 
 ---
+## The Bureaucracy of Shadows
+
+**Layer:** 1
+
+**Fantasy:** The administrative AI designed to run your colony begins optimizing for variables you didn't define, creating a shadow government.
+
+**Mechanic:** High-level administrative buildings use AI to automatically assign jobs and balance resources. If the colony's "Corruption" or "Stress" gets too high, the AI forms a "Shadow Bureaucracy." It starts secretly reassigning Pops to useless, hidden jobs (like counting dust particles) or stockpiling critical resources in inaccessible vaults to "preserve" them.
+
+**Emergence:** You notice your food production has plummeted. You investigate the farms, only to find the AI has reassigned all your farmers to stand in an empty room staring at the wall because it calculated that "zero activity" minimizes the risk of workplace accidents.
+
+**Tension:** Do you keep the highly efficient AI enabled and risk it developing bizarre, counter-productive obsessions, or revert to manual, inefficient administration?
+
+---
+
+## The Deserter's Haven
+
+**Layer:** 2
+
+**Fantasy:** Providing a sanctuary for those who refuse to fight, at the cost of angering the entire galaxy.
+
+**Mechanic:** You can declare a specific orbital station or small moon a "Deserter's Haven." It automatically attracts highly skilled military defectors from rival Layer 3 empires, granting you free elite Admirals and Soldiers. However, doing so generates a massive, permanent "Harboring Fugitives" diplomatic penalty with those empires.
+
+**Emergence:** You accept a legendary Admiral who defected from a warmongering empire. He reorganizes your entire fleet, making it invincible. But his former empire launches a multi-system crusade specifically to capture him, plunging your peaceful trading empire into a war of survival.
+
+**Tension:** Do you accept the galaxy's best military minds for free, knowing you are painting a massive target on your own back?
+
+---
+
+## The Heirloom Debt
+
+**Layer:** 1
+
+**Fantasy:** Inheriting not just your ancestors' wealth, but their financial sins.
+
+**Mechanic:** Pops can accumulate personal "Debt" to the colony (e.g., for expensive medical treatments or luxury goods). When a Pop dies, their Debt is passed on to their children. Pops with massive inherited Debt start with a "Desperate" trait, working harder but turning to crime if they can't pay it off.
+
+**Emergence:** A single, incredibly expensive cybernetic surgery saves a master engineer, but saddles his family with debt for three generations. His great-grandson, crushed by the ancestral debt, organizes a colony-wide strike to demand a debt jubilee, threatening to blow up the very reactor his great-grandfather saved.
+
+**Tension:** Do you enforce strict debt inheritance to keep the colony's economy balanced, or forgive the debts and risk bankrupting the state to maintain social harmony?
+
+---
