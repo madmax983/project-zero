@@ -627,7 +627,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [x] `1129` Planetary Rings as Highways — `specs/1129-planetary-rings-as-highways.md` — completed 2026-06-25
 
 - [ ] `1134` Operational Detritus — `specs/1134-operational-detritus.md`
-- [ ] `1136` The Sentient Bureaucracy — `specs/1136-sentient-bureaucracy.md`
+
 - [ ] `1137` Heroic Acts — `specs/1137-heroic-acts.md`
 - [ ] `1138` Organic Recycling — `specs/1138-organic-recycling.md`
 - [ ] `1139` Magnetic Reversal — `specs/1139-magnetic-reversal.md`

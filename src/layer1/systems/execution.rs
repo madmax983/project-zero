@@ -6,6 +6,12 @@ use bevy_ecs::prelude::*;
 #[allow(clippy::too_many_lines)]
 pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
+        (
+            crate::layer1::administration::sentient_bureaucracy::update_bureaucracy_sentience_system,
+            crate::layer1::administration::sentient_bureaucracy::autonomous_work_reassignment_system,
+        ).chain().in_set(super::Layer1SystemSet::Execution),
+    );
+    schedule.add_systems(
         crate::layer1::architecture::gravity_engineering::evaluate_structural_integrity_system
             .in_set(super::Layer1SystemSet::Execution),
     );
