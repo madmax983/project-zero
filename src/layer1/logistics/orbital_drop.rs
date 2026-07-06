@@ -1,5 +1,6 @@
 use crate::layer1::items::ItemType as Item;
 use crate::layer1::map::GridPosition as GridPos;
+
 use crate::layer1::spoilage::Perishable as Spoilage;
 use crate::layer1::terrain::{TerrainGrid as GridMap, TerrainType};
 use bevy_ecs::prelude::*;
@@ -215,5 +216,24 @@ mod tests {
             ),
             "Heavy drop should crater the terrain"
         );
+    }
+}
+
+/// Bridges OrbitalDropEvent (Logistics) to crate::layer1::core::chronicle::AddChronicleEvent (Chronicle).
+pub fn orbital_drop_chronicle_bridge(
+    mut drop_events: EventReader<OrbitalDropEvent>,
+    mut chronicle_events: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+) {
+    for event in drop_events.read() {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            text: format!(
+                "Orbital Drop at ({}, {}): {} items scattered within {} tiles.",
+                event.target.x,
+                event.target.y,
+                event.items.len(),
+                event.scatter_radius
+            ),
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
+        });
     }
 }

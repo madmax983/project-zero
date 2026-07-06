@@ -662,7 +662,7 @@ mod gravity_plating_bridge;
 
 #[path = "integration/blackout_bazaars_bridge.rs"]
 mod blackout_bazaars_bridge;
-#[path = "integration/planetary_scarring_chronicle.rs"]
-mod planetary_scarring_chronicle;
 #[path = "integration/feral_admin_chronicle.rs"]
 mod feral_admin_chronicle;
+#[path = "integration/planetary_scarring_chronicle.rs"]
+mod planetary_scarring_chronicle;

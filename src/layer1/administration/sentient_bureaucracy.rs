@@ -1,7 +1,7 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::administration::admin::AdminStats;
 use crate::layer1::mind::utility_types::{ActionType, PopAction};
 use crate::shared::time::SimulationTime;
+use bevy_ecs::prelude::*;
 
 #[derive(Resource, Default, Debug)]
 pub struct SentientBureaucracyState {
@@ -59,8 +59,8 @@ pub fn autonomous_work_reassignment_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy_app::{App, Update};
     use crate::layer1::mind::utility_types::{ActionType, PopAction};
+    use bevy_app::{App, Update};
 
     #[test]
     fn test_sentient_bureaucracy_activation_after_prolonged_strain() {
@@ -69,7 +69,11 @@ mod tests {
         app.add_systems(Update, update_bureaucracy_sentience_system);
 
         // Strained admin capacity
-        app.insert_resource(AdminStats { supply: 100.0, demand: 150.0, efficiency: 0.5 });
+        app.insert_resource(AdminStats {
+            supply: 100.0,
+            demand: 150.0,
+            efficiency: 0.5,
+        });
         // Initialize SentientBureaucracyState
         app.insert_resource(SentientBureaucracyState {
             strain_duration: 0.0,
@@ -83,12 +87,17 @@ mod tests {
         }
 
         // Force the threshold for the sake of the test
-        app.world_mut().resource_mut::<SentientBureaucracyState>().strain_duration = 100.0;
+        app.world_mut()
+            .resource_mut::<SentientBureaucracyState>()
+            .strain_duration = 100.0;
         app.update();
 
         // Assert
         let state = app.world().resource::<SentientBureaucracyState>();
-        assert!(state.is_active, "Sentient Bureaucracy should activate after prolonged administrative strain.");
+        assert!(
+            state.is_active,
+            "Sentient Bureaucracy should activate after prolonged administrative strain."
+        );
     }
 
     #[test]
@@ -102,11 +111,14 @@ mod tests {
             is_active: true,
         });
 
-        let pop_entity = app.world_mut().spawn(PopAction {
-            current: ActionType::Work,
-            current_utility: 10.0,
-            ticks_committed: 0,
-        }).id();
+        let pop_entity = app
+            .world_mut()
+            .spawn(PopAction {
+                current: ActionType::Work,
+                current_utility: 10.0,
+                ticks_committed: 0,
+            })
+            .id();
 
         // Act
         app.update();
@@ -114,6 +126,10 @@ mod tests {
         // Assert
         let action = app.world().entity(pop_entity).get::<PopAction>().unwrap();
         // Assuming the sentient bureaucracy reroutes work to something else
-        assert_ne!(action.current, ActionType::Work, "Sentient Bureaucracy should autonomously reassign actions.");
+        assert_ne!(
+            action.current,
+            ActionType::Work,
+            "Sentient Bureaucracy should autonomously reassign actions."
+        );
     }
 }

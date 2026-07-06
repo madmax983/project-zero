@@ -1,6 +1,6 @@
-use bevy::prelude::*;
 use crate::layer1::entities::pop::Pop;
 use crate::layer2::orbit::asteroid_claims::Asteroid;
+use bevy::prelude::*;
 
 #[derive(Component)]
 pub struct Dissatisfaction {
@@ -42,17 +42,18 @@ pub fn evaluate_hermit_exodus_system(
     let mut available_asteroids: Vec<Entity> = asteroids.iter().collect();
 
     for (pop_entity, dissatisfaction, social_need) in pops.iter() {
-        if dissatisfaction.level > HERMIT_EXODUS_DISSATISFACTION_THRESHOLD && social_need.value < HERMIT_EXODUS_SOCIAL_NEED_THRESHOLD {
+        if dissatisfaction.level > HERMIT_EXODUS_DISSATISFACTION_THRESHOLD
+            && social_need.value < HERMIT_EXODUS_SOCIAL_NEED_THRESHOLD
+        {
             if let Some(asteroid_entity) = available_asteroids.pop() {
                 // Remove the pop
                 commands.entity(pop_entity).despawn();
 
                 // Convert the asteroid
                 commands.entity(asteroid_entity).remove::<Uncolonized>();
-                commands.entity(asteroid_entity).insert((
-                    HermitOutpost,
-                    DiscoveryProgress::default(),
-                ));
+                commands
+                    .entity(asteroid_entity)
+                    .insert((HermitOutpost, DiscoveryProgress::default()));
             }
         }
     }
@@ -83,10 +84,13 @@ mod tests {
     fn setup_app() -> App {
         let mut app = App::new();
         app.add_event::<DiscoveryEvent>();
-        app.add_systems(Update, (
-            evaluate_hermit_exodus_system,
-            process_hermit_discoveries_system,
-        ));
+        app.add_systems(
+            Update,
+            (
+                evaluate_hermit_exodus_system,
+                process_hermit_discoveries_system,
+            ),
+        );
         app
     }
 
@@ -95,47 +99,59 @@ mod tests {
         let mut app = setup_app();
 
         // Spawn an uncolonized asteroid
-        let asteroid = app.world_mut().spawn((
-            Asteroid,
-            Uncolonized,
-        )).id();
+        let asteroid = app.world_mut().spawn((Asteroid, Uncolonized)).id();
 
         // Spawn a highly dissatisfied pop with low social need
-        let pop = app.world_mut().spawn((
-            Pop,
-            Dissatisfaction { level: 95.0 }, // High dissatisfaction
-            SocialNeed { value: 10.0 },      // Low social need
-        )).id();
+        let pop = app
+            .world_mut()
+            .spawn((
+                Pop,
+                Dissatisfaction { level: 95.0 }, // High dissatisfaction
+                SocialNeed { value: 10.0 },      // Low social need
+            ))
+            .id();
 
         app.update();
 
         // Assert: Pop is removed/converted and Asteroid becomes HermitOutpost
-        assert!(app.world().get::<Pop>(pop).is_none(), "Pop should leave the colony");
+        assert!(
+            app.world().get::<Pop>(pop).is_none(),
+            "Pop should leave the colony"
+        );
 
         let outpost = app.world().get::<HermitOutpost>(asteroid);
         assert!(outpost.is_some(), "Asteroid should now be a Hermit Outpost");
-        assert!(app.world().get::<Uncolonized>(asteroid).is_none(), "Asteroid should no longer be Uncolonized");
+        assert!(
+            app.world().get::<Uncolonized>(asteroid).is_none(),
+            "Asteroid should no longer be Uncolonized"
+        );
     }
 
     #[test]
     fn test_satisfied_pop_does_not_become_hermit() {
         let mut app = setup_app();
 
-        let asteroid = app.world_mut().spawn((
-            Asteroid,
-            Uncolonized,
-        )).id();
+        let asteroid = app.world_mut().spawn((Asteroid, Uncolonized)).id();
 
-        let pop = app.world_mut().spawn((
-            Pop,
-            Dissatisfaction { level: 20.0 }, // Low dissatisfaction
-            SocialNeed { value: 10.0 },
-        )).id();
+        let pop = app
+            .world_mut()
+            .spawn((
+                Pop,
+                Dissatisfaction { level: 20.0 }, // Low dissatisfaction
+                SocialNeed { value: 10.0 },
+            ))
+            .id();
 
         app.update();
 
-        assert!(app.world().get::<Pop>(pop).is_some(), "Satisfied Pop should stay");
-        assert!(app.world().get::<HermitOutpost>(asteroid).is_none(), "Asteroid should remain uncolonized");
+        assert!(
+            app.world().get::<Pop>(pop).is_some(),
+            "Satisfied Pop should stay"
+        );
+        assert!(
+            app.world().get::<HermitOutpost>(asteroid).is_none(),
+            "Asteroid should remain uncolonized"
+        );
     }
 
     #[test]
@@ -153,6 +169,9 @@ mod tests {
         // Assert: DiscoveryEvent should be emitted
         let events = app.world().resource::<Events<DiscoveryEvent>>();
         let mut reader = events.get_cursor();
-        assert!(reader.read(events).next().is_some(), "Hermit Outpost should generate a DiscoveryEvent");
+        assert!(
+            reader.read(events).next().is_some(),
+            "Hermit Outpost should generate a DiscoveryEvent"
+        );
     }
 }

@@ -115,12 +115,12 @@ impl Plugin for PlanetarySpinUpPlugin {
             );
     }
 }
+pub mod asteroid_hermits;
 pub mod cryo_mutiny;
 pub mod leviathans;
 pub mod orbital_ring;
 pub mod refugees;
 pub mod solar_sail_migration;
-pub mod void_leviathan;
-pub mod asteroid_hermits;
 pub mod stolen_fleet;
+pub mod void_leviathan;
 pub use stolen_fleet::*;

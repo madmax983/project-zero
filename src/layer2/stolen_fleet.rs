@@ -1,6 +1,6 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::resources::ColonyResources;
 use crate::layer2::fleet::{Fleet, FleetComposition};
+use bevy_ecs::prelude::*;
 
 #[derive(Component)]
 pub struct DefectionEvent {
@@ -33,13 +33,18 @@ pub fn process_defection_events(
     mut war_events: EventWriter<WarDeclarationEvent>,
 ) {
     for (_entity, mut event) in defection_query.iter_mut() {
-        if event.processed { continue; }
+        if event.processed {
+            continue;
+        }
         if event.accepted {
             // Spawn the new fleet
             commands.spawn((
                 Fleet,
                 FleetComposition::default(),
-                UpkeepRequirement { food: event.food_upkeep, fuel: event.fuel_upkeep },
+                UpkeepRequirement {
+                    food: event.food_upkeep,
+                    fuel: event.fuel_upkeep,
+                },
                 FleetMorale { current: 100.0 },
             ));
 
@@ -89,13 +94,15 @@ mod tests {
         let events = Events::<WarDeclarationEvent>::default();
         world.insert_resource(events);
 
-        let defection = world.spawn(DefectionEvent {
-            fleet_size: 50,
-            food_upkeep: 5000.0,
-            fuel_upkeep: 2000.0,
-            accepted: false,
-            processed: false,
-        }).id();
+        let defection = world
+            .spawn(DefectionEvent {
+                fleet_size: 50,
+                food_upkeep: 5000.0,
+                fuel_upkeep: 2000.0,
+                accepted: false,
+                processed: false,
+            })
+            .id();
 
         // Act - Accept the fleet
         world.get_mut::<DefectionEvent>(defection).unwrap().accepted = true;
@@ -115,10 +122,16 @@ mod tests {
         let (fleet_entity, _) = fleet_query.iter(&world).next().unwrap();
 
         let upkeep = world.get::<UpkeepRequirement>(fleet_entity).unwrap();
-        assert_eq!(upkeep.food, 5000.0, "Fleet upkeep should match defection demands");
+        assert_eq!(
+            upkeep.food, 5000.0,
+            "Fleet upkeep should match defection demands"
+        );
 
         let events = world.resource::<Events<WarDeclarationEvent>>();
-        assert!(!events.is_empty(), "A punitive war should have been declared");
+        assert!(
+            !events.is_empty(),
+            "A punitive war should have been declared"
+        );
     }
 
     #[test]
@@ -126,13 +139,22 @@ mod tests {
         // Arrange
         let mut world = World::new();
 
-        let fleet = world.spawn((
-            Fleet,
-            UpkeepRequirement { food: 5000.0, fuel: 2000.0 },
-            FleetMorale { current: 100.0 },
-        )).id();
+        let fleet = world
+            .spawn((
+                Fleet,
+                UpkeepRequirement {
+                    food: 5000.0,
+                    fuel: 2000.0,
+                },
+                FleetMorale { current: 100.0 },
+            ))
+            .id();
 
-        world.insert_resource(ColonyResources { food: 1000.0, fuel: 1000.0, ..Default::default() }); // Insufficient
+        world.insert_resource(ColonyResources {
+            food: 1000.0,
+            fuel: 1000.0,
+            ..Default::default()
+        }); // Insufficient
 
         // Act
         let mut schedule = bevy_ecs::schedule::Schedule::default();
@@ -141,7 +163,10 @@ mod tests {
 
         // Assert
         let morale = world.get::<FleetMorale>(fleet).unwrap();
-        assert!(morale.current < 100.0, "Fleet morale should drop due to insufficient upkeep");
+        assert!(
+            morale.current < 100.0,
+            "Fleet morale should drop due to insufficient upkeep"
+        );
 
         let resources = world.get_resource::<ColonyResources>().unwrap();
         assert_eq!(resources.food, 0.0, "Food should be drained completely");

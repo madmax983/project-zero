@@ -141,9 +141,24 @@ mod tests {
     #[test]
     fn test_rhythm_sync_distances() {
         let test_cases = vec![
-            (GridPosition { x: 0, y: 0 }, GridPosition { x: 1, y: 1 }, true, "Adjacent (1) should sync"),
-            (GridPosition { x: 0, y: 0 }, GridPosition { x: 2, y: 0 }, false, "Distance 2 should not sync"),
-            (GridPosition { x: 0, y: 0 }, GridPosition { x: 0, y: 0 }, false, "Same position (self) handled gracefully/ignored based on other_pos == pos"),
+            (
+                GridPosition { x: 0, y: 0 },
+                GridPosition { x: 1, y: 1 },
+                true,
+                "Adjacent (1) should sync",
+            ),
+            (
+                GridPosition { x: 0, y: 0 },
+                GridPosition { x: 2, y: 0 },
+                false,
+                "Distance 2 should not sync",
+            ),
+            (
+                GridPosition { x: 0, y: 0 },
+                GridPosition { x: 0, y: 0 },
+                false,
+                "Same position (self) handled gracefully/ignored based on other_pos == pos",
+            ),
         ];
 
         for (pos_a, pos_b, expected_sync, msg) in test_cases {
@@ -153,13 +168,15 @@ mod tests {
                 ..Default::default()
             });
 
-            let entity_a = world.spawn((
-                pos_a,
-                MachineRhythm {
-                    cycle_end_tick: 100,
-                    last_sync_bonus: 0.0,
-                },
-            )).id();
+            let entity_a = world
+                .spawn((
+                    pos_a,
+                    MachineRhythm {
+                        cycle_end_tick: 100,
+                        last_sync_bonus: 0.0,
+                    },
+                ))
+                .id();
 
             world.spawn((
                 pos_b,
@@ -199,13 +216,15 @@ mod tests {
                 ..Default::default()
             });
 
-            let entity_a = world.spawn((
-                GridPosition { x: 0, y: 0 },
-                MachineRhythm {
-                    cycle_end_tick: tick_a,
-                    last_sync_bonus: 0.0,
-                },
-            )).id();
+            let entity_a = world
+                .spawn((
+                    GridPosition { x: 0, y: 0 },
+                    MachineRhythm {
+                        cycle_end_tick: tick_a,
+                        last_sync_bonus: 0.0,
+                    },
+                ))
+                .id();
 
             world.spawn((
                 GridPosition { x: 1, y: 0 },
@@ -227,7 +246,6 @@ mod tests {
             }
         }
     }
-
 
     #[test]
     fn test_update_rhythm_system_no_machines() {

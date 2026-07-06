@@ -1,7 +1,7 @@
-use bevy_ecs::prelude::*;
-use crate::layer1::map::{GridPosition};
 use crate::layer1::admin::Office;
 use crate::layer1::energy::PowerConsumer;
+use crate::layer1::map::GridPosition;
+use bevy_ecs::prelude::*;
 
 #[derive(Component)]
 pub struct AdministrativeBuilding;
@@ -24,7 +24,6 @@ pub struct UnprocessedForms {
 #[derive(Component)]
 pub struct FeralColony;
 
-
 pub fn spawn_unprocessed_forms_system(
     mut commands: Commands,
     query: Query<(&GridPosition, &PowerConsumer, &Office), With<AdministrativeBuilding>>,
@@ -36,7 +35,6 @@ pub fn spawn_unprocessed_forms_system(
             return;
         }
     }
-
 
     let mut rng = rand::thread_rng();
     use rand::Rng;
@@ -50,7 +48,7 @@ pub fn spawn_unprocessed_forms_system(
 
             let spawn_pos = GridPosition {
                 x: pos.x + offset_x,
-                y: pos.y + offset_y
+                y: pos.y + offset_y,
             };
 
             let mut found = false;
@@ -63,10 +61,7 @@ pub fn spawn_unprocessed_forms_system(
             }
 
             if !found {
-                commands.spawn((
-                    UnprocessedForms { stack_size: 1 },
-                    spawn_pos,
-                ));
+                commands.spawn((UnprocessedForms { stack_size: 1 }, spawn_pos));
             }
         }
     }
@@ -89,7 +84,6 @@ pub fn feral_admin_chronicle_bridge(
 }
 
 pub fn process_impassable_terrain_system(
-
     query: Query<(&GridPosition, &UnprocessedForms), Changed<UnprocessedForms>>,
     mut occupied: ResMut<crate::layer1::core::spatial::OccupiedTiles>,
 ) {
@@ -103,9 +97,9 @@ pub fn process_impassable_terrain_system(
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::layer1::map::GridPosition;
     use bevy_app::App;
     use bevy_app::Update;
-    use crate::layer1::map::GridPosition;
 
     #[test]
     fn test_unprocessed_forms_spawn_when_unstaffed_or_unpowered() {
@@ -113,12 +107,18 @@ mod tests {
         app.add_systems(Update, spawn_unprocessed_forms_system);
 
         let admin_pos = GridPosition { x: 5, y: 5 };
-        app.insert_resource(crate::shared::time::SimulationTime { tick: 10, ..Default::default() });
+        app.insert_resource(crate::shared::time::SimulationTime {
+            tick: 10,
+            ..Default::default()
+        });
 
         app.world_mut().spawn((
             FeralColony,
             AdministrativeBuilding,
-            PowerConsumer { demand: 10.0, active: false },
+            PowerConsumer {
+                demand: 10.0,
+                active: false,
+            },
             Office::default(),
             admin_pos,
         ));
@@ -126,7 +126,11 @@ mod tests {
         app.update();
 
         let mut found_forms = false;
-        for (_, pos) in app.world_mut().query::<(&UnprocessedForms, &GridPosition)>().iter(app.world()) {
+        for (_, pos) in app
+            .world_mut()
+            .query::<(&UnprocessedForms, &GridPosition)>()
+            .iter(app.world())
+        {
             let dist = (pos.x - admin_pos.x).abs() + (pos.y - admin_pos.y).abs();
             if dist == 1 {
                 found_forms = true;
@@ -149,7 +153,9 @@ mod tests {
 
         app.update();
 
-        let grid = app.world().resource::<crate::layer1::core::spatial::OccupiedTiles>();
+        let grid = app
+            .world()
+            .resource::<crate::layer1::core::spatial::OccupiedTiles>();
         assert!(grid.0.contains(&(10, 10)));
     }
 }

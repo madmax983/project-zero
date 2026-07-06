@@ -1,6 +1,6 @@
-use bevy::prelude::*;
 use crate::layer1::economy::ColonyResources;
 use crate::layer1::pop::Pop;
+use bevy::prelude::*;
 
 #[derive(Component)]
 pub struct OrbitalHabitat {
@@ -34,7 +34,10 @@ pub fn evaluate_orbital_secession_system(
         let planet_population = pop_query.iter().count() as u32;
 
         for (entity, habitat, unrest) in habitat_query.iter_mut() {
-            if habitat.wealth > planet_wealth && habitat.population > planet_population && unrest.level > SECESSION_UNREST_THRESHOLD {
+            if habitat.wealth > planet_wealth
+                && habitat.population > planet_population
+                && unrest.level > SECESSION_UNREST_THRESHOLD
+            {
                 commands.entity(entity).insert(SecessionState::Seceded);
             }
         }
@@ -50,10 +53,16 @@ mod tests {
         let mut app = App::new();
         app.add_systems(Update, evaluate_orbital_secession_system);
 
-        let habitat_entity = app.world_mut().spawn(
-            (OrbitalHabitat { population: 5000, wealth: 100000.0 },
-            Unrest { level: 90.0 })
-        ).id();
+        let habitat_entity = app
+            .world_mut()
+            .spawn((
+                OrbitalHabitat {
+                    population: 5000,
+                    wealth: 100000.0,
+                },
+                Unrest { level: 90.0 },
+            ))
+            .id();
 
         // Spawn 4000 Pops for the planet
         for _ in 0..4000 {
@@ -77,10 +86,16 @@ mod tests {
         let mut app = App::new();
         app.add_systems(Update, evaluate_orbital_secession_system);
 
-        let habitat_entity = app.world_mut().spawn(
-            (OrbitalHabitat { population: 5000, wealth: 10000.0 },
-            Unrest { level: 90.0 })
-        ).id();
+        let habitat_entity = app
+            .world_mut()
+            .spawn((
+                OrbitalHabitat {
+                    population: 5000,
+                    wealth: 10000.0,
+                },
+                Unrest { level: 90.0 },
+            ))
+            .id();
 
         // Spawn 10000 Pops for the planet
         for _ in 0..10000 {

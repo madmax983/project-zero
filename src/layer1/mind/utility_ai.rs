@@ -961,9 +961,17 @@ mod tests {
         let pop = world.spawn(PopAction::default()).id();
 
         // Run system
-        world.run_system_once(update_action_timer_system).expect("System should not panic");
+        world
+            .run_system_once(update_action_timer_system)
+            .expect("System should not panic");
 
-        assert_eq!(world.get::<PopAction>(pop).expect("PopAction should exist").ticks_committed, 1);
+        assert_eq!(
+            world
+                .get::<PopAction>(pop)
+                .expect("PopAction should exist")
+                .ticks_committed,
+            1
+        );
     }
 
     #[test]
