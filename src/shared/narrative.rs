@@ -54,7 +54,7 @@ use comfy_table::{presets::UTF8_FULL, Cell, Color as TableColor, Table};
 
 impl NarrativeError {
     /// Returns a beautiful formatted table for the error.
-    pub fn to_table(&self) -> Table {
+    pub fn to_table(&self) -> String {
         let error_msg = format!("{}", self);
         let action_msg = match self {
             Self::DirectoryNotFound(_) | Self::NoLoreFiles(_) | Self::IoError(_, _) => {
@@ -106,7 +106,7 @@ impl NarrativeError {
                 .add_attribute(comfy_table::Attribute::Bold),
             Cell::new(action_msg).fg(TableColor::Cyan),
         ]);
-        table
+        table.to_string()
     }
 }
 
