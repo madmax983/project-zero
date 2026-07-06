@@ -898,3 +898,4 @@
 
 - [x] `1311` The Dreaming Sickness — `specs/1311-the-dreaming-sickness.md` — completed 2026-10-31
 - [x] `1136` The Sentient Bureaucracy — `specs/1136-sentient-bureaucracy.md` — completed 2026-10-31
+- [x] `1005` Subterranean Biosphere Inversion — `specs/1005-subterranean-biosphere-inversion.md` — completed 2026-10-31

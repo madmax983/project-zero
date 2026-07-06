@@ -521,3 +521,4 @@ pub mod terraforming;
 pub mod terraforming_rejection;
 pub use terraforming::*;
 pub use terraforming_rejection::*;
+pub mod biosphere_inversion;

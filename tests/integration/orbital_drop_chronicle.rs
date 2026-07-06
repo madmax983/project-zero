@@ -1,7 +1,7 @@
 use bevy::prelude::*;
 use scale::layer1::chronicle::{AddChronicleEvent, EventImportance};
-use scale::layer1::logistics::orbital_drop::orbital_drop_chronicle_bridge;
 use scale::layer1::items::ItemType;
+use scale::layer1::logistics::orbital_drop::orbital_drop_chronicle_bridge;
 use scale::layer1::logistics::orbital_drop::OrbitalDropEvent;
 use scale::layer1::map::GridPosition;
 
