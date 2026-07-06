@@ -92,6 +92,8 @@ For the **advanced simulation of legends** (Oral Tradition), see the [Oral Tradi
 >
 > **NOTE:** Do not attempt to run this snippet without enabling `features = ["nova"]` in your `Cargo.toml`.
 > If the `nova` feature is not enabled, `OralTradition`, `Story`, and `StoryGenre` will not be available in the prelude and your code will fail to compile with an `E0422` error.
+>
+> *If you see `failed to resolve: use of undeclared type OralTradition`, you forgot to enable the feature!*
 
 The "Nova" feature (Oral Tradition) builds upon the base narrative system to create living legends that evolve in taverns. It is located in `scale::layer1::oral_tradition`.
 
@@ -111,15 +113,17 @@ use scale::prelude::*;
 
 fn main() {
     let mut tradition = OralTradition::default();
+    let mut chronicle = Chronicle::default();
 
-    // Add a story directly to the tradition
-    let story = Story {
-        text: "The colony survived the Great Frost.".to_string(),
-        historical_date: 100,
-        mutations: 0,
-        genre: StoryGenre::Heroic,
-    };
-    tradition.add_story(story);
+    // 1. Add a historical event
+    chronicle.add_event(
+        100, // tick
+        "The colony survived the Great Frost.".to_string(),
+        EventImportance::Major,
+    );
+
+    // 2. Process events into stories
+    tradition.process_chronicles(&chronicle);
 
     // Inspect
     println!("{:?}", tradition.stories);

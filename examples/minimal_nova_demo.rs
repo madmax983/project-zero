@@ -5,22 +5,18 @@
 //!
 //! Run with: `cargo run --features nova --example minimal_nova_demo`
 
-use bevy_ecs::prelude::*;
 use crossterm::style::{Color, Stylize};
 use scale::prelude::*;
 
 fn main() {
-    let mut world = World::new();
-
     // 1. Initialize Resources
-    world.insert_resource(OralTradition::default());
-    world.insert_resource(Chronicle::default());
+    let mut tradition = OralTradition::default();
+    let mut chronicle = Chronicle::default();
 
     println!(
         "{}",
         "╭── Initial State ──────────────────────────────╮".with(Color::Cyan)
     );
-    let tradition = world.resource::<OralTradition>();
     if tradition.stories.is_empty() {
         let text = format!("{:<47}", "No stories currently circulating.");
         println!("│ {} │", text.with(Color::DarkGrey));
@@ -41,7 +37,7 @@ fn main() {
         "\n{}",
         "╭── Adding Event ───────────────────────────────╮".with(Color::Cyan)
     );
-    world.resource_mut::<Chronicle>().add_event(
+    chronicle.add_event(
         100, // tick
         "The colony survived the Great Frost.".to_string(),
         EventImportance::Legendary,
@@ -59,10 +55,7 @@ fn main() {
         "╭── Processing Events ──────────────────────────╮".with(Color::Cyan)
     );
     // Use the simplified API
-    world.resource_scope(|world, chronicle: Mut<Chronicle>| {
-        let mut tradition = world.resource_mut::<OralTradition>();
-        tradition.process_chronicles(&chronicle);
-    });
+    tradition.process_chronicles(&chronicle);
     let text = format!("{:<47}", "✓ Events processed into Oral Tradition.");
     println!("│ {} │", text.with(Color::Green));
     println!(
@@ -72,7 +65,6 @@ fn main() {
 
     // 4. Inspect the result
     println!("\n{}", "Updated Oral Tradition".with(Color::Cyan).bold());
-    let tradition = world.resource::<OralTradition>();
 
     println!("{}", tradition);
 }
