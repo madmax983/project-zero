@@ -9,3 +9,5 @@ pub use tether::*;
 pub mod asteroid_claims;
 pub mod gravity_debt;
 pub use gravity_debt::*;
+pub mod secession;
+pub use secession::*;
