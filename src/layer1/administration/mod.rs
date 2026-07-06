@@ -33,3 +33,5 @@ pub mod bureaucratic_black_hole;
 pub use bureaucratic_black_hole::*;
 pub mod feral_administration;
 pub use feral_administration::*;
+pub mod sentient_bureaucracy;
+pub use sentient_bureaucracy::*;
