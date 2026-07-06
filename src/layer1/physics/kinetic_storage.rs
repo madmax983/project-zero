@@ -80,7 +80,7 @@ pub fn handle_battery_destruction_system(
         if battery.charge > 10.0 {
             // Safety threshold, empty batteries don't explode
             // Calculate explosion parameters based on potential energy (charge)
-            let radius = (battery.charge / 50.0).ceil().max(1.0) as u32;
+            let radius = (battery.charge / 50.0).ceil().max(1.0).min(u32::MAX as f32) as u32;
 
             events.send(ExplosionEvent {
                 center: *pos,

@@ -416,10 +416,7 @@ pub fn update_unmet_luxury_system(
     pops: Query<&crate::layer1::needs::Needs, With<crate::layer1::pop::Pop>>,
 ) {
     let unmet_count = pops.iter().filter(|needs| needs.leisure < 30.0).count();
-    #[allow(clippy::cast_possible_truncation)]
-    {
-        stats.unmet_luxury = unmet_count as u32;
-    }
+    stats.unmet_luxury = unmet_count.try_into().unwrap_or(u32::MAX);
 }
 
 /// Bridges `SacrilegeEvent` to `Unrest` and `Chronicle`.
@@ -937,7 +934,7 @@ pub fn vermin_item_rot_system(
 
     let extra_decay = modifier - 1.0;
     #[allow(clippy::cast_possible_truncation, clippy::cast_sign_loss)]
-    let guaranteed_decay = extra_decay.floor() as u32;
+    let guaranteed_decay = extra_decay.floor().max(0.0).min(u32::MAX as f32) as u32;
     let chance_decay = extra_decay.fract();
 
     query.par_iter_mut().for_each(|mut perishable| {
@@ -2854,7 +2851,7 @@ pub fn sync_scarcity_resources_bridge_system(
     >,
 ) {
     if let (Ok(res), Ok(mut store)) = (resources.get_single(), storage.get_single_mut()) {
-        store.food = res.food as u32;
+        store.food = res.food.max(0.0).min(u32::MAX as f32) as u32;
     }
 }
 

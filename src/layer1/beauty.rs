@@ -217,7 +217,9 @@ pub fn update_beauty_grid_system(
             for y in min_y..=max_y {
                 for x in min_x..=max_x {
                     // Check distance
-                    let dist_sq = (x - cx).pow(2) + (y - cy).pow(2);
+                    let dx = (x - cx).abs();
+                    let dy = (y - cy).abs();
+                    let dist_sq = dx.saturating_mul(dx).saturating_add(dy.saturating_mul(dy));
                     #[allow(clippy::cast_precision_loss)]
                     let dist = (dist_sq as f32).sqrt();
 
