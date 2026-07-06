@@ -107,6 +107,86 @@ mod tests {
     }
 
     #[test]
+    fn test_dreaming_sickness_infection_does_not_spread_if_no_infected() {
+        let mut app = App::new();
+        app.add_systems(Update, spread_dreaming_sickness);
+        let healthy = app.world_mut().spawn((Pop, GridPosition { x: 5, y: 6 })).id();
+        app.update();
+        assert!(app.world().get::<DreamingSickness>(healthy).is_none());
+    }
+
+
+    #[test]
+    fn test_dreaming_sickness_infection_does_not_spread_if_out_of_range() {
+        let mut app = App::new();
+        app.insert_resource(DreamingSicknessConfig { spread_chance: 1.0 });
+        app.add_systems(Update, spread_dreaming_sickness);
+        let _infected = app.world_mut().spawn((Pop, GridPosition { x: 5, y: 5 }, DreamingSickness { severity: 0.1 })).id();
+        let healthy = app.world_mut().spawn((Pop, GridPosition { x: 5, y: 8 })).id();
+        app.update();
+        assert!(app.world().get::<DreamingSickness>(healthy).is_none());
+    }
+
+    #[test]
+    fn test_spontaneous_sleep_not_triggered_at_low_severity() {
+        let mut app = App::new();
+        app.add_systems(Update, spontaneous_sleep);
+        let pop = app.world_mut().spawn((Pop, PopAction { current: ActionType::Idle, current_utility: 0.0, ticks_committed: 0 }, DreamingSickness { severity: 0.5 })).id();
+        app.update();
+        let action = app.world().get::<PopAction>(pop).unwrap();
+        match action.current {
+            ActionType::Idle => assert!(true),
+            _ => panic!("Expected ActionType::Idle"),
+        }
+    }
+
+
+    #[test]
+    fn test_spontaneous_sleep_already_sleeping() {
+        let mut app = App::new();
+        app.add_systems(Update, spontaneous_sleep);
+        let pop = app.world_mut().spawn((Pop, PopAction { current: ActionType::SatisfyRest, current_utility: 0.0, ticks_committed: 0 }, DreamingSickness { severity: 0.95 })).id();
+        app.update();
+        let action = app.world().get::<PopAction>(pop).unwrap();
+        match action.current {
+            ActionType::SatisfyRest => assert!(true),
+            _ => panic!("Expected ActionType::SatisfyRest"),
+        }
+    }
+
+
+    #[test]
+    fn test_dreaming_sickness_infection_spreads_no_config() {
+        let mut app = App::new();
+        // Don't insert config to test the default fallback mapping
+        app.add_systems(Update, spread_dreaming_sickness);
+        let _infected = app.world_mut().spawn((Pop, GridPosition { x: 5, y: 5 }, DreamingSickness { severity: 0.1 })).id();
+        let _healthy = app.world_mut().spawn((Pop, GridPosition { x: 5, y: 6 })).id();
+        app.update();
+        // Since chance is 0.1, we might not get infected, but we are testing that the code runs without crashing
+    }
+
+    #[test]
+    fn test_dreaming_sickness_config_default() {
+        let config = DreamingSicknessConfig::default();
+        assert_eq!(config.spread_chance, 0.1);
+    }
+
+
+    #[test]
+    fn test_dreaming_sickness_effects_at_zero_severity() {
+        let mut app = App::new();
+        app.add_systems(Update, dreaming_sickness_effects);
+
+        let pop = app.world_mut().spawn((Pop, Needs { rest: 1.0, ..Default::default() }, DreamingSickness { severity: 0.0 })).id();
+
+        app.update();
+
+        let needs = app.world().get::<Needs>(pop).unwrap();
+        assert_eq!(needs.rest, 1.0);
+    }
+
+    #[test]
     fn test_spontaneous_sleep_at_high_severity() {
         let mut app = App::new();
         app.add_systems(Update, spontaneous_sleep);
