@@ -10263,3 +10263,52 @@ Dangerous ideologies spread by the inmates.
 - automated defense drones
 - an unknown hostile signature
 - opportunistic scavengers
+
+## Fragment Type: [FLEET_NAME]
+- the Obsidian Flotilla
+- the Star-Crossed
+- Task Force Echo
+- the Exiled Armada
+- the Vagabond Fleet
+
+## Fragment Type: [ORIGIN_EMPIRE]
+- the Core Worlds
+- the Sovereign Ascendancy
+- the Trade Coalition
+- the First Federation
+- the Outer Rim Syndicate
+
+## Fragment Type: [SECESSION_REASON]
+- unjust taxation
+- cultural drift
+- resource exploitation
+- irreconcilable differences
+- a desire for true autonomy
+
+## Fragment Type: [DISASTER_TYPE]
+- localized tectonic fissures
+- acid rain monsoons
+- hyper-canes
+- sudden atmospheric ignition
+- biological overgrowth
+
+## Fragment Type: [ARTIFACT_TYPE]
+- a humming crystalline monolith
+- a pre-collapse data drive
+- an alien sensory array
+- an intact void-engine
+- a petrified void-whale bone
+
+## Fragment Type: [FORM_TYPE]
+- triplicate requisition forms
+- endless census registries
+- incomprehensible tax code addendums
+- automated loyalty questionnaires
+- blank, stamped affidavits
+
+## Fragment Type: [DREAM_VISION]
+- the dying star
+- a city of glass and light
+- the whispering void
+- the face of the Substrate
+- a forgotten homeworld
