@@ -9993,3 +9993,76 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "The void answered. [YEAR]. Our broadcast drew [UNWANTED_ATTENTION] to [COLONY]."
 - "[YEAR]: The signal was heard. Now [UNWANTED_ATTENTION] descends upon [COLONY]."
 - "We spoke too loudly. [UNWANTED_ATTENTION] is tracking our signal to [COLONY]. [YEAR]."
+
+## The Stolen Fleet Templates (Spec 318)
+
+### FLEET_DEFECTION
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [FLEET_NAME], [ORIGIN_EMPIRE]
+**Patterns:**
+- "[YEAR]: The [FLEET_NAME] arrived at [COLONY], flying no flags. They defected from [ORIGIN_EMPIRE]."
+- "Mutiny in the [ORIGIN_EMPIRE]. In [YEAR], their [FLEET_NAME] pledged loyalty to [COLONY]."
+- "[COLONY] accepted the [FLEET_NAME] in [YEAR]. A stolen asset from [ORIGIN_EMPIRE]."
+
+### PUNITIVE_WAR
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [ORIGIN_EMPIRE]
+**Patterns:**
+- "[YEAR]: [ORIGIN_EMPIRE] declared a punitive war against [COLONY] for harboring the stolen fleet."
+- "[ORIGIN_EMPIRE] seeks blood. War declared on [COLONY] in [YEAR]."
+
+## Orbital Secession Templates (Spec 1004)
+
+### ORBITAL_SECESSION
+**Generates:** Play event (chronicle during game)
+**Slots:** [HABITAT_NAME], [PLANET_NAME], [YEAR], [SECESSION_REASON]
+**Patterns:**
+- "[YEAR]: [HABITAT_NAME] declared independence from [PLANET_NAME]. They cite [SECESSION_REASON]."
+- "The orbital habitat [HABITAT_NAME] seceded in [YEAR]. The tether to [PLANET_NAME] is broken."
+- "Independence for [HABITAT_NAME]. [YEAR]. [PLANET_NAME] is now under embargo."
+
+## The Terraforming Rejection Templates (Spec 1006)
+
+### AUTOIMMUNE_RESPONSE
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [DISASTER_TYPE]
+**Patterns:**
+- "[YEAR]: The planet fights back. [DISASTER_TYPE] struck [COLONY] after aggressive terraforming."
+- "Terraforming stress reached critical limits in [YEAR]. The world spawned [DISASTER_TYPE] at [COLONY]."
+- "We pushed the biosphere too far. [YEAR]. Result: [DISASTER_TYPE]."
+
+## The Asteroid Hermits Templates (Spec 1309)
+
+### HERMIT_EXODUS
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [HERMIT_COUNT]
+**Patterns:**
+- "[YEAR]: [HERMIT_COUNT] souls left [COLONY] to live on barren rock. The Hermit Exodus."
+- "Disgusted by society, [HERMIT_COUNT] miners fled [COLONY] for the asteroids in [YEAR]."
+
+### HERMIT_DISCOVERY
+**Generates:** Play event (chronicle during game)
+**Slots:** [OUTPOST_NAME], [YEAR], [ARTIFACT_TYPE]
+**Patterns:**
+- "[YEAR]: The hermits of [OUTPOST_NAME] found something in the deep dark: [ARTIFACT_TYPE]."
+- "A transmission from [OUTPOST_NAME]. [YEAR]. They claim to have discovered [ARTIFACT_TYPE]."
+
+## The Feral Administration Templates (Spec 1310)
+
+### FORM_AVALANCHE
+**Generates:** Play event (chronicle during game)
+**Slots:** [BUILDING_NAME], [YEAR], [FORM_TYPE]
+**Patterns:**
+- "[YEAR]: Unstaffed and unpowered, the [BUILDING_NAME] began dispensing [FORM_TYPE]. They block the streets."
+- "An avalanche of [FORM_TYPE] buried the sector around [BUILDING_NAME] in [YEAR]."
+- "[YEAR]: The feral administration of [BUILDING_NAME] choked the paths with [FORM_TYPE]."
+
+## The Dreaming Sickness Templates (Spec 1311)
+
+### SICKNESS_OUTBREAK
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [DREAM_VISION]
+**Patterns:**
+- "[YEAR]: The Dreaming Sickness swept through [COLONY]. They sleep to see [DREAM_VISION]."
+- "Work stopped at [COLONY] in [YEAR]. Entire shifts fell asleep, dreaming of [DREAM_VISION]."
+- "The shared hallucination of [DREAM_VISION] infected [COLONY]. [YEAR]."
