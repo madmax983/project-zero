@@ -227,4 +227,18 @@ mod tests {
             }
         }
     }
+
+
+    #[test]
+    fn test_update_rhythm_system_no_machines() {
+        let mut app = bevy::app::App::new();
+        app.insert_resource(crate::shared::time::SimulationTime {
+            tick: 100,
+            ..Default::default()
+        });
+        app.add_systems(bevy::app::Update, update_rhythm_system);
+
+        // Run with no machines, shouldn't panic
+        app.update();
+    }
 }

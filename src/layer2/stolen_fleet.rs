@@ -118,7 +118,7 @@ mod tests {
         assert_eq!(upkeep.food, 5000.0, "Fleet upkeep should match defection demands");
 
         let events = world.resource::<Events<WarDeclarationEvent>>();
-        assert!(events.len() > 0, "A punitive war should have been declared");
+        assert!(!events.is_empty(), "A punitive war should have been declared");
     }
 
     #[test]

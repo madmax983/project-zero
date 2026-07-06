@@ -24,59 +24,6 @@ pub struct UnprocessedForms {
 #[derive(Component)]
 pub struct FeralColony;
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-    use bevy_app::App;
-    use bevy_app::Update;
-    use crate::layer1::map::GridPosition;
-
-    #[test]
-    fn test_unprocessed_forms_spawn_when_unstaffed_or_unpowered() {
-        let mut app = App::new();
-        app.add_systems(Update, spawn_unprocessed_forms_system);
-
-        let admin_pos = GridPosition { x: 5, y: 5 };
-        app.insert_resource(crate::shared::time::SimulationTime { tick: 10, ..Default::default() });
-
-        app.world_mut().spawn((
-            FeralColony,
-            AdministrativeBuilding,
-            PowerConsumer { demand: 10.0, active: false },
-            Office::default(),
-            admin_pos,
-        ));
-
-        app.update();
-
-        let mut found_forms = false;
-        for (_, pos) in app.world_mut().query::<(&UnprocessedForms, &GridPosition)>().iter(app.world()) {
-            let dist = (pos.x - admin_pos.x).abs() + (pos.y - admin_pos.y).abs();
-            if dist == 1 {
-                found_forms = true;
-                break;
-            }
-        }
-        assert!(found_forms);
-    }
-
-    #[test]
-    fn test_unprocessed_forms_block_pathfinding() {
-        let mut app = App::new();
-        app.add_systems(Update, process_impassable_terrain_system);
-        app.insert_resource(crate::layer1::core::spatial::OccupiedTiles::default());
-
-        app.world_mut().spawn((
-            UnprocessedForms { stack_size: 10 },
-            GridPosition { x: 10, y: 10 },
-        ));
-
-        app.update();
-
-        let grid = app.world().resource::<crate::layer1::core::spatial::OccupiedTiles>();
-        assert!(grid.0.contains(&(10, 10)));
-    }
-}
 
 pub fn spawn_unprocessed_forms_system(
     mut commands: Commands,
@@ -150,5 +97,59 @@ pub fn process_impassable_terrain_system(
         if forms.stack_size >= 10 {
             occupied.0.insert((pos.x, pos.y));
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use bevy_app::App;
+    use bevy_app::Update;
+    use crate::layer1::map::GridPosition;
+
+    #[test]
+    fn test_unprocessed_forms_spawn_when_unstaffed_or_unpowered() {
+        let mut app = App::new();
+        app.add_systems(Update, spawn_unprocessed_forms_system);
+
+        let admin_pos = GridPosition { x: 5, y: 5 };
+        app.insert_resource(crate::shared::time::SimulationTime { tick: 10, ..Default::default() });
+
+        app.world_mut().spawn((
+            FeralColony,
+            AdministrativeBuilding,
+            PowerConsumer { demand: 10.0, active: false },
+            Office::default(),
+            admin_pos,
+        ));
+
+        app.update();
+
+        let mut found_forms = false;
+        for (_, pos) in app.world_mut().query::<(&UnprocessedForms, &GridPosition)>().iter(app.world()) {
+            let dist = (pos.x - admin_pos.x).abs() + (pos.y - admin_pos.y).abs();
+            if dist == 1 {
+                found_forms = true;
+                break;
+            }
+        }
+        assert!(found_forms);
+    }
+
+    #[test]
+    fn test_unprocessed_forms_block_pathfinding() {
+        let mut app = App::new();
+        app.add_systems(Update, process_impassable_terrain_system);
+        app.insert_resource(crate::layer1::core::spatial::OccupiedTiles::default());
+
+        app.world_mut().spawn((
+            UnprocessedForms { stack_size: 10 },
+            GridPosition { x: 10, y: 10 },
+        ));
+
+        app.update();
+
+        let grid = app.world().resource::<crate::layer1::core::spatial::OccupiedTiles>();
+        assert!(grid.0.contains(&(10, 10)));
     }
 }

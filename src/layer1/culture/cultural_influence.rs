@@ -106,4 +106,30 @@ mod tests {
             "High art and luxury should generate significant cultural pressure"
         );
     }
+
+    #[test]
+    fn test_calculate_cultural_pressure_system_decays_over_time() {
+        let mut app = setup_app();
+
+        // Ensure 0 new art/luxury so only decay happens
+        let mut resources = app.world_mut().resource_mut::<ColonyResources>();
+        resources.art = 0.0;
+        resources.luxury = 0.0;
+
+        let mut influence = app.world_mut().resource_mut::<CulturalInfluenceGrid>();
+        influence.total_pressure = 100.0;
+
+        app.update();
+
+        let influence = app.world().get_resource::<CulturalInfluenceGrid>().unwrap();
+        assert!((influence.total_pressure - 95.0).abs() < f32::EPSILON, "Pressure should decay by 5% when no new art/luxury is generated");
+    }
+
+    #[test]
+    fn test_calculate_cultural_pressure_system_missing_resources() {
+        // Run with no resources, shouldn't panic
+        let mut app = bevy::app::App::new();
+        app.add_systems(bevy::app::Update, calculate_cultural_pressure_system);
+        app.update(); // Should just skip processing
+    }
 }
