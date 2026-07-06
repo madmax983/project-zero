@@ -1172,6 +1172,7 @@ mod tests {
         world.init_resource::<Events<crate::layer1::agriculture::zero_g_flora::DepressurizationEvent>>();
         world.init_resource::<Events<crate::layer3::diplomacy::system_sovereignty::DeclarationOfIndependenceEvent>>();
         world.init_resource::<Events<crate::layer3::diplomacy::system_sovereignty::WarDeclarationEvent>>();
+        world.init_resource::<Events<crate::layer2::stolen_fleet::WarDeclarationEvent>>();
         world.insert_resource(crate::layer3::diplomacy::system_sovereignty::ColonyStatus {
             is_sovereign: false,
             overlord_id: Some(1),
@@ -1237,6 +1238,7 @@ mod tests {
         world.init_resource::<Events<crate::layer1::agriculture::zero_g_flora::DepressurizationEvent>>();
         world.init_resource::<Events<crate::layer3::diplomacy::system_sovereignty::DeclarationOfIndependenceEvent>>();
         world.init_resource::<Events<crate::layer3::diplomacy::system_sovereignty::WarDeclarationEvent>>();
+        world.init_resource::<Events<crate::layer2::stolen_fleet::WarDeclarationEvent>>();
         world.init_resource::<Events<crate::layer2::celestial_library::LibraryDonationEvent>>();
         world.insert_resource(crate::layer3::diplomacy::system_sovereignty::ColonyStatus {
             is_sovereign: false,
@@ -1327,6 +1329,7 @@ mod tests {
         world.init_resource::<Events<crate::layer1::agriculture::zero_g_flora::DepressurizationEvent>>();
         world.init_resource::<Events<crate::layer3::diplomacy::system_sovereignty::DeclarationOfIndependenceEvent>>();
         world.init_resource::<Events<crate::layer3::diplomacy::system_sovereignty::WarDeclarationEvent>>();
+        world.init_resource::<Events<crate::layer2::stolen_fleet::WarDeclarationEvent>>();
         world.insert_resource(crate::layer3::diplomacy::system_sovereignty::ColonyStatus {
             is_sovereign: false,
             overlord_id: Some(1),
@@ -1517,6 +1520,7 @@ mod tests {
         world.init_resource::<Events<crate::layer1::agriculture::zero_g_flora::DepressurizationEvent>>();
         world.init_resource::<Events<crate::layer3::diplomacy::system_sovereignty::DeclarationOfIndependenceEvent>>();
         world.init_resource::<Events<crate::layer3::diplomacy::system_sovereignty::WarDeclarationEvent>>();
+        world.init_resource::<Events<crate::layer2::stolen_fleet::WarDeclarationEvent>>();
         world.insert_resource(crate::layer3::diplomacy::system_sovereignty::ColonyStatus {
             is_sovereign: false,
             overlord_id: Some(1),

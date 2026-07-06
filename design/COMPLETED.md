@@ -895,3 +895,4 @@
 - [x] `INT-1310` Integration: The Feral Administration -> Chronicle — completed 2024-05-31
 - [x] `1004` The Orbital Secession — `specs/1004-orbital-secession.md` — completed 2026-07-06
 - [x] `1004` The Orbital Secession — `specs/1004-orbital-secession.md` — completed 2026-07-06
+- [x] `298` The Nostalgia Engine — `specs/298-nostalgia-engine.md` — completed 2026-07-06

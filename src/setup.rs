@@ -423,6 +423,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<crate::layer1::mind::sleep_debt::SleepDebtConfig>();
     world.init_resource::<Events<crate::layer1::mind::sleep_debt::RepoManArrivalEvent>>();
     world.init_resource::<Events<crate::layer2::events::LaunchEvent>>();
+    world.init_resource::<Events<crate::layer2::stolen_fleet::WarDeclarationEvent>>();
     world.init_resource::<Events<crate::layer2::events::ShipDestroyedEvent>>();
     world.init_resource::<Events<crate::layer2::dead_protocols::ViolationEvent>>();
     world.init_resource::<Events<crate::layer2::orbital_mirrors::MirrorFocusEvent>>();

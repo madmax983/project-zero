@@ -56,8 +56,6 @@ See `design/IDEAS.md` for unspecced concepts.
 
 - [ ] `290` The Phantom Shift — `specs/290-phantom-shift.md`
 - [ ] `292` The Chrono-Stutter — `specs/292-chrono-stutter.md`
-- [ ] `298` The Nostalgia Engine — `specs/298-nostalgia-engine.md`
-- [ ] `299` Temporal Smuggling — `specs/299-temporal-smuggling.md`
 
 
 
@@ -758,3 +756,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1316` Ablative Logistics — `specs/1316-ablative-logistics.md`
 - [ ] `1317` The 'Good' War — `specs/1317-the-good-war.md`
 - [ ] `1319` Shadow Ecosystems — `specs/1319-shadow-ecosystems.md`
+- [ ] `299` Temporal Smuggling — `specs/299-temporal-smuggling.md`
