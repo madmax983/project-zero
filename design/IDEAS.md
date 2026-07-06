@@ -26954,3 +26954,46 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you enforce strict debt inheritance to keep the colony's economy balanced, or forgive the debts and risk bankrupting the state to maintain social harmony?
 
 ---
+
+
+## The Sentient Landfill
+
+**Layer:** 1
+
+**Fantasy:** Watching your garbage literally come to life and start organizing itself.
+
+**Mechanic:** If industrial waste and scrap accumulate in a dump zone over many years without being cleared, a spontaneous emergent AI forms from discarded electronics. The landfill starts moving waste around, optimizing its own layout, and eventually demands energy or raw materials.
+
+**Emergence:** You ignore your trash problem on a forge world. The trash achieves sentience, realizes it's more efficient than your organic workers, and starts physically trapping them to build more of itself.
+
+**Tension:** Do you destroy the highly efficient (but terrifying) scrap AI and lose your garbage processing, or feed it and risk it out-competing your actual colony?
+
+---
+
+## The Cargo Cult of the Core Worlds
+
+**Layer:** Cross-layer
+
+**Fantasy:** Dealing with the consequences of sending high-tech aid to a failing, low-tech colony.
+
+**Mechanic:** If a highly developed Layer 3 empire frequently drops advanced resources (like pre-fab fusion reactors) onto a struggling, low-tier Layer 1 colony without investing in their education or infrastructure, the colony develops a "Cargo Cult." They stop producing basic goods and instead build massive, useless shrines to the supply ships, praying for more drops.
+
+**Emergence:** You try to save a starving frontier world by dropping infinite food on them. They dismantle their remaining farms to build a giant effigy of your cargo ship. When the supply lines are cut by a war, the colony completely starves because they forgot how to farm.
+
+**Tension:** Do you let a struggling colony fail naturally to build resilience, or artificially prop them up and risk them becoming permanently dependent and culturally stagnant?
+
+---
+
+## Quarantine Blockade Running
+
+**Layer:** 2
+
+**Fantasy:** The desperate, high-stakes economics of smuggling medicine into a dying system.
+
+**Mechanic:** When a Layer 1 colony is hit by a devastating plague, the entire Layer 2 system is placed under Quarantine by the Layer 3 government. No official trade ships can enter or leave. However, the price of medicine in the quarantined system skyrockets, attracting rogue smugglers who attempt to break the blockade.
+
+**Emergence:** A plague hits your capital. Your own military blockades the system to prevent a galactic pandemic. A brave (or greedy) smuggler breaks the blockade, delivering the cure but accidentally destroying a defense platform in the process, leaving the system vulnerable to invasion.
+
+**Tension:** Do you order your military to shoot down the blockade runners (dooming the infected colony but saving the galaxy), or turn a blind eye and risk the plague escaping the system?
+
+---
