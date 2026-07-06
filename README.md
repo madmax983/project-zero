@@ -245,7 +245,7 @@ scale/
 
 ## Technical Details
 
-**Language:** Rust Edition 2024
+**Language:** Rust Edition 2021
 
 **Dependencies:**
 - `bevy_ecs` — Entity Component System for simulation
