@@ -26997,3 +26997,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you order your military to shoot down the blockade runners (dooming the infected colony but saving the galaxy), or turn a blind eye and risk the plague escaping the system?
 
 ---
+
+## The Overwork Debt Cycle
+
+**Layer:** 1
+
+**Fantasy:** Pops push themselves past their limits to meet extreme quotas, but the bill always comes due.
+
+**Mechanic:** You can enact "Emergency Shifts," significantly increasing work speed but accumulating an invisible "Overwork Debt" counter on each Pop. Once the crisis passes and shifts return to normal, this debt manifests as severe sudden illnesses, prolonged lethargy, or catastrophic equipment failures as exhausted Pops finally make mistakes.
+
+**Emergence:** You survive a harsh winter by overworking your hydroponics farmers. The crops are saved, but in spring, every farmer collapses simultaneously, leaving you completely vulnerable during planting season.
+
+**Tension:** Do you risk complete collapse later for survival now, or accept moderate losses now to preserve long-term stability?
+
+---
+
+## The Counterfeit Economy
+
+**Layer:** 1 / 2
+
+**Fantasy:** Desperate times lead to desperate measures; the emergence of a black market built on fake resources.
+
+**Mechanic:** When a specific luxury or essential good (like advanced medicine or high-tier entertainment) is demanded but unavailable, Pops with high 'Crafting' skills might secretly produce counterfeit versions. These satisfy the immediate need but carry severe hidden risks (e.g., counterfeit medicine occasionally poisons Pops, fake entertainment items break and cause massive mood penalties).
+
+**Emergence:** A plague hits, and your official medical supply runs out. Suddenly, the mortality rate drops anyway, but weeks later, half the colony develops mysterious toxic organ damage from the counterfeit cure circulating in the undercity.
+
+**Tension:** Do you crack down on the counterfeiters, causing immediate rioting and unhappiness, or let the black market run and deal with the unpredictable fallout?
+
+---
+
+## Feral Architecture
+
+**Layer:** Cross-layer
+
+**Fantasy:** The colony's automated construction systems lose their connection to the central network and start building on instinct.
+
+**Mechanic:** If a colony's communication network is severed or severely degraded (Layer 2 interference or Layer 1 sabotage), automated construction drones stop following blueprints. They enter a "Feral Architecture" state, automatically reinforcing existing structures with scrap, building bizarre, non-functional art pieces out of vital materials, or haphazardly expanding life support into unneeded areas.
+
+**Emergence:** A communications blackout lasts a month. When it lifts, you find your drones have dismantled your primary spaceport to build a massive, perfectly sealed, structurally flawless monument to a meaningless mathematical equation.
+
+**Tension:** Do you disable the automated systems during a blackout, losing all maintenance capabilities, or leave them on and risk them fundamentally altering your colony's layout?
+
+---
