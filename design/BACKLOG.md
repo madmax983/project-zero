@@ -758,3 +758,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1316` Ablative Logistics — `specs/1316-ablative-logistics.md`
 - [ ] `1317` The 'Good' War — `specs/1317-the-good-war.md`
 - [ ] `1319` Shadow Ecosystems — `specs/1319-shadow-ecosystems.md`
+- [ ] `1320` The Architect's Ego — `specs/1320-the-architects-ego.md`
