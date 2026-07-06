@@ -598,12 +598,20 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::core::integration::lottery_chronicle_bridge,
             crate::layer1::core::integration::early_warning_chronicle_bridge,
             crate::layer1::core::integration::planetary_scarring_chronicle_bridge,
+
             crate::layer1::core::integration::cassandra_syndrome_chronicle_bridge,
             crate::layer1::core::integration::cassandra_cult_chronicle_bridge,
             crate::layer1::core::integration::blackout_bazaar_chronicle_bridge,
             crate::layer1::core::integration::symbiont_sabotage_bridge_system,
             crate::layer1::core::integration::pet_death_bridge_system,
             crate::layer1::core::integration::ghost_code_chronicle_bridge,
+        )
+            .in_set(Layer1SystemSet::Observation),
+    );
+
+    schedule.add_systems(
+        (
+            crate::layer1::core::integration::feral_administration_chronicle_bridge,
         )
             .in_set(Layer1SystemSet::Observation),
     );
