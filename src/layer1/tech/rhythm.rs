@@ -8,7 +8,6 @@ pub struct MachineRhythm {
     pub last_sync_bonus: f32, // Accumulated rhythm score
 }
 
-
 pub fn update_rhythm_system(
     time: Res<SimulationTime>,
     mut query: Query<(&mut MachineRhythm, &GridPosition)>,
@@ -22,7 +21,6 @@ pub fn update_rhythm_system(
         if rhythm.cycle_end_tick != time.tick {
             continue;
         }
-
 
         let mut sync_count = 0;
 
@@ -39,11 +37,8 @@ pub fn update_rhythm_system(
                 if diff <= 2 {
                     sync_count += 1;
                 }
-
             }
-
         }
-
 
         if sync_count > 0 {
             rhythm.last_sync_bonus = 10.0 * sync_count as f32;
@@ -51,7 +46,5 @@ pub fn update_rhythm_system(
         } else {
             rhythm.last_sync_bonus = 0.0;
         }
-
     }
-
 }

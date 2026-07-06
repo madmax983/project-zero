@@ -422,13 +422,13 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::core::integration::reformat_chronicle_bridge,
             crate::layer1::core::integration::tectonic_fracking_chronicle_bridge
                 .after(crate::layer1::geology::fracking::tectonic_fracking_system),
-            crate::layer1::integration::orbital_drop_chronicle_bridge
+            crate::layer1::logistics::orbital_drop::orbital_drop_chronicle_bridge
                 .after(crate::layer1::logistics::orbital_drop::process_orbital_drops),
             crate::layer1::social::cargo_cult::apply_cargo_cult_belief_system
                 .after(crate::layer1::logistics::orbital_drop::process_orbital_drops),
             crate::layer1::social::cargo_cult::process_ritual_actions_system
                 .after(crate::layer1::social::cargo_cult::apply_cargo_cult_belief_system),
-            crate::layer1::integration::mass_driver_chronicle_bridge
+            crate::layer1::logistics::mass_driver::mass_driver_chronicle_bridge
                 .after(crate::layer1::logistics::mass_driver::package_arrival_system),
             crate::layer1::integration::predatory_weather_emission_bridge_system,
         )
@@ -598,7 +598,6 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::core::integration::lottery_chronicle_bridge,
             crate::layer1::core::integration::early_warning_chronicle_bridge,
             crate::layer1::core::integration::planetary_scarring_chronicle_bridge,
-
             crate::layer1::core::integration::cassandra_syndrome_chronicle_bridge,
             crate::layer1::core::integration::cassandra_cult_chronicle_bridge,
             crate::layer1::core::integration::blackout_bazaar_chronicle_bridge,
@@ -610,9 +609,7 @@ pub fn register(schedule: &mut Schedule) {
     );
 
     schedule.add_systems(
-        (
-            crate::layer1::core::integration::feral_administration_chronicle_bridge,
-        )
+        (crate::layer1::core::integration::feral_administration_chronicle_bridge,)
             .in_set(Layer1SystemSet::Observation),
     );
 

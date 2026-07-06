@@ -122,7 +122,10 @@ mod tests {
         app.update();
 
         let influence = app.world().get_resource::<CulturalInfluenceGrid>().unwrap();
-        assert!((influence.total_pressure - 95.0).abs() < f32::EPSILON, "Pressure should decay by 5% when no new art/luxury is generated");
+        assert!(
+            (influence.total_pressure - 95.0).abs() < f32::EPSILON,
+            "Pressure should decay by 5% when no new art/luxury is generated"
+        );
     }
 
     #[test]

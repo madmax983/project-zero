@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 use scale::layer1::chronicle::{AddChronicleEvent, EventImportance};
-use scale::layer1::integration::mass_driver_chronicle_bridge;
+use scale::layer1::logistics::mass_driver::mass_driver_chronicle_bridge;
 use scale::layer1::logistics::mass_driver::BombardmentEvent;
 
 #[test]

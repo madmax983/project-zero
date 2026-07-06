@@ -32,9 +32,6 @@ use ratatui::style::Color;
 
 use std::collections::HashSet;
 
-use crate::layer1::logistics::mass_driver::BombardmentEvent;
-use crate::layer1::logistics::orbital_drop::OrbitalDropEvent;
-
 /// Bridges `KineticStrikeEvent` to `AddChronicleEvent` (Chronicle).
 pub fn kinetic_strike_chronicle_bridge(
     mut strike_events: EventReader<crate::layer1::geology::subsurface::KineticStrikeEvent>,
@@ -45,22 +42,6 @@ pub fn kinetic_strike_chronicle_bridge(
             text: format!(
                 "Kinetic Strike! A heavy orbital payload struck ({}, {}).",
                 event.target_x, event.target_y
-            ),
-            importance: EventImportance::Major,
-        });
-    }
-}
-
-/// Bridges BombardmentEvent (Mass Driver) to AddChronicleEvent (Chronicle).
-pub fn mass_driver_chronicle_bridge(
-    mut bomb_events: EventReader<BombardmentEvent>,
-    mut chronicle_events: EventWriter<AddChronicleEvent>,
-) {
-    for event in bomb_events.read() {
-        chronicle_events.send(AddChronicleEvent {
-            text: format!(
-                "Kinetic Bombardment! Mass driver payload struck colony {:?} with {} energy.",
-                event.target, event.kinetic_energy
             ),
             importance: EventImportance::Major,
         });
@@ -275,25 +256,6 @@ pub fn tether_snap_chronicle_bridge(
     for _event in events.read() {
         chronicle_events.send(AddChronicleEvent {
             text: "The Sky Fell. The orbital tether was severed, its massive cable obliterating everything in its path.".to_string(),
-            importance: EventImportance::Major,
-        });
-    }
-}
-
-/// Bridges OrbitalDropEvent (Logistics) to AddChronicleEvent (Chronicle).
-pub fn orbital_drop_chronicle_bridge(
-    mut drop_events: EventReader<OrbitalDropEvent>,
-    mut chronicle_events: EventWriter<AddChronicleEvent>,
-) {
-    for event in drop_events.read() {
-        chronicle_events.send(AddChronicleEvent {
-            text: format!(
-                "Orbital Drop at ({}, {}): {} items scattered within {} tiles.",
-                event.target.x,
-                event.target.y,
-                event.items.len(),
-                event.scatter_radius
-            ),
             importance: EventImportance::Major,
         });
     }
@@ -3413,7 +3375,12 @@ pub fn planetary_scarring_chronicle_bridge(
 pub fn feral_administration_chronicle_bridge(
     query: bevy_ecs::system::Query<
         (),
-        (bevy_ecs::query::Added<crate::layer1::administration::feral_administration::UnprocessedForms>, bevy_ecs::query::With<crate::layer1::administration::feral_administration::FeralColony>),
+        (
+            bevy_ecs::query::Added<
+                crate::layer1::administration::feral_administration::UnprocessedForms,
+            >,
+            bevy_ecs::query::With<crate::layer1::administration::feral_administration::FeralColony>,
+        ),
     >,
     mut chronicle_events: bevy_ecs::event::EventWriter<
         crate::layer1::core::chronicle::AddChronicleEvent,
@@ -3421,7 +3388,8 @@ pub fn feral_administration_chronicle_bridge(
 ) {
     for _ in query.iter() {
         chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
-            text: "A Feral Administration has begun to produce an avalanche of paperwork.".to_string(),
+            text: "A Feral Administration has begun to produce an avalanche of paperwork."
+                .to_string(),
             importance: crate::layer1::core::chronicle::EventImportance::Major,
         });
     }
