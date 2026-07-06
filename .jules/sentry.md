@@ -1,39 +1,9 @@
-## 2026-06-17 - Subconscious Grid Lockdown Gap
-**Learning:** Found a missing test for the transition of access control modes triggered by `GridState::Lockdown`.
-**Action:** Always verify enum variants are exhausted by unit tests. If a variant like `Lockdown` is evaluated dynamically without test coverage, it's a silent failure risk. I will prioritize `match` and state evaluations during coverage audits.
-## [Testing `evaluate_fetch_clothing`]
-**Learning:** The temperature grid logic in clothing evaluation was entirely untested and missing coverage for key edge cases (insulation cap, safe temperature paths, missing temperature grid).
-**Action:** Always verify complex fallback logic like `mul_add` for safe temperature calculations with table-driven or explicitly varied test inputs to ensure branches are accurately mapped.
-## 2026-06-21 - AI Core Rogue Power Flicker
-**Learning:** Found a missing test for the power flicker behavior of rogue AI cores in `src/layer1/core/ai_core.rs`. The logic randomly toggles power consumers when the AI core goes rogue, but this was untested.
-**Action:** Implemented a test that forces a rogue AI and runs the system multiple times to ensure the random chance of flickering power correctly triggers.
-**[Testing `handle_bury_corpse`]
-**Learning:** When unit-testing systems directly using `bevy_ecs::system::SystemState::new(&mut world)`, you may encounter complex type compiler errors if you inline the tuple type for complex queries or borrow checker issues. Defining an explicit type alias (e.g., `type SystemData<'w, 's> = (Commands<'w, 's>, Query<'w, 's, &'static MyComponent>, ...);`) using explicitly bounded lifetimes (`'w`, `'s`) and `'static` for component references solves this effectively.
-**Action:** Use explicitly bounded type aliases for `SystemState` configurations in Bevy unit tests.
-**[Subconscious Grid State Evaluation]
-**Learning:** The transition to `GridState::Normal` from an anxious state when average stress normalizes was missing a direct unit test in `src/layer1/infrastructure/subconscious_grid.rs`.
-**Action:** Always write tests that cover the fallback/default branch of state transition logic, especially when it recovers from an extreme state.
-## 2026-06-26 - Integration Bridge Coverage Gap in Layer 3
-**Learning:** Found multiple untested event-driven integration bridges in `src/layer3/integration.rs` (`hyperlane_collapse_chronicle_bridge`, `dead_internet_chronicle_bridge`, `black_market_terraforming_bridge`, `dynastic_succession_chronicle_bridge`, `dynastic_crisis_chronicle_bridge`, and `jump_risk_bridge_system`). These bridges are critical for linking internal Layer 3 logic into the `AddChronicleEvent` system, meaning if one silently failed, no global notification would reach the player.
-**Action:** When adding simple event-to-event or system-to-event integration bridges, always add a basic unit test instantiating a dummy `App`, pushing the trigger event, running `app.update()`, and verifying the expected `EventWriter` buffer output.
-## [Integration Bridge Coverage Gap in Layer 3 - Fashion & Silence]
-**Learning:** Found multiple untested event-driven integration bridges in `src/layer3/integration.rs` (`diplomatic_fashion_chronicle_bridge` and `the_silence_chronicle_bridge`). These bridges are critical for linking internal Layer 3 logic into the `AddChronicleEvent` system, meaning if one silently failed, no global notification would reach the player.
-**Action:** Added basic unit tests instantiating a dummy `App`, pushing the trigger event, running `app.update()`, and verifying the expected `EventWriter` buffer output. Always add these basic tests when creating new integration bridges.
-## [Testing `paranoia_unrest_system`]
-**Learning:** Found a potential panic risk where `.unwrap()` was called on an `Option` inside an `is_some_and` block. While technically guarded by logic, it was an unidiomatic and theoretically unsafe pattern.
-**Action:** Always refactor `is_some_and(..)` followed by `.unwrap()` into an idiomatic `if let Some(val) = option` to cleanly and safely handle destructuring in systems. Also, always add unit tests covering the cases where the resource is missing or conditions are unmet to prevent regression.
-## [Testing Grid Initializations]
-**Learning:** Found missing tests covering `.expect()` error handling during struct initializations of `RoofGrid` and `FoundationSoilGrid` on extreme max values representing size overflow.
-**Action:** Always verify enum variants are exhausted by unit tests. If a variant like `Lockdown` is evaluated dynamically without test coverage, it's a silent failure risk. I will prioritize `match` and state evaluations during coverage audits. Adding `#[should_panic]` test block allows these `expect()` statements to be hit and verified.
+# Sentry's Journal
 
-## [Testing Edge Cases in Physics and AI Logic]
-**Learning:** Found gaps in testing negative bounds on pressure checks inside `suction_system`, and missing coverage for fallback logic on job assignments.
-**Action:** Adding assertions or using test setups targeting edge cases or fallback branch allows you to verify that no logic goes untested.
+**[Testing Module Redefinition]**
+**Learning:** When using Python scripts to append new tests to a file, verify whether a `#[cfg(test)] mod tests { ... }` block already exists in the file. Blindly appending a new `mod tests` block to the bottom of the file causes rustc `E0428` ("the name `tests` is defined multiple times").
+**Action:** Use regex replacements that target the end of the existing `mod tests` block (e.g., replacing the final closing brace `}`) or carefully place the new test functions inside the existing scope, rather than creating a duplicate module namespace.
 
-**[Clamping Edge Case in apply_chemical_speed_modifiers_system]**
-**Learning:** Found an unchecked edge case in `apply_chemical_speed_modifiers_system` where clamping was tested but using default component values.
-**Action:** Wrote tests specifically targeting the clamping behaviour to ensure it matches the 0.1 to 5.0 range expected, increasing test coverage.
-
-**[layer1::tech::rhythm] Added Table-Driven Tests for Sync Logistics**
-**Learning:** Using table-driven test patterns in Rust for checking Bevy ECS queries (like distance calculations and tick windows) is extremely helpful for covering integer edge cases without massive code duplication.
-**Action:** Always prefer table-driven vectors of tuples `(input1, input2, expected)` when dealing with spatial or temporal radius checks in isolated systems.
+**[Clippy Anti-Patterns in Tests]**
+**Learning:** `cargo clippy` with `-D warnings` is strict even inside test modules. Anti-patterns like `assert!(events.len() > 0)` or `assert!(true)` inside match arms trigger warnings (`clippy::len_zero` and `clippy::assertions_on_constants`). Furthermore, clippy enforces `clippy::items_after_test_module`, meaning `mod tests` must always be the absolute last item in the file.
+**Action:** When updating tests or formatting files as Sentry, prefer `!is_empty()` over `.len() > 0`, use empty blocks `{}` instead of `assert!(true)` for intentional no-ops, and ensure the `mod tests` declaration remains at the very bottom of the source file.

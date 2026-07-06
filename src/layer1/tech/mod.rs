@@ -733,6 +733,25 @@ mod tests {
         // Assert researcher is infected
         assert!(world.get::<MemeticCarrier>(researcher).is_some());
     }
+
+    #[test]
+    fn test_try_unlock_already_unlocked() {
+        let mut state = TechState {
+            total_capacity: 100.0,
+            used_capacity: 0.0,
+            ..Default::default()
+        };
+
+        // Initially unlock it
+        let first_try = state.try_unlock(Tech::Masonry);
+        assert!(first_try);
+        assert_eq!(state.used_capacity, Tech::Masonry.storage_cost());
+
+        // Try unlocking again, should return true immediately without adding to used capacity
+        let second_try = state.try_unlock(Tech::Masonry);
+        assert!(second_try);
+        assert_eq!(state.used_capacity, Tech::Masonry.storage_cost()); // Should not double-charge
+    }
 }
 pub mod ghost_code;
 #[cfg(test)]

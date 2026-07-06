@@ -248,7 +248,7 @@ impl ScopedEvaluationContext {
 /// schedule.add_systems(update_action_timer_system);
 /// schedule.run(&mut world);
 ///
-/// assert_eq!(world.get::<PopAction>(entity).unwrap().ticks_committed, 6);
+/// assert_eq!(world.get::<PopAction>(entity).expect("PopAction should exist").ticks_committed, 6);
 /// ```
 pub fn update_action_timer_system(mut query: Query<&mut PopAction>) {
     query.par_iter_mut().for_each(|mut action| {
@@ -961,9 +961,9 @@ mod tests {
         let pop = world.spawn(PopAction::default()).id();
 
         // Run system
-        world.run_system_once(update_action_timer_system).unwrap();
+        world.run_system_once(update_action_timer_system).expect("System should not panic");
 
-        assert_eq!(world.get::<PopAction>(pop).unwrap().ticks_committed, 1);
+        assert_eq!(world.get::<PopAction>(pop).expect("PopAction should exist").ticks_committed, 1);
     }
 
     #[test]

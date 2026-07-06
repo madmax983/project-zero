@@ -135,7 +135,7 @@ mod tests {
         app.update();
         let action = app.world().get::<PopAction>(pop).unwrap();
         match action.current {
-            ActionType::Idle => assert!(true),
+            ActionType::Idle => {},
             _ => panic!("Expected ActionType::Idle"),
         }
     }
@@ -149,7 +149,7 @@ mod tests {
         app.update();
         let action = app.world().get::<PopAction>(pop).unwrap();
         match action.current {
-            ActionType::SatisfyRest => assert!(true),
+            ActionType::SatisfyRest => {},
             _ => panic!("Expected ActionType::SatisfyRest"),
         }
     }
@@ -197,7 +197,7 @@ mod tests {
 
         let action = app.world().get::<PopAction>(pop).unwrap();
         match action.current {
-            ActionType::SatisfyRest => assert!(true),
+            ActionType::SatisfyRest => {},
             _ => panic!("Expected ActionType::SatisfyRest"),
         }
     }
