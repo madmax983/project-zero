@@ -218,7 +218,8 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<Events<crate::layer3::diplomacy::endless_draft::VeteranReturnEvent>>();
     world.init_resource::<crate::layer1::diplomacy::factions::rivals::TerritoryGrid>();
     world.init_resource::<Events<crate::layer3::diplomacy::succession::SuccessionEvent>>();
-    world.init_resource::<Events<crate::layer3::diplomacy::xenolinguistics::MessageResponseEvent>>();
+    world
+        .init_resource::<Events<crate::layer3::diplomacy::xenolinguistics::MessageResponseEvent>>();
     world.init_resource::<Events<crate::layer3::diplomacy::succession::SuccessionCrisisEvent>>();
     world.init_resource::<Events<crate::layer3::diplomacy::diplomatic_fashion::DiplomaticMeetingEvent>>();
     world.init_resource::<crate::layer1::mind::fugue::FugueEventTracker>();

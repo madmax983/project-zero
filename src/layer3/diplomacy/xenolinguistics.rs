@@ -1,5 +1,5 @@
+use crate::layer3::economy::Faction;
 use bevy::prelude::*;
-use crate::layer3::economy::{Faction, FactionId};
 use std::collections::hash_map::DefaultHasher;
 use std::hash::{Hash, Hasher};
 
@@ -37,7 +37,6 @@ pub fn generate_cipher_message(true_message: &str, barrier: &LanguageBarrier) ->
         return true_message.to_string();
     }
 
-
     let words: Vec<&str> = true_message.split_whitespace().collect();
     let mut result = Vec::new();
 
@@ -63,10 +62,13 @@ pub fn process_alien_responses_system(
 ) {
     for event in events.read() {
         for (mut dip_state, _barrier, faction) in query.iter_mut() {
-            if faction.id.0 == event.faction_id {
-                if event.chosen_response == ResponseType::AcceptFuel && event.true_intent == IntentType::Insult {
-                    dip_state.relations -= 20;
-                }
+            if faction.id.0 != event.faction_id {
+                continue;
+            }
+            if event.chosen_response == ResponseType::AcceptFuel
+                && event.true_intent == IntentType::Insult
+            {
+                dip_state.relations -= 20;
             }
         }
     }
@@ -79,7 +81,9 @@ mod tests {
     #[test]
     fn test_cipher_message_generation() {
         let message = String::from("GIFT BIO_SLUDGE");
-        let barrier = LanguageBarrier { understanding_level: 0 };
+        let barrier = LanguageBarrier {
+            understanding_level: 0,
+        };
 
         let ciphered = generate_cipher_message(&message, &barrier);
 
@@ -91,10 +95,16 @@ mod tests {
     fn test_translation_progress_unlocks_words() {
         let message = String::from("GIFT BIO_SLUDGE");
 
-        let barrier = LanguageBarrier { understanding_level: 50 };
+        let barrier = LanguageBarrier {
+            understanding_level: 50,
+        };
         let ciphered = generate_cipher_message(&message, &barrier);
 
-        assert!(ciphered.contains("GIFT") || ciphered.contains("BIO_SLUDGE") || ciphered.contains("****"));
+        assert!(
+            ciphered.contains("GIFT")
+                || ciphered.contains("BIO_SLUDGE")
+                || ciphered.contains("****")
+        );
     }
 
     #[test]
@@ -105,7 +115,9 @@ mod tests {
         world.spawn((
             crate::layer3::economy::Faction { id: faction_id },
             DiplomaticState { relations: 50 },
-            LanguageBarrier { understanding_level: 10 }
+            LanguageBarrier {
+                understanding_level: 10,
+            },
         ));
 
         let mut events = Events::<MessageResponseEvent>::default();
@@ -121,6 +133,9 @@ mod tests {
         schedule.run(&mut world);
 
         let dip_state = world.query::<&DiplomaticState>().single(&world);
-        assert!(dip_state.relations < 50, "Relations should drop due to misunderstanding");
+        assert!(
+            dip_state.relations < 50,
+            "Relations should drop due to misunderstanding"
+        );
     }
 }
