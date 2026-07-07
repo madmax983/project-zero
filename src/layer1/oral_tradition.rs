@@ -1,3 +1,4 @@
+#![allow(deprecated)]
 //! System for Oral Tradition and Folk Tales.
 //!
 //! Converts colony history (Chronicle) into living legends that are shared in taverns.

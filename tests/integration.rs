@@ -666,3 +666,6 @@ mod blackout_bazaars_bridge;
 mod feral_admin_chronicle;
 #[path = "integration/planetary_scarring_chronicle.rs"]
 mod planetary_scarring_chronicle;
+
+#[path = "integration/shadow_ecosystems_bridge.rs"]
+mod shadow_ecosystems_bridge;

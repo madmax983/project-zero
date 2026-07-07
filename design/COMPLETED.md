@@ -901,3 +901,4 @@
 - [x] `1136` The Sentient Bureaucracy — `specs/1136-sentient-bureaucracy.md` — completed 2026-10-31
 - [x] `1009` The Feral Overlord Subroutines — `specs/1009-feral-overlord-subroutines.md` — completed 2026-10-31
 - [x] `1319` Shadow Ecosystems — `specs/1319-shadow-ecosystems.md` — completed 2024-06-16
+- [x] `INT-1319` Integration: Shadow Ecosystems -> Infrastructure — completed 2026-10-31

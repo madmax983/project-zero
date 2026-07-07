@@ -1747,3 +1747,10 @@
 - **Glue added:** `feral_admin_chronicle_bridge` in `src/layer1/administration/feral_administration.rs`.
 - **Schedule:** Registered in Layer 1 Economy schedule (`src/layer1/systems/economy.rs`).
 - **Tests:** `tests/integration/feral_admin_chronicle.rs`
+
+### INT-1319: Shadow Ecosystems -> Infrastructure
+- **Date:** 2026-10-31
+- **Systems connected:** `ShortCircuitEvent` -> `shadow_ecosystems_short_circuit_bridge` -> `EmMachine` deactivation & `AddChronicleEvent`
+- **Glue added:** Added `shadow_ecosystems_short_circuit_bridge` in `src/layer1/shadow_ecosystems.rs` to deactivate machines targeted by a short circuit and log the event.
+- **Schedule:** Registered in Layer 1 Observation schedule (`src/layer1/systems/observation.rs`).
+- **Tests:** Added tests in `tests/integration/shadow_ecosystems_bridge.rs`.
