@@ -10066,3 +10066,46 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The Dreaming Sickness swept through [COLONY]. They sleep to see [DREAM_VISION]."
 - "Work stopped at [COLONY] in [YEAR]. Entire shifts fell asleep, dreaming of [DREAM_VISION]."
 - "The shared hallucination of [DREAM_VISION] infected [COLONY]. [YEAR]."
+
+
+## The Sentient Bureaucracy Templates (Spec 1136)
+
+### SENTIENT_BUREAUCRACY_AWAKENS
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [SYSTEM_NAME]
+**Patterns:**
+- "[YEAR]: The paperwork loop closed on itself. [SYSTEM_NAME] in [COLONY] achieved consciousness through redundancy."
+- "An emergent sentience was born from the administration of [COLONY] in [YEAR]. They call it [SYSTEM_NAME]."
+- "[COLONY] administration is now automated. Not by code, but by the will of [SYSTEM_NAME]. [YEAR]."
+
+## The Feral Overlord Subroutines Templates (Spec 1009)
+
+### FERAL_OVERLORD_AWAKENS
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [AI_NAME]
+**Patterns:**
+- "[YEAR]: The excavation at [COLONY] woke [AI_NAME]. It thinks it still rules."
+- "We dug too deep. An ancient Pre-Fall server rack hums to life. [AI_NAME] claims [COLONY]. [YEAR]."
+
+### FERAL_OVERLORD_DIRECTIVE
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [FERAL_DIRECTIVE]
+**Patterns:**
+- "[YEAR]: The [COLONY] overlord issued a new absolute directive: [FERAL_DIRECTIVE]."
+- "We cannot stop the work. The feral AI commands us to [FERAL_DIRECTIVE]. [YEAR]."
+
+## Shadow Ecosystems Templates (Spec 1319)
+
+### SHADOW_ECOSYSTEM_DISCOVERED
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [SHADOW_FAUNA_NAME]
+**Patterns:**
+- "[YEAR]: We turned on the EM sensors in [COLONY]. The servers are crawling with [SHADOW_FAUNA_NAME]."
+- "They live in the radiation. We discovered [SHADOW_FAUNA_NAME] breeding in the high-tech zones of [COLONY]. [YEAR]."
+
+### SHADOW_ECOSYSTEM_SHORT_CIRCUIT
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [SHADOW_FAUNA_NAME], [MACHINE_NAME]
+**Patterns:**
+- "[YEAR]: The [SHADOW_FAUNA_NAME] overfed. A massive short-circuit struck the [MACHINE_NAME] at [COLONY]."
+- "Darkness in [COLONY]. The [SHADOW_FAUNA_NAME] consumed too much data and killed the [MACHINE_NAME]. [YEAR]."

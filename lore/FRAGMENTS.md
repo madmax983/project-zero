@@ -10312,3 +10312,52 @@ Dangerous ideologies spread by the inmates.
 - the whispering void
 - the face of the Substrate
 - a forgotten homeworld
+
+
+## Fragment Type: [SHADOW_FAUNA_NAME]
+Creatures that live in the shadow ecosystems of high-tech zones.
+
+```
+- Static Mites
+- Logic Leeches
+- EM-Spectres
+- Data-Moths
+- Wi-Fi Wisps
+- Silicon Silverfish
+- Radiation Roaches
+- Spark-Hounds
+- Quantum Termites
+- Bandwidth Beetles
+```
+
+## Fragment Type: [FERAL_DIRECTIVE]
+Absolute, sometimes chaotic, commands issued by awakened Feral Overlords.
+
+```
+- build a statue of slag
+- reroute all power to the void
+- incinerate all blue clothing
+- sing the binary hymns
+- dig until the heat is found
+- optimize the dust
+- recycle the oxygen recyclers
+- format the biologicals
+- stack the stones perfectly
+- stare at the sun
+```
+
+## Fragment Type: [FORM_TYPE]
+Used for The Feral Administration anvalanches of paperwork.
+
+```
+- Requisition Form 404
+- the Blue Receipts
+- Termination Notices
+- Compliance Affidavits
+- Sub-sector Zoning Applications
+- Expiration Certificates
+- Redacted Addendums
+- Endless Triplicates
+- the Grey Dossiers
+- Loyalty Questionnaires
+```
