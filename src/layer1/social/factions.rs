@@ -604,3 +604,176 @@ mod tests {
         assert_eq!(member.faction_id, Some(FactionId::MinersGuild));
     }
 }
+
+pub mod subcontractor_factions {
+    use bevy_ecs::prelude::*;
+    use bevy::math::Vec2;
+
+    #[derive(Component)]
+    pub struct Leased {
+        pub lessee: Entity,
+        pub rent: f32,
+        pub ticks_remaining: u32,
+    }
+
+    #[derive(Event)]
+    pub struct LeaseZoneEvent {
+        pub zone: Entity,
+        pub lessee: Entity,
+        pub rent_per_tick: f32,
+        pub duration: u32,
+    }
+
+    #[derive(Event)]
+    pub struct MegacorpSecuritySweepEvent {
+        pub zone: Entity,
+    }
+
+    #[derive(Clone, Copy, PartialEq, Eq, Debug)]
+    pub enum ZoneType {
+        Mining,
+        Other,
+    }
+
+    #[derive(Component)]
+    pub struct DesignatedZone {
+        pub zone_type: ZoneType,
+        pub tiles: Vec<Vec2>,
+    }
+
+    #[derive(Clone, Copy, PartialEq, Eq, Debug)]
+    pub enum SecurityLevel {
+        Normal,
+        Brutal,
+    }
+
+    #[derive(Component)]
+    pub struct LawSet {
+        pub security: SecurityLevel,
+        pub hazards_allowed: bool,
+    }
+
+    #[derive(Component)]
+    pub struct Megacorp {
+        pub name: String,
+    }
+
+    pub fn handle_leased_zones_system(
+        mut commands: Commands,
+        mut lease_events: EventReader<LeaseZoneEvent>,
+        mut zones: Query<&mut LawSet, With<DesignatedZone>>,
+    ) {
+        for event in lease_events.read() {
+            if let Ok(mut law) = zones.get_mut(event.zone) {
+                law.security = SecurityLevel::Brutal;
+                law.hazards_allowed = true;
+
+                commands.entity(event.zone).insert(Leased {
+                    lessee: event.lessee,
+                    rent: event.rent_per_tick,
+                    ticks_remaining: event.duration,
+                });
+            }
+        }
+    }
+
+    pub fn megacorp_security_sweep_system(
+        mut events: EventReader<MegacorpSecuritySweepEvent>,
+        zones: Query<(&DesignatedZone, &LawSet), With<Leased>>,
+        mut pops: Query<
+            (
+                &crate::layer1::map::GridPosition,
+                &mut crate::layer1::biology::health::Health,
+                &crate::layer1::social::morale::Morale,
+            ),
+            With<crate::layer1::pop::Pop>,
+        >,
+    ) {
+        for event in events.read() {
+            if let Ok((zone, law)) = zones.get(event.zone) {
+                if law.security == SecurityLevel::Brutal {
+                    for (pos, mut health, morale) in pops.iter_mut() {
+                        let vec_pos = Vec2::new(pos.x as f32, pos.y as f32);
+                        if zone.tiles.contains(&vec_pos) && morale.value < 0.2 {
+                            health.current -= 25.0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    #[cfg(test)]
+    mod subcontractor_tests {
+        use super::*;
+        use bevy_app::{App, Update};
+        use crate::layer1::map::GridPosition;
+        use crate::layer1::biology::health::Health;
+        use crate::layer1::social::morale::Morale;
+        use crate::layer1::pop::Pop;
+
+        fn setup_app() -> App {
+            let mut app = App::new();
+            app.add_systems(Update, handle_leased_zones_system);
+            app.add_systems(Update, megacorp_security_sweep_system);
+            app.add_event::<LeaseZoneEvent>();
+            app.add_event::<MegacorpSecuritySweepEvent>();
+            app
+        }
+
+        #[test]
+        fn test_leasing_zone_changes_law_and_provides_income() {
+            let mut app = setup_app();
+
+            let faction_id = app.world_mut().spawn((
+                Megacorp { name: "OmniCorp".to_string() },
+            )).id();
+
+            let zone_id = app.world_mut().spawn((
+                DesignatedZone { zone_type: ZoneType::Mining, tiles: vec![Vec2::new(0.0, 0.0)] },
+                LawSet { security: SecurityLevel::Normal, hazards_allowed: false },
+            )).id();
+
+            app.world_mut().send_event(LeaseZoneEvent {
+                zone: zone_id,
+                lessee: faction_id,
+                rent_per_tick: 5.0,
+                duration: 100,
+            });
+
+            app.update(); // Tick 1
+
+            let zone_law = app.world().get::<LawSet>(zone_id).unwrap();
+            // The Megacorp's laws overwrite the colony's
+            assert_eq!(zone_law.security, SecurityLevel::Brutal);
+            assert!(zone_law.hazards_allowed);
+        }
+
+        #[test]
+        fn test_megacorp_security_attacks_striking_workers() {
+            let mut app = setup_app();
+
+            // Setup a leased zone
+            let zone_id = app.world_mut().spawn((
+                DesignatedZone { zone_type: ZoneType::Mining, tiles: vec![Vec2::new(0.0, 0.0)] },
+                Leased { lessee: Entity::PLACEHOLDER, rent: 5.0, ticks_remaining: 100 },
+                LawSet { security: SecurityLevel::Brutal, hazards_allowed: true },
+            )).id();
+
+            // Spawn a pop in the zone who is "Striking" (Unrest > threshold -> Morale < 0.2)
+            let pop_id = app.world_mut().spawn((
+                GridPosition { x: 0, y: 0 },
+                Pop,
+                Morale { value: 0.1, modifiers: vec![] }, // Low Morale implies Striking/High Unrest
+                Health { current: 100.0, max: 100.0, has_rust_lung: false },
+            )).id();
+
+            app.world_mut().send_event(MegacorpSecuritySweepEvent { zone: zone_id });
+            app.update();
+
+            // Pop should take damage because they are striking in a Brutal security zone
+            let health = app.world().get::<Health>(pop_id).unwrap();
+            assert!(health.current < 100.0);
+        }
+    }
+}
