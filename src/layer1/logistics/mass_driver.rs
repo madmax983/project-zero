@@ -78,6 +78,22 @@ pub fn package_arrival_system(
     }
 }
 
+/// Bridges BombardmentEvent (Mass Driver) to crate::layer1::core::chronicle::AddChronicleEvent (Chronicle).
+pub fn mass_driver_chronicle_bridge(
+    mut bomb_events: EventReader<BombardmentEvent>,
+    mut chronicle_events: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+) {
+    for event in bomb_events.read() {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            text: format!(
+                "Kinetic Bombardment! Mass driver payload struck colony {:?} with {} energy.",
+                event.target, event.kinetic_energy
+            ),
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
+        });
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -201,21 +217,5 @@ mod tests {
             bomb_event.kinetic_energy, 1000,
             "Damage should scale with payload amount"
         );
-    }
-}
-
-/// Bridges BombardmentEvent (Mass Driver) to crate::layer1::core::chronicle::AddChronicleEvent (Chronicle).
-pub fn mass_driver_chronicle_bridge(
-    mut bomb_events: EventReader<BombardmentEvent>,
-    mut chronicle_events: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
-) {
-    for event in bomb_events.read() {
-        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
-            text: format!(
-                "Kinetic Bombardment! Mass driver payload struck colony {:?} with {} energy.",
-                event.target, event.kinetic_energy
-            ),
-            importance: crate::layer1::core::chronicle::EventImportance::Major,
-        });
     }
 }

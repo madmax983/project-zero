@@ -38,7 +38,11 @@ pub fn process_debris_rain(
 
 pub fn process_falling_debris(
     mut commands: Commands,
-    debris_query: Query<(Entity, &crate::layer1::core::map::GridPosition, &FallingDebris)>,
+    debris_query: Query<(
+        Entity,
+        &crate::layer1::core::map::GridPosition,
+        &FallingDebris,
+    )>,
     mut structure_query: Query<
         (
             Entity,
@@ -90,7 +94,10 @@ mod tests {
     #[test]
     fn test_debris_rain_spawn() {
         let mut app = App::new();
-        app.add_systems(Update, (process_debris_rain, process_falling_debris).chain());
+        app.add_systems(
+            Update,
+            (process_debris_rain, process_falling_debris).chain(),
+        );
 
         app.world_mut().insert_resource(DebrisRainChance(1.0)); // Always rain
         app.world_mut().insert_resource(TerrainGrid {
@@ -102,7 +109,7 @@ mod tests {
         app.update();
 
         let mut query = app.world_mut().query::<&ScrapPile>();
-        let scrap_count = query.iter(&app.world()).count();
+        let scrap_count = query.iter(app.world()).count();
         assert!(
             scrap_count > 0,
             "Debris should have spawned a scrap pile on the grid"
@@ -180,14 +187,11 @@ mod tests {
         app.update();
 
         let health = app.world().get::<Health>(building).unwrap();
-        assert_eq!(
-            health.current, 50.0,
-            "Building should have taken 50 damage"
-        );
+        assert_eq!(health.current, 50.0, "Building should have taken 50 damage");
 
         let mut scrap_query = app.world_mut().query::<&ScrapPile>();
         assert_eq!(
-            scrap_query.iter(&app.world()).count(),
+            scrap_query.iter(app.world()).count(),
             0,
             "Should not spawn scrap on hit"
         );
@@ -208,11 +212,8 @@ mod tests {
         app.update();
 
         let mut query = app.world_mut().query::<&FallingDebris>();
-        let debris_count = query.iter(&app.world()).count();
-        assert_eq!(
-            debris_count, 0,
-            "No debris should spawn when chance is 0.0"
-        );
+        let debris_count = query.iter(app.world()).count();
+        assert_eq!(debris_count, 0, "No debris should spawn when chance is 0.0");
     }
 
     #[test]
@@ -230,10 +231,7 @@ mod tests {
         app.update();
 
         let mut query = app.world_mut().query::<&FallingDebris>();
-        let debris_count = query.iter(&app.world()).count();
-        assert_eq!(
-            debris_count, 0,
-            "No debris should spawn on an empty grid"
-        );
+        let debris_count = query.iter(app.world()).count();
+        assert_eq!(debris_count, 0, "No debris should spawn on an empty grid");
     }
 }
