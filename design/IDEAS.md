@@ -27081,3 +27081,86 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you finish the centuries-long terraforming dream, knowing it will genocide your own adapted citizens, or intentionally sabotage it to maintain the toxic environment they now call home?
 
 ---
+
+## Pop Relationships [SPECCED]
+
+**Layer:** 1
+
+**Fantasy:** Watching a colony develop social fabric—friendships, rivalries, families.
+
+**Mechanic:** Pops build relationship scores with pops they work alongside. High relationship = mood bonus. Low relationship = conflicts, productivity loss.
+
+**Emergence:** Players might notice two pops always fighting and separate them. A beloved elder pop dying might tank colony morale.
+
+**Tension:** Do you optimize job assignments for efficiency or social harmony?
+
+---
+
+## The Founder Effect [SPECCED]
+
+**Layer:** Cross-layer
+
+**Fantasy:** Your first colonists' traits echo through generations and across worlds.
+
+**Mechanic:** Colony ships carry pops with traits. New colonies inherit trait distributions from founders. A colony founded by aggressive pops breeds aggressive culture.
+
+**Emergence:** Your militaristic frontier worlds trace back to that one hotheaded miner you sent on the first ship. Your peaceful core worlds descend from your original scientists.
+
+**Tension:** Do you carefully curate colony ships or just send whoever's available?
+
+---
+
+## Cascade Failure [SPECCED]
+
+**Layer:** Cross-layer
+
+**Fantasy:** Watching one small problem snowball into galactic crisis.
+
+**Mechanic:** Resource shortages at Layer 1 reduce colony output. Reduced output strains system logistics. System strain weakens sector defenses. Sector weakness invites invasion.
+
+**Emergence:** That granary fire on your breadbasket world just lost you the war.
+
+**Tension:** How much redundancy do you build? Do you intervene early or trust the system?
+
+---
+## The Bio-Archive
+
+**Layer:** Cross-layer
+
+**Fantasy:** A living library of every species encountered, a monument to biodiversity.
+
+**Mechanic:** Establish a specialized habitat on a Layer 1 colony that preserves genetic samples of flora and fauna found across Layer 2 and 3 exploration. Provides massive science and cultural output but requires intense, unique environmental upkeep.
+
+**Emergence:** A containment failure releases an apex predator from a distant galaxy onto your agricultural world, completely upending the local ecosystem and requiring a massive military response.
+
+**Tension:** Do you prioritize funding the Bio-Archive for its massive cultural prestige, or focus on immediate survival and risk losing the galaxy's biodiversity forever?
+
+---
+
+## Hollow Worlds
+
+**Layer:** 2
+
+**Fantasy:** Discovering that a planet is not a solid rock, but a megastructure from a bygone era.
+
+**Mechanic:** Certain planets have a "Hollow" trait. You can colonize the surface (Layer 1) normally, but deep drilling reveals an entire secondary, inverted map on the interior. The interior has unique physics, ancient tech, and possibly dormant inhabitants.
+
+**Emergence:** You heavily industrialize the surface, causing the planet's structural integrity to fail. The surface colony collapses into the hollow interior, sparking a war of survival between the surviving colonists and the awakened ancient defenders.
+
+**Tension:** Do you play it safe on the surface, or delve into the hollow interior for incredible rewards, risking the destruction of your colony?
+
+---
+
+## The Void's Embrace
+
+**Layer:** 3
+
+**Fantasy:** A creeping, cosmic dread that slowly infects the minds of your citizens.
+
+**Mechanic:** A slow-moving, invisible anomaly slowly spreads across the galaxy map. Systems engulfed by the anomaly suffer a slow but constant increase in "Existential Dread" among their pops (Layer 1). Only specialized, high-tier "Beacon" structures can push back the anomaly.
+
+**Emergence:** You ignore the anomaly, focusing on a border war. Years later, your core worlds, engulfed by the Void, succumb to mass despair, and entire planetary populations simply stop working and await the end, collapsing your empire from within.
+
+**Tension:** Do you divert massive resources to building Beacons and fighting a metaphysical threat, or focus on tangible enemies and hope the anomaly passes?
+
+---
