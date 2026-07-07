@@ -49,3 +49,7 @@
 **[Cleaning Up Testing Modules via Refactor]**
 **Learning:** Modifying logic in Bevy systems might sometimes expose linter violations like `clippy::items-after-test-module` where production bridge functions are located below `mod tests { ... }`.
 **Action:** Always hoist production functions above `#cfg[test] mod tests` blocks during refactors to respect standard Rust module structures.
+
+**[Testing Refactoring with Targeted Tests]**
+**Learning:** A full `cargo test` on the workspace can take over 400s and time out. When refactoring a specific module, relying on a full test suite run slows down feedback and causes timeouts.
+**Action:** Always run targeted tests using `-p <package> --lib <module::path>` (e.g., `cargo test -p scale --lib layer3::diplomacy::xenolinguistics::tests`) to quickly and safely verify that the refactoring did not break behavior.
