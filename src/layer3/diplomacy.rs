@@ -96,3 +96,4 @@ pub mod open_source_science;
 pub mod trade_embargoes;
 
 pub mod bureaucratic_blackout;
+pub mod xenolinguistics;
