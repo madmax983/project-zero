@@ -7,6 +7,17 @@ use bevy_ecs::prelude::*;
 pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
+            crate::layer1::shadow_ecosystems::spawn_data_fauna,
+            crate::layer1::shadow_ecosystems::data_fauna_feeding,
+            crate::layer1::shadow_ecosystems::data_fauna_overfeed,
+            crate::layer1::shadow_ecosystems::reveal_data_fauna,
+        )
+            .chain()
+            .in_set(super::Layer1SystemSet::Execution),
+    );
+
+    schedule.add_systems(
+        (
             crate::layer1::administration::sentient_bureaucracy::update_bureaucracy_sentience_system,
             crate::layer1::administration::sentient_bureaucracy::autonomous_work_reassignment_system,
         ).chain().in_set(super::Layer1SystemSet::Execution),
