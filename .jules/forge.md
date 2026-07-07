@@ -41,3 +41,11 @@
 **Refactoring `calculate_room_quality`**
 **Learning:** Found a function over 100 lines with 7 levels of nesting checking grid boundaries. Deep nesting makes the logic extremely hard to follow and modify. Also need to be careful when converting `if let (Ok... = TryFrom)` constructs into early returns: the original code effectively treated failure to convert (negative values) as non-walkable and non-rock, resulting in `enclosed` remaining unchanged.
 **Action:** Extract nested blocks dealing with discrete logical steps (like boundary enclosure checking) into separate helper functions. Use early returns (guard clauses) to flatten structure. When converting `if let` blocks that return `false` on failure and are part of a larger negated condition (`!is_rock && !is_wall && is_walkable`), make sure the early return yields `true` so the negated final evaluation remains consistent.
+
+**[Extracting Match Statements with String Literals]**
+**Learning:** Monolithic inline `match` statements used solely for string representation lookups (like formatting `TerrainType` in the `headless` tool) create duplicated logic when they exist in multiple places (`get_tile_info`, `scan_terrain`).
+**Action:** Extract repeated string-formatting `match` blocks into a dedicated `format_xyz_name` helper function that returns a `&'static str`.
+
+**[Cleaning Up Testing Modules via Refactor]**
+**Learning:** Modifying logic in Bevy systems might sometimes expose linter violations like `clippy::items-after-test-module` where production bridge functions are located below `mod tests { ... }`.
+**Action:** Always hoist production functions above `#cfg[test] mod tests` blocks during refactors to respect standard Rust module structures.

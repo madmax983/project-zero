@@ -1287,113 +1287,48 @@ fn designate_at(world: &mut World, designation_type: DesignationType, x: i32, y:
             Some(comfy_table::Color::Green),
             Some(comfy_table::Attribute::Bold),
         );
-    } else {
-        // Check why it failed
-        let terrain = world.resource::<TerrainGrid>();
-        let tile = terrain.get(x as usize, y as usize);
-
-        match designation_type {
-            DesignationType::Mine => {
-                if tile == Some(TerrainType::Rock) {
-                    print_dashboard_panel(
-                        "ERROR",
-                        &format!("Failed: already designated at ({x}, {y})"),
-                        Some(comfy_table::Color::Red),
-                        Some(comfy_table::Attribute::Bold),
-                    );
-                } else {
-                    print_dashboard_panel(
-                        "ERROR",
-                        &format!("Failed: ({x}, {y}) is {tile:?}, need Rock for mining"),
-                        Some(comfy_table::Color::Red),
-                        Some(comfy_table::Attribute::Bold),
-                    );
-                }
-            }
-            DesignationType::Chop => {
-                if tile == Some(TerrainType::Tree) {
-                    print_dashboard_panel(
-                        "ERROR",
-                        &format!("Failed: already designated at ({x}, {y})"),
-                        Some(comfy_table::Color::Red),
-                        Some(comfy_table::Attribute::Bold),
-                    );
-                } else {
-                    print_dashboard_panel(
-                        "ERROR",
-                        &format!("Failed: ({x}, {y}) is {tile:?}, need Tree for chopping"),
-                        Some(comfy_table::Color::Red),
-                        Some(comfy_table::Attribute::Bold),
-                    );
-                }
-            }
-            DesignationType::Demolish | DesignationType::Destroy => {
-                print_dashboard_panel(
-                    "ERROR",
-                    &format!("Failed: no building at ({x}, {y})"),
-                    Some(comfy_table::Color::Red),
-                    Some(comfy_table::Attribute::Bold),
-                );
-            }
-            DesignationType::Repair => {
-                print_dashboard_panel(
-                    "ERROR",
-                    &format!("Failed: no building to repair at ({x}, {y})"),
-                    Some(comfy_table::Color::Red),
-                    Some(comfy_table::Attribute::Bold),
-                );
-            }
-            DesignationType::SetZone(_) => {
-                print_dashboard_panel(
-                    "ERROR",
-                    &format!("Failed: cannot set zone at ({x}, {y})"),
-                    Some(comfy_table::Color::Red),
-                    Some(comfy_table::Attribute::Bold),
-                );
-            }
-            DesignationType::Tame => {
-                print_dashboard_panel(
-                    "ERROR",
-                    &format!("Failed: no wild animal at ({x}, {y})"),
-                    Some(comfy_table::Color::Red),
-                    Some(comfy_table::Attribute::Bold),
-                );
-            }
-            DesignationType::ClearFlora => {
-                print_dashboard_panel(
-                    "ERROR",
-                    &format!("Failed: no flora at ({x}, {y})"),
-                    Some(comfy_table::Color::Red),
-                    Some(comfy_table::Attribute::Bold),
-                );
-            }
-            DesignationType::JuryRig => {
-                print_dashboard_panel(
-                    "ERROR",
-                    &format!("Failed: no building to jury-rig at ({x}, {y})"),
-                    Some(comfy_table::Color::Red),
-                    Some(comfy_table::Attribute::Bold),
-                );
-            }
-            DesignationType::Cannibalize => {
-                print_dashboard_panel(
-                    "ERROR",
-                    &format!("Failed: no Lander at ({x}, {y})"),
-                    Some(comfy_table::Color::Red),
-                    Some(comfy_table::Attribute::Bold),
-                );
-            }
-            DesignationType::CollectSample => {
-                print_dashboard_panel(
-                    "ERROR",
-                    &format!("Failed: no Flora or Fauna at ({x}, {y})"),
-                    Some(comfy_table::Color::Red),
-                    Some(comfy_table::Attribute::Bold),
-                );
-            }
-            DesignationType::Consume => {}
-        }
+        return;
     }
+
+    // Check why it failed
+    let terrain = world.resource::<TerrainGrid>();
+    let tile = terrain.get(x as usize, y as usize);
+    let tile_name = tile.map_or("Unknown".to_string(), |t| format!("{t:?}"));
+
+    let err_msg = match designation_type {
+        DesignationType::Mine => {
+            if tile == Some(TerrainType::Rock) {
+                format!("Failed: already designated at ({x}, {y})")
+            } else {
+                format!("Failed: ({x}, {y}) is {tile_name}, need Rock for mining")
+            }
+        }
+        DesignationType::Chop => {
+            if tile == Some(TerrainType::Tree) {
+                format!("Failed: already designated at ({x}, {y})")
+            } else {
+                format!("Failed: ({x}, {y}) is {tile_name}, need Tree for chopping")
+            }
+        }
+        DesignationType::Demolish | DesignationType::Destroy => {
+            format!("Failed: no building at ({x}, {y})")
+        }
+        DesignationType::Repair => format!("Failed: no building to repair at ({x}, {y})"),
+        DesignationType::SetZone(_) => format!("Failed: cannot set zone at ({x}, {y})"),
+        DesignationType::Tame => format!("Failed: no wild animal at ({x}, {y})"),
+        DesignationType::ClearFlora => format!("Failed: no flora at ({x}, {y})"),
+        DesignationType::JuryRig => format!("Failed: no building to jury-rig at ({x}, {y})"),
+        DesignationType::Cannibalize => format!("Failed: no Lander at ({x}, {y})"),
+        DesignationType::CollectSample => format!("Failed: no Flora or Fauna at ({x}, {y})"),
+        DesignationType::Consume => return, // Do nothing for consume
+    };
+
+    print_dashboard_panel(
+        "ERROR",
+        &err_msg,
+        Some(comfy_table::Color::Red),
+        Some(comfy_table::Attribute::Bold),
+    );
 }
 
 fn print_designations(world: &mut World) {
@@ -1629,26 +1564,7 @@ fn scan_terrain(world: &mut World, center_x: i32, center_y: i32, radius: ScanRad
                 .get(&(x, y))
                 .copied()
                 .unwrap_or(TerrainType::Grass);
-            let terrain_name = match tile {
-                TerrainType::Grass => "Grass",
-                TerrainType::Dirt => "Dirt",
-                TerrainType::Rock => "Rock",
-                TerrainType::Water => "Water",
-                TerrainType::Tree => "Tree",
-                TerrainType::Path => "Path",
-                TerrainType::Shrub => "Shrub",
-                TerrainType::Sapling => "Sapling",
-                TerrainType::DeepRock => "Deep Rock",
-                TerrainType::Crater => "Crater",
-                TerrainType::MagmaRock => "Magma Rock",
-                TerrainType::SporeBloom => "Spore Bloom",
-                TerrainType::Artifact => "Artifact",
-                TerrainType::FaultLine(true) => "Fault Line (Open)",
-                TerrainType::FaultLine(false) => "Fault Line (Closed)",
-                TerrainType::IndestructibleStump => "Indestructible Stump",
-                TerrainType::Bridge => "Bridge",
-                TerrainType::Void => "Void",
-            };
+            let terrain_name = format_terrain_name(tile);
 
             let walkable = tile.is_walkable();
             let buildable = matches!(
@@ -1749,25 +1665,8 @@ const fn get_terrain_color_headless(t: TerrainType) -> comfy_table::Color {
 }
 
 /// Get info about a single tile
-fn get_tile_info(world: &mut World, x: i32, y: i32) {
-    let terrain = world.resource::<TerrainGrid>();
-    let max_x = i32::try_from(terrain.width).unwrap_or(i32::MAX);
-    let max_y = i32::try_from(terrain.height).unwrap_or(i32::MAX);
-
-    if x < 0 || y < 0 || x >= max_x || y >= max_y {
-        print_dashboard_panel(
-            &format!("Tile Info: ({x}, {y})"),
-            "ERROR: Coordinates out of bounds",
-            Some(comfy_table::Color::Red),
-            Some(comfy_table::Attribute::Bold),
-        );
-        return;
-    }
-
-    let tile = terrain
-        .get(x as usize, y as usize)
-        .unwrap_or(TerrainType::Grass);
-    let terrain_name = match tile {
+fn format_terrain_name(tile: TerrainType) -> &'static str {
+    match tile {
         TerrainType::Grass => "Grass",
         TerrainType::Dirt => "Dirt",
         TerrainType::Rock => "Rock",
@@ -1786,7 +1685,28 @@ fn get_tile_info(world: &mut World, x: i32, y: i32) {
         TerrainType::IndestructibleStump => "Indestructible Stump",
         TerrainType::Bridge => "Bridge",
         TerrainType::Void => "Void",
-    };
+    }
+}
+
+fn get_tile_info(world: &mut World, x: i32, y: i32) {
+    let terrain = world.resource::<TerrainGrid>();
+    let max_x = i32::try_from(terrain.width).unwrap_or(i32::MAX);
+    let max_y = i32::try_from(terrain.height).unwrap_or(i32::MAX);
+
+    if x < 0 || y < 0 || x >= max_x || y >= max_y {
+        print_dashboard_panel(
+            &format!("Tile Info: ({x}, {y})"),
+            "ERROR: Coordinates out of bounds",
+            Some(comfy_table::Color::Red),
+            Some(comfy_table::Attribute::Bold),
+        );
+        return;
+    }
+
+    let tile = terrain
+        .get(x as usize, y as usize)
+        .unwrap_or(TerrainType::Grass);
+    let terrain_name = format_terrain_name(tile);
 
     let walkable = tile.is_walkable();
     let buildable = matches!(
