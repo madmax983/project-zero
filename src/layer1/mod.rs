@@ -522,3 +522,5 @@ pub mod terraforming_rejection;
 pub use terraforming::*;
 pub use terraforming_rejection::*;
 pub mod feral_overlord;
+pub mod shadow_ecosystems;
+pub use shadow_ecosystems::*;
