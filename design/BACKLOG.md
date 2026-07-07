@@ -578,7 +578,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `998` The Symbiotic Data-Weavers — `specs/998-symbiotic-data-weavers.md`
 - [ ] `999` Interplanetary Pollination — `specs/999-interplanetary-pollination.md`
 - [ ] `1002` The Bio-Rhythmic Commute — `specs/1002-bio-rhythmic-commute.md`
-- [ ] `1003` The Feral Overlord Subroutines — `specs/1003-feral-overlord-subroutines.md`
 
 - [ ] `1005` Subterranean Biosphere Inversion — `specs/1005-subterranean-biosphere-inversion.md`
 - [ ] `1008` The Refugee Archipelago — `specs/1008-the-refugee-archipelago.md`
