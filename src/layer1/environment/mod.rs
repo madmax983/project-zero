@@ -46,3 +46,6 @@ pub mod thermal_camouflage;
 pub use thermal_camouflage::*;
 pub mod atmosphere;
 pub use atmosphere::*;
+
+pub mod orbital_junkyard;
+pub use orbital_junkyard::*;
