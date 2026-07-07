@@ -27039,3 +27039,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you disable the automated systems during a blackout, losing all maintenance capabilities, or leave them on and risk them fundamentally altering your colony's layout?
 
 ---
+
+## The Silent Mutiny
+
+**Layer:** 2 / Cross-layer
+
+**Fantasy:** Your fleet commanders quietly deciding you are no longer fit to lead, not with a bang, but with a whisper.
+
+**Mechanic:** When a Layer 2 fleet is sent on repeatedly suicidal missions or left unsupplied for long periods, the Admiral's loyalty drops. Instead of a hard "rebellion" event, they initiate a "Silent Mutiny." The fleet stops responding to your direct movement orders, instead patrolling a safe route, intercepting local pirates, and protecting nearby friendly colonies, but refusing to attack your chosen targets or move to dangerous sectors.
+
+**Emergence:** You order your grand armada to dive into a lethal nebula to crush an enemy capital. They simply ignore the order, remaining in orbit around your core worlds to defend them. You are forced to realize your military has become a self-governing defense force that no longer trusts your offensive strategies.
+
+**Tension:** Do you try to arrest the beloved Admiral and risk a full-blown civil war, or accept that you no longer have absolute control over your own military?
+
+---
+
+## Orbital Debris Kessler Syndrome
+
+**Layer:** 2 / Cross-layer
+
+**Fantasy:** The consequences of a thousand space battles forming a physical cage around your world.
+
+**Mechanic:** Every ship destroyed in orbit around a Layer 1 colony adds to an invisible "Debris Density" value. As density increases, ships attempting to launch or land have a rising percentage chance of taking catastrophic damage. At critical mass, a "Kessler Event" triggers, permanently sealing the planet off from all Layer 2 trade and ship movement until a massive, multi-year cleanup megaproject is completed.
+
+**Emergence:** You successfully defend your capital from twenty consecutive invasions over a century. You win the war, only to realize the wreckage of your enemies has formed an impenetrable shell of high-velocity shrapnel. Your capital is safe, but permanently isolated, slowly starving as it can no longer import food.
+
+**Tension:** Do you fight defensive wars in deep space to keep your orbits clean, risking your fleets without planetary defense support, or fight at home and risk entombing yourself in your own victory?
+
+---
+
+## Generational Shift in Atmosphere
+
+**Layer:** 1
+
+**Fantasy:** A terraforming project taking so long that the colonists adapt to the poison before the air is clean.
+
+**Mechanic:** If a colony relies on life support on a toxic world for multiple generations, new Pops born there have a chance to develop a "Tox-Adapted" trait. They can breathe the local atmosphere but take damage in pure, Earth-like oxygen. If a long-term terraforming project finally completes, turning the world pristine, these adapted Pops begin to suffocate.
+
+**Emergence:** Your ancestors started a 500-year terraforming engine. You finally complete it, turning the smog-choked hellscape into a paradise. Immediately, half your workforce begins dying of oxygen toxicity, and a massive riot breaks out demanding you turn the terraforming engine *off* to return the smog.
+
+**Tension:** Do you finish the centuries-long terraforming dream, knowing it will genocide your own adapted citizens, or intentionally sabotage it to maintain the toxic environment they now call home?
+
+---
