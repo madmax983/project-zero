@@ -218,6 +218,7 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<Events<crate::layer3::diplomacy::endless_draft::VeteranReturnEvent>>();
     world.init_resource::<crate::layer1::diplomacy::factions::rivals::TerritoryGrid>();
     world.init_resource::<Events<crate::layer3::diplomacy::succession::SuccessionEvent>>();
+    world.init_resource::<Events<crate::layer3::diplomacy::xenolinguistics::MessageResponseEvent>>();
     world.init_resource::<Events<crate::layer3::diplomacy::succession::SuccessionCrisisEvent>>();
     world.init_resource::<Events<crate::layer3::diplomacy::diplomatic_fashion::DiplomaticMeetingEvent>>();
     world.init_resource::<crate::layer1::mind::fugue::FugueEventTracker>();
@@ -946,6 +947,7 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
     schedule.add_systems(
         (
             crate::layer3::diplomacy::succession::process_succession_system,
+            crate::layer3::diplomacy::xenolinguistics::process_alien_responses_system,
             crate::layer3::diplomacy::cultural_ransom::process_artifact_raid_system,
             crate::layer3::diplomacy::cultural_ransom::apply_hostage_penalties_system,
             crate::layer3::diplomacy::cultural_ransom::handle_ransom_negotiation_system,
@@ -1532,6 +1534,7 @@ mod tests {
 
         world.init_resource::<Events<crate::layer1::social::ghost_shift_strike::GhostShiftStartedEvent>>();
         world.init_resource::<Events<crate::layer3::diplomacy::succession::SuccessionEvent>>();
+        world.init_resource::<Events<crate::layer3::diplomacy::xenolinguistics::MessageResponseEvent>>();
         world.init_resource::<Events<crate::layer3::diplomacy::diplomatic_fashion::DiplomaticMeetingEvent>>();
         world.init_resource::<Events<crate::layer1::pop_memories::FamineEvent>>();
         world
