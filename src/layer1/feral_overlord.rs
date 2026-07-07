@@ -1,7 +1,5 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::deep_crust_resonance::ExcavationEvent;
-
-
+use bevy_ecs::prelude::*;
 
 #[derive(Component)]
 pub struct FeralOverlordAI {
@@ -63,8 +61,8 @@ pub fn feral_ai_directive_system(
 
 #[cfg(test)]
 mod tests {
-    use crate::layer1::infrastructure::subconscious_grid::Colony;
     use super::*;
+    use crate::layer1::infrastructure::subconscious_grid::Colony;
     use bevy_app::App;
     use bevy_app::Update;
 
@@ -76,16 +74,21 @@ mod tests {
 
         let colony = app.world_mut().spawn(Colony).id();
 
-        app.world_mut().resource_mut::<Events<ExcavationEvent>>().send(ExcavationEvent {
-            colony,
-            miner: Entity::from_raw(1),
-            target: Entity::from_raw(2),
-            discovery_type: "PreFallServerRack".to_string(),
-        });
+        app.world_mut()
+            .resource_mut::<Events<ExcavationEvent>>()
+            .send(ExcavationEvent {
+                colony,
+                miner: Entity::from_raw(1),
+                target: Entity::from_raw(2),
+                discovery_type: "PreFallServerRack".to_string(),
+            });
 
         app.update();
 
-        assert!(app.world().get::<FeralOverlordAI>(colony).is_some(), "Excavating a Pre-Fall server should awaken the Feral AI.");
+        assert!(
+            app.world().get::<FeralOverlordAI>(colony).is_some(),
+            "Excavating a Pre-Fall server should awaken the Feral AI."
+        );
     }
 
     #[test]
@@ -93,10 +96,16 @@ mod tests {
         let mut app = App::new();
         app.add_systems(Update, feral_ai_directive_system);
 
-        let _colony = app.world_mut().spawn((
-            Colony,
-            FeralOverlordAI { active: true, tick_counter: 100 },
-        )).id();
+        let _colony = app
+            .world_mut()
+            .spawn((
+                Colony,
+                FeralOverlordAI {
+                    active: true,
+                    tick_counter: 100,
+                },
+            ))
+            .id();
 
         app.update();
 
@@ -109,6 +118,9 @@ mod tests {
             }
         }
 
-        assert!(found_feral_order, "Active Feral AI should periodically issue Absolute priority work orders.");
+        assert!(
+            found_feral_order,
+            "Active Feral AI should periodically issue Absolute priority work orders."
+        );
     }
 }

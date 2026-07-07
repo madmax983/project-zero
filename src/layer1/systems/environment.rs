@@ -241,6 +241,8 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::environment::terraforming::apply_planetary_effects_system),
             crate::layer1::logistics::orbital_drop::process_orbital_drops,
             crate::layer1::nanite_storms::apply_nanite_storm_effects,
+            crate::layer1::environment::orbital_junkyard::process_debris_rain,
+            crate::layer1::environment::orbital_junkyard::process_falling_debris,
         )
             .in_set(Layer1SystemSet::Environment),
     );

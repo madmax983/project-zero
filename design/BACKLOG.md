@@ -67,7 +67,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `309` The Bureaucratic Strike — `specs/309-bureaucratic-strike.md`
 
 - [ ] `315` The Propaganda Engine — `specs/315-propaganda-engine.md`
-- [ ] `317` The Orbital Junkyard — `specs/317-orbital-junkyard.md`
 - [ ] `319` The Gravity Well Forge — `specs/319-gravity-well-forge.md`
 - [ ] `320` The Subterranean Ocean — `specs/320-subterranean-ocean.md`
 - [ ] `321` The Ego Machine — `specs/321-ego-machine.md`

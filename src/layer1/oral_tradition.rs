@@ -559,14 +559,18 @@ impl std::fmt::Display for OralTradition {
 }
 
 #[cfg(not(feature = "nova"))]
-#[deprecated(note = "Requires `nova` feature to be enabled. Add `features = [\"nova\"]` to your Cargo.toml for `scale`")]
+#[deprecated(
+    note = "Requires `nova` feature to be enabled. Add `features = [\"nova\"]` to your Cargo.toml for `scale`"
+)]
 #[derive(Debug, Default)]
 pub struct OralTradition {
     pub stories: Vec<Story>,
 }
 
 #[cfg(not(feature = "nova"))]
-#[deprecated(note = "Requires `nova` feature to be enabled. Add `features = [\"nova\"]` to your Cargo.toml for `scale`")]
+#[deprecated(
+    note = "Requires `nova` feature to be enabled. Add `features = [\"nova\"]` to your Cargo.toml for `scale`"
+)]
 #[derive(Debug)]
 pub struct Story {
     pub text: String,
@@ -576,7 +580,9 @@ pub struct Story {
 }
 
 #[cfg(not(feature = "nova"))]
-#[deprecated(note = "Requires `nova` feature to be enabled. Add `features = [\"nova\"]` to your Cargo.toml for `scale`")]
+#[deprecated(
+    note = "Requires `nova` feature to be enabled. Add `features = [\"nova\"]` to your Cargo.toml for `scale`"
+)]
 #[derive(Debug)]
 pub enum StoryGenre {
     Heroic,
