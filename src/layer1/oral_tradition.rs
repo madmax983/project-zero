@@ -595,7 +595,9 @@ pub enum StoryGenre {
 #[cfg(not(feature = "nova"))]
 impl OralTradition {
     pub fn add_story(&mut self, _story: Story) {}
-    pub fn process_chronicles(&mut self, _chronicle: &crate::layer1::core::chronicle::Chronicle) {}
+    pub fn process_chronicles(&mut self, _chronicle: &crate::layer1::core::chronicle::Chronicle) {
+        eprintln!("WARNING: OralTradition requires the `nova` feature to be enabled to function.");
+    }
 }
 
 #[cfg(not(feature = "nova"))]

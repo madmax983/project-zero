@@ -19,14 +19,13 @@ pub use crate::layer1::psychology::needs::Needs;
 pub use crate::layer1::social::Tavern;
 pub use crate::shared::log::MessageLog;
 
-#[cfg(feature = "nova")]
 pub use crate::layer1::oral_tradition::{OralTradition, Story, StoryGenre};
 
-#[cfg(feature = "nova")]
 pub use crate::layer1::oral_tradition::{collect_chronicles_system, storytelling_system};
 
 // Echo DX Audit: Export common components for headless users
-pub use crate::layer1;
+pub use bevy_ecs::prelude::{World, Query, Commands, Res, ResMut, Entity, Component};
+    pub use crate::layer1;
 pub use crate::layer1::economy::resources::ColonyResources;
 pub use crate::layer1::nature::terrain::{TerrainGrid, TerrainType};
 pub use crate::layer1::tech::TechState;

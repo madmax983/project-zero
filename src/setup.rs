@@ -81,6 +81,8 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     let mut world = World::new();
     world.init_resource::<crate::layer1::nature::long_night::LongNightEvent>();
     world.init_resource::<crate::layer1::fungal_network::SporeNetwork>();
+    world.init_resource::<bevy_ecs::event::Events<crate::layer1::social::factions::subcontractor_factions::LeaseZoneEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<crate::layer1::social::factions::subcontractor_factions::MegacorpSecuritySweepEvent>>();
     world.init_resource::<Events<crate::layer1::economy::information_black_market::EarlyWarningEvent>>();
     world.init_resource::<bevy_ecs::event::Events<crate::layer1::nature::long_night::StartLongNightEvent>>();
     world.init_resource::<bevy_ecs::event::Events<crate::layer1::tech::legacy_code::ReformatCommand>>();

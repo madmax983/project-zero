@@ -74,8 +74,7 @@ fn main() {
     match generator.generate("CIVILIZATION_RISE", &context) {
         Ok(story) => println!("{}", story),
         Err(e) => {
-            let table = e.to_table();
-            println!("{table}"); // Prints a helpful missing context message
+            println!("{}", e); // Prints a helpful missing context message
         }
     }
 }
@@ -91,9 +90,7 @@ For the **advanced simulation of legends** (Oral Tradition), see the [Oral Tradi
 > # ⚠️ REQUIRES FEATURE NOVA
 >
 > **NOTE:** Do not attempt to run this snippet without enabling `features = ["nova"]` in your `Cargo.toml`.
-> If the `nova` feature is not enabled, `OralTradition`, `Story`, and `StoryGenre` will not be available in the prelude and your code will fail to compile with an `E0422` error.
->
-> *If you see `failed to resolve: use of undeclared type OralTradition`, you forgot to enable the feature!*
+> If the `nova` feature is not enabled, `OralTradition` will gracefully warn you that it requires the feature to function.
 
 The "Nova" feature (Oral Tradition) builds upon the base narrative system to create living legends that evolve in taverns. It is located in `scale::layer1::oral_tradition`.
 
