@@ -10109,3 +10109,84 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 **Patterns:**
 - "[YEAR]: The [SHADOW_FAUNA_NAME] overfed. A massive short-circuit struck the [MACHINE_NAME] at [COLONY]."
 - "Darkness in [COLONY]. The [SHADOW_FAUNA_NAME] consumed too much data and killed the [MACHINE_NAME]. [YEAR]."
+
+
+## Chromotaxis Templates (Spec 1146)
+
+### Template: CHROMOTAXIS_ATTRACTION
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [BEAST_NAME], [STRUCTURAL_COLOR], [ATTRACTION_BEHAVIOR]
+**Patterns:**
+- "[YEAR]: The [BEAST_NAME] swarms the new hab-block. They are drawn to the [STRUCTURAL_COLOR] walls, [ATTRACTION_BEHAVIOR]."
+- "We painted the vents [STRUCTURAL_COLOR]. Now the [BEAST_NAME] won't leave. They are [ATTRACTION_BEHAVIOR]. [YEAR]."
+- "[COLONY], [YEAR]: The [STRUCTURAL_COLOR] structures are a magnet. [BEAST_NAME] herds are [ATTRACTION_BEHAVIOR] around them."
+
+### Template: CHROMOTAXIS_AGGRO
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [BEAST_NAME], [STRUCTURAL_COLOR], [DAMAGE_REPORT]
+**Patterns:**
+- "[YEAR]: The [BEAST_NAME] attacked the [STRUCTURAL_COLOR] silo. [DAMAGE_REPORT]."
+- "They hate the [STRUCTURAL_COLOR] paint. The [BEAST_NAME] breached the perimeter, causing [DAMAGE_REPORT]. [YEAR]."
+- "[COLONY] repainted the walls [STRUCTURAL_COLOR]. The [BEAST_NAME] took it as a challenge. [DAMAGE_REPORT]. [YEAR]."
+
+## The Bureau of Regrets Templates (Spec 496)
+
+### Template: PENITENT_FACTION_FORMS
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [ATROCITY_TYPE], [PENITENT_DEMAND]
+**Patterns:**
+- "[YEAR]: The guilt is too heavy. After the [ATROCITY_TYPE], the Bureau of Regrets forms, demanding [PENITENT_DEMAND]."
+- "They will not let us forget the [ATROCITY_TYPE]. The Penitent Faction rises in [COLONY] with a single demand: [PENITENT_DEMAND]. [YEAR]."
+- "[COLONY], [YEAR]: The scars of the [ATROCITY_TYPE] birthed a new movement. They seek atonement through [PENITENT_DEMAND]."
+
+### Template: REPARATION_STRIKE
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [PENITENT_DEMAND]
+**Patterns:**
+- "[YEAR]: We refused [PENITENT_DEMAND]. The Penitent Faction lays down their tools. The Reparation Strikes begin."
+- "The guilt halts the machines. [COLONY] suffers a massive strike because we ignored the [PENITENT_DEMAND]. [YEAR]."
+- "[COLONY], [YEAR]: Production ceases. They will not work until [PENITENT_DEMAND] is met."
+
+## The Bureaucratic Black Hole Templates (Spec 1170)
+
+### Template: BLACK_HOLE_FORMS
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [ADMIN_DISTRICT_NAME]
+**Patterns:**
+- "[YEAR]: The paperwork in [ADMIN_DISTRICT_NAME] reached critical density. A Bureaucratic Black Hole opens."
+- "[COLONY] built too many desks. The [ADMIN_DISTRICT_NAME] is now an event horizon for resources and people. [YEAR]."
+- "[YEAR]: The [ADMIN_DISTRICT_NAME] administration hub has collapsed under its own bureaucratic weight."
+
+### Template: LOST_IN_PAPERWORK
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [RESOURCE], [ADMIN_DISTRICT_NAME]
+**Patterns:**
+- "[YEAR]: A shipment of [RESOURCE] was routed through [ADMIN_DISTRICT_NAME]. It never came out the other side."
+- "The forms were misfiled in [ADMIN_DISTRICT_NAME]. [RESOURCE] simply vanished from the ledgers. [YEAR]."
+- "[COLONY], [YEAR]: We lost [RESOURCE] to the bureaucratic void of [ADMIN_DISTRICT_NAME]."
+
+### Template: POP_REASSIGNED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [POP_NAME], [ADMIN_DISTRICT_NAME]
+**Patterns:**
+- "[YEAR]: [POP_NAME] went to [ADMIN_DISTRICT_NAME] to file a grievance. They were 'reassigned'. We have no record of them."
+- "The black hole took [POP_NAME]. They entered [ADMIN_DISTRICT_NAME] and ceased to exist in the database. [YEAR]."
+- "[COLONY], [YEAR]: [POP_NAME] is gone. The [ADMIN_DISTRICT_NAME] clerks claim they were never born."
+
+## The Phantom Tax Templates (Spec 876)
+
+### Template: SLUSH_FUND_HACKED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [POP_NAME], [HACK_AMOUNT]
+**Patterns:**
+- "[YEAR]: [POP_NAME] found the galactic rounding error. We suddenly have [HACK_AMOUNT]. We are kings."
+- "The phantom tax was reclaimed. [POP_NAME] hacked the slush fund, injecting [HACK_AMOUNT] into [COLONY]. [YEAR]."
+- "[COLONY], [YEAR]: [POP_NAME] cracked the bank. [HACK_AMOUNT] flooded our reserves. But someone will notice."
+
+### Template: REPO_FLEET_ARRIVAL
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [REPO_FLEET_DESC]
+**Patterns:**
+- "[YEAR]: The ledger balances itself. A [REPO_FLEET_DESC] drops from orbit to collect the debt."
+- "They came for the stolen credits. [COLONY] sky is darkened by a [REPO_FLEET_DESC]. [YEAR]."
+- "[COLONY], [YEAR]: The Galactic Bank does not forgive. The [REPO_FLEET_DESC] demands what we took, and more."
