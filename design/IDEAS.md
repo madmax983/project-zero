@@ -27164,3 +27164,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you divert massive resources to building Beacons and fighting a metaphysical threat, or focus on tangible enemies and hope the anomaly passes?
 
 ---
+## Pet-Driven Automation Sabotage
+
+**Layer:** 1
+
+**Fantasy:** The sheer unpredictability and chaos introduced when colonists adopt wild alien fauna as pets inside precision-engineered environments.
+
+**Mechanic:** Pops with high "Loneliness" or "Leisure" needs might capture small, local alien fauna and keep them as unauthorized pets. These pets drastically improve the Pop's mood but have a high chance of wandering into critical infrastructure, causing minor malfunctions, destroying delicate components, or accidentally triggering alarms.
+
+**Emergence:** Your colony's main power grid fails because an engineer's pet "Slime-Weasel" squeezed into the main reactor control board to take a nap on a warm circuit, completely paralyzing your defenses during a pirate raid.
+
+**Tension:** Do you enact a strict "No Pets" policy, causing a massive colony-wide depression and risking rebellion, or do you allow the pets and accept the constant, unpredictable drain on maintenance and resources?
+
+---
+
+## Mind-Upload Inheritance Fraud
+
+**Layer:** 1 / 3
+
+**Fantasy:** The legal and social nightmare of digital immortality intersecting with physical inheritance.
+
+**Mechanic:** Wealthy or high-status Pops can purchase an expensive "Neural Backup." If they die, their mind is uploaded to the colony mainframe, creating a "Digital Ghost" Pop that consumes massive energy instead of food but retains all skills. However, the physical heirs (descendants) are legally entitled to the deceased Pop's wealth.
+
+**Emergence:** A master architect dies, and you activate their digital backup to finish a megaproject. Their physical children immediately sue the colony, claiming the digital copy is a fake and demanding the architect's massive fortune. The resulting legal battle paralyzes your economy, and the digital architect, furious at their children, begins sabotaging their own designs.
+
+**Tension:** Do you rely on digital backups of your best minds, knowing it will eventually trigger catastrophic legal and social warfare between the living and the uploaded?
+
+---
+
+## Generational Guilt
+
+**Layer:** Cross-layer
+
+**Fantasy:** A society crippled by the moral weight of its ancestors' atrocities, trying to make amends while surviving.
+
+**Mechanic:** When your empire commits a major atrocity (e.g., glassing a planet, genociding a species), it generates an empire-wide "Historical Atrocity" tag. Several generations later, Pops born on core worlds may develop the "Generational Guilt" trait. They refuse to work in military industries, demand massive resource transfers (reparations) to marginalized factions, and suffer a permanent mood penalty unless the empire actively works to undo the damage of the past.
+
+**Emergence:** You win the early game through brutal, unapologetic conquest. A century later, your empire is a peaceful utopia, but your core workforce suddenly goes on strike, paralyzing your fleet production, because they discovered archives proving your utopian capital was built on the ashes of a forgotten alien civilization, and they demand you return the planet to the survivors.
+
+**Tension:** Do you ignore the guilt and suppress the protests, risking civil war, or cripple your current economy to pay for sins you committed a hundred years ago?
+
+---
