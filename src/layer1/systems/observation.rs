@@ -610,7 +610,8 @@ pub fn register(schedule: &mut Schedule) {
 
     schedule.add_systems(
         (crate::layer1::core::integration::feral_administration_chronicle_bridge,
-            crate::layer1::shadow_ecosystems::shadow_ecosystems_short_circuit_bridge,)
+            crate::layer1::shadow_ecosystems::shadow_ecosystems_short_circuit_bridge,
+            crate::layer1::core::integration::building_death_notification_system,)
             .in_set(Layer1SystemSet::Observation),
     );
 

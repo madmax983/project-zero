@@ -3391,3 +3391,45 @@ pub fn feral_administration_chronicle_bridge(
         });
     }
 }
+
+/// INT-043: Bridge Building Removed Event to log notification (Building Destroyed).
+pub fn building_death_notification_system(
+    mut events: bevy_ecs::event::EventReader<crate::layer1::core::events::BuildingRemovedEvent>,
+    mut log: bevy_ecs::prelude::ResMut<crate::shared::log::MessageLog>,
+) {
+    for _ in events.read() {
+        log.add("Building destroyed!");
+    }
+}
+
+#[cfg(test)]
+mod building_death_tests {
+    use super::*;
+    use crate::layer1::core::events::BuildingRemovedEvent;
+    use crate::layer1::building::BuildingType;
+    use crate::layer1::core::map::GridPosition;
+
+    #[test]
+    fn test_building_death_message() {
+        let mut world = bevy_ecs::world::World::new();
+        world.init_resource::<bevy_ecs::event::Events<BuildingRemovedEvent>>();
+        world.init_resource::<crate::shared::log::MessageLog>();
+
+        let mut schedule = bevy_ecs::schedule::Schedule::default();
+        schedule.add_systems(building_death_notification_system);
+
+        let mut events = world.resource_mut::<bevy_ecs::event::Events<BuildingRemovedEvent>>();
+        events.send(BuildingRemovedEvent {
+            entity: bevy_ecs::entity::Entity::from_raw(1),
+            position: GridPosition { x: 0, y: 0 },
+            building_type: BuildingType::Wall,
+        });
+
+        schedule.run(&mut world);
+
+        let log = world.resource::<crate::shared::log::MessageLog>();
+        let messages = &log.messages;
+        assert_eq!(messages.len(), 1);
+        assert_eq!(messages[0].text, "Building destroyed!");
+    }
+}

@@ -903,3 +903,4 @@
 - [x] `1319` Shadow Ecosystems — `specs/1319-shadow-ecosystems.md` — completed 2024-06-16
 - [x] `INT-1319` Integration: Shadow Ecosystems -> Infrastructure — completed 2026-10-31
 - [x] `1003` The Feral Overlord Subroutines — `specs/1003-feral-overlord-subroutines.md` — completed 2026-11-01
+- [x] `043` Defensive Structures — `specs/043-defensive-structures.md` — completed 2026-02-01

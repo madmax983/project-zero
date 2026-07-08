@@ -155,6 +155,14 @@ mod tests {
         assert!(health.is_alive());
     }
 
+
+    #[test]
+    fn test_building_takes_damage() {
+        let mut health = Health { current: 100.0, max: 100.0, has_rust_lung: false };
+        health.take_damage(10.0);
+        assert_eq!(health.current, 90.0);
+    }
+
     #[test]
     fn test_take_damage() {
         let mut health = Health::default();
