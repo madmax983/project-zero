@@ -187,6 +187,163 @@ pub mod failure {
                 .expect("InvasionThreat should exist");
             assert!(threat.level > 0.0);
         }
+
+        #[test]
+        fn test_evaluate_system_logistics_no_expected_output() {
+            let mut app = App::new();
+            app.add_systems(Update, evaluate_system_logistics);
+            app.add_event::<LogisticsStrainedEvent>();
+
+            let entity = app
+                .world_mut()
+                .spawn((
+                    SystemLogistics {
+                        capacity: 100,
+                        utilized: 50,
+                    },
+                    ColonyOutput {
+                        expected_food: 0,
+                        actual_food: 0,
+                        expected_parts: 0,
+                        actual_parts: 0,
+                    },
+                ))
+                .id();
+
+            app.update();
+
+            let logistics = app.world().get::<SystemLogistics>(entity).expect("Component should exist");
+            assert_eq!(
+                logistics.capacity, 100,
+                "Capacity should remain unchanged when expected is 0"
+            );
+
+            let events = app.world().resource::<Events<LogisticsStrainedEvent>>();
+            assert!(
+                events.get_cursor().read(events).next().is_none(),
+                "No event should be sent"
+            );
+        }
+
+        #[test]
+        fn test_evaluate_system_logistics_under_capacity() {
+            let mut app = App::new();
+            app.add_systems(Update, evaluate_system_logistics);
+            app.add_event::<LogisticsStrainedEvent>();
+
+            let entity = app
+                .world_mut()
+                .spawn((
+                    SystemLogistics {
+                        capacity: 100,
+                        utilized: 10,
+                    },
+                    ColonyOutput {
+                        expected_food: 50,
+                        actual_food: 50,
+                        expected_parts: 50,
+                        actual_parts: 50,
+                    },
+                ))
+                .id();
+
+            app.update();
+
+            let logistics = app.world().get::<SystemLogistics>(entity).expect("Component should exist");
+            assert_eq!(
+                logistics.capacity, 100,
+                "Capacity should match ratio (1.0 * 100)"
+            );
+
+            let events = app.world().resource::<Events<LogisticsStrainedEvent>>();
+            assert!(
+                events.get_cursor().read(events).next().is_none(),
+                "No event should be sent since utilized (10) < capacity (100)"
+            );
+        }
+
+        #[test]
+        fn test_update_sector_defenses_zero_capacity() {
+            let mut app = App::new();
+            app.add_systems(Update, update_sector_defenses);
+            app.add_event::<DefenseWeakenedEvent>();
+
+            let entity = app
+                .world_mut()
+                .spawn((
+                    SectorDefense { power: 1000 },
+                    SystemLogistics {
+                        capacity: 0,
+                        utilized: 10,
+                    },
+                ))
+                .id();
+
+            app.update();
+
+            let defense = app.world().get::<SectorDefense>(entity).expect("Component should exist");
+            assert_eq!(
+                defense.power, 750,
+                "Power should drop by 25% when capacity is 0"
+            );
+
+            let events = app.world().resource::<Events<DefenseWeakenedEvent>>();
+            assert!(
+                events.get_cursor().read(events).next().is_some(),
+                "Event should be sent"
+            );
+        }
+
+        #[test]
+        fn test_update_sector_defenses_under_strain() {
+            let mut app = App::new();
+            app.add_systems(Update, update_sector_defenses);
+            app.add_event::<DefenseWeakenedEvent>();
+
+            let entity = app
+                .world_mut()
+                .spawn((
+                    SectorDefense { power: 1000 },
+                    SystemLogistics {
+                        capacity: 100,
+                        utilized: 50,
+                    },
+                ))
+                .id();
+
+            app.update();
+
+            let defense = app.world().get::<SectorDefense>(entity).expect("Component should exist");
+            assert_eq!(
+                defense.power, 1000,
+                "Power should not drop when strain < 1.0"
+            );
+
+            let events = app.world().resource::<Events<DefenseWeakenedEvent>>();
+            assert!(
+                events.get_cursor().read(events).next().is_none(),
+                "No event should be sent"
+            );
+        }
+
+        #[test]
+        fn test_calculate_invasion_threat_strong_defense() {
+            let mut app = App::new();
+            app.add_systems(Update, calculate_invasion_threat);
+
+            let entity = app
+                .world_mut()
+                .spawn((SectorDefense { power: 1000 }, InvasionThreat { level: 0.0 }))
+                .id();
+
+            app.update();
+
+            let threat = app.world().get::<InvasionThreat>(entity).expect("Component should exist");
+            assert_eq!(
+                threat.level, 0.0,
+                "Threat should not increase with strong defense"
+            );
+        }
     }
 }
 pub use failure::*;

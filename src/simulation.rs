@@ -96,6 +96,8 @@ pub fn build_simulation_schedule() -> Schedule {
 /// Run one simulation tick: all game systems via schedule, then increment tick counter.
 #[allow(clippy::too_many_lines)]
 fn init_simulation_resources(world: &mut World) {
+    world.init_resource::<Events<crate::layer1::social::factions::subcontractor_factions::MegacorpSecuritySweepEvent>>();
+    world.init_resource::<Events<crate::layer1::social::factions::subcontractor_factions::LeaseZoneEvent>>();
     world.init_resource::<bevy_ecs::event::Events<crate::layer1::shadow_ecosystems::ShortCircuitEvent>>();
 
     world.init_resource::<bevy_ecs::event::Events<crate::layer1::social::blacksite::PrisonBreakEvent>>();

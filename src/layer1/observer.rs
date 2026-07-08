@@ -122,7 +122,7 @@ mod tests {
         schedule.add_systems(observer_reaction_system);
         schedule.run(&mut world);
 
-        let speed = world.get::<Speed>(pop).unwrap();
+        let speed = world.get::<Speed>(pop).expect("Component should exist");
         // Base hustle is 1.1
         assert!((speed.current - 1.1).abs() < f32::EPSILON);
     }
@@ -152,7 +152,7 @@ mod tests {
         schedule.add_systems(observer_reaction_system);
         schedule.run(&mut world);
 
-        let speed = world.get::<Speed>(pop).unwrap();
+        let speed = world.get::<Speed>(pop).expect("Component should exist");
         // Lazy hustle is 1.5
         assert!((speed.current - 1.5).abs() < f32::EPSILON);
     }
@@ -178,7 +178,9 @@ mod tests {
         schedule.add_systems(observer_reaction_system);
         schedule.run(&mut world);
 
-        let stress = world.get::<StressTracker>(pop).unwrap();
+        let stress = world
+            .get::<StressTracker>(pop)
+            .expect("Component should exist");
         // Base 0.05 + Anxious 0.5 = 0.55
         assert!((stress.accumulated_stress - 0.55).abs() < 0.001);
     }
@@ -206,7 +208,9 @@ mod tests {
         schedule.add_systems(observer_reaction_system);
         schedule.run(&mut world);
 
-        let stress = world.get::<StressTracker>(pop).unwrap();
+        let stress = world
+            .get::<StressTracker>(pop)
+            .expect("Component should exist");
         // Optimist: stress_add = 0.0, morale_add > 0 -> stress - 0.2
         // 10.0 - 0.2 = 9.8
         assert!((stress.accumulated_stress - 9.8).abs() < 0.001);
