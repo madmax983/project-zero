@@ -10361,3 +10361,60 @@ Used for The Feral Administration anvalanches of paperwork.
 - the Grey Dossiers
 - Loyalty Questionnaires
 ```
+
+
+## Chromotaxis Fragments (Spec 1146)
+
+## Fragment Type: [STRUCTURAL_COLOR]
+- rust-red
+- pale-blue
+- stark-white
+- hazard-yellow
+- matte-black
+- neon-green
+
+## Fragment Type: [ATTRACTION_BEHAVIOR]
+- grazing on the paint
+- pressing their bodies against the warm metal
+- humming softly to the structure
+- trying to mate with the airlocks
+
+## The Bureau of Regrets Fragments (Spec 496)
+
+## Fragment Type: [ATROCITY_TYPE]
+- mass starvation of the lower decks
+- the forced labor edict
+- the execution of the mutineers
+- the venting of the sick ward
+- the engineered crop blight
+
+## Fragment Type: [PENITENT_DEMAND]
+- the destruction of the prison blocks
+- dismantling the forced-growth vats
+- tearing down the Governor's spire
+- purging the execution archives
+
+## The Bureaucratic Black Hole Fragments (Spec 1170)
+
+## Fragment Type: [ADMIN_DISTRICT_NAME]
+- Sector 7G
+- The Central Filing Hub
+- the Ministry of Quotas
+- The Paper Labyrinth
+- The Red Tape District
+- The Endless Desks
+
+## The Phantom Tax Fragments (Spec 876)
+
+## Fragment Type: [HACK_AMOUNT]
+- a king's ransom in credits
+- an impossible fortune
+- more wealth than the sector generates in a decade
+- a vault-breaking sum
+- enough credits to buy a star
+
+## Fragment Type: [REPO_FLEET_DESC]
+- cold, automated repo-armada
+- silent banking dreadnought
+- relentless collection swarm
+- mathematically perfect kill-fleet
