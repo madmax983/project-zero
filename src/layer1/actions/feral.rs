@@ -1,6 +1,6 @@
+use crate::layer1::entities::pop::Pop;
 use bevy_ecs::prelude::*;
 use bevy_time::{Time, Timer};
-use crate::layer1::entities::pop::Pop;
 
 #[derive(Clone, PartialEq, Eq, Debug)]
 pub enum TaskPriority {
@@ -56,13 +56,17 @@ pub fn feral_ai_directive_system(
     mut pop_query: Query<&mut ActionQueue, With<Pop>>,
 ) {
     for mut ai in ai_query.iter_mut() {
-        if !ai.is_active { continue; }
+        if !ai.is_active {
+            continue;
+        }
 
         ai.cooldown_timer.tick(time.delta());
 
         if ai.cooldown_timer.finished() {
             // Pick a random task (simplified for green phase)
-            let new_task = Task::ConstructMonument { priority: TaskPriority::FeralOverride };
+            let new_task = Task::ConstructMonument {
+                priority: TaskPriority::FeralOverride,
+            };
 
             for mut queue in pop_query.iter_mut() {
                 // Prepend high priority task
@@ -80,7 +84,7 @@ mod tests {
     use super::*;
     use bevy_app::App;
     use bevy_app::Update;
-    use bevy_time::{TimerMode};
+    use bevy_time::TimerMode;
 
     #[test]
     fn test_feral_ai_issues_high_priority_task() {
@@ -89,18 +93,24 @@ mod tests {
         app.add_systems(Update, feral_ai_directive_system);
 
         // Setup AI state
-        let _ai_entity = app.world_mut().spawn((
-            FeralOverlordAI {
+        let _ai_entity = app
+            .world_mut()
+            .spawn((FeralOverlordAI {
                 is_active: true,
-                cooldown_timer: Timer::from_seconds(0.0, TimerMode::Once)
-            },
-        )).id();
+                cooldown_timer: Timer::from_seconds(0.0, TimerMode::Once),
+            },))
+            .id();
 
         // Setup a pop with a normal queue
-        let pop = app.world_mut().spawn((
-            Pop,
-            ActionQueue { tasks: vec![Task::Idle] },
-        )).id();
+        let pop = app
+            .world_mut()
+            .spawn((
+                Pop,
+                ActionQueue {
+                    tasks: vec![Task::Idle],
+                },
+            ))
+            .id();
 
         app.update();
 
@@ -114,10 +124,17 @@ mod tests {
     fn test_feral_ai_cannot_be_canceled_by_player() {
         let mut app = App::new();
 
-        let pop = app.world_mut().spawn((
-            Pop,
-            ActionQueue { tasks: vec![Task::ConstructMonument { priority: TaskPriority::FeralOverride }] },
-        )).id();
+        let pop = app
+            .world_mut()
+            .spawn((
+                Pop,
+                ActionQueue {
+                    tasks: vec![Task::ConstructMonument {
+                        priority: TaskPriority::FeralOverride,
+                    }],
+                },
+            ))
+            .id();
 
         // Simulate player trying to cancel
         let mut queue = app.world_mut().get_mut::<ActionQueue>(pop).unwrap();

@@ -606,8 +606,8 @@ mod tests {
 }
 
 pub mod subcontractor_factions {
-    use bevy_ecs::prelude::*;
     use bevy::math::Vec2;
+    use bevy_ecs::prelude::*;
 
     #[derive(Component)]
     pub struct Leased {
@@ -706,11 +706,11 @@ pub mod subcontractor_factions {
     #[cfg(test)]
     mod subcontractor_tests {
         use super::*;
-        use bevy_app::{App, Update};
-        use crate::layer1::map::GridPosition;
         use crate::layer1::biology::health::Health;
-        use crate::layer1::social::morale::Morale;
+        use crate::layer1::map::GridPosition;
         use crate::layer1::pop::Pop;
+        use crate::layer1::social::morale::Morale;
+        use bevy_app::{App, Update};
 
         fn setup_app() -> App {
             let mut app = App::new();
@@ -725,14 +725,26 @@ pub mod subcontractor_factions {
         fn test_leasing_zone_changes_law_and_provides_income() {
             let mut app = setup_app();
 
-            let faction_id = app.world_mut().spawn((
-                Megacorp { name: "OmniCorp".to_string() },
-            )).id();
+            let faction_id = app
+                .world_mut()
+                .spawn((Megacorp {
+                    name: "OmniCorp".to_string(),
+                },))
+                .id();
 
-            let zone_id = app.world_mut().spawn((
-                DesignatedZone { zone_type: ZoneType::Mining, tiles: vec![Vec2::new(0.0, 0.0)] },
-                LawSet { security: SecurityLevel::Normal, hazards_allowed: false },
-            )).id();
+            let zone_id = app
+                .world_mut()
+                .spawn((
+                    DesignatedZone {
+                        zone_type: ZoneType::Mining,
+                        tiles: vec![Vec2::new(0.0, 0.0)],
+                    },
+                    LawSet {
+                        security: SecurityLevel::Normal,
+                        hazards_allowed: false,
+                    },
+                ))
+                .id();
 
             app.world_mut().send_event(LeaseZoneEvent {
                 zone: zone_id,
@@ -754,21 +766,45 @@ pub mod subcontractor_factions {
             let mut app = setup_app();
 
             // Setup a leased zone
-            let zone_id = app.world_mut().spawn((
-                DesignatedZone { zone_type: ZoneType::Mining, tiles: vec![Vec2::new(0.0, 0.0)] },
-                Leased { lessee: Entity::PLACEHOLDER, rent: 5.0, ticks_remaining: 100 },
-                LawSet { security: SecurityLevel::Brutal, hazards_allowed: true },
-            )).id();
+            let zone_id = app
+                .world_mut()
+                .spawn((
+                    DesignatedZone {
+                        zone_type: ZoneType::Mining,
+                        tiles: vec![Vec2::new(0.0, 0.0)],
+                    },
+                    Leased {
+                        lessee: Entity::PLACEHOLDER,
+                        rent: 5.0,
+                        ticks_remaining: 100,
+                    },
+                    LawSet {
+                        security: SecurityLevel::Brutal,
+                        hazards_allowed: true,
+                    },
+                ))
+                .id();
 
             // Spawn a pop in the zone who is "Striking" (Unrest > threshold -> Morale < 0.2)
-            let pop_id = app.world_mut().spawn((
-                GridPosition { x: 0, y: 0 },
-                Pop,
-                Morale { value: 0.1, modifiers: vec![] }, // Low Morale implies Striking/High Unrest
-                Health { current: 100.0, max: 100.0, has_rust_lung: false },
-            )).id();
+            let pop_id = app
+                .world_mut()
+                .spawn((
+                    GridPosition { x: 0, y: 0 },
+                    Pop,
+                    Morale {
+                        value: 0.1,
+                        modifiers: vec![],
+                    }, // Low Morale implies Striking/High Unrest
+                    Health {
+                        current: 100.0,
+                        max: 100.0,
+                        has_rust_lung: false,
+                    },
+                ))
+                .id();
 
-            app.world_mut().send_event(MegacorpSecuritySweepEvent { zone: zone_id });
+            app.world_mut()
+                .send_event(MegacorpSecuritySweepEvent { zone: zone_id });
             app.update();
 
             // Pop should take damage because they are striking in a Brutal security zone
