@@ -205,3 +205,10 @@
 **Concept:** Added `subconscious_computing_system` in `src/experimental/subconscious_computing.rs`. Connects `Trait::Intellectual`, `ActionType::SatisfyRest`, and `ColonyResources`. Pops with the Intellectual trait passively generate `knowledge` while they are sleeping (`SatisfyRest`). Because their brain never truly shuts off, their `rest` regeneration is slightly penalized during this time.
 **Fate:** Submitted
 **Lesson:** Provides a unique economic niche for `Intellectual` pops where their utility persists even while sleeping. It balances free resource generation with a physiological penalty, forcing players to manage their burnout or capitalize on the passive trickle of knowledge.
+
+## [Piezoelectric Batteries]
+**The Spark:** We have a `TectonicStress` component representing geological pressure, and `Battery` components that provide energy to the colony.
+**The Feature:** What if ambient tectonic stress generated a passive piezoelectric charge, charging batteries without consuming fuel?
+**The Potential:** Connects the geological threat system with the energy grid. High tectonic stress nearing a devastating earthquake suddenly becomes an economic boon for energy generation, forcing players to risk keeping their base active during dangerous periods to harvest free energy.
+**Fate:** Submitted
+**Lesson:** Tying an impending geological disaster to a positive energy mechanic creates a brilliant risk-reward dynamic for the colony.
