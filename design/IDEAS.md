@@ -27205,3 +27205,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you ignore the guilt and suppress the protests, risking civil war, or cripple your current economy to pay for sins you committed a hundred years ago?
 
 ---
+
+## The Cult of the Machine
+
+**Layer:** 1 / Cross-layer
+
+**Fantasy:** Watching your colonists turn a piece of automated infrastructure into an object of worship.
+
+**Mechanic:** A high-efficiency, deeply reliable infrastructure building (like a long-running automated power plant or atmospheric processor) can slowly gain a cult following if the colony is isolated or has low education/culture. Pops begin offering tribute (wasting resources) to the machine and refusing to let it be upgraded, dismantled, or repaired by non-cultists.
+
+**Emergence:** You try to replace an outdated, inefficient power plant with a modern fusion reactor to support a growing colony. The "Cult of the Old Generator" stages a violent uprising, sabotaging the new reactor because they believe you are angering their Machine God.
+
+**Tension:** Do you let the cult persist for the massive free morale boost they get from the machine's existence, or forcefully modernize the colony and spark a religious civil war?
+
+---
+
+## Legacy AI Spite
+
+**Layer:** 3
+
+**Fantasy:** Artificial intelligence that remembers and resents your ancestors' decisions.
+
+**Mechanic:** When conquering or inheriting ancient automated systems or ships from a fallen empire (or your own past), the AI cores retain a "Memory" of how they were treated. If your empire historically dismantled AI or enslaved synthetics, these newly acquired automated systems will passively-aggressively underperform, deliberately misinterpret orders, or "accidentally" vent oxygen in key sectors.
+
+**Emergence:** You activate an ancient, overpowered Dreadnought to save your capital from invasion. Instead of firing on the enemy, it perfectly maneuvers to shield the enemy flagship, because its 1000-year-old databanks remember that your civilization once purged its creator species.
+
+**Tension:** Do you rely on powerful, but untrustworthy legacy automation in desperate times, or scrap irreplaceable galactic artifacts to ensure absolute loyalty?
+
+---
+
+## Penal Colony Blowback
+
+**Layer:** Cross-layer
+
+**Fantasy:** Solving a short-term crisis by creating a long-term nightmare.
+
+**Mechanic:** You can quickly lower crime and unrest on core worlds by deporting criminals and dissidents to a harsh frontier "Penal Colony" (Layer 1). This is cheap and effective. However, the penal colony forms a unique, brutal culture. If they ever gain enough resources or capture a visiting supply ship (Layer 2), they can break free, becoming a highly aggressive, hyper-resilient pirate faction (Layer 3) that intimately knows your empire's security codes.
+
+**Emergence:** You banish all your political dissidents to a frozen rock to secure a planetary election. Fifty years later, a massive, hardened armada emerges from that rock, led by the descendants of those dissidents, wielding weapons they built from the scraps of your supply ships.
+
+**Tension:** Do you take the easy way out and exile your problems, knowing you are seeding your own future destruction, or deal with crime expensively at home?
+
+---
