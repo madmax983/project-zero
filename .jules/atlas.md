@@ -76,3 +76,7 @@
 **[Title] Continue Dismantling Core Integration Blob (Logistics)**
 **Tangle:** The file `src/layer1/core/integration.rs` was massive containing logistics-related bridges like `mass_driver_chronicle_bridge` and `orbital_drop_chronicle_bridge`, exacerbating the "Blob" anti-pattern and distancing the bridging logic from the logistics domain.
 **Blueprint:** Moved `mass_driver_chronicle_bridge` to `src/layer1/logistics/mass_driver.rs` and `orbital_drop_chronicle_bridge` to `src/layer1/logistics/orbital_drop.rs`. Updated the references in `src/layer1/systems/observation.rs`.
+
+**[Title] Break Circular Dependency and Fix Blob Anti-pattern with Escape Pods Chronicle Bridge**
+**Tangle:** The `escape_pods_chronicle_bridge` was located in `src/layer1/core/integration.rs`, exacerbating the "Blob" anti-pattern in `integration.rs` and distancing the bridging logic from the `escape` domain where `DistressSignal` and `Lifeboat` are defined. This led to bloated files and poor cohesion.
+**Blueprint:** Moved `escape_pods_chronicle_bridge` from `src/layer1/core/integration.rs` to `src/layer1/actions/escape.rs` to enforce domain cohesion. Updated references in `src/layer1/systems/observation.rs` and the integration tests (`tests/integration/escape_pods_chronicle.rs`).
