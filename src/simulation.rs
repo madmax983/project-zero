@@ -1045,6 +1045,11 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
     ));
 
     schedule.add_systems((
+        crate::layer2::integration::orbital_secession_chronicle_bridge,
+    ));
+
+
+    schedule.add_systems((
         crate::layer3::pirates::resource_curse_raid_bridge,
         crate::layer1::social::pirates::process_pirate_amnesty_system
             .after(crate::layer3::pirates::evaluate_pirate_amnesty_system),

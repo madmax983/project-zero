@@ -669,3 +669,6 @@ mod planetary_scarring_chronicle;
 
 #[path = "integration/shadow_ecosystems_bridge.rs"]
 mod shadow_ecosystems_bridge;
+
+#[path = "integration/orbital_secession_bridge.rs"]
+mod orbital_secession_bridge;

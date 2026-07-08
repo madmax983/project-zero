@@ -1754,3 +1754,9 @@
 - **Glue added:** Added `shadow_ecosystems_short_circuit_bridge` in `src/layer1/shadow_ecosystems.rs` to deactivate machines targeted by a short circuit and log the event.
 - **Schedule:** Registered in Layer 1 Observation schedule (`src/layer1/systems/observation.rs`).
 - **Tests:** Added tests in `tests/integration/shadow_ecosystems_bridge.rs`.
+
+### INT-1004: Orbital Secession -> Factions & Chronicle
+- **Date:** 2026-11-01
+- **Systems connected:** `SecessionState` -> `orbital_secession_chronicle_bridge` -> `TradeEmbargo` / `AddChronicleEvent`
+- **Glue added:** Added `orbital_secession_chronicle_bridge` in `src/layer2/integration.rs` to declare trade embargoes (Food and Metal) by the `OrbitalSecessionist` faction and emit an `AddChronicleEvent` when an orbital habitat secedes. Registered in `src/simulation.rs`.
+- **Tests:** `tests/integration/orbital_secession_bridge.rs`

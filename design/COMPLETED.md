@@ -904,3 +904,4 @@
 - [x] `INT-1319` Integration: Shadow Ecosystems -> Infrastructure — completed 2026-10-31
 - [x] `1003` The Feral Overlord Subroutines — `specs/1003-feral-overlord-subroutines.md` — completed 2026-11-01
 - [x] `1002` The Bio-Rhythmic Commute — `specs/1002-bio-rhythmic-commute.md` — completed 2026-07-08
+- [x] `INT-1004` Integration: Orbital Secession -> Factions & Chronicle - completed 2026-11-01

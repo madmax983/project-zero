@@ -92,6 +92,8 @@ pub enum FactionId {
     /// Hive mind collective that split from the unintegrated pops.
     Penitent,
     HiveMind,
+    /// Faction representing a seceded orbital habitat.
+    OrbitalSecessionist,
 }
 
 /// Data associated with a faction.

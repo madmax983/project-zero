@@ -1100,3 +1100,38 @@ pub fn observe_forge_crush_event(
         });
     }
 }
+
+use crate::layer2::orbit::SecessionState;
+use crate::layer3::diplomacy::trade_embargoes::TradeEmbargo;
+use crate::layer1::social::factions::FactionId;
+use crate::layer1::resources::ResourceType;
+
+/// Bridges Orbital Secession (SecessionState::Seceded) to TradeEmbargoes and AddChronicleEvent.
+pub fn orbital_secession_chronicle_bridge(
+    mut commands: Commands,
+    query: Query<Entity, Changed<SecessionState>>,
+    states: Query<&SecessionState>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for entity in query.iter() {
+        if let Ok(state) = states.get(entity) {
+            if *state == SecessionState::Seceded {
+                // Secession triggers an embargo on the planet.
+                // We embargo key resources like Food and Metal to represent the "demand tribute" / self-sufficient nature.
+                commands.spawn(TradeEmbargo {
+                    resource: ResourceType::Food,
+                    enforcing_faction: FactionId::OrbitalSecessionist,
+                });
+                commands.spawn(TradeEmbargo {
+                    resource: ResourceType::Metal,
+                    enforcing_faction: FactionId::OrbitalSecessionist,
+                });
+
+                chronicle_events.send(AddChronicleEvent {
+                    importance: crate::layer1::chronicle::EventImportance::Major,
+                    text: "An orbital habitat has declared independence! The secessionists have severed our trade lines and are demanding tribute.".to_string(),
+                });
+            }
+        }
+    }
+}
