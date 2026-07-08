@@ -144,18 +144,20 @@ pub fn reveal_data_fauna(
     }
 }
 
-
 /// INT-1319: Bridges ShortCircuitEvent to EmMachine deactivation and Chronicle
 pub fn shadow_ecosystems_short_circuit_bridge(
     mut events: bevy_ecs::event::EventReader<ShortCircuitEvent>,
     mut machine_query: Query<&mut EmMachine>,
-    mut chronicle_events: bevy_ecs::event::EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+    mut chronicle_events: bevy_ecs::event::EventWriter<
+        crate::layer1::core::chronicle::AddChronicleEvent,
+    >,
 ) {
     for event in events.read() {
         if let Ok(mut machine) = machine_query.get_mut(event.target) {
             machine.active = false;
             chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
-                text: "A swarm of Data Fauna has overfed and short-circuited a machine!".to_string(),
+                text: "A swarm of Data Fauna has overfed and short-circuited a machine!"
+                    .to_string(),
                 importance: crate::layer1::core::chronicle::EventImportance::Major,
             });
         }
@@ -241,7 +243,7 @@ mod tests {
         let events = app.world().resource::<Events<ShortCircuitEvent>>();
         let reader = events.get_cursor();
         assert!(
-            reader.len(&events) > 0,
+            reader.len(events) > 0,
             "Overfed fauna should trigger a ShortCircuitEvent"
         );
     }

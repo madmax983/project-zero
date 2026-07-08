@@ -83,10 +83,13 @@ impl Default for DroneBehavior {
 ///     assert_eq!(behavior.intelligence_level, IntelligenceLevel::High);
 /// }
 /// ```
+/// ⚡ Bolt Optimization:
+/// - Replaced the un-sized `Vec::new()` allocation with `Vec::with_capacity(...)` based on the query size.
+/// - This avoids repeated small memory allocations during the loop execution.
 pub fn update_drone_clusters(
     mut query: Query<(Entity, &GridPosition, &mut DroneBehavior), With<Drone>>,
 ) {
-    let mut drone_positions = Vec::new();
+    let mut drone_positions = Vec::with_capacity(query.iter().len());
     for (entity, pos, _) in query.iter() {
         drone_positions.push((entity, *pos));
     }
