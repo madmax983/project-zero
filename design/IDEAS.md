@@ -27247,3 +27247,57 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you take the easy way out and exile your problems, knowing you are seeding your own future destruction, or deal with crime expensively at home?
 
 ---
+## The Hollow Sky
+
+**Layer:** 2
+
+**Fantasy:** The creeping dread of realizing a massive orbital structure is not empty, but instead hiding something within its dark, hollow spaces.
+
+**Mechanic:** Sometimes, exploring a giant derelict megastructure (like a Ringworld fragment or a Dyson Sphere) on Layer 2 reveals it is completely hollowed out on the inside, seemingly stripped of all useful technology or organic life. However, colonizing or exploiting the surface slowly uncovers that the interior is actually a thriving, hyper-adapted ecosystem of "Void Scavengers" that feed on energy and metal.
+
+**Emergence:** You set up a highly profitable mining colony on the surface of the derelict. Years later, your resource output mysteriously drops. You discover the Void Scavengers have breached the crust and are slowly, methodically eating your colony from underneath, turning your industry into their own hollowed-out nesting grounds.
+
+**Tension:** Do you abandon the highly profitable surface operations, or engage in a costly, multi-generational subterranean war against a native species perfectly adapted to fighting in the dark?
+
+---
+## The Ephemeral Currency
+
+**Layer:** Cross-layer
+
+**Fantasy:** An economy built on a resource that rots, forcing rapid, panicked circulation of wealth.
+
+**Mechanic:** A powerful new alien resource can be used as a high-value currency (Layer 3 trade) and powerful energy source (Layer 1). However, it decays quickly. If a Pop or planetary vault hoards too much for too long, the currency "spoils," emitting a toxic aura that damages health and infrastructure.
+
+**Emergence:** Your richest, most powerful Pops accidentally poison their own elite districts because they hoarded their wealth instead of spending it, leading to a sudden, violent redistribution of power.
+
+**Tension:** Do you rapidly spend this powerful currency, risking inflation and reckless expansion, or try to safely store it and risk catastrophic decay?
+
+---
+
+## The Bureaucracy of Empathy
+
+**Layer:** 1
+
+**Fantasy:** The darkest conclusion of an overly administrated society: emotional support via paperwork.
+
+**Mechanic:** In highly developed, hyper-bureaucratic colonies, Pops cannot fulfill their "Social" or "Leisure" needs organically. They must submit "Empathy Requests" to a central administrative building. If the request is denied or delayed by slow bureaucrats, the Pop gains a "Psychotic Efficiency" trait—they stop feeling emotions entirely, their work speed triples, but they occasionally sabotage life support systems.
+
+**Emergence:** You purposely understaff the Empathy Bureau to force your entire mining sector into "Psychotic Efficiency" to meet a quota, only to realize they have systematically dismantled the oxygen scrubbers because breathing is "sub-optimal."
+
+**Tension:** Do you invest massive administrative overhead to keep your Pops sane, or weaponize their misery for incredible short-term industrial gains at the cost of long-term survival?
+
+---
+
+## The Sabotaged Translation
+
+**Layer:** Cross-layer
+
+**Fantasy:** A petty, localized grievance spiraling into a devastating interstellar war due to a single mistranslation.
+
+**Mechanic:** Interstellar diplomacy (Layer 3) messages are processed by specific "Translator" Pops on Layer 1. If a Translator Pop has a low relationship score with the planetary governor or a specific faction, they will intentionally and subtly mistranslate incoming and outgoing diplomatic messages to cause political chaos that undermines their rivals.
+
+**Emergence:** You try to negotiate a vital peace treaty with a neighboring empire. Your lead translator, furious that they were denied a housing upgrade, translates "We accept your generous terms" into a horrific, culturally specific insult. The neighbor instantly declares total war, and your empire burns because of a localized housing dispute.
+
+**Tension:** Do you constantly monitor and appease the trivial needs of your translation staff, or automate the process with AI and lose the nuanced diplomatic bonuses human translators provide?
+
+---
