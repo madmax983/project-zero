@@ -1055,6 +1055,7 @@ pub const fn get_flora_char(flora: FloraType) -> &'static str {
         FloraType::SilentFlora => "♠",
         FloraType::FireWeed => "w",
         FloraType::Ironwood => "T",
+        FloraType::Lumiflora => "L",
     }
 }
 
@@ -1066,6 +1067,7 @@ pub const fn get_flora_color(flora: FloraType) -> Color {
         FloraType::StrangleVines => Color::Rgb(139, 0, 139), // DarkMagenta
         FloraType::SilentFlora => Color::Rgb(255, 255, 255), // White
         FloraType::FireWeed => Color::Rgb(255, 100, 0), // Orange-red
-        FloraType::Ironwood => Color::Rgb(100, 100, 100), // Grey
+        FloraType::Ironwood => Color::Rgb(100, 100, 100),
+        FloraType::Lumiflora => Color::Rgb(200, 200, 100),
     }
 }

@@ -77,6 +77,7 @@ pub enum FloraType {
     /// Nutritious flora that completely nullifies sound.
     SilentFlora,
     FireWeed,
+    Lumiflora,
     Ironwood,
 }
 

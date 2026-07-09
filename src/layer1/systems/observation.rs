@@ -389,6 +389,8 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::flora::detect_hazards_system,
             crate::layer1::flora::flora_growth_system,
             crate::layer1::flora::ecological_succession_system,
+            crate::layer1::nature::lumiflora_bloom_system,
+            crate::layer1::nature::apply_bio_rhythm_aura,
             chronicle_event_handler_system.after(check_milestones_system),
             crate::layer1::festivals::check_for_festivals_system
                 .after(chronicle_event_handler_system),
