@@ -27343,3 +27343,73 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you try to carefully manage the psychological state of a district to sculpt the perfect building, or do you intentionally traumatize a sector to force the matter into a brutally effective shape?
 
 ---
+
+## The Lineage Debt
+
+**Layer:** 1
+
+**Fantasy:** Pops track not just their own grudges, but the grudges of their ancestors, creating multi-generational feuds over trivial slights.
+
+**Mechanic:** Negative relationship scores between Pops are inherited by their children. A 'Feud' modifier applies when Pops of rival lineages work in the same building, causing massive efficiency drops and periodic brawls that damage machinery.
+
+**Emergence:** A simple disagreement over a food ration in the first winter spirals into a 200-year blood feud between your two best mining families, paralyzing your entire mineral economy because they refuse to work in the same shaft.
+
+**Tension:** Do you segregate your workforce based on ancient family squabbles (losing efficiency), or force them together and risk violent sabotage?
+
+---
+
+## The Founder's Shadow
+
+**Layer:** Cross-layer
+
+**Fantasy:** A colony paralyzed by its reverence for the very first colonist, shaping every aspect of its future culture.
+
+**Mechanic:** The specific traits and early actions of the first colonist to step off the ship (The Founder) permanently dictate the 'Ideal Citizen' template for that world. Any future Pop that deviates from this template (e.g., The Founder was a Pacifist Farmer, and a new Pop is an Aggressive Miner) suffers a permanent 'Social Outcast' morale penalty and reduced political influence on that planet.
+
+**Emergence:** You colonize a critical chokepoint system, intending it to be a massive military fortress. However, the first Pop off the ship randomly rolled the 'Extreme Pacifist' and 'Agoraphobic' traits. Now, anyone you recruit to man the planetary defenses is treated as a pariah by the local culture, causing endless mutinies and making the fortress useless.
+
+**Tension:** Do you meticulously engineer your first colonist to ensure a specific long-term planetary culture, or accept the organic, sometimes deeply flawed, cultural foundation they lay down?
+
+---
+
+## The Scavenger Barge
+
+**Layer:** 2
+
+**Fantasy:** A massive, ugly ship that profits from the misery and destruction of others.
+
+**Mechanic:** A slow, unarmed ship with massive cargo capacity that can only harvest resources from 'Debris Fields' left behind by space battles or destroyed orbital stations.
+
+**Emergence:** You intentionally provoke a war between two rival Layer 3 factions in a neighboring system just so you can send your Scavenger Barges in afterward to hoover up the lucrative wreckage of their dreadnoughts.
+
+**Tension:** Do you wait for organic conflict to generate debris, or actively destabilize the sector to feed your scavenging economy?
+
+---
+
+## The Orbital Tractor
+
+**Layer:** 2
+
+**Fantasy:** Literally rearranging the heavens to suit your logistical needs.
+
+**Mechanic:** A ship equipped with a massive gravity tether. It cannot carry cargo or fight, but it can slowly drag small asteroids or disabled ships into new orbits around your colonies for easier mining or salvage.
+
+**Emergence:** You try to drag a massive, resource-rich asteroid into low orbit around your capital, but miscalculate the orbital mechanics. The asteroid degrades and crashes, causing an extinction-level event on your own homeworld.
+
+**Tension:** Do you risk the catastrophic danger of manipulating orbital bodies near your populated worlds for extreme logistical convenience?
+
+---
+
+## The Atmospheric Skimmer
+
+**Layer:** 2
+
+**Fantasy:** Daring pilots diving into the crushing depths of gas giants to harvest rare elements.
+
+**Mechanic:** A specialized ship class that can enter the upper atmosphere of gas giants. It gathers highly valuable volatile gasses but takes continuous hull damage while 'skimming.'
+
+**Emergence:** A player gets greedy trying to fill the cargo hold completely and loses their most expensive, highly-upgraded skimmer when it dives too deep and gets crushed by pressure.
+
+**Tension:** Do you push your luck for maximum profit, or play it safe and harvest slowly, knowing the resource is crucial for late-game tech?
+
+---
