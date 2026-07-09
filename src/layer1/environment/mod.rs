@@ -49,3 +49,5 @@ pub use atmosphere::*;
 
 pub mod orbital_junkyard;
 pub use orbital_junkyard::*;
+pub mod magnetic_reversal;
+pub use magnetic_reversal::*;

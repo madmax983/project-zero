@@ -91,6 +91,12 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
         .init_resource::<Events<crate::layer1::culture::celestial_cemeteries::ClearCemeteryEvent>>(
         );
     world.init_resource::<Events<crate::layer1::architecture::smart_matter::RaidEvent>>();
+
+
+        world.insert_resource(crate::layer1::environment::magnetic_reversal::MagneticField { active: true, radiation_level: 0.0 });
+        world.init_resource::<Events<crate::layer1::social::factions::subcontractor_factions::LeaseZoneEvent>>();
+        world.init_resource::<Events<crate::layer1::social::factions::subcontractor_factions::MegacorpSecuritySweepEvent>>();
+        world.init_resource::<Events<crate::layer1::environment::magnetic_reversal::PoleFlipEvent>>();
     world.init_resource::<bevy_ecs::event::Events<crate::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
     world.init_resource::<bevy_ecs::event::Events<crate::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
     world.init_resource::<Events<crate::layer1::social::hoarder::ConfiscateHoardEvent>>();
@@ -1226,6 +1232,12 @@ mod tests {
             );
         world.init_resource::<Events<crate::layer1::culture::celestial_cemeteries::ClearCemeteryEvent>>();
         world.init_resource::<Events<crate::layer1::architecture::smart_matter::RaidEvent>>();
+
+
+        world.insert_resource(crate::layer1::environment::magnetic_reversal::MagneticField { active: true, radiation_level: 0.0 });
+        world.init_resource::<Events<crate::layer1::social::factions::subcontractor_factions::LeaseZoneEvent>>();
+        world.init_resource::<Events<crate::layer1::social::factions::subcontractor_factions::MegacorpSecuritySweepEvent>>();
+        world.init_resource::<Events<crate::layer1::environment::magnetic_reversal::PoleFlipEvent>>();
         world.init_resource::<bevy_ecs::event::Events<crate::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
         world.init_resource::<bevy_ecs::event::Events<crate::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
         world.init_resource::<Events<crate::layer1::culture::memorial_revolt::PetDeathEvent>>();

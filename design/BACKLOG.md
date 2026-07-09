@@ -626,7 +626,6 @@ See `design/IDEAS.md` for unspecced concepts.
 
 - [ ] `1137` Heroic Acts — `specs/1137-heroic-acts.md`
 - [ ] `1138` Organic Recycling — `specs/1138-organic-recycling.md`
-- [ ] `1139` Magnetic Reversal — `specs/1139-magnetic-reversal.md`
 - [ ] `1142` The Scapegoat — `specs/1142-the-scapegoat.md`
 - [ ] `1143` Pulsar Timing — `specs/1143-pulsar-timing.md`
 
