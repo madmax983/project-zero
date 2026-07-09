@@ -863,6 +863,7 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
 
     schedule.add_systems((
         crate::layer2::mycelial_network::evaluate_ecological_damage_system,
+crate::layer2::integration::orbital_secession_embargo_bridge,
         crate::layer2::integration::mycelial_network_immune_response_chronicle_bridge,
         crate::layer2::integration::observe_forge_crush_event,
         crate::layer2::integration::celestial_library_chronicle_bridge,
@@ -1535,6 +1536,8 @@ mod tests {
         world.init_resource::<Events<crate::layer2::orphan_fleet::HackOrphanFleetEvent>>();
         world.init_resource::<Events<crate::layer2::orphan_fleet::OrphanFleetDefectionEvent>>();
 
+world.init_resource::<Events<crate::layer1::social::factions::subcontractor_factions::LeaseZoneEvent>>();
+world.init_resource::<Events<crate::layer1::social::factions::subcontractor_factions::MegacorpSecuritySweepEvent>>();
         world.init_resource::<Events<crate::layer1::social::ghost_shift_strike::GhostShiftStartedEvent>>();
         world.init_resource::<Events<crate::layer3::diplomacy::succession::SuccessionEvent>>();
         world.init_resource::<Events<crate::layer3::diplomacy::xenolinguistics::MessageResponseEvent>>();

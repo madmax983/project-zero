@@ -1100,3 +1100,32 @@ pub fn observe_forge_crush_event(
         });
     }
 }
+
+/// INT-1004: Bridges `Added<SecessionState::Seceded>` to spawn a `TradeEmbargo` and emit `AddChronicleEvent`
+use crate::layer2::orbit::secession::SecessionState;
+use crate::layer3::diplomacy::trade_embargoes::TradeEmbargo;
+use crate::layer1::resources::ResourceType;
+use crate::layer1::social::factions::FactionId;
+
+pub fn orbital_secession_embargo_bridge(
+    mut commands: Commands,
+    query: Query<
+        &SecessionState,
+        Added<SecessionState>,
+    >,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for state in query.iter() {
+        if matches!(state, SecessionState::Seceded) {
+            commands.spawn(TradeEmbargo {
+                resource: ResourceType::Metal,
+                enforcing_faction: FactionId::Unaligned,
+            });
+
+            chronicle_events.send(AddChronicleEvent {
+                importance: EventImportance::Major,
+                text: "A massive orbital habitat has seceded from the homeworld and declared a trade embargo!".to_string(),
+            });
+        }
+    }
+}
