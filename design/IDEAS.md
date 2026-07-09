@@ -6451,7 +6451,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Volume of Knowledge vs. Accessibility of Knowledge.
 
 ---
-## Harmonic Mining
+## Harmonic Mining [SPECCED]
 
 **Layer:** 1
 
@@ -6465,7 +6465,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Industrial Rhythm
+## The Industrial Rhythm [SPECCED]
 
 **Layer:** 1
 
@@ -6493,7 +6493,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Thermal Gliders
+## Thermal Gliders [SPECCED]
 
 **Layer:** 1
 
@@ -6507,7 +6507,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Selective Amnesia
+## Selective Amnesia [SPECCED]
 
 **Layer:** 1
 
@@ -6535,7 +6535,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Hard-Light Architecture
+## Hard-Light Architecture [SPECCED]
 
 **Layer:** 1
 

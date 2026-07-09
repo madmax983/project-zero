@@ -754,3 +754,9 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1317` The 'Good' War — `specs/1317-the-good-war.md`
 - [ ] `1320` The Architect's Ego — `specs/1320-the-architects-ego.md`
 - [ ] `1321` The Heirloom Debt — `specs/1321-the-heirloom-debt.md`
+
+- [ ] `1322` Harmonic Mining — `specs/1322-harmonic-mining.md`
+- [ ] `1323` The Industrial Rhythm — `specs/1323-the-industrial-rhythm.md`
+- [ ] `1324` Thermal Gliders — `specs/1324-thermal-gliders.md`
+- [ ] `1325` Selective Amnesia — `specs/1325-selective-amnesia.md`
+- [ ] `1326` Hard-Light Architecture — `specs/1326-hard-light-architecture.md`
