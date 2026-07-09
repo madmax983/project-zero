@@ -29,10 +29,7 @@ pub fn process_lifeboat_launches(mut commands: Commands, query: Query<(Entity, &
 /// INT-1127: Bridges `DistressSignal` (Escape Pods) to `AddChronicleEvent` (Chronicle).
 pub fn escape_pods_chronicle_bridge(
     mut commands: Commands,
-    query: Query<
-        &DistressSignal,
-        Added<DistressSignal>,
-    >,
+    query: Query<&DistressSignal, Added<DistressSignal>>,
     mut chronicle_events: bevy_ecs::event::EventWriter<
         crate::layer1::core::chronicle::AddChronicleEvent,
     >,
