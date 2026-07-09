@@ -108,6 +108,70 @@ mod tests {
     }
 
     #[test]
+    fn test_full_understanding_returns_true_message() {
+        let message = String::from("GIFT BIO_SLUDGE");
+        let barrier = LanguageBarrier {
+            understanding_level: 100,
+        };
+
+        let ciphered = generate_cipher_message(&message, &barrier);
+        assert_eq!(message, ciphered);
+    }
+
+    #[test]
+    fn test_partial_understanding_keeps_some_words() {
+        let message = String::from("WORD THAT ALWAYS HASHES TO LOW VALUE");
+        let barrier = LanguageBarrier {
+            understanding_level: 99,
+        };
+
+        let ciphered = generate_cipher_message(&message, &barrier);
+        assert_eq!(message, ciphered);
+    }
+
+    #[test]
+    fn test_process_alien_responses_system_ignores_other_factions() {
+        let mut world = World::new();
+        let other_faction_id = crate::layer3::economy::FactionId(2);
+
+        world.spawn((
+            crate::layer3::economy::Faction { id: other_faction_id },
+            DiplomaticState { relations: 50 },
+            LanguageBarrier {
+                understanding_level: 10,
+            },
+        ));
+
+        let mut events = Events::<MessageResponseEvent>::default();
+        events.send(MessageResponseEvent {
+            faction_id: 1, // Event for target faction
+            chosen_response: ResponseType::AcceptFuel,
+            true_intent: IntentType::Insult,
+        });
+        world.insert_resource(events);
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems(process_alien_responses_system);
+        schedule.run(&mut world);
+
+        let dip_state = world.query::<&DiplomaticState>().single(&world);
+        assert_eq!(
+            dip_state.relations, 50,
+            "Relations should not drop for a different faction"
+        );
+    }
+
+    #[test]
+    fn test_generate_cipher_message_coverage_boost() {
+        let message = String::from("A");
+        let barrier = LanguageBarrier {
+            understanding_level: 0,
+        };
+        let ciphered = generate_cipher_message(&message, &barrier);
+        assert_eq!("****", ciphered);
+    }
+
+    #[test]
     fn test_misunderstanding_triggers_diplomatic_incident() {
         let mut world = World::new();
         let faction_id = crate::layer3::economy::FactionId(1);
