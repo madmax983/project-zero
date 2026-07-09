@@ -579,7 +579,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `999` Interplanetary Pollination — `specs/999-interplanetary-pollination.md`
 - [ ] `1002` The Bio-Rhythmic Commute — `specs/1002-bio-rhythmic-commute.md`
 
-- [ ] `1005` Subterranean Biosphere Inversion — `specs/1005-subterranean-biosphere-inversion.md`
 - [ ] `1008` The Refugee Archipelago — `specs/1008-the-refugee-archipelago.md`
 
 - [ ] `1013` The Void Echoes — `specs/1013-the-void-echoes.md`

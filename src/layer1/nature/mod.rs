@@ -67,3 +67,6 @@ pub use archaeology::*;
 
 pub mod subterranean_smog;
 pub use subterranean_smog::*;
+
+pub mod biosphere_inversion;
+pub use biosphere_inversion::*;
