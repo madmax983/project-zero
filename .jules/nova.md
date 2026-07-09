@@ -205,3 +205,7 @@
 **Concept:** Added `subconscious_computing_system` in `src/experimental/subconscious_computing.rs`. Connects `Trait::Intellectual`, `ActionType::SatisfyRest`, and `ColonyResources`. Pops with the Intellectual trait passively generate `knowledge` while they are sleeping (`SatisfyRest`). Because their brain never truly shuts off, their `rest` regeneration is slightly penalized during this time.
 **Fate:** Submitted
 **Lesson:** Provides a unique economic niche for `Intellectual` pops where their utility persists even while sleeping. It balances free resource generation with a physiological penalty, forcing players to manage their burnout or capitalize on the passive trickle of knowledge.
+## [Fungal Scaffolding]
+**Concept:** Added `fungal_scaffolding_system` in `src/experimental/fungal_scaffolding.rs`. When a building is damaged (`Structure.current_hp` < `Structure.max_hp`), and there is an active `SporeNetwork`, the fungal network patches the building. It naturally regenerates a small amount of the building`s HP per tick, scaling with the network`s strength. As a side effect, it spawns `Clutter` (mycelial overgrowth) around the building.
+**Fate:** Submitted
+**Lesson:** Connects the spore mechanics to base maintenance. Players using the Spore Network get free auto-repair on their walls and buildings, but have to deal with the resulting mess (Clutter) it leaves behind, creating a symbiotic loop between base repair and cleanliness.
