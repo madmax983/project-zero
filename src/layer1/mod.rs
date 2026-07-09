@@ -524,3 +524,4 @@ pub use terraforming_rejection::*;
 pub mod feral_overlord;
 pub mod shadow_ecosystems;
 pub use shadow_ecosystems::*;
+pub mod colony;

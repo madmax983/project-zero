@@ -20,3 +20,16 @@ pub struct TributeDemandEvent {
     pub system: Entity,
     pub amount: u32,
 }
+
+#[derive(Event, Debug)]
+pub struct AsylumRequestEvent {
+    pub flotilla: Entity,
+    pub target: Entity,
+    pub population: u32,
+}
+
+#[derive(Component)]
+pub enum Faction {
+    Independent,
+    Player,
+}

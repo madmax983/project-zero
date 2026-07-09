@@ -46,6 +46,13 @@ pub fn build_simulation_schedule() -> Schedule {
         .add_systems(crate::layer2::planetary_scarring::process_planetary_scars_system);
     register_simulation_core_systems(&mut schedule);
     register_simulation_extended_systems(&mut schedule);
+    schedule.add_systems((
+        crate::layer2::refugee_archipelago::spawn_refugees_on_collapse_system,
+        crate::layer2::refugee_archipelago::refugee_arrival_system,
+        crate::layer2::refugee_archipelago::refugee_navigation_ai_system,
+        crate::layer2::refugee_archipelago::refugee_depletion_system,
+        crate::layer2::refugee_archipelago::refugee_rejection_system,
+    ));
     schedule.add_systems(crate::layer2::void_leviathan::update_leviathan_eclipse_system);
     schedule.add_systems(crate::layer2::propaganda_engine::update_propaganda_system);
     schedule.add_systems(
@@ -351,6 +358,9 @@ fn init_simulation_resources(world: &mut World) {
 
     world.init_resource::<Events<crate::layer1::environment::disasters::DisasterEvent>>();
 
+        world.init_resource::<Events<crate::layer1::colony::CollapseEvent>>();
+        world.init_resource::<Events<crate::layer1::diplomacy::AsylumRequestEvent>>();
+        world.init_resource::<Events<crate::layer2::refugee_archipelago::AsylumRejectedEvent>>();
     world.init_resource::<Events<crate::layer2::tourism::disaster_tourism::GriefTouristArrivalEvent>>();
     world.init_resource::<Events<crate::layer2::station::ShipConstructionCompletedEvent>>();
 

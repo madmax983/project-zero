@@ -125,3 +125,21 @@ pub mod stolen_fleet;
 pub mod void_leviathan;
 pub use stolen_fleet::*;
 pub mod propaganda_engine;
+pub mod refugee_archipelago;
+
+pub struct RefugeeArchipelagoPlugin;
+
+impl Plugin for RefugeeArchipelagoPlugin {
+    fn build(&self, app: &mut App) {
+        app.add_systems(
+            Update,
+            (
+                refugee_archipelago::spawn_refugees_on_collapse_system,
+                refugee_archipelago::refugee_arrival_system,
+                refugee_archipelago::refugee_navigation_ai_system,
+                refugee_archipelago::refugee_depletion_system,
+                refugee_archipelago::refugee_rejection_system,
+            ),
+        );
+    }
+}
