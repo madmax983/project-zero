@@ -27301,3 +27301,87 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you constantly monitor and appease the trivial needs of your translation staff, or automate the process with AI and lose the nuanced diplomatic bonuses human translators provide?
 
 ---
+
+## The Whispering Grid
+
+**Layer:** 1
+
+**Fantasy:** The colony's infrastructure becomes a vector for paranoia and unintended communication, turning the walls themselves into a source of stress.
+
+**Mechanic:** A high-efficiency but poorly insulated power or data grid upgrade causes "Crosstalk." Pops working near these grid lines randomly overhear fragmented, distorted communications from other parts of the colony or even distant outposts. This slowly increases their Paranoia and Stress, but occasionally reveals hidden traits or secrets of other Pops.
+
+**Emergence:** A critical communications blackout during a raid forces the colony to rely on the Whispering Grid to coordinate. The resulting cacophony of panicked voices and tactical data saves the colony but leaves the entire workforce severely traumatized and distrustful of each other, convinced there are spies in the walls.
+
+**Tension:** Do you maintain the efficient but maddening grid, risking mass paranoia, or revert to slower, less efficient communication to keep the colony sane?
+
+---
+
+## Diplomatic Decoy
+
+**Layer:** Cross-layer (1 & 3)
+
+**Fantasy:** Weaponizing bureaucracy and protocol to buy time against a superior force.
+
+**Mechanic:** When faced with an overwhelming invasion or a catastrophic diplomatic demand, you can construct a lavish "Decoy Embassy" or "Protocol Monument" on a disposable Layer 1 world. You then route all diplomatic communications and negotiations to this structure, trapping the enemy AI or Envoy in endless, mandatory ceremonial protocols and procedural delays.
+
+**Emergence:** A massive enemy armada arrives in your system. Instead of fighting, you invite their supreme commander to the Decoy Embassy for a mandatory "thousand-tea ceremony." The armada sits idle in orbit, burning through their supplies, while you secretly evacuate your core worlds and build a massive defense fleet behind their backs.
+
+**Tension:** Do you sacrifice a planet's resources to build a useless monument to bureaucracy just to buy time, knowing that if the decoy is discovered, the retaliation will be absolute?
+
+---
+
+## Drop Forge
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Industrial production delivered via kinetic bombardment.
+
+**Mechanic:** Instead of building slow factories on the ground, you can construct a "Drop Forge" in orbit (Layer 2). It manufactures heavy machinery or raw ingots and literally drops them onto the Layer 1 colony via targeted kinetic strikes. The delivery is instant, but the impact destroys the terrain and any nearby structures, requiring Pops to scavenge the "delivery crater."
+
+**Emergence:** You desperately need titanium shielding to survive an incoming solar flare. You order the Drop Forge to deliver it directly to the colony center. The impact destroys your hospital and causes a localized earthquake, but the shielding arrives just in time to save the rest of the colony.
+
+**Tension:** Do you use the Drop Forge for instant, chaotic logistical solutions, risking massive collateral damage to your own infrastructure, or rely on slow, safe traditional supply chains?
+
+---
+
+## Xenoflora Subversion
+
+**Layer:** 1
+
+**Fantasy:** The planet's ecosystem actively infiltrates and mimics the colony's infrastructure, blurring the line between machine and nature.
+
+**Mechanic:** A slow-growing, highly adaptive alien plant (Xenoflora) begins to encase external buildings. Initially, it provides a passive insulation bonus, reducing energy costs. However, over time, the flora begins to interface with the building's systems, siphoning power and occasionally acting autonomously (e.g., locking doors, venting atmosphere) to create optimal conditions for its own growth.
+
+**Emergence:** You ignore the vines growing on your primary oxygen scrubber because they look nice and save power. Eventually, the vines achieve complete control, overriding the manual safeties to flood the sector with high-humidity, toxic spores perfectly suited for the plant, but deadly to your colonists.
+
+**Tension:** Do you expend significant labor continuously clearing the invasive flora, or accept the energy savings and risk the ecosystem hijacking your life support?
+
+---
+
+## The Parasitic Commute
+
+**Layer:** 1
+
+**Fantasy:** The colony's transit infrastructure becomes a living, demanding organism that requires a toll paid in blood or extreme energy.
+
+**Mechanic:** To solve extreme logistical bottlenecks, the colony can cultivate "Transit Arteries"—massive, bio-engineered worm-tunnels that instantly transport Pops and resources. However, these arteries are semi-sentient and require "sustenance." If they are not fed a steady supply of high-quality organic matter (or vast amounts of raw energy), they begin to subtly drain the Health and Morale of the Pops commuting through them, eventually digesting stragglers if starvation sets in.
+
+**Emergence:** You build a sprawling, hyper-efficient factory network connected entirely by Transit Arteries. During a food shortage, you can't feed the network. The arteries begin arriving empty, having consumed the commuting night shift to stay alive, instantly crippling your industrial output and plunging the colony into terror.
+
+**Tension:** Do you rely on standard, slow, mechanical transit, or risk the incredible efficiency of a biological network that might decide your workers are more nutritious than the cargo they carry?
+
+---
+
+## The Phantom Fleet Registry
+
+**Layer:** 2 -> 3
+
+**Fantasy:** A bureaucratic ghost in the machine that creates phantom armadas, useful for intimidation but terrifyingly real if provoked.
+
+**Mechanic:** A glitch in the sector's ancient automated registry system (Layer 2) occasionally generates "Phantom Signatures"—sensor ghosts of massive, non-existent fleets. Other empires (Layer 3) react to these signatures as if they were real. The player can intentionally exploit this glitch by feeding it false data, projecting the illusion of overwhelming military power to deter attacks or extort neighbors.
+
+**Emergence:** You successfully bluff a hyper-aggressive neighbor into paying tribute by projecting a massive Phantom Fleet on their border. However, the glitch escalates, and the automated registry begins issuing actual, physical maintenance requests and docking demands for the non-existent ships, completely paralyzing your starports with phantom logistics.
+
+**Tension:** Do you play the dangerous game of diplomatic bluffing, knowing that a single close-range scan by an enemy will reveal the lie and trigger immediate war, or do you spend resources fixing the glitch to clear your logistics network?
+
+---
