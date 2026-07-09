@@ -1174,6 +1174,10 @@ mod tests {
         world.init_resource::<bevy::prelude::Events<crate::layer2::weather::StormImpactEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::law::justice::CrimeCommittedEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::social::grievances::PostGrievanceEvent>>();
+        world.init_resource::<Events<crate::layer1::social::factions::subcontractor_factions::LeaseZoneEvent>>();
+        world.init_resource::<Events<
+            crate::layer1::social::factions::subcontractor_factions::MegacorpSecuritySweepEvent,
+        >>();
         world.init_resource::<Events<crate::layer1::agriculture::zero_g_flora::DepressurizationEvent>>();
         world.init_resource::<Events<crate::layer3::diplomacy::system_sovereignty::DeclarationOfIndependenceEvent>>();
         world.init_resource::<Events<crate::layer3::diplomacy::system_sovereignty::WarDeclarationEvent>>();
@@ -1239,6 +1243,10 @@ mod tests {
         world.init_resource::<bevy::prelude::Events<crate::layer2::skyhooks::LaunchIntent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::law::justice::CrimeCommittedEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::social::grievances::PostGrievanceEvent>>();
+        world.init_resource::<Events<crate::layer1::social::factions::subcontractor_factions::LeaseZoneEvent>>();
+        world.init_resource::<Events<
+            crate::layer1::social::factions::subcontractor_factions::MegacorpSecuritySweepEvent,
+        >>();
         world.init_resource::<Events<crate::layer1::agriculture::zero_g_flora::DepressurizationEvent>>();
         world.init_resource::<Events<crate::layer3::diplomacy::system_sovereignty::DeclarationOfIndependenceEvent>>();
         world.init_resource::<Events<crate::layer3::diplomacy::system_sovereignty::WarDeclarationEvent>>();
@@ -1329,6 +1337,10 @@ mod tests {
         world.init_resource::<bevy::prelude::Events<crate::layer2::skyhooks::LaunchIntent>>();
         world.init_resource::<Events<crate::layer2::moon_hermits::PopDesertedEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::social::grievances::PostGrievanceEvent>>();
+        world.init_resource::<Events<crate::layer1::social::factions::subcontractor_factions::LeaseZoneEvent>>();
+        world.init_resource::<Events<
+            crate::layer1::social::factions::subcontractor_factions::MegacorpSecuritySweepEvent,
+        >>();
         world.init_resource::<Events<crate::layer1::agriculture::zero_g_flora::DepressurizationEvent>>();
         world.init_resource::<Events<crate::layer3::diplomacy::system_sovereignty::DeclarationOfIndependenceEvent>>();
         world.init_resource::<Events<crate::layer3::diplomacy::system_sovereignty::WarDeclarationEvent>>();
@@ -1519,6 +1531,10 @@ mod tests {
 
         world.init_resource::<Events<crate::layer2::moon_hermits::PopDesertedEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::social::grievances::PostGrievanceEvent>>();
+        world.init_resource::<Events<crate::layer1::social::factions::subcontractor_factions::LeaseZoneEvent>>();
+        world.init_resource::<Events<
+            crate::layer1::social::factions::subcontractor_factions::MegacorpSecuritySweepEvent,
+        >>();
         world.init_resource::<Events<crate::layer1::agriculture::zero_g_flora::DepressurizationEvent>>();
         world.init_resource::<Events<crate::layer3::diplomacy::system_sovereignty::DeclarationOfIndependenceEvent>>();
         world.init_resource::<Events<crate::layer3::diplomacy::system_sovereignty::WarDeclarationEvent>>();
@@ -1536,6 +1552,10 @@ mod tests {
         world.init_resource::<Events<crate::layer2::orphan_fleet::OrphanFleetDefectionEvent>>();
 
         world.init_resource::<Events<crate::layer1::social::ghost_shift_strike::GhostShiftStartedEvent>>();
+        world.init_resource::<Events<crate::layer1::social::factions::subcontractor_factions::LeaseZoneEvent>>();
+        world.init_resource::<Events<
+            crate::layer1::social::factions::subcontractor_factions::MegacorpSecuritySweepEvent,
+        >>();
         world.init_resource::<Events<crate::layer3::diplomacy::succession::SuccessionEvent>>();
         world.init_resource::<Events<crate::layer3::diplomacy::xenolinguistics::MessageResponseEvent>>();
         world.init_resource::<Events<crate::layer3::diplomacy::diplomatic_fashion::DiplomaticMeetingEvent>>();
