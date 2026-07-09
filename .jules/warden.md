@@ -5,3 +5,7 @@
 **2025-03-09 - [crossbeam-epoch Invalid Pointer Dereference]**
 **Threat:** [RUSTSEC-2026-0204 in crossbeam-epoch (v0.9.18) could lead to an invalid pointer dereference when formatting pointers, potentially crashing the application.]
 **Defense:** [Updated crossbeam-epoch dependency to v0.9.20 via cargo update -p crossbeam-epoch to fix the vulnerability.]
+
+**2025-07-09 - [Integer Overflows in Distance Calculations]**
+**Threat:** [GridPosition x and y are `i32`. Using `.pow(2)` on differences between distant coordinates without conversion leads to integer overflow panics in `turret`, `artifacts`, and `ad_screen` logic.]
+**Defense:** [Cast coordinate differences to `f32` first before squaring them using `.powi(2)` to safely compute Euclidean distances.]

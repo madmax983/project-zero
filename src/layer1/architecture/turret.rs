@@ -119,8 +119,8 @@ fn find_best_target(
 
     for (target_entity, target_pos) in targets {
         #[allow(clippy::cast_precision_loss)]
-        let dist = ((turret_pos.x - target_pos.x).pow(2) as f32
-            + (turret_pos.y - target_pos.y).pow(2) as f32)
+        let dist = ((turret_pos.x as f32 - target_pos.x as f32).powi(2)
+            + (turret_pos.y as f32 - target_pos.y as f32).powi(2))
             .sqrt();
 
         if dist <= turret_data.attack.range && dist < min_dist {
