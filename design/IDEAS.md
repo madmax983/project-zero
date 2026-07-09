@@ -27301,3 +27301,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you constantly monitor and appease the trivial needs of your translation staff, or automate the process with AI and lose the nuanced diplomatic bonuses human translators provide?
 
 ---
+
+## The Feral Syntax
+
+**Layer:** 1 / 3
+
+**Fantasy:** A language that actively fights against being translated or spoken, infecting diplomatic channels.
+
+**Mechanic:** Discovering ancient, hyper-advanced alien ruins on Layer 1 yields "The Feral Syntax," a unique linguistic tech. Pops tasked with translating it suffer a "Cognitive Hazard" debuff, slowly losing sanity but generating massive research points. If the language is fully researched and used in Layer 3 diplomacy, it acts as a memetic virus. Any empire you send messages to suffers severe bureaucratic slowdowns as the language literally corrupts their translation AIs.
+
+**Emergence:** You try to negotiate a standard trade deal with a rival empire using the Feral Syntax. The trade deal fails, but the rival's administrative centers randomly begin shutting down life support systems because the language embedded a chaotic subroutine in their planetary governors' code.
+
+**Tension:** Do you weaponize a language you barely understand, knowing that if your own Translator Pops lose their sanity, the Feral Syntax will spread unchecked through your own core worlds?
+
+---
+
+## Bureaucratic Exorcism
+
+**Layer:** 1
+
+**Fantasy:** Fighting actual ghosts using spreadsheets and red tape.
+
+**Mechanic:** On worlds with high historical casualty rates, "Digital Echoes" (ghosts of dead Pops stored in failing databanks) begin haunting industrial sectors, slowing production. Instead of sending priests or soldiers, you must construct an "Auditorium of Records" and staff it with high-level bureaucrats. They perform "Bureaucratic Exorcisms"—auditing the ghost's unresolved earthly affairs, paying back-taxes, and officially filing their death certificates to finally let the system delete them.
+
+**Emergence:** Your most haunted, terrifying forge world is cleansed not by a squad of elite plasma-wielding marines, but by a team of exhausted accountants frantically filing tax returns for people who died three centuries ago.
+
+**Tension:** Do you expend massive administrative bandwidth dealing with the paperwork of the dead, or abandon the haunted sectors entirely to focus on the living?
+
+---
+
+## Memetic Architecture
+
+**Layer:** 1
+
+**Fantasy:** Buildings that change shape based on the collective unconscious of the colony.
+
+**Mechanic:** You construct a late-game structure using "Programmable Matter." The building has no fixed blueprint. Instead, its shape, function, and efficiency are entirely determined by the dominant mood and traits of the surrounding Pops. If built in an affluent, happy district, it forms a beautiful, high-efficiency "Leisure Spire." If built in an overworked, miserable mining sector, it twists into a grim, hyper-efficient "Labor Panopticon" that lowers morale further but doubles output.
+
+**Emergence:** You build one in a stable district, but a localized plague breaks out. As the Pops become terrified and paranoid, the building literally reshapes itself overnight into a heavily fortified quarantine bunker, locking the infected inside.
+
+**Tension:** Do you try to carefully manage the psychological state of a district to sculpt the perfect building, or do you intentionally traumatize a sector to force the matter into a brutally effective shape?
+
+---
