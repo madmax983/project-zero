@@ -1,9 +1,9 @@
 #[cfg(test)]
 mod integration_tests {
     use bevy::prelude::*;
+    use scale::layer1::actions::escape::escape_pods_chronicle_bridge;
     use scale::layer1::actions::escape::{process_lifeboat_launches, DistressSignal, Lifeboat};
     use scale::layer1::core::chronicle::AddChronicleEvent;
-    use scale::layer1::actions::escape::escape_pods_chronicle_bridge;
 
     #[test]
     fn test_escape_pods_launch_chronicle_event() {
