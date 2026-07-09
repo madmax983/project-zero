@@ -27343,3 +27343,85 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you try to carefully manage the psychological state of a district to sculpt the perfect building, or do you intentionally traumatize a sector to force the matter into a brutally effective shape?
 
 ---
+
+## Culinary Espionage
+
+**Layer:** Cross-layer
+
+**Fantasy:** Sabotaging an enemy empire not with bombs, but with irresistibly delicious, perfectly engineered comfort food.
+
+**Mechanic:** You can spend espionage resources to infiltrate a rival Layer 3 empire's food supply chains and introduce a genetically tailored "Comfort Spice." Pops on their Layer 1 colonies become rapidly addicted to this specific flavor profile, which can only be sourced from your trade ships.
+
+**Emergence:** You are losing a bitter border war with a militaristic neighbor. Instead of fighting back, you flood their core worlds with highly addictive, perfectly synthesized pastries. Six months later, their civilian population riots and forces a peace treaty because their military rations don't taste right anymore.
+
+**Tension:** Do you invest in traditional military fleets, or spend decades engineering the perfect addictive snack to conquer your enemies through their stomachs?
+
+---
+
+## The Phantom Smuggler's Moon
+
+**Layer:** 2
+
+**Fantasy:** An elusive black market that mathematically shouldn't exist, hiding in the gravitational blind spots of the system.
+
+**Mechanic:** Criminal syndicates discover a "Gravitational Anomaly" in a system that allows a small, hollowed-out asteroid to maintain a highly erratic, near-invisible orbit. This "Phantom Moon" acts as a massive, untaxed trade hub. It only appears on your sensors briefly during specific planetary alignments.
+
+**Emergence:** You blockade a rebellious planet perfectly, placing ships in every known orbit. Yet, they somehow remain fully supplied with weapons and luxury goods. Months later, during a solar flare, your sensors briefly reveal an entire bustling pirate metropolis hiding right behind your flagship in a mathematical blind spot.
+
+**Tension:** Do you wait for the rare alignment to strike the moon with your fleet (risking missing it and hitting your own planets), or pay exorbitant bribes to the cartel to use it as your own secret logistics hub?
+
+---
+
+## Echoes of the Precursors
+
+**Layer:** 1
+
+**Fantasy:** Building over the ruins of past mistakes is cheaper, but the ghosts of the past remain.
+
+**Mechanic:** When expanding your colony on Layer 1, you can choose to bulldoze ancient ruins or integrate them. Integrating ruins saves massive resources but applies a permanent "Haunted" modifier to the sector, increasing worker stress and generating cryptic, unsettling rumors.
+
+**Emergence:** You build your main hospital on top of integrated ruins to save time. It works perfectly until a strange rumor starts circulating that the medical scanners are capturing images of long-dead alien patients, terrifying your Pops and crashing morale in the medical district.
+
+**Tension:** Do you clear the valuable land to rebuild quickly, or sacrifice prime real estate to construct a monument that heals the colony's psychological scars?
+
+---
+
+## Chronicle Forgery
+
+**Layer:** 1 / 3
+
+**Fantasy:** Rewriting history to suppress unrest, but at the cost of collective memory and sanity.
+
+**Mechanic:** When a devastating event occurs on Layer 1 (a massacre, a massive famine), it enters the colony's "Chronicle," permanently scarring local morale but serving as a cautionary tale. You can employ "Ministry of Truth" bureaucrats to forge the Chronicle, deleting the event. Doing so instantly removes the morale penalty, but introduces a "Cognitive Dissonance" trait to Pops who lived through it.
+
+**Emergence:** You delete the record of a horrific mining collapse to maintain production quotas. Ten years later, the surviving miners, driven mad by the contradiction between their memories and official history, orchestrate a rebellion fueled entirely by a truth the system insists never happened.
+
+**Tension:** Do you accept the long-term morale drag of historical tragedies, or artificially sanitize your history and risk catastrophic psychological backlash from those who remember the truth?
+
+---
+
+## Debris-Field Symbiosis
+
+**Layer:** 2
+
+**Fantasy:** Cultivating a treacherous orbit as a natural defense mechanism.
+
+**Mechanic:** After multiple space battles, a planet's orbit becomes choked with ship debris, normally a massive hazard for trade and movement. However, you can research technologies to seed this debris with specialized, void-adapted xenoflora or nanite swarms. They use the debris as a substrate, creating a "Living Minefield" that ignores your own heavily-shielded ships but aggressively tears apart invading fleets.
+
+**Emergence:** You intentionally fight several suicidal naval battles above a weak border world to create a massive debris field. You then seed it with nanites. An overwhelming enemy armada arrives years later and is completely shredded by a swirling maelstrom of weaponized junk that you cultivated like a garden.
+
+**Tension:** Do you clear orbit to maximize economic trade efficiency, or intentionally pollute it to grow a terrifying, impassable barrier?
+
+---
+
+## The Cartographer's Ransom
+
+**Layer:** 3
+
+**Fantasy:** Information warfare where the shape of the galaxy itself is the hostage.
+
+**Mechanic:** Exploration ships mapping deep space (Layer 2) gather highly valuable "Stellar Cartography" data. Rather than just giving you vision, this data can be hoarded. A specialized espionage faction can intentionally transmit *corrupted* cartography to rival empires, subtly shifting the coordinates of hyperlanes or planets in their navigation databases.
+
+**Emergence:** A rival empire sends their invincible grand armada to conquer your capital. However, because you've been feeding their astrometrics division corrupted data for a decade, the armada drops out of warp directly into the center of a local sun.
+
+**Tension:** Do you share accurate maps to foster galactic trade and diplomacy, or horde the truth and wage a silent war by rewriting the stars for your enemies?
