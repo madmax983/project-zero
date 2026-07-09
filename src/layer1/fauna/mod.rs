@@ -103,40 +103,41 @@ pub fn suppress_fauna_system(
 /// - **Wander**: Scans for Pops within `detection_range`. If found, transitions to `Chase`.
 /// - **Chase**: Moves toward target. If adjacent, transitions to `Attack`. If target lost/far, `Wander`.
 /// - **Attack**: Deals damage to target.
-#[allow(clippy::cast_precision_loss)]
+#[allow(clippy::cast_precision_loss, clippy::type_complexity)]
 pub fn fauna_behavior_system(world: &mut World) {
     // 1. Query all Fauna
     let mut fauna_updates = Vec::new();
     let mut attacks = Vec::new();
 
-    // Query Pops for targets
-    // We collect to avoid borrowing world while iterating query
-    let pops: Vec<(Entity, GridPosition)> = world
-        .query_filtered::<(Entity, &GridPosition), With<Pop>>()
-        .iter(world)
-        .map(|(e, p)| (e, *p))
-        .collect();
+    // ⚡ Bolt Optimization:
+    // We avoid allocating a `Vec` of all pops per frame.
+    // By scoping the resource access cleanly using Bevy's SystemState, we can eliminate O(N) memory allocations and O(N) lookups.
+    use bevy_ecs::system::SystemState;
+    let mut system_state: SystemState<(
+        Query<(Entity, &mut Fauna, &GridPosition, Option<&FaunaBody>)>,
+        Query<(Entity, &GridPosition), With<Pop>>,
+    )> = SystemState::new(world);
 
-    let mut query = world.query::<(Entity, &mut Fauna, &GridPosition, Option<&FaunaBody>)>();
+    let (mut fauna_query, pops_query) = system_state.get_mut(world);
 
-    for (entity, mut fauna, pos, body) in query.iter_mut(world) {
+    for (entity, mut fauna, pos, body) in fauna_query.iter_mut() {
         if fauna.attack_cooldown > 0 {
             fauna.attack_cooldown -= 1;
         }
 
         match fauna.state {
-            FaunaState::Wander => handle_wander_state(&mut fauna, pos, &pops),
+            FaunaState::Wander => handle_wander_state(&mut fauna, pos, &pops_query),
             FaunaState::Chase => handle_chase_state(
                 &mut fauna,
                 entity,
                 pos,
                 body,
-                &pops,
+                &pops_query,
                 &mut attacks,
                 &mut fauna_updates,
             ),
             FaunaState::Attack => {
-                handle_attack_state(&mut fauna, entity, pos, body, &pops, &mut attacks)
+                handle_attack_state(&mut fauna, entity, pos, body, &pops_query, &mut attacks)
             }
             FaunaState::Flee => {}
         }
@@ -237,15 +238,19 @@ pub fn handle_fauna_death_system(
     }
 }
 
-fn handle_wander_state(fauna: &mut Fauna, pos: &GridPosition, pops: &[(Entity, GridPosition)]) {
+fn handle_wander_state(
+    fauna: &mut Fauna,
+    pos: &GridPosition,
+    pops: &Query<(Entity, &GridPosition), With<Pop>>,
+) {
     let mut best_target = None;
     let mut min_dist = fauna.detection_range;
 
-    for (target_e, target_pos) in pops {
+    for (target_e, target_pos) in pops.iter() {
         let dist = pos.distance_chebyshev(*target_pos) as f32;
         if dist <= min_dist {
             min_dist = dist;
-            best_target = Some(*target_e);
+            best_target = Some(target_e);
         }
     }
 
@@ -260,7 +265,7 @@ fn handle_chase_state(
     entity: Entity,
     pos: &GridPosition,
     body: Option<&FaunaBody>,
-    pops: &[(Entity, GridPosition)],
+    pops: &Query<(Entity, &GridPosition), With<Pop>>,
     attacks: &mut Vec<(Entity, Entity, f32)>,
     fauna_updates: &mut Vec<(Entity, GridPosition)>,
 ) {
@@ -269,7 +274,7 @@ fn handle_chase_state(
         return;
     };
 
-    let Some((_, target_pos)) = pops.iter().find(|(e, _)| *e == target) else {
+    let Ok((_, target_pos)) = pops.get(target) else {
         fauna.state = FaunaState::Wander;
         fauna.target = None;
         return;
@@ -298,7 +303,7 @@ fn handle_attack_state(
     entity: Entity,
     pos: &GridPosition,
     body: Option<&FaunaBody>,
-    pops: &[(Entity, GridPosition)],
+    pops: &Query<(Entity, &GridPosition), With<Pop>>,
     attacks: &mut Vec<(Entity, Entity, f32)>,
 ) {
     let Some(target) = fauna.target else {
@@ -306,7 +311,7 @@ fn handle_attack_state(
         return;
     };
 
-    let Some((_, target_pos)) = pops.iter().find(|(e, _)| *e == target) else {
+    let Ok((_, target_pos)) = pops.get(target) else {
         fauna.state = FaunaState::Wander;
         fauna.target = None;
         return;
@@ -332,6 +337,7 @@ mod tests {
     use crate::layer1::map::GridPosition;
     use crate::layer1::pop::Pop;
     use bevy_ecs::prelude::*;
+    use bevy_ecs::system::RunSystemOnce;
 
     // Helper to create a basic world with necessary resources
     fn setup_world() -> World {
@@ -374,7 +380,7 @@ mod tests {
             .id();
 
         // Run behavior system
-        fauna_behavior_system(&mut world);
+        let _ = world.run_system_once(fauna_behavior_system);
 
         // Wolf should be Chasing pop
         let wolf_comp = world.get::<Fauna>(wolf).unwrap();
@@ -401,7 +407,7 @@ mod tests {
         // Spawn Pop far away
         world.spawn((Pop, GridPosition { x: 10, y: 0 }, Health::default()));
 
-        fauna_behavior_system(&mut world);
+        let _ = world.run_system_once(fauna_behavior_system);
 
         let wolf_comp = world.get::<Fauna>(wolf).unwrap();
         assert_eq!(wolf_comp.state, FaunaState::Wander);
@@ -454,7 +460,7 @@ mod tests {
         wolf_mut.state = FaunaState::Chase;
         wolf_mut.target = Some(pop);
 
-        fauna_behavior_system(&mut world);
+        let _ = world.run_system_once(fauna_behavior_system);
 
         // Pop should take damage
         let health = world.get::<Health>(pop).unwrap();
@@ -497,7 +503,7 @@ mod tests {
         wolf_mut.target = Some(pop);
         wolf_mut.detection_range = 10.0;
 
-        fauna_behavior_system(&mut world);
+        let _ = world.run_system_once(fauna_behavior_system);
 
         // Should have MovementTarget component added
         assert!(world.get::<MovementTarget>(wolf).is_some());
@@ -529,7 +535,7 @@ mod tests {
         // Update target entity ID
         world.get_mut::<Fauna>(wolf).unwrap().target = Some(pop);
 
-        fauna_behavior_system(&mut world);
+        let _ = world.run_system_once(fauna_behavior_system);
 
         let wolf_comp = world.get::<Fauna>(wolf).unwrap();
         assert_eq!(wolf_comp.state, FaunaState::Wander);
