@@ -534,4 +534,36 @@ mod tests {
         // Assert Corpse is despawned
         assert!(world.get_entity(corpse).is_err());
     }
+
+    #[test]
+    fn test_grave_spawns_on_pop_death() {
+        use crate::layer1::entities::pop::PopName;
+        use bevy_ecs::system::RunSystemOnce;
+        let mut world = World::new();
+        let pos = GridPosition { x: 5, y: 5 };
+
+        let pop_entity = world
+            .spawn((Pop, pos, PopName("Miner Bob".to_string())))
+            .id();
+
+        world.init_resource::<Events<crate::layer1::entities::pop::PopDied>>();
+        world.insert_resource(crate::shared::time::SimulationTime::default());
+
+        world
+            .entity_mut(pop_entity)
+            .insert(crate::layer1::health::Dead);
+
+        let _ = world.run_system_once(crate::layer1::entities::pop::handle_pop_death_system);
+
+        let graves = world
+            .query_filtered::<&GridPosition, With<Grave>>()
+            .iter(&world)
+            .collect::<Vec<_>>();
+        assert_eq!(graves.len(), 1);
+        assert_eq!(*graves[0], pos);
+
+        let grave_comp = world.query::<&Grave>().single(&world);
+        assert_eq!(grave_comp.corpse_name.as_deref(), Some("Miner Bob"));
+        assert!(grave_comp.occupied);
+    }
 }

@@ -516,12 +516,24 @@ pub fn handle_pop_death_system(
             .map(|cause| cause.0.clone())
             .unwrap_or_else(|| "Causes unknown".to_string());
 
-        // 1. Spawn Corpse & Visuals
+        // 1. Spawn Corpse & Visuals & Grave
         if let Some(pos) = pos_opt {
             commands.spawn((
                 Corpse {
                     name: name.clone(),
                     decay: 0.0,
+                },
+                *pos,
+            ));
+
+            // Spec 267: Spawn Grave on Pop Death
+            commands.spawn((
+                crate::layer1::architecture::Building {
+                    building_type: crate::layer1::architecture::BuildingType::Grave,
+                },
+                crate::layer1::funeral::Grave {
+                    occupied: true,
+                    corpse_name: Some(name.clone()),
                 },
                 *pos,
             ));
