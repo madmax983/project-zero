@@ -905,3 +905,4 @@
 - [x] `1003` The Feral Overlord Subroutines — `specs/1003-feral-overlord-subroutines.md` — completed 2026-11-01
 - [x] `1002` The Bio-Rhythmic Commute — `specs/1002-bio-rhythmic-commute.md` — completed 2026-07-08
 - [x] `331` Xenolinguistics — `specs/331-xenolinguistics.md` — completed 2026-07-08
+- [x] `1013` The Void Echoes — `specs/1013-the-void-echoes.md` — completed 2026-10-31

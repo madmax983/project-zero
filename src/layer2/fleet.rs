@@ -21,6 +21,17 @@ pub enum FleetFaction {
 #[derive(Component, Debug, Clone, Copy)]
 pub struct Fleet;
 
+#[derive(Component, Debug, Clone, Copy)]
+pub struct Wreckage {
+    pub decay_level: f32,
+}
+
+#[derive(Component, Debug, Clone, Copy)]
+pub struct OrbitalPosition {
+    pub x: f32,
+    pub y: f32,
+}
+
 /// Component indicating a fleet is stationary at an orbital body.
 #[derive(Component, Debug, Clone, Copy)]
 pub struct InOrbit {

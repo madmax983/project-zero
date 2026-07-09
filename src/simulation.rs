@@ -523,6 +523,9 @@ fn init_simulation_resources(world: &mut World) {
                     .after(crate::layer2::signature::consume_spoofing_energy),
                 crate::layer1::anomalies::void_sirens::apply_siren_obsession,
                 crate::layer1::anomalies::void_sirens::handle_obsessed_jobs,
+                crate::layer1::anomalies::void_echoes::void_echo_infection_system,
+                crate::layer1::anomalies::void_echoes::haunted_research_generation_system,
+                crate::layer1::anomalies::void_echoes::apply_haunted_mood_penalty_system,
                 crate::layer1::logistics::beanstalk::beanstalk_morale_system,
                 crate::layer1::logistics::beanstalk::beanstalk_collapse_system,
             ));

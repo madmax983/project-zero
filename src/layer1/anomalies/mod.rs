@@ -626,5 +626,6 @@ mod tests {
 }
 pub mod benevolent_malfunctions;
 pub mod temporal_echoes;
+pub mod void_echoes;
 pub mod void_sirens;
 pub use temporal_echoes::*;
