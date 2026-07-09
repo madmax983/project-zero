@@ -3,6 +3,17 @@
 //!
 //! Converts colony history (Chronicle) into living legends that are shared in taverns.
 //! Stories evolve over time, gaining mutations and providing buffs to listeners.
+//!
+//! # Feature Flag Required
+//!
+//! This module is part of the "Nova" expansion content and requires the `nova` feature to be enabled.
+//!
+//! ```ignore
+//! // This will fail to compile if `features = ["nova"]` is not set in Cargo.toml
+//! use scale::layer1::oral_tradition::OralTradition;
+//!
+//! let tradition = OralTradition::default();
+//! ```
 
 #[cfg(feature = "nova")]
 use crate::layer1::core::chronicle::{Chronicle, EventImportance};
@@ -558,55 +569,3 @@ impl std::fmt::Display for OralTradition {
         write!(f, "{}", table)
     }
 }
-
-#[cfg(not(feature = "nova"))]
-#[deprecated(
-    note = "Requires `nova` feature to be enabled. Add `features = [\"nova\"]` to your Cargo.toml for `scale`"
-)]
-#[derive(Debug, Default)]
-pub struct OralTradition {
-    pub stories: Vec<Story>,
-}
-
-#[cfg(not(feature = "nova"))]
-#[deprecated(
-    note = "Requires `nova` feature to be enabled. Add `features = [\"nova\"]` to your Cargo.toml for `scale`"
-)]
-#[derive(Debug)]
-pub struct Story {
-    pub text: String,
-    pub historical_date: u64,
-    pub mutations: u32,
-    pub genre: StoryGenre,
-}
-
-#[cfg(not(feature = "nova"))]
-#[deprecated(
-    note = "Requires `nova` feature to be enabled. Add `features = [\"nova\"]` to your Cargo.toml for `scale`"
-)]
-#[derive(Debug)]
-pub enum StoryGenre {
-    Heroic,
-    Tragedy,
-    Cautionary,
-    Trivial,
-}
-
-#[cfg(not(feature = "nova"))]
-impl OralTradition {
-    pub fn add_story(&mut self, _story: Story) {}
-    pub fn process_chronicles(&mut self, _chronicle: &crate::layer1::core::chronicle::Chronicle) {}
-}
-
-#[cfg(not(feature = "nova"))]
-impl std::fmt::Display for OralTradition {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "OralTradition (Requires nova feature)")
-    }
-}
-
-#[cfg(not(feature = "nova"))]
-pub fn collect_chronicles_system() {}
-
-#[cfg(not(feature = "nova"))]
-pub fn storytelling_system() {}
