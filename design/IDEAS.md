@@ -27343,3 +27343,42 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you try to carefully manage the psychological state of a district to sculpt the perfect building, or do you intentionally traumatize a sector to force the matter into a brutally effective shape?
 
 ---
+## The Stellar Decoupling
+
+**Layer:** 2
+
+**Fantasy:** Navigating and surviving in a system where the star itself is dying and fundamental stellar mechanics begin to break down.
+
+**Mechanic:** As a star enters its final decay phase, the "Habitable Zone" drastically and unpredictably shifts. Orbits of planets and stations slowly decay towards the star, while solar flares randomly disable electronics and hyperlane connections across the entire system.
+
+**Emergence:** You heavily fortify a lush core world, but the star's sudden decay turns it into an irradiated wasteland. You are forced to rapidly evacuate the population to a frozen moon that, due to the shifting habitable zone, is now melting into a temperate paradise.
+
+**Tension:** Do you abandon billions of credits of infrastructure to save your people, or aggressively research experimental shielding to anchor your world against the dying star?
+
+---
+## The Reactive Biosphere
+
+**Layer:** 1
+
+**Fantasy:** A planet that feels alive, actively fighting back against the industrialized pollution and expansion of the colony like an immune system.
+
+**Mechanic:** Planets have a hidden "Biosphere Tolerance" metric. As the colony expands, cuts down forests, and generates pollution, the tolerance drops. Once depleted, the planet triggers a "Biosphere Rejection" event: local flora mutates to aggressively reclaim concrete, weather patterns intentionally target industrial hubs, and fauna coordinate attacks on mining outposts.
+
+**Emergence:** You try to rapidly strip-mine a jungle world to fuel a war. The planet responds by rapidly growing indestructible vines over your spaceport and spawning swarms of toxic insects that specifically target your fusion reactors, effectively blockading you from your own military.
+
+**Tension:** Do you invest in slow, expensive eco-friendly technologies, or brutally suppress the planet's immune response with military force to maintain your resource quotas?
+
+---
+## The Machine Spirit Cults
+
+**Layer:** Cross-layer
+
+**Fantasy:** Witnessing a high-tech society regress into superstition and ritual to manage their increasingly complex and failing technology.
+
+**Mechanic:** If a colony relies heavily on advanced automation (Layer 1) or autonomous trade fleets (Layer 2) but lacks the educational infrastructure to understand them, Pops begin to form "Machine Spirit" cults. They attribute random machine failures to "anger" and successes to "blessings." They will periodically halt work to perform elaborate, resource-intensive rituals to "appease" the machines.
+
+**Emergence:** Your automated logistics network is perfectly efficient, but your uneducated dockworkers decide the sorting algorithm is a jealous god. They start intentionally destroying perfectly good cargo to "sacrifice" it to the algorithm, crashing your economy.
+
+**Tension:** Do you spend massive resources on universal education to break the superstition, or officially adopt the cult as a state religion to regain control over the workforce, permanently capping your technological progress?
+
+---
