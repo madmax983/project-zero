@@ -53,6 +53,7 @@ pub enum Trait {
     Trauma,
     /// Resists atmospheric hazards (+30% Biocompatibility).
     NativeBorn,
+    Militaristic,
     /// Vulnerable to atmospheric hazards (-20% Biocompatibility).
     WeakImmunity,
     /// Loves fire (starts fires during breakdowns).
@@ -149,6 +150,7 @@ impl Trait {
     pub const fn label(&self) -> &'static str {
         match self {
             Self::Psychopath => "Psychopath",
+            Self::Militaristic => "Militaristic",
             Self::StoneSkin => "Stone Skin",
             Self::NightVision => "Night Vision",
             Self::GillLungs => "Gill Lungs",
