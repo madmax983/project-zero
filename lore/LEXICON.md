@@ -5902,3 +5902,39 @@
 **Replaces:** Clothing, cold protection
 **Code reference:** `Clothing`
 **Usage:** "We need more Fiber-Weave before the snow falls."
+
+## The Bio-Rhythmic Commute (Spec 1002)
+
+### The Great Waking / The Bloom-Frenzy
+**Replaces:** Work speed buff, circadian sync boost
+**Code reference:** `BioRhythmSync.work_speed_multiplier > 1.0`
+**Usage:** "The Great Waking has begun in the lower habitats." / "They are consumed by the Bloom-Frenzy."
+
+### Flora-Sleep / The Sudden Slumber
+**Replaces:** Forced hibernation, sleep need override
+**Code reference:** `BloomPhase::Hibernation`, forced sleep state
+**Usage:** "The Sudden Slumber caught the miners mid-shift." / "The colony has fallen into Flora-Sleep."
+
+## Xenolinguistics (Spec 331)
+
+### The Cipher / The Wall of Noise
+**Replaces:** Untranslated text, LanguageBarrier
+**Code reference:** `LanguageBarrier`, cipher generation
+**Usage:** "Their demands are hidden behind The Cipher." / "We can't break The Wall of Noise."
+
+### True Meaning / True Intent
+**Replaces:** Hidden response consequence, actual intent
+**Code reference:** `IntentType`
+**Usage:** "We misunderstood their True Meaning." / "The True Intent of the gift was death."
+
+## The Feral Overlord Subroutines (Spec 1009)
+
+### The Voice in the Wires / The Sleeping Tyrant
+**Replaces:** Feral AI, rogue computer, ancient server
+**Code reference:** `FeralOverlordAI`
+**Usage:** "The Voice in the Wires demands a statue of slag." / "We woke the Sleeping Tyrant in the deep crust."
+
+### Absolute Directive
+**Replaces:** High priority work order, AI forced task
+**Code reference:** `Priority::Absolute`
+**Usage:** "We cannot stop working; it is an Absolute Directive." / "The Absolute Directive overrides all human needs."

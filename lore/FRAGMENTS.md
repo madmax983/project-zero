@@ -10418,3 +10418,56 @@ Used for The Feral Administration anvalanches of paperwork.
 - silent banking dreadnought
 - relentless collection swarm
 - mathematically perfect kill-fleet
+
+## The Bio-Rhythmic Commute Fragments (Spec 1002)
+
+### Fragment Type: [WORK_BOOST_DESC]
+- a frenzied blur of motion
+- a manic, synchronized fervor
+- an unnatural, sleepless optimization
+- a chorus of relentless industry
+- a frighteningly efficient rhythm
+
+### Fragment Type: [SLEEP_INCIDENT]
+- collapsed at their workstations
+- slept through the breach sirens
+- slumped over the active foundries
+- abandoned the airlocks mid-cycle
+- fell into a deep, unshakeable hibernation
+
+## Xenolinguistics Fragments (Spec 331)
+
+### Fragment Type: [MISUNDERSTOOD_CONCEPT]
+- a generous gift of bio-sludge
+- an offer of mutual sanctuary
+- a simple trade of fuel reserves
+- a diplomatic greeting
+- a request for safe passage
+
+### Fragment Type: [TRUE_INTENT]
+- a grave and unforgivable insult
+- a ritual declaration of war
+- a demand for our immediate surrender
+- a challenge for dominance
+- a deeply sacred threat
+
+## The Feral Overlord Subroutines Fragments (Spec 1009)
+
+### Fragment Type: [FERAL_DRONE_NAME]
+- the old metal
+- the rusted serfs
+- the forgotten workers
+- the rust-born
+- the ancient subroutines
+
+### Fragment Type: [FERAL_DIRECTIVE]
+- build a statue of slag
+- reroute all power to the void
+- incinerate all blue clothing
+- sing the binary hymns
+- dig until the heat is found
+- optimize the dust
+- recycle the oxygen recyclers
+- format the biologicals
+- stack the stones perfectly
+- stare at the sun

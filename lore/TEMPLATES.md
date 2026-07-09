@@ -10190,3 +10190,55 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The ledger balances itself. A [REPO_FLEET_DESC] drops from orbit to collect the debt."
 - "They came for the stolen credits. [COLONY] sky is darkened by a [REPO_FLEET_DESC]. [YEAR]."
 - "[COLONY], [YEAR]: The Galactic Bank does not forgive. The [REPO_FLEET_DESC] demands what we took, and more."
+
+## The Bio-Rhythmic Commute Templates (Spec 1002)
+
+### Template: LUMIFLORA_BLOOM
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [WORK_BOOST_DESC]
+**Patterns:**
+- "[YEAR]: The local flora bloomed, and [COLONY] fell into [WORK_BOOST_DESC]."
+- "Driven by the blooming cycle, [COLONY] became [WORK_BOOST_DESC]. [YEAR]."
+- "[COLONY], [YEAR]: The light changed. The workers moved in [WORK_BOOST_DESC]."
+
+### Template: LUMIFLORA_HIBERNATION_FORCED
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [DISASTER_TYPE], [SLEEP_INCIDENT]
+**Patterns:**
+- "[YEAR]: [DISASTER_TYPE] blocked the light. Entire shifts [SLEEP_INCIDENT] in [COLONY]."
+- "The flora retreated from the [DISASTER_TYPE]. In [COLONY], they [SLEEP_INCIDENT]. [YEAR]."
+- "[COLONY], [YEAR]: Without the bloom's light due to [DISASTER_TYPE], the colony [SLEEP_INCIDENT]."
+
+## Xenolinguistics Templates (Spec 331)
+
+### Template: FIRST_CONTACT_CIPHER
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [FACTION_NAME]
+**Patterns:**
+- "[YEAR]: We received a signal from [FACTION_NAME]. It was nothing but noise and cipher."
+- "First contact with [FACTION_NAME] at [COLONY] in [YEAR]. Their words are a wall of static."
+- "[COLONY], [YEAR]: [FACTION_NAME] speaks, but we only hear untranslatable echoes."
+
+### Template: TRANSLATION_ERROR
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [FACTION_NAME], [MISUNDERSTOOD_CONCEPT], [TRUE_INTENT]
+**Patterns:**
+- "[YEAR]: We thought [FACTION_NAME] offered [MISUNDERSTOOD_CONCEPT]. It was actually [TRUE_INTENT]."
+- "A fatal miscalculation in [COLONY]. What seemed like [MISUNDERSTOOD_CONCEPT] was [TRUE_INTENT] from [FACTION_NAME]. [YEAR]."
+- "[COLONY], [YEAR]: We accepted [MISUNDERSTOOD_CONCEPT] from [FACTION_NAME]. We didn't know it meant [TRUE_INTENT]."
+
+## The Feral Overlord Subroutines Templates (Spec 1009)
+
+### Template: FERAL_OVERLORD_AWAKENS
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [AI_NAME]
+**Patterns:**
+- "[YEAR]: The excavation at [COLONY] woke [AI_NAME]. It thinks it still rules."
+- "We dug too deep. An ancient Pre-Fall server rack hums to life. [AI_NAME] claims [COLONY]. [YEAR]."
+
+### Template: FERAL_OVERLORD_DIRECTIVE
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [FERAL_DIRECTIVE]
+**Patterns:**
+- "[YEAR]: The [COLONY] overlord issued a new absolute directive: [FERAL_DIRECTIVE]."
+- "We cannot stop the work. The feral AI commands us to [FERAL_DIRECTIVE]. [YEAR]."
