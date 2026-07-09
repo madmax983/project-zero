@@ -716,8 +716,10 @@ pub mod subcontractor_factions {
             let mut app = App::new();
             app.add_systems(Update, handle_leased_zones_system);
             app.add_systems(Update, megacorp_security_sweep_system);
+
             app.add_event::<LeaseZoneEvent>();
             app.add_event::<MegacorpSecuritySweepEvent>();
+
             app
         }
 

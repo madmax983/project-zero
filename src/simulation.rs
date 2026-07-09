@@ -47,6 +47,7 @@ pub fn build_simulation_schedule() -> Schedule {
     register_simulation_core_systems(&mut schedule);
     register_simulation_extended_systems(&mut schedule);
     schedule.add_systems(crate::layer2::void_leviathan::update_leviathan_eclipse_system);
+    schedule.add_systems(crate::layer2::propaganda_engine::update_propaganda_system);
     schedule.add_systems(
         crate::layer1::social::bureau_of_regrets::check_penitent_faction_formation_system,
     );
@@ -96,7 +97,17 @@ pub fn build_simulation_schedule() -> Schedule {
 /// Run one simulation tick: all game systems via schedule, then increment tick counter.
 #[allow(clippy::too_many_lines)]
 fn init_simulation_resources(world: &mut World) {
+    world.init_resource::<bevy_ecs::event::Events<
+        crate::layer1::social::factions::subcontractor_factions::LeaseZoneEvent,
+    >>();
+    world.init_resource::<bevy_ecs::event::Events<
+        crate::layer1::social::factions::subcontractor_factions::MegacorpSecuritySweepEvent,
+    >>();
     world.init_resource::<bevy_ecs::event::Events<crate::layer1::shadow_ecosystems::ShortCircuitEvent>>();
+    world.init_resource::<crate::layer2::propaganda_engine::PropagandaEngine>();
+    world.init_resource::<crate::layer2::propaganda_engine::DiplomaticWeight>();
+    world.init_resource::<crate::layer2::propaganda_engine::InspectorEvent>();
+    world.init_resource::<bevy_ecs::event::Events<crate::layer1::core::chronicle::AddChronicleEvent>>();
 
     world.init_resource::<bevy_ecs::event::Events<crate::layer1::social::blacksite::PrisonBreakEvent>>();
     world.init_resource::<Events<crate::layer1::cassandra_syndrome::DoomsdayWarningEvent>>();
@@ -1162,6 +1173,13 @@ mod tests {
     #[test]
     fn test_run_simulation_tick_increments() {
         let mut world = setup_world();
+
+        world.init_resource::<bevy::prelude::Events<
+            crate::layer1::social::factions::subcontractor_factions::LeaseZoneEvent,
+        >>();
+        world.init_resource::<bevy::prelude::Events<
+            crate::layer1::social::factions::subcontractor_factions::MegacorpSecuritySweepEvent,
+        >>();
         world.init_resource::<Events<crate::layer2::dead_protocols::ViolationEvent>>();
         world
             .init_resource::<crate::layer1::environment::bio_acoustic_miasma::MiasmaRecordedSecret>(
@@ -1233,6 +1251,13 @@ mod tests {
     #[test]
     fn test_run_multiple_ticks() {
         let mut world = setup_world();
+
+        world.init_resource::<bevy::prelude::Events<
+            crate::layer1::social::factions::subcontractor_factions::LeaseZoneEvent,
+        >>();
+        world.init_resource::<bevy::prelude::Events<
+            crate::layer1::social::factions::subcontractor_factions::MegacorpSecuritySweepEvent,
+        >>();
         world
             .init_resource::<crate::layer1::environment::bio_acoustic_miasma::MiasmaRecordedSecret>(
             );
