@@ -1,6 +1,6 @@
-use bevy::prelude::*;
-use crate::layer1::entities::pop::PopulationCount;
 use crate::layer1::economy::inflation::EmpireResources;
+use crate::layer1::entities::pop::PopulationCount;
+use bevy::prelude::*;
 
 #[derive(Component)]
 pub struct OrbitalHabitat {
@@ -41,7 +41,10 @@ pub fn evaluate_orbital_secession_system(
     };
 
     for (entity, habitat, unrest) in habitat_query.iter_mut() {
-        if habitat.wealth > planet_wealth && habitat.population > planet_population && unrest.level > SECESSION_UNREST_THRESHOLD {
+        if habitat.wealth > planet_wealth
+            && habitat.population > planet_population
+            && unrest.level > SECESSION_UNREST_THRESHOLD
+        {
             commands.entity(entity).insert(SecessionState::Seceded);
         }
     }
@@ -50,21 +53,30 @@ pub fn evaluate_orbital_secession_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::entities::pop::PopulationCount;
     use crate::layer1::economy::inflation::EmpireResources;
+    use crate::layer1::entities::pop::PopulationCount;
 
     #[test]
     fn test_secession_triggers_on_high_wealth_and_unrest() {
         let mut app = App::new();
         app.add_systems(Update, evaluate_orbital_secession_system);
 
-        let habitat_entity = app.world_mut().spawn((
-            OrbitalHabitat { population: 5000, wealth: 100000.0 },
-            Unrest { level: 90.0 }
-        )).id();
+        let habitat_entity = app
+            .world_mut()
+            .spawn((
+                OrbitalHabitat {
+                    population: 5000,
+                    wealth: 100000.0,
+                },
+                Unrest { level: 90.0 },
+            ))
+            .id();
 
         app.insert_resource(PopulationCount { total: 4000 });
-        app.world_mut().spawn(EmpireResources { credits: 50000.0, alloys: 0 });
+        app.world_mut().spawn(EmpireResources {
+            credits: 50000.0,
+            alloys: 0,
+        });
 
         app.update();
 
@@ -77,13 +89,22 @@ mod tests {
         let mut app = App::new();
         app.add_systems(Update, evaluate_orbital_secession_system);
 
-        let habitat_entity = app.world_mut().spawn((
-            OrbitalHabitat { population: 5000, wealth: 10000.0 },
-            Unrest { level: 90.0 }
-        )).id();
+        let habitat_entity = app
+            .world_mut()
+            .spawn((
+                OrbitalHabitat {
+                    population: 5000,
+                    wealth: 10000.0,
+                },
+                Unrest { level: 90.0 },
+            ))
+            .id();
 
         app.insert_resource(PopulationCount { total: 10000 });
-        app.world_mut().spawn(EmpireResources { credits: 500000.0, alloys: 0 });
+        app.world_mut().spawn(EmpireResources {
+            credits: 500000.0,
+            alloys: 0,
+        });
 
         app.update();
 
