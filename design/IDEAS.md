@@ -27555,3 +27555,87 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** A single injured miner returns to the densely populated housing district. Instantly, thousands of completely healthy pops collapse in phantom agony, bringing the entire colony's production to a screeching halt because of one broken leg.
 
 **Tension:** Do you violently quarantine or exile the single suffering individual to save the sanity of the masses, or completely overhaul your medical infrastructure to treat them instantly?
+
+## Sub-light Refugee Fleets
+
+**Layer:** 2
+
+**Fantasy:** Desperate refugees weaponizing the wreckage of their own destroyed homes.
+
+**Mechanic:** When a Layer 3 civilization collapses or a planet is destroyed, it spawns "Sub-light Refugee Fleets." Because they lack hyper-drive technology, these fleets take decades or centuries to reach neighboring systems. The game tracks their slow progress.
+
+**Emergence:** A catastrophic famine on your homeworld results in a massive wave of refugee fleets flooding neighboring systems, overwhelming their economies and sparking a galactic refugee crisis that you inadvertently caused.
+
+**Tension:** Do you absorb refugees to boost your own long-term population at a massive short-term cost, or weaponize them against rivals and risk creating a future nemesis?
+
+---
+
+## The Orphan Protocol
+
+**Layer:** 1
+
+**Fantasy:** A colony kept running by a tribe of feral orphans subsisting on mushroom scraps.
+
+**Mechanic:** When adult Pops die, their children are usually sent to state orphanages. If the orphanage is overcrowded or underfunded, children escape and form a hidden "Feral Protocol" faction. They live in maintenance shafts, steal minor amounts of food, but also passively repair minor infrastructure damage and hunt vermin.
+
+**Emergence:** Your colony is starving and infrastructure is failing. You notice that your deepest, most dangerous mining sector is somehow perfectly maintained despite no adult workers being assigned there, kept running by a tribe of feral orphans subsisting on mushroom scraps.
+
+**Tension:** Do you fund expensive orphanages to raise proper, educated citizens, or intentionally neglect them to cultivate a free, self-sustaining maintenance workforce that lives in your vents?
+
+---
+
+## Orbital Debris Religion
+
+**Layer:** 1
+
+**Fantasy:** Watching discarded ships and orbital debris slowly turn into an independent, jury-rigged civilization.
+
+**Mechanic:** On worlds situated beneath a dense, historical "Kessler Syndrome" debris field, Pops may form a "Cult of the Falling Metal." When debris survives reentry and crashes, it is treated as a divine gift. The cult provides massive morale and unity bonuses but demands that valuable recovered technology be placed in shrines rather than recycled into the economy. They will also violently protest any Layer 2 efforts to clean up the orbital debris.
+
+**Emergence:** You ignore the cult, so they start cannibalizing your actual spaceport to build their shrine out of stolen scrap. You give in and build the shrine to restore order. It actually works, but instead of beneficent gods bringing gifts, the signal summons a heavily armed, automated Layer 3 tax collection fleet demanding tribute.
+
+**Tension:** Do you spend military resources to clean up orbital debris safely, or leave it to fuel the dangerous, unpredictable scavenger economy of your fringe worlds?
+
+---
+
+## The Rot Archive
+
+**Layer:** 1
+
+**Fantasy:** Preserving the flawed, fragile memories of a dying civilization against the inevitable decay of time.
+
+**Mechanic:** A specialized "Archive" building can be constructed. Instead of generating abstract research points, it physically stores "Memory Data Drives" created when Pops die. Over time, these drives suffer "Data Rot." Players must assign skilled Pops (Archivists) and constant energy to fight the rot. A perfectly preserved drive from an ancient founder offers massive cultural and scientific boons, but a rotted drive can spread "Cognitive Corruptions" (psychological debuffs) to anyone who studies it.
+
+**Emergence:** You dedicate massive resources to preserve the memories of your founding generation. Centuries later, a power failure during a siege causes the drives to rot. Desperate for a morale boost, your Archivists broadcast the corrupted memories anyway, causing the entire colony to hallucinate that the siege is a festival, leading them to walk willingly into enemy fire.
+
+**Tension:** Do you expend precious energy and highly skilled labor to fight the inevitable rot of the past, or do you let the old memories die to save the living?
+
+---
+
+## The Wound's Echo
+
+**Layer:** Cross-layer
+
+**Fantasy:** A psychological resonance from a localized anomaly that haunts the descendants of those who witness it.
+
+**Mechanic:** When a colony ship or trade fleet skirts too close to "The Wound" (the universal constant anomaly) on Layer 2, the crew doesn't take physical damage. Instead, they gain a hidden "Wound Resonance" trait. When they settle a Layer 1 colony, their descendants have a chance to inherit this trait. Resonant Pops are occasionally "called" to the anomaly, suffering severe morale drops unless they build strange, resource-intensive monuments pointing toward The Wound's coordinates.
+
+**Emergence:** A booming, hyper-rational core world suddenly grinds to a halt because a faction of Resonant Pops (descended from a single haunted navigator centuries ago) seizes the industrial sector and demands all steel production be diverted to building a massive, pointless obelisk aimed at an empty sector of space.
+
+**Tension:** Do you quarantine and oppress the Resonant Pops to maintain industrial efficiency, or indulge their bizarre architectural demands to keep the peace, wasting vital resources on monuments to an anomaly?
+
+---
+
+## The Lighthouse Protocol
+
+**Layer:** 2
+
+**Fantasy:** Maintaining a beacon of civilization in a dark, silent galaxy, hoping someone is listening.
+
+**Mechanic:** You can convert a massive orbital habitat into a "Lighthouse." It consumes an astronomical amount of energy to broadcast a continuous "We are here and we are alive" signal across the sector. This grants massive diplomatic and immigration bonuses from friendly factions. However, the signal also draws attention from less desirable entities—pirates, feral swarms, or ancient dormant threats.
+
+**Emergence:** Your colony is slowly dying of starvation. You activate the Lighthouse Protocol in a last-ditch effort to attract refugee ships carrying food. It works, saving the colony. But decades later, the game reveals that a massive, slow-moving swarm of feral drones locked onto that initial distress burst, and it has finally arrived to consume the planet.
+
+**Tension:** Do you broadcast your existence to the galaxy to survive isolation, knowing that every time you speak into the dark, something unknown might hear you?
+
+---
