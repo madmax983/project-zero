@@ -6451,11 +6451,11 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Volume of Knowledge vs. Accessibility of Knowledge.
 
 ---
-## Harmonic Mining
+## Harmonic Mining [SPECCED]
 
 **Layer:** 1
 
-**Fantasy:** Mining without pickaxes. Singing the stone to dust.
+**Fantasy:** Mining without pickaxes. Singing the stone to dust. [SPECCED]
 
 **Mechanic:** "Sonic Drills" disintegrate ore instantly in a radius. However, they vibrate at specific frequencies. If the frequency matches other materials (Glass, Crystal, Bone), those shatter too.
 

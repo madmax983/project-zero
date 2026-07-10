@@ -1,6 +1,7 @@
 # Backlog
 
 ## High Priority
+- [ ] `1322` Harmonic Mining — `specs/1322-harmonic-mining.md`
 
 
 
