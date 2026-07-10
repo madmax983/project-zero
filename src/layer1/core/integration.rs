@@ -3244,7 +3244,7 @@ pub fn gravity_plating_power_bridge_system(
     for (entity, consumer) in query.iter() {
         if !consumer.active {
             events
-                .send(crate::layer1::physics::gravity_plating::PowerGridEvent::NodeFailed(entity));
+                .send(crate::layer1::physics::gravity_plating::PowerGridEvent { failed_node: entity });
         }
     }
 }
@@ -3321,7 +3321,7 @@ pub fn blackout_bazaar_chronicle_bridge(
 
 /// INT-1018: Bridges `MegaEvent` to `AddChronicleEvent`
 pub fn planetary_scarring_chronicle_bridge(
-    mut events: bevy_ecs::event::EventReader<crate::layer1::disasters::mega_event::MegaEvent>,
+    mut events: bevy_ecs::event::EventReader<crate::layer1::disasters::MegaEvent>,
     mut chronicle_events: bevy_ecs::event::EventWriter<
         crate::layer1::core::chronicle::AddChronicleEvent,
     >,

@@ -43,12 +43,10 @@ pub struct PowerNode {
 /// ```
 /// use bevy_ecs::prelude::*;
 /// use scale::layer1::physics::gravity_plating::PowerGridEvent;
-/// let event = PowerGridEvent::NodeFailed(Entity::from_raw(1));
+/// let event = PowerGridEvent { failed_node: Entity::from_raw(1) };
 /// ```
 #[derive(Event)]
-pub enum PowerGridEvent {
-    NodeFailed(Entity),
-}
+pub struct PowerGridEvent { pub failed_node: Entity }
 
 /// A distinct spatial area within the colony that shares environmental properties.
 ///
@@ -160,7 +158,7 @@ pub fn monitor_gravity_generator_power_system(
     mut zone_query: Query<&mut GravityState>,
 ) {
     for event in events.read() {
-        let PowerGridEvent::NodeFailed(node_entity) = event;
+        let node_entity = &event.failed_node;
         if let Ok(gen) = generator_query.get(*node_entity) {
             if let Ok(mut grav_state) = zone_query.get_mut(gen.target_zone) {
                 *grav_state = GravityState::ZeroG;
@@ -284,7 +282,7 @@ mod tests {
 
         app.world_mut()
             .resource_mut::<Events<PowerGridEvent>>()
-            .send(PowerGridEvent::NodeFailed(generator));
+            .send(PowerGridEvent { failed_node: generator });
 
         app.update();
 

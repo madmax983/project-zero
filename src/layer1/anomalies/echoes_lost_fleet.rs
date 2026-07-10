@@ -37,7 +37,6 @@ pub fn lure_militaristic_pops_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy_ecs::prelude::*;
     use bevy_app::prelude::*;
     use crate::layer1::pop::Pop;
     use crate::layer1::psychology::traits::{Traits, Trait};

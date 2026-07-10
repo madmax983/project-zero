@@ -1,4 +1,3 @@
-pub mod mega_event;
 
 use crate::layer1::core::map::GridPosition;
 use bevy_ecs::prelude::*;
@@ -13,4 +12,11 @@ pub enum DisasterType {
 pub struct DisasterEvent {
     pub position: GridPosition,
     pub disaster_type: DisasterType,
+}
+
+#[derive(Event)]
+pub struct MegaEvent {
+    pub planet_entity: Entity,
+    pub event_type: String,
+    pub intensity: f32,
 }

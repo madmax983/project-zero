@@ -3,7 +3,7 @@ use bevy_ecs::event::Events;
 use bevy_ecs::prelude::*;
 use scale::layer1::core::chronicle::{AddChronicleEvent, EventImportance};
 use scale::layer1::core::integration::planetary_scarring_chronicle_bridge;
-use scale::layer1::disasters::mega_event::MegaEvent;
+use scale::layer1::disasters::MegaEvent;
 
 fn verify_event(mut reader: EventReader<AddChronicleEvent>) {
     let mut count = 0;

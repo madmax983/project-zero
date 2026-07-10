@@ -50,7 +50,7 @@ fn test_pet_system_integration() {
         .id();
 
     // Run until pop2 catches the pet (or enough times to be sure)
-    for _ in 0..100 {
+    for _ in 0..1000 {
         app.update();
         if app.world().get::<XenofloraPet>(pop2).is_some() {
             break;

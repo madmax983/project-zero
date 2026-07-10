@@ -1,4 +1,4 @@
-use crate::layer1::disasters::mega_event::MegaEvent;
+use crate::layer1::disasters::MegaEvent;
 use crate::layer2::planet::{PlanetNode, PlanetTexture};
 use bevy::prelude::*;
 
@@ -22,7 +22,7 @@ pub fn process_planetary_scars_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::disasters::mega_event::MegaEvent;
+    use crate::layer1::disasters::MegaEvent;
     use crate::layer2::planet::{PlanetNode, PlanetTexture};
 
     #[test]

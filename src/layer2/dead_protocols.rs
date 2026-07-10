@@ -3,13 +3,10 @@ use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
 
 #[derive(PartialEq)]
-pub enum ProtocolRule {
-    NoMiningRedPlanets,
-}
 
 #[derive(Component)]
 pub struct DeadProtocol {
-    pub rule: ProtocolRule,
+    pub rule_no_mining_red_planets: bool,
 }
 
 #[derive(Event)]
@@ -25,7 +22,7 @@ pub fn protocol_violation_system(
 ) {
     for event in events.read() {
         if let Ok(protocol) = query.get(event.target) {
-            if protocol.rule == ProtocolRule::NoMiningRedPlanets {
+            if protocol.rule_no_mining_red_planets {
                 commands.spawn((Fleet, FleetFaction::AncientEnforcer));
                 if let Some(ref mut l) = log {
                     l.add_colored(
@@ -53,7 +50,7 @@ mod tests {
         let planet = app
             .world_mut()
             .spawn(DeadProtocol {
-                rule: ProtocolRule::NoMiningRedPlanets,
+                rule_no_mining_red_planets: true,
             })
             .id();
 
