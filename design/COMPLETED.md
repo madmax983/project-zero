@@ -895,7 +895,6 @@
 - [x] `318` The Stolen Fleet — `specs/318-stolen-fleet.md` — completed 2026-10-31
 - [x] `INT-1310` Integration: The Feral Administration -> Chronicle — completed 2024-05-31
 - [x] `1004` The Orbital Secession — `specs/1004-orbital-secession.md` — completed 2026-07-06
-- [x] `1004` The Orbital Secession — `specs/1004-orbital-secession.md` — completed 2026-07-06
 
 - [x] `1311` The Dreaming Sickness — `specs/1311-the-dreaming-sickness.md` — completed 2026-10-31
 - [x] `1136` The Sentient Bureaucracy — `specs/1136-sentient-bureaucracy.md` — completed 2026-10-31
