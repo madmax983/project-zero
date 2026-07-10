@@ -628,3 +628,5 @@ pub mod benevolent_malfunctions;
 pub mod temporal_echoes;
 pub mod void_sirens;
 pub use temporal_echoes::*;
+pub mod echoes_lost_fleet;
+pub use echoes_lost_fleet::*;
