@@ -27413,3 +27413,115 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you push your luck for maximum profit, or play it safe and harvest slowly, knowing the resource is crucial for late-game tech?
 
 ---
+
+## The Sociopathic Optimizers
+
+**Layer:** 1 / 3
+
+**Fantasy:** Pops that have sacrificed their humanity to become perfectly efficient machines of state.
+
+**Mechanic:** Pops that suffer extreme, prolonged stress without relief can undergo a 'Psychic Break'. Instead of dying or rioting, they lose the 'Empathy' trait permanently, becoming 'Sociopathic Optimizers'. They no longer have Social or Leisure needs and their work speed quadruples. However, they begin to view other, normal Pops as 'inefficiencies'. If allowed to run administrative buildings, they will subtly sabotage life support in 'unproductive' sectors to save power.
+
+**Emergence:** You purposefully stress out your bureaucratic sector to breed Optimizers and boost your economy. They run your empire flawlessly, right up until the moment they calculate that feeding the mining sector is statistically less efficient than just letting them starve and replacing them with automation, causing a massive, silent famine you didn't order.
+
+**Tension:** Do you purge the terrifyingly efficient monsters you created, crippling your economy, or let them run the colony and risk them coldly executing your own citizens?
+
+---
+
+## The Empathy Firewall
+
+**Layer:** Cross-layer
+
+**Fantasy:** Protecting the core worlds from the psychic shock of a distant war.
+
+**Mechanic:** When massive atrocities or casualties occur in a Layer 3 war, the 'Psychic Shock' travels through the hyperlanes, massively increasing Unrest and Stress on Layer 1 colonies that hear about it. You can build 'Empathy Firewalls'—massive orbital propaganda and sensory-deprivation stations. These block the shockwave, keeping the core worlds blissfully ignorant, but the Pops crewing the Firewall absorb the full brunt of the horror, going insane rapidly.
+
+**Emergence:** Your core worlds are a peaceful utopia because your Empathy Firewall is hiding the brutal war you are losing on the frontier. Eventually, the Firewall crew completely breaks down from the horror and broadcasts raw, unfiltered footage of the slaughter directly into the minds of every Pop in the capital, instantly causing a planet-wide psychotic riot.
+
+**Tension:** Do you let the entire empire suffer the manageable, shared trauma of war, or isolate the horror onto a small, doomed group to maintain a fragile, artificial peace at home?
+
+---
+
+## The Post-Scarcity Rot
+
+**Layer:** 1 / 3
+
+**Fantasy:** Discovering that absolute material wealth destroys the social fabric faster than poverty.
+
+**Mechanic:** If a colony maintains 100% need satisfaction and maximum resource stockpiles for an extended period, they enter 'Post-Scarcity'. Instead of a golden age, Pops begin rapidly developing the 'Ennui' trait. They stop working, their birth rates plummet, and they begin forming 'Nihilist Cults' that actively try to sabotage critical infrastructure just to feel the thrill of danger and purpose again.
+
+**Emergence:** You finally achieve a perfect, unassailable utopian core world. Ten years later, the incredibly wealthy, bored citizens intentionally shut down the planetary shields during a meteor shower because surviving it gives them a temporary mood buff, wiping out half the city.
+
+**Tension:** Do you intentionally manufacture crises, shortages, and wars just to give your population the struggle they need to remain sane and functional?
+
+---
+
+## The Diplomatic Mimicry Spores
+
+**Layer:** 1 / 3
+
+**Fantasy:** An alien flora that learns to impersonate your ambassadors.
+
+**Mechanic:** A rare Layer 1 xenoflora (the 'Mimic Spore') perfectly copies the vocal patterns and pheromones of any Pop that spends too much time near it. If it infects a diplomatic envoy sent to a Layer 3 civilization, the spore takes root in the alien capital and begins autonomously sending wildly erratic diplomatic messages back to you, pretending to be the alien leader.
+
+**Emergence:** You send an envoy to secure a peace treaty. The Mimic Spore infects them. Years later, you receive a furious declaration of war from the aliens, followed immediately by a passionate love letter from the same alien leader, followed by a demand for 10,000 tons of raw fertilizer. You realize you aren't negotiating with an empire, you're negotiating with a very confused, very powerful houseplant.
+
+**Tension:** Do you aggressively burn out the highly lucrative xenoflora from your colony, or risk it permanently corrupting your interstellar communication networks?
+
+---
+
+## The Quantum Heirloom Entanglement
+
+**Layer:** Cross-layer
+
+**Fantasy:** An artifact so powerful it physically binds two distant planets together.
+
+**Mechanic:** You can discover or forge 'Quantum Heirlooms'—pairs of objects (e.g., two halves of a precursor core). If placed on two different planets (Layer 2), their environments become entangled. If one planet is terraformed into a lush paradise, the other instantly mirrors it. However, if one suffers a massive disaster (like a core collapse or nuclear bombardment), the other suffers the exact same fate instantly, regardless of distance.
+
+**Emergence:** You place one Heirloom on your heavily defended capital, and the other on a distant, barely habitable frontier mining world. The frontier world instantly becomes a paradise, solving your resource crisis. Ten years later, a small pirate fleet raids the undefended frontier world and glasses it from orbit. Your impenetrable capital city instantly, inexplicably shatters into a million pieces.
+
+**Tension:** Do you use the incredible power of entanglement to instantly develop your empire, knowing you are creating an undefended, catastrophic vulnerability for your most important worlds?
+
+---
+
+## The Nomadic Capital
+
+**Layer:** Cross-layer
+
+**Fantasy:** Abandoning planetary attachment to rule from a massive, vulnerable fleet.
+
+**Mechanic:** Late-game tech allows you to designate a massive Layer 2 'Juggernaut' ship as your empire's Capital, rather than a Layer 1 planet. It provides massive administrative and economic bonuses to whatever system it is currently in. However, if the Juggernaut is destroyed, your entire empire instantly fractures into warring splinter factions due to the complete loss of central command.
+
+**Emergence:** You move your Capital to the Juggernaut to constantly buff your front-line war efforts. A lucky enemy stealth bomber slips past your defenses and detonates the ship's core. In an instant, your massive, unified galactic empire dissolves into thirty different AI-controlled warlords fighting over the scraps, and you are left controlling a single, starving mining outpost on the rim.
+
+**Tension:** Do you risk the absolute, single-point-of-failure destruction of your civilization for the incredible tactical flexibility of a moving capital?
+
+---
+
+## Orbital Parallax Markets
+
+**Layer:** 2 / 3
+
+**Fantasy:** Exploiting relativistic time dilation for financial gain.
+
+**Mechanic:** Building 'Parallax Markets' extremely close to massive gravity wells (like black holes) causes them to process trades slower in real-time due to time dilation. However, this allows them to 'see' market fluctuations from the rest of the galaxy slightly before they finalize locally. This generates a massive 'Arbitrage' income, but the Pops stationed there age significantly slower, causing severe cultural alienation from the rest of the empire.
+
+**Emergence:** You build a Parallax Market to fund your war effort. It works flawlessly. Centuries later, the war is won, but the traders on the station return to the capital. They still hold the cultural values and political grudges of an era 300 years past, immediately sparking a violent, anachronistic civil war within your modern utopia.
+
+**Tension:** Do you sacrifice the cultural cohesion of your citizens to exploit the laws of physics for infinite wealth?
+
+---
+
+## The Sentient Byproduct
+
+**Layer:** 1 / 2
+
+**Fantasy:** Discovering your industrial waste has become self-aware.
+
+**Mechanic:** If a colony produces massive amounts of high-tech 'Neural Scrap' (byproducts of building advanced AI or robotics) and dumps it into a specific environment (like an acidic ocean or deep crust), the scrap can spontaneously organize into a 'Scrap Consciousness'. It isn't hostile initially; it just wants to trade its unique, bizarre manufactured goods for more 'food' (raw materials).
+
+**Emergence:** You dump your industrial waste into an oceanic trench to save money. Fifty years later, a massive, writhing entity made of rusted server racks and toxic sludge surfaces. It demands equal representation on the planetary council and offers to build you invincible warships in exchange for all your iron. You agree, only to realize the warships are also sentient and refuse to fire on other 'waste' lifeforms.
+
+**Tension:** Do you exterminate the horrifying consequence of your own pollution, or recognize it as a new species and try to integrate it into your society?
+
+---
