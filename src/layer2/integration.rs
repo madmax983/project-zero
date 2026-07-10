@@ -1100,3 +1100,31 @@ pub fn observe_forge_crush_event(
         });
     }
 }
+
+pub fn orbital_secession_embargo_bridge_system(
+    mut commands: bevy_ecs::prelude::Commands,
+    mut query: bevy_ecs::prelude::Query<(bevy_ecs::prelude::Entity, Option<&mut crate::layer2::fleet::FleetFaction>, &crate::layer2::orbit::secession::SecessionState), bevy_ecs::prelude::Changed<crate::layer2::orbit::secession::SecessionState>>,
+    mut events: bevy_ecs::prelude::EventWriter<crate::layer1::chronicle::AddChronicleEvent>,
+) {
+    for (_entity, mut faction_opt, state) in query.iter_mut() {
+        if *state == crate::layer2::orbit::secession::SecessionState::Seceded {
+            if let Some(ref mut faction) = faction_opt {
+                **faction = crate::layer2::fleet::FleetFaction::Pirate;
+            }
+
+            commands.spawn(crate::layer3::diplomacy::trade_embargoes::TradeEmbargo {
+                resource: crate::layer1::resources::ResourceType::Food,
+                enforcing_faction: crate::layer1::social::factions::FactionId::Stateless,
+            });
+            commands.spawn(crate::layer3::diplomacy::trade_embargoes::TradeEmbargo {
+                resource: crate::layer1::resources::ResourceType::Metal,
+                enforcing_faction: crate::layer1::social::factions::FactionId::Stateless,
+            });
+
+            events.send(crate::layer1::chronicle::AddChronicleEvent {
+                importance: crate::layer1::chronicle::EventImportance::Major,
+                text: "An orbital habitat has declared independence, embargoing the planet and demanding tribute.".to_string(),
+            });
+        }
+    }
+}

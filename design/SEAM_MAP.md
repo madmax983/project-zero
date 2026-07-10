@@ -1754,3 +1754,10 @@
 - **Glue added:** Added `shadow_ecosystems_short_circuit_bridge` in `src/layer1/shadow_ecosystems.rs` to deactivate machines targeted by a short circuit and log the event.
 - **Schedule:** Registered in Layer 1 Observation schedule (`src/layer1/systems/observation.rs`).
 - **Tests:** Added tests in `tests/integration/shadow_ecosystems_bridge.rs`.
+
+### INT-1004: Orbital Secession -> Faction & Embargo
+- **Date:** 2026-07-06
+- **Systems connected:** `evaluate_orbital_secession_system` -> `orbital_secession_embargo_bridge_system` -> `TradeEmbargo`, `FleetFaction`, `AddChronicleEvent`
+- **Glue added:** `orbital_secession_embargo_bridge_system` in `src/layer2/integration.rs`
+- **Schedule:** Registered in Layer 2 `SimulationSchedule` (after evaluation)
+- **Tests:** `tests/integration/orbital_secession_bridge.rs`

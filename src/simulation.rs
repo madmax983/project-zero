@@ -862,6 +862,7 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
             .before(crate::layer2::trade::escape_velocity::process_launch_system),
         crate::layer2::integration::blind_auction_chronicle_bridge_system,
         crate::layer2::integration::refugee_arrival_bridge_system,
+        crate::layer2::integration::orbital_secession_embargo_bridge_system,
         crate::layer1::culture::celestial_cemeteries::process_corpses_system,
         crate::layer1::culture::celestial_cemeteries::calculate_launch_risk_system,
         crate::layer1::environment::thermal_camouflage::update_thermal_signatures,

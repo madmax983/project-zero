@@ -1,3 +1,4 @@
+
 #![allow(clippy::needless_pass_by_value)]
 #[path = "integration/cult_of_first_ship_bridge.rs"]
 mod cult_of_first_ship_bridge;
@@ -669,3 +670,7 @@ mod planetary_scarring_chronicle;
 
 #[path = "integration/shadow_ecosystems_bridge.rs"]
 mod shadow_ecosystems_bridge;
+
+
+#[path = "integration/orbital_secession_bridge.rs"]
+mod orbital_secession_bridge;
