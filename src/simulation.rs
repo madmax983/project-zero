@@ -643,6 +643,10 @@ fn register_simulation_core_systems(schedule: &mut Schedule) {
 
 #[allow(clippy::too_many_lines)]
 fn register_simulation_extended_systems(schedule: &mut Schedule) {
+    #[cfg(feature = "nova")]
+    schedule.add_systems(
+        crate::experimental::photosynthetic_nourishment::photosynthetic_nourishment_system,
+    );
     schedule.add_systems((
         crate::layer1::blackout_bazaars::spawn_blackout_bazaars_system,
         crate::layer1::blackout_bazaars::despawn_blackout_bazaars_system,

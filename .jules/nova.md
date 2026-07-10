@@ -205,3 +205,8 @@
 **Concept:** Added `subconscious_computing_system` in `src/experimental/subconscious_computing.rs`. Connects `Trait::Intellectual`, `ActionType::SatisfyRest`, and `ColonyResources`. Pops with the Intellectual trait passively generate `knowledge` while they are sleeping (`SatisfyRest`). Because their brain never truly shuts off, their `rest` regeneration is slightly penalized during this time.
 **Fate:** Submitted
 **Lesson:** Provides a unique economic niche for `Intellectual` pops where their utility persists even while sleeping. It balances free resource generation with a physiological penalty, forcing players to manage their burnout or capitalize on the passive trickle of knowledge.
+
+## [Photosynthetic Nourishment]
+**Concept:** Added `photosynthetic_nourishment_system` to `src/experimental/photosynthetic_nourishment.rs`. Connects `Trait::Photosynthesis` with the existing `LightMap` and `AmbientLight`. Pops with this trait naturally regenerate their hunger need when they are bathed in sufficient light.
+**Fate:** Submitted
+**Lesson:** Connecting physiological needs (Hunger) to environmental aesthetics (Light) creates emergent strategic decisions. Players can now intentionally build well-lit areas or skylights to house their photosynthetic pops, saving on agricultural food production.
