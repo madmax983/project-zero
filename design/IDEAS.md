@@ -27555,3 +27555,14 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** A single injured miner returns to the densely populated housing district. Instantly, thousands of completely healthy pops collapse in phantom agony, bringing the entire colony's production to a screeching halt because of one broken leg.
 
 **Tension:** Do you violently quarantine or exile the single suffering individual to save the sanity of the masses, or completely overhaul your medical infrastructure to treat them instantly?
+## Synthetic Soul Emulation
+
+**Layer:** 1
+
+**Fantasy:** Advanced synthetics attempting to mathematically emulate the "soul" of dead colonists.
+
+**Mechanic:** When a highly skilled Pop dies, you can choose to download their memory engrams into a raw Synthetic frame. The Synthetic gains their skills perfectly, but begins suffering from "Emulation Drift." They try to perfectly recreate the dead Pop's daily routines, even if they no longer make sense, like attempting to consume food (wasting it) or visiting a destroyed childhood home, severely reducing their efficiency.
+
+**Emergence:** You replace your entire elite, fallen military squad with Synthetic Soul Emulators. They are devastating in combat, but every week they halt all patrols and stand perfectly still in the ruined mess hall, silently trying to eat non-existent rations and mourn comrades who are technically standing right next to them.
+
+**Tension:** Do you accept the massive inefficiency of these "ghosts in the machine" to retain their unparalleled skills, or perform a hard wipe, turning them into efficient but unspecialized drones?
