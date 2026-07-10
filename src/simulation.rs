@@ -426,6 +426,8 @@ fn init_simulation_resources(world: &mut World) {
     // Digital Detritus
     world.init_resource::<crate::layer3::digital_detritus::DataMiningQueue>();
     world.init_resource::<crate::layer3::digital_detritus::DiscoveredTechs>();
+    world.init_resource::<Events<crate::layer2::refugee_archipelago::CollapseEvent>>();
+    world.init_resource::<Events<crate::layer2::refugee_archipelago::AsylumRequestEvent>>();
     world.init_resource::<Events<crate::layer3::digital_detritus::VirusEvent>>();
     world.init_resource::<Events<crate::layer1::architecture::living_architecture::PopConsumedEvent>>();
     world.init_resource::<Events<crate::layer1::architecture::embezzlement::EmbezzlementEvent>>();
@@ -620,6 +622,8 @@ fn register_simulation_core_systems(schedule: &mut Schedule) {
             .after(crate::layer1::nature::solar::update_solar_output_system),
     ));
     schedule.add_systems((
+        crate::layer2::refugee_archipelago::spawn_refugees_on_collapse_system,
+        crate::layer2::refugee_archipelago::refugee_arrival_system,
         crate::layer1::economy::apply_cultural_contraband_system,
         crate::layer3::planet::black_market_terraforming::trigger_rogue_terraforming,
         crate::layer3::planet::black_market_terraforming::apply_rogue_terraforming_events,

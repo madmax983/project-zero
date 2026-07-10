@@ -361,7 +361,8 @@ pub fn register(schedule: &mut Schedule) {
         (
             crate::layer1::shipbreaking::spawn_crashed_ship_system.after(process_start_plan_system),
             crate::layer1::shipbreaking::mine_system.after(arrival_handler_system),
-            crate::layer1::nature::biosphere_inversion::deep_crust_breach_system.after(crate::layer1::shipbreaking::mine_system),
+            crate::layer1::nature::biosphere_inversion::deep_crust_breach_system
+                .after(crate::layer1::shipbreaking::mine_system),
             crate::layer1::shipbreaking::hull_destroyed_system
                 .after(crate::layer1::shipbreaking::mine_system),
             crate::layer1::grafting::process_grafting,

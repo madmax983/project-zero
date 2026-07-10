@@ -579,7 +579,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `999` Interplanetary Pollination — `specs/999-interplanetary-pollination.md`
 - [ ] `1002` The Bio-Rhythmic Commute — `specs/1002-bio-rhythmic-commute.md`
 
-- [ ] `1008` The Refugee Archipelago — `specs/1008-the-refugee-archipelago.md`
 
 - [ ] `1013` The Void Echoes — `specs/1013-the-void-echoes.md`
 - [ ] `1014` Gravity-Well Funerals — `specs/1014-gravity-well-funerals.md`
