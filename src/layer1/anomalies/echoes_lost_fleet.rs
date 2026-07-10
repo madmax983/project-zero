@@ -1,5 +1,5 @@
+use crate::layer1::psychology::traits::{Trait, Traits};
 use bevy_ecs::prelude::*;
-use crate::layer1::psychology::traits::{Traits, Trait};
 
 #[derive(Component)]
 pub struct GhostDreadnought {
@@ -13,7 +13,7 @@ pub struct LuredByGhostFleet;
 pub fn lure_militaristic_pops_system(
     mut commands: Commands,
     dreadnoughts: Query<&GhostDreadnought>,
-    pops: Query<(Entity, &Traits), Without<LuredByGhostFleet>>
+    pops: Query<(Entity, &Traits), Without<LuredByGhostFleet>>,
 ) {
     let mut is_broadcasting = false;
     for dreadnought in dreadnoughts.iter() {
@@ -37,11 +37,11 @@ pub fn lure_militaristic_pops_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy_ecs::prelude::*;
-    use bevy_app::prelude::*;
-    use crate::layer1::pop::Pop;
-    use crate::layer1::psychology::traits::{Traits, Trait};
     use crate::layer1::map::GridPosition;
+    use crate::layer1::pop::Pop;
+    use crate::layer1::psychology::traits::{Trait, Traits};
+    use bevy_app::prelude::*;
+    use bevy_ecs::prelude::*;
 
     #[test]
     fn test_lost_fleet_broadcast_lures_militaristic_pops() {
@@ -49,23 +49,28 @@ mod tests {
         app.add_systems(Update, lure_militaristic_pops_system);
 
         // Setup the dreadnought anomaly
-        app.world_mut().spawn(GhostDreadnought { is_broadcasting: true, ticks_remaining: 100 });
+        app.world_mut().spawn(GhostDreadnought {
+            is_broadcasting: true,
+            ticks_remaining: 100,
+        });
 
         // Setup a pop with the Militaristic trait
         let mut traits = Traits::default();
         traits.add(Trait::Militaristic);
-        let pop_id = app.world_mut().spawn((
-            Pop,
-            traits,
-            GridPosition { x: 10, y: 10 },
-        )).id();
+        let pop_id = app
+            .world_mut()
+            .spawn((Pop, traits, GridPosition { x: 10, y: 10 }))
+            .id();
 
         // Run the luring system
         app.update();
 
         // Pop should receive a "Lured" component or be despawned/marked for escape
         let has_lured = app.world().get::<LuredByGhostFleet>(pop_id).is_some();
-        assert!(has_lured, "Militaristic pop should be lured by the ghost fleet broadcast");
+        assert!(
+            has_lured,
+            "Militaristic pop should be lured by the ghost fleet broadcast"
+        );
     }
 
     #[test]
@@ -74,19 +79,24 @@ mod tests {
         app.add_systems(Update, lure_militaristic_pops_system);
 
         // Setup the dreadnought anomaly
-        app.world_mut().spawn(GhostDreadnought { is_broadcasting: true, ticks_remaining: 100 });
+        app.world_mut().spawn(GhostDreadnought {
+            is_broadcasting: true,
+            ticks_remaining: 100,
+        });
 
         // Setup a pop without the Militaristic trait
-        let pop_id = app.world_mut().spawn((
-            Pop,
-            Traits::default(),
-            GridPosition { x: 10, y: 10 },
-        )).id();
+        let pop_id = app
+            .world_mut()
+            .spawn((Pop, Traits::default(), GridPosition { x: 10, y: 10 }))
+            .id();
 
         // Run the luring system
         app.update();
 
         let has_lured = app.world().get::<LuredByGhostFleet>(pop_id).is_some();
-        assert!(!has_lured, "Non-militaristic pop should ignore the ghost fleet broadcast");
+        assert!(
+            !has_lured,
+            "Non-militaristic pop should ignore the ghost fleet broadcast"
+        );
     }
 }

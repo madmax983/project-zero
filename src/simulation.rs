@@ -97,6 +97,9 @@ pub fn build_simulation_schedule() -> Schedule {
 /// Run one simulation tick: all game systems via schedule, then increment tick counter.
 #[allow(clippy::too_many_lines)]
 fn init_simulation_resources(world: &mut World) {
+    world.init_resource::<bevy::prelude::Events<crate::layer2::ftl::wakes::FtlJumpEvent>>();
+    world.init_resource::<bevy::prelude::Events<crate::layer2::ftl::wakes::SubspaceWakeEvent>>();
+
     world.init_resource::<bevy_ecs::event::Events<
         crate::layer1::social::factions::subcontractor_factions::LeaseZoneEvent,
     >>();
@@ -643,6 +646,10 @@ fn register_simulation_core_systems(schedule: &mut Schedule) {
 
 #[allow(clippy::too_many_lines)]
 fn register_simulation_extended_systems(schedule: &mut Schedule) {
+    schedule.add_systems((
+        crate::layer2::ftl::wakes::generate_subspace_wake_system,
+        crate::layer1::hazards::wakes::resolve_subspace_wakes_system,
+    ));
     schedule.add_systems((
         crate::layer1::blackout_bazaars::spawn_blackout_bazaars_system,
         crate::layer1::blackout_bazaars::despawn_blackout_bazaars_system,
@@ -1312,6 +1319,7 @@ mod tests {
     #[allow(clippy::too_many_lines)]
     fn test_schedule_runs_on_fresh_world() {
         let mut world = setup_world();
+
         init_simulation_resources(&mut world);
         *world.resource_mut::<GameState>() = GameState::Running;
         world
