@@ -27413,3 +27413,145 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you push your luck for maximum profit, or play it safe and harvest slowly, knowing the resource is crucial for late-game tech?
 
 ---
+
+## Feral Architecture
+
+**Layer:** 1
+
+**Fantasy:** The automated building systems of a fallen colony continue to build blindly, creating bizarre, labyrinthine cities.
+
+**Mechanic:** When a colony's communication network is severed or severely degraded, automated construction drones stop following blueprints. They enter a "Feral Architecture" state, automatically reinforcing existing structures with scrap, building bizarre, non-functional art pieces out of vital materials, or haphazardly expanding life support into unneeded areas.
+
+**Emergence:** You retake a colony that was cut off for a century. The population is alive, but the city has been built into an impossible, claustrophobic maze of reinforced steel that is nearly impossible to navigate or restructure, requiring you to carefully demolish "feral" blocks without triggering structural collapses.
+
+**Tension:** Do you let the feral drones build for "free" defense, knowing the resulting city will be an unlivable nightmare to manage, or spend resources to hunt down every last drone?
+---
+
+## The Substrate Cult
+
+**Layer:** 1
+
+**Fantasy:** Pops begin worshipping the game's abstract mechanics (the player/Substrate).
+
+**Mechanic:** Pops with high "Knowledge" but low "Sanity" have a chance to deduce they are part of a larger, unseen system (the Substrate). They form a cult that actively tries to manipulate the UI or prediction algorithms. For example, they might intentionally starve themselves, believing that creating an "alert" will summon the Substrate's attention to their sector.
+
+**Emergence:** You get a constant stream of "Low Food" warnings from a sector, but when you investigate, the granaries are full. The pops are just refusing to eat until you build them a monument, holding their own lives hostage to "the eye in the sky."
+
+**Tension:** Do you reward their metagaming by intervening, validating their religion, or ignore them and let them die of self-imposed starvation?
+---
+
+## Planetary Amnesia
+
+**Layer:** 2
+
+**Fantasy:** A system-wide event wipes the memories of all pops on a planet, reverting them to a blank slate.
+
+**Mechanic:** Certain rare cosmic phenomena or devastating ancient weapons can trigger "Amnesia Waves." When a planet is hit, all pops lose their skills, relationships, and memories. The colony's output plummets. However, all negative traits (e.g., addictions, grudges, phobias) are also wiped.
+
+**Emergence:** Your most rebellious, unmanageable forge world is hit by an amnesia wave. Suddenly, they are perfectly compliant and happy, but they don't know how to operate the plasma forges anymore. You have to send teachers from other worlds to retrain them before the system economy collapses.
+
+**Tension:** If you could weaponize this effect, would you use it on your own rioting citizens?
+---
+
+## Bureaucratic Blackout
+
+**Layer:** 1
+
+**Fantasy:** The sheer weight of administrative bloat causes a physical, systemic collapse of the colony's infrastructure.
+
+**Mechanic:** As a colony grows, it requires administrative buildings to maintain efficiency. However, these buildings generate "Red Tape" as a byproduct. If Red Tape isn't cleared by high-level bureaucrats or burned in specialized "Incinerators," it slowly infects automated systems. Eventually, automated doors refuse to open without form 27B/6, power grids shut down for "mandatory union breaks," and life support demands a notarized request for oxygen.
+
+**Emergence:** You ignore your administration sector while focusing on building a massive military fleet. The day before the fleet is set to launch, the entire orbital defense grid goes offline because the automated targeting system's operating license expired and no one filed the renewal paperwork. The enemy invades uncontested.
+
+**Tension:** Do you dedicate a huge portion of your workforce to entirely non-productive administrative tasks, or risk the entire colony literally grinding to a halt over missing paperwork?
+---
+
+## The Substrate Whispers
+
+**Layer:** Cross-layer
+
+**Fantasy:** The underlying code of the simulation occasionally leaks into the minds of the pops.
+
+**Mechanic:** Extremely rare cosmic events (e.g., passing near the edge of the galactic map) can cause "Substrate Leaks." Pops exposed to this radiation begin having visions of UI elements, coordinate grids, and raw statistics. They gain immense boosts to science and prediction (utility AI logic), but suffer massive sanity drains.
+
+**Emergence:** A group of affected pops forms a highly efficient engineering caste. They can build structures in half the time, but they insist on building them exactly aligned to the global absolute grid coordinates, refusing to place buildings organically, and they speak only in hexadecimal coordinates, deeply unsettling the rest of the colony.
+
+**Tension:** Do you intentionally expose your best scientists to the edge of the map for the massive boost, knowing they will slowly go mad and alienate the rest of the population?
+---
+
+## The Quarantine Symphony
+
+**Layer:** Cross-layer
+
+**Fantasy:** A quarantined world communicates its despair not through words, but through mathematical music broadcast across the system.
+
+**Mechanic:** When a Layer 1 colony is under strict quarantine (due to plague or unrest) and cut off from all physical trade, pops with high "Leisure/Art" scores will commandeer the Comms Array to broadcast "Quarantine Symphonies" into Layer 2.
+
+**Emergence:** Other colonies in the system hear the symphony. Pops with high empathy gain "Sorrow" debuffs but also produce massive bursts of "Cultural Output." A system might intentionally keep one world perpetually suffering just to harvest their beautiful, tragic broadcasts.
+
+**Tension:** Do you jam the signal to maintain efficiency, or let the music play, risking system-wide depression for the sake of unparalleled art?
+---
+
+## The Archive of Forgotten Names
+
+**Layer:** 1
+
+**Fantasy:** A colony attempts to preserve the identities of every lost soul, until the data outgrows the colony itself.
+
+**Mechanic:** Pops can construct "Data Tombs." When a pop dies, their memories and relationships are downloaded into the tomb. As long as the tomb is powered and maintained, descendants gain a massive "Ancestral Connection" morale boost. However, as the tomb fills, its power and compute requirements grow exponentially.
+
+**Emergence:** A struggling colony sacrifices life support for the living to maintain the servers for the dead. Eventually, the power grid collapses, causing a mass die-off that the system then tries to record, causing a complete cascading failure.
+
+**Tension:** Do you delete the records of the dead to save the living, triggering a generational "Great Forgetting" depression, or do you sacrifice vital resources to keep their memories alive?
+---
+
+## Planetary Tinnitus
+
+**Layer:** 2
+
+**Fantasy:** A planet's atmosphere permanently records the high-frequency distress signals of a catastrophic orbital defeat.
+
+**Mechanic:** When a massive fleet is destroyed in low orbit (Layer 2), the intense, synchronized distress beacons can cause "Atmospheric Imprinting." The atmosphere itself begins to sporadically broadcast a high-frequency "Planetary Tinnitus" down to the Layer 1 colony. Pops exposed to the Tinnitus cannot fulfill their "Rest" need, leading to widespread exhaustion and violent hallucinations.
+
+**Emergence:** You fight off a massive pirate armada in orbit, saving your capital. But the resulting Tinnitus prevents anyone from sleeping. Within a month, the exhausted, hallucinating pops burn down the very city you just saved, believing the pirates have already landed.
+
+**Tension:** Do you invest massive resources in atmospheric scrubbers to quiet the ghosts, or force your colonists to endure the historical trauma to exploit the planet's rich resources?
+---
+
+## The Echo Plague
+
+**Layer:** 1
+
+**Fantasy:** A psychological contagion where colonists begin mimicking the actions of the dead.
+
+**Mechanic:** A colony that has experienced high casualties and high stress can spawn an "Echo Plague." Pops afflicted with the plague abandon their current jobs and instead automatically attempt to perform the exact tasks that recently deceased pops were doing right before they died, regardless of whether those tasks are safe or necessary.
+
+**Emergence:** You suffer a catastrophic reactor meltdown that kills all your engineers. A week later, the surviving farmers and artists catch the Echo Plague. They abandon the hydroponics bays to blindly march into the highly irradiated reactor ruins to "fix" it without protective gear, exacerbating the disaster in a loop of compulsive mimicry.
+
+**Tension:** Do you violently suppress the afflicted pops to keep them out of hazardous zones, or try to safely quarantine them while the colony starves from their lack of productive work?
+---
+
+## Ghost Trade Routes
+
+**Layer:** 2
+
+**Fantasy:** Relativistic trade creates a booming economy based entirely on the shipments of a civilization that died centuries ago.
+
+**Mechanic:** Ancient, automated Layer 2 cargo ships occasionally arrive in the system following millennia-old "Ghost Trade Routes." They attempt to deliver obsolete but valuable goods to coordinates that no longer have a colony, or demand payment in forgotten currencies.
+
+**Emergence:** You learn the schedule of a ghost trade fleet and build a massive spaceport purely to intercept and trade with them. Your entire economy becomes dependent on the automated commerce of a dead empire. Then, the ghost fleet finally runs out of fuel and stops coming, causing an instant, catastrophic economic depression.
+
+**Tension:** Do you base your economy on the massive, free influx of ghost goods, knowing it could stop at any second without warning?
+---
+
+## Empathy Cascade
+
+**Layer:** 1
+
+**Fantasy:** A psychological plague where pops physically cannot stop feeling the pain of others.
+
+**Mechanic:** A rare, highly contagious "Memetic Virus" can break out, causing the "Hyper-Empathy" trait. Pops with this trait have their mood directly tied to the lowest mood of any pop within a 10-tile radius. If one pop is starving, every hyper-empathic pop nearby feels the exact same severity of the "Starving" debuff, even if they are well-fed.
+
+**Emergence:** A single injured miner returns to the densely populated housing district. Instantly, thousands of completely healthy pops collapse in phantom agony, bringing the entire colony's production to a screeching halt because of one broken leg.
+
+**Tension:** Do you violently quarantine or exile the single suffering individual to save the sanity of the masses, or completely overhaul your medical infrastructure to treat them instantly?
