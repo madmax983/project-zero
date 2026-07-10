@@ -906,3 +906,4 @@
 - [x] `331` Xenolinguistics — `specs/331-xenolinguistics.md` — completed 2026-07-08
 - [x] `1005` Subterranean Biosphere Inversion — `specs/1005-subterranean-biosphere-inversion.md` — completed 2026-02-01
 - [x] `1267` Echoes of the Lost Fleet — `specs/1267-echoes-of-the-lost-fleet.md` — completed 2026-11-01
+- [x] `997` Subspace Stowaways — `specs/997-subspace-stowaways.md` — completed 2026-07-10

@@ -124,4 +124,5 @@ pub mod solar_sail_migration;
 pub mod stolen_fleet;
 pub mod void_leviathan;
 pub use stolen_fleet::*;
+pub mod ftl;
 pub mod propaganda_engine;

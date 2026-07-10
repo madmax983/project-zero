@@ -546,6 +546,12 @@ fn init_simulation_resources_more(world: &mut World) {
     if !world.contains_resource::<crate::layer1::nature::atmosphere::SmogGrid>() {
         world.init_resource::<crate::layer1::nature::atmosphere::SmogGrid>();
     }
+    if !world.contains_resource::<Events<crate::layer2::ftl::SubspaceWakeEvent>>() {
+        world.init_resource::<Events<crate::layer2::ftl::SubspaceWakeEvent>>();
+    }
+    if !world.contains_resource::<Events<crate::layer2::ftl::FtlJumpEvent>>() {
+        world.init_resource::<Events<crate::layer2::ftl::FtlJumpEvent>>();
+    }
 }
 
 pub fn run_simulation_tick(world: &mut World) {
@@ -661,6 +667,10 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
     schedule.add_systems((
         crate::layer1::economy::bio_loom::apply_bio_suit_armor,
         crate::layer1::economy::bio_loom::process_bio_suit_parasitism,
+    ));
+    schedule.add_systems((
+        crate::layer2::ftl::wakes::generate_subspace_wake_system,
+        crate::layer1::hazards::wakes::resolve_subspace_wake_system,
     ));
     schedule.add_systems(
         (
@@ -1646,6 +1656,9 @@ mod tests {
         world.init_resource::<crate::layer1::nature::long_night::LongNightEvent>();
         world.init_resource::<crate::layer1::fungal_network::SporeNetwork>();
         world.init_resource::<crate::layer2::solar_sail_migration::SolarMigrationState>();
+
+        world.init_resource::<Events<crate::layer2::ftl::FtlJumpEvent>>();
+        world.init_resource::<Events<crate::layer2::ftl::SubspaceWakeEvent>>();
 
         let schedule = build_simulation_schedule();
         world.add_schedule(schedule);
