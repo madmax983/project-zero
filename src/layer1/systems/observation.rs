@@ -10,7 +10,7 @@ pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
             crate::layer1::architecture::gravity_engineering::gravity_engineering_chronicle_bridge,
-            crate::layer1::core::integration::kinetic_strike_chronicle_bridge,
+            crate::layer1::geology::subsurface::kinetic_strike_chronicle_bridge,
             crate::layer1::actions::escape::escape_pods_chronicle_bridge,
             crate::layer1::core::integration::subconscious_grid_lockdown_chronicle_bridge,
             crate::layer1::mycelial::detect_tripwire_step,

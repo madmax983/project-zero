@@ -2,7 +2,7 @@
 mod tests {
     use bevy::prelude::*;
     use scale::layer1::core::chronicle::{AddChronicleEvent, EventImportance};
-    use scale::layer1::core::integration::kinetic_strike_chronicle_bridge;
+    use scale::layer1::geology::subsurface::kinetic_strike_chronicle_bridge;
     use scale::layer1::geology::subsurface::KineticStrikeEvent;
 
     #[test]

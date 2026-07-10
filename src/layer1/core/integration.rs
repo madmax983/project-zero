@@ -32,22 +32,6 @@ use ratatui::style::Color;
 
 use std::collections::HashSet;
 
-/// Bridges `KineticStrikeEvent` to `AddChronicleEvent` (Chronicle).
-pub fn kinetic_strike_chronicle_bridge(
-    mut strike_events: EventReader<crate::layer1::geology::subsurface::KineticStrikeEvent>,
-    mut chronicle_events: EventWriter<AddChronicleEvent>,
-) {
-    for event in strike_events.read() {
-        chronicle_events.send(AddChronicleEvent {
-            text: format!(
-                "Kinetic Strike! A heavy orbital payload struck ({}, {}).",
-                event.target_x, event.target_y
-            ),
-            importance: EventImportance::Major,
-        });
-    }
-}
-
 /// INT-1088: Bridges Megafauna Death to Apex Meat Harvesting
 pub fn apex_meat_harvest_bridge_system(
     query: Query<&crate::layer1::fauna::Fauna, Added<crate::layer1::Dead>>,
