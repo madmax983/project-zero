@@ -103,6 +103,6 @@ mod tests {
             weight.value, 0,
             "Diplomatic weight should plummet to zero when a bluff is called."
         );
-        assert_eq!(engine.active, false, "The bluff should end.");
+        assert!(!engine.active, "The bluff should end.");
     }
 }

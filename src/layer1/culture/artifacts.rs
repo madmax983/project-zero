@@ -88,7 +88,8 @@ pub fn apply_artifact_auras_system(
 
         for (art_pos, aura) in &artifacts {
             // Calculate squared distance to avoid sqrt
-            let dist_sq = ((pos.x - art_pos.x).pow(2) + (pos.y - art_pos.y).pow(2)) as f32;
+            let dist_sq = (pos.x as f32 - art_pos.x as f32).powi(2)
+                + (pos.y as f32 - art_pos.y as f32).powi(2);
             if dist_sq <= aura.radius.powi(2) {
                 active_auras.effects.push(aura.effect);
 
@@ -291,6 +292,45 @@ mod tests {
             active_auras.is_empty(),
             "Aura should be removed when leaving range"
         );
+    }
+
+    #[test]
+    fn test_artifact_aura_overflow_safety() {
+        let mut world = World::new();
+
+        // Spawn Artifact at extreme coordinates
+        world.spawn((
+            Artifact,
+            ArtifactAura {
+                radius: 5.0,
+                effect: AuraEffect::Insight,
+            },
+            GridPosition {
+                x: i32::MAX,
+                y: i32::MAX,
+            },
+        ));
+
+        // Spawn Pop at opposite extreme coordinates
+        let pop = world
+            .spawn((
+                Pop,
+                GridPosition {
+                    x: i32::MIN,
+                    y: i32::MIN,
+                },
+                ActiveAuras::default(),
+            ))
+            .id();
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems(apply_artifact_auras_system);
+
+        // This should not panic
+        schedule.run(&mut world);
+
+        let active_auras = world.get::<ActiveAuras>(pop).unwrap();
+        assert!(active_auras.is_empty());
     }
 }
 pub mod vr_pod {

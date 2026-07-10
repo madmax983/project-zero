@@ -86,10 +86,11 @@ pub fn update_ad_screens_system(
     mut pops: Query<(&GridPosition, &mut Needs), With<Pop>>,
 ) {
     for (screen_pos, mut screen) in &mut screens {
-        let radius_sq = (screen.radius * screen.radius) as i32;
+        let radius_sq = screen.radius.powi(2);
 
         for (pop_pos, mut needs) in &mut pops {
-            let dist_sq = (screen_pos.x - pop_pos.x).pow(2) + (screen_pos.y - pop_pos.y).pow(2);
+            let dist_sq = (screen_pos.x as f32 - pop_pos.x as f32).powi(2)
+                + (screen_pos.y as f32 - pop_pos.y as f32).powi(2);
             if dist_sq <= radius_sq {
                 // Generate credits
                 screen.accumulated_credits += screen.credits_per_pop;
@@ -185,5 +186,41 @@ mod tests {
         let needs = world.get::<Needs>(pop_id).unwrap();
         // Only base decay applies, which isn't applied in this system
         assert_eq!(needs.leisure, 1.0);
+    }
+
+    #[test]
+    fn test_ad_screen_overflow_safety() {
+        let mut world = World::new();
+
+        world.spawn((
+            Pop,
+            GridPosition {
+                x: i32::MAX,
+                y: i32::MAX,
+            },
+            Needs {
+                leisure: 1.0,
+                ..Default::default()
+            },
+        ));
+
+        world.spawn((
+            GridPosition {
+                x: i32::MIN,
+                y: i32::MIN,
+            },
+            AdScreen {
+                radius: 2.0,
+                credits_per_pop: 0.5,
+                need_decay_multiplier: 2.0,
+                accumulated_credits: 0.0,
+            },
+        ));
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems(update_ad_screens_system);
+
+        // This should not panic
+        schedule.run(&mut world);
     }
 }

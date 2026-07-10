@@ -119,9 +119,9 @@ fn find_best_target(
 
     for (target_entity, target_pos) in targets {
         #[allow(clippy::cast_precision_loss)]
-        let dist = ((turret_pos.x - target_pos.x).pow(2) as f32
-            + (turret_pos.y - target_pos.y).pow(2) as f32)
-            .sqrt();
+        let dist = ((turret_pos.x as f32 - target_pos.x as f32).powi(2)
+            + (turret_pos.y as f32 - target_pos.y as f32).powi(2))
+        .sqrt();
 
         if dist <= turret_data.attack.range && dist < min_dist {
             min_dist = dist;
@@ -448,5 +448,51 @@ mod tests {
             "Should not gain waste from negative cost. Current waste: {}",
             res.waste
         );
+    }
+
+    #[test]
+    fn test_turret_overflow_safety() {
+        let mut world = setup_world();
+        world.resource_mut::<ColonyResources>().waste = 10.0;
+
+        world.spawn((
+            Building {
+                building_type: BuildingType::TrashCannon,
+            },
+            Turret {
+                attack: AttackProperties {
+                    damage: 10.0,
+                    range: 5.0,
+                    cooldown: 0,
+                    accuracy: 1.0,
+                },
+                ammo_cost: 1.0,
+                ammo_type: ResourceType::Waste,
+            },
+            GridPosition {
+                x: i32::MAX,
+                y: i32::MAX,
+            },
+            CombatState::default(),
+        ));
+
+        world.spawn((
+            Fauna {
+                fauna_type: FaunaType::Wolf,
+                ..Default::default()
+            },
+            GridPosition {
+                x: i32::MIN,
+                y: i32::MIN,
+            },
+            Health {
+                current: 100.0,
+                max: 100.0,
+                has_rust_lung: false,
+            },
+        ));
+
+        // This should not panic
+        turret_fire_system(&mut world);
     }
 }

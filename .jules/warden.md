@@ -5,3 +5,6 @@
 **2025-03-09 - [crossbeam-epoch Invalid Pointer Dereference]**
 **Threat:** [RUSTSEC-2026-0204 in crossbeam-epoch (v0.9.18) could lead to an invalid pointer dereference when formatting pointers, potentially crashing the application.]
 **Defense:** [Updated crossbeam-epoch dependency to v0.9.20 via cargo update -p crossbeam-epoch to fix the vulnerability.]
+**2024-03-22 - [Integer Overflow Fixes]**
+**Threat:** Multiple integer overflow vulnerabilities in Euclidean distance calculation `.pow(2)` for large coordinate inputs. Potential panic DoS.
+**Defense:** Replaced `i32` math with `.powi(2)` on casted `f32` types in `culture/artifacts.rs`, `ad_screen.rs`, and `architecture/turret.rs`.
