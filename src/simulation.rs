@@ -82,9 +82,9 @@ pub fn build_simulation_schedule() -> Schedule {
     schedule.add_systems((
         crate::layer1::nature::subterranean_smog::process_subterranean_smog_system,
         crate::layer1::nature::subterranean_smog::apply_smog_penalties_system,
-        crate::layer1::tech::teleporter::psychosis::handle_teleport_system,
-        crate::layer1::tech::teleporter::psychosis::process_psychosis_system,
-        crate::layer1::tech::teleporter::psychosis::hunger_decay_system,
+        crate::layer1::tech::teleporter::handle_teleport_system,
+        crate::layer1::tech::teleporter::process_psychosis_system,
+        crate::layer1::tech::teleporter::hunger_decay_system,
     ));
     schedule.add_systems((
         crate::layer1::biology::symbiotic_gear::symbiotic_hunger_modifier_system,
@@ -538,10 +538,8 @@ fn init_simulation_resources_more(world: &mut World) {
     if !world.contains_resource::<Events<crate::layer2::communications::signal_decay::CommsMessageEvent>>() {
         world.init_resource::<Events<crate::layer2::communications::signal_decay::CommsMessageEvent>>();
             }
-    if !world
-        .contains_resource::<Events<crate::layer1::tech::teleporter::psychosis::TeleportEvent>>()
-    {
-        world.init_resource::<Events<crate::layer1::tech::teleporter::psychosis::TeleportEvent>>();
+    if !world.contains_resource::<Events<crate::layer1::tech::teleporter::TeleportEvent>>() {
+        world.init_resource::<Events<crate::layer1::tech::teleporter::TeleportEvent>>();
     }
     if !world.contains_resource::<crate::layer1::nature::atmosphere::SmogGrid>() {
         world.init_resource::<crate::layer1::nature::atmosphere::SmogGrid>();
@@ -1637,7 +1635,7 @@ mod tests {
             .init_resource::<Events<crate::layer2::trade::phantom_limb_logistics::AuditRiskEvent>>(
             );
         world.init_resource::<crate::layer1::nature::atmosphere::SmogGrid>();
-        world.init_resource::<Events<crate::layer1::tech::teleporter::psychosis::TeleportEvent>>();
+        world.init_resource::<Events<crate::layer1::tech::teleporter::TeleportEvent>>();
         world.init_resource::<crate::layer1::nature::long_night::LongNightEvent>();
         world.init_resource::<crate::layer1::fungal_network::SporeNetwork>();
         world.init_resource::<crate::layer2::solar_sail_migration::SolarMigrationState>();

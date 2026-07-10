@@ -14,3 +14,12 @@
 **Bloat:** Dummy fallback structs and functions added just to suppress a compilation error when a feature is disabled.
 **Cut:** Deleted the dummy code and gated the exports so the compiler rightfully errors out.
 **Saved:** 50 lines of code / Fake runtime outputs confusing users
+## [Reduction]
+**Bloat:** Layer Lasagna (deep directory hierarchies for tiny feature modules).
+**Cut:** Flattened `layer1/crafting`, `layer1/cassandra_syndrome`, `layer1/tech/teleporter`, and `layer3/auditor` directories into single flat `.rs` files.
+**Saved:** Removed 4 unnecessary sub-directories and collapsed nested imports.
+
+## [Reduction]
+**Bloat:** Speculative Generality (1-variant Enums `ProtocolRule` and `PowerGridEvent`).
+**Cut:** Replaced 1-variant enums with concrete tag/tuple structs.
+**Saved:** Reduced API surface area, simplified matching logic, and deleted unnecessary abstractions.

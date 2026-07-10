@@ -3243,8 +3243,9 @@ pub fn gravity_plating_power_bridge_system(
 ) {
     for (entity, consumer) in query.iter() {
         if !consumer.active {
-            events
-                .send(crate::layer1::physics::gravity_plating::PowerGridEvent::NodeFailed(entity));
+            events.send(crate::layer1::physics::gravity_plating::PowerGridEvent(
+                entity,
+            ));
         }
     }
 }

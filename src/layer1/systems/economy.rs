@@ -379,8 +379,8 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::energy::gravity_siphon::trigger_orbital_decay_system,
             crate::layer1::core::integration::gravity_siphon_chronicle_bridge,
             crate::layer1::fungal_network::process_spore_taps_system,
-            crate::layer1::crafting::byproducts::complete_crafting_system,
-            crate::layer1::crafting::byproducts::waste_dumping_system,
+            crate::layer1::crafting::complete_crafting_system,
+            crate::layer1::crafting::waste_dumping_system,
         )
             .chain()
             .in_set(Layer1SystemSet::Economy),
