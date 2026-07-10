@@ -221,3 +221,6 @@ pub mod feral_foraging;
 
 #[cfg(feature = "nova")]
 pub mod subconscious_computing;
+
+#[cfg(feature = "nova")]
+pub mod photosynthetic_nourishment;
