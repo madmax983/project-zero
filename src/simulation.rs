@@ -472,6 +472,8 @@ fn init_simulation_resources(world: &mut World) {
             world.init_resource::<Events<crate::layer1::unseen_bureaucracy::PhantomShiftEvent>>();
             world.init_resource::<Events<crate::layer3::diplomacy::cultural_ransom::RaidEvent>>();
             world.init_resource::<Events<crate::layer2::planetary_spin_up::PlanetaryTorqueEvent>>();
+            world.init_resource::<Events<crate::layer2::ftl::wakes::FtlJumpEvent>>();
+            world.init_resource::<Events<crate::layer2::ftl::wakes::SubspaceWakeEvent>>();
             world.insert_resource(
                 crate::layer1::environment::terminator_habitats::TerminatorLine {
                     x_coordinate: 50.0,
@@ -643,6 +645,7 @@ fn register_simulation_core_systems(schedule: &mut Schedule) {
 
 #[allow(clippy::too_many_lines)]
 fn register_simulation_extended_systems(schedule: &mut Schedule) {
+    schedule.add_systems((crate::layer2::ftl::wakes::generate_subspace_wake_system, crate::layer1::hazards::wakes::apply_subspace_wake_system));
     schedule.add_systems((
         crate::layer1::blackout_bazaars::spawn_blackout_bazaars_system,
         crate::layer1::blackout_bazaars::despawn_blackout_bazaars_system,
@@ -1593,6 +1596,8 @@ mod tests {
         world.init_resource::<Events<crate::layer1::unseen_bureaucracy::PhantomShiftEvent>>();
         world.init_resource::<Events<crate::layer3::diplomacy::cultural_ransom::RaidEvent>>();
         world.init_resource::<Events<crate::layer2::planetary_spin_up::PlanetaryTorqueEvent>>();
+            world.init_resource::<Events<crate::layer2::ftl::wakes::FtlJumpEvent>>();
+            world.init_resource::<Events<crate::layer2::ftl::wakes::SubspaceWakeEvent>>();
         world.insert_resource(
             crate::layer1::environment::terminator_habitats::TerminatorLine { x_coordinate: 50.0 },
         );
