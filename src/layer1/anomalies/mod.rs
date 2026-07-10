@@ -630,3 +630,5 @@ pub mod void_sirens;
 pub use temporal_echoes::*;
 pub mod echoes_lost_fleet;
 pub use echoes_lost_fleet::*;
+pub mod wakes;
+pub use wakes::*;

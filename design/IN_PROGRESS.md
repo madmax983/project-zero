@@ -1,3 +1,4 @@
 - [x] `INT-1305` Integration: The Cassandra Syndrome -> Chronicle - claimed 2026-10-31
 - [x] `1310` The Feral Administration — `specs/1310-the-feral-administration.md` — claimed 2026-10-31
 - [ ] `1004` The Orbital Secession — `specs/1004-orbital-secession.md` — claimed 2026-07-06
+- [ ] `997` Subspace Stowaways — `specs/997-subspace-stowaways.md` — claimed 2024-07-10
