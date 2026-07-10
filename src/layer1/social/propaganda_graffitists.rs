@@ -17,7 +17,7 @@ pub fn propaganda_graffiti_system(
     pops: Query<(&Traits, &StressTracker, &GridPosition)>,
     buildings: Query<(Entity, &GridPosition), (With<Building>, Without<RebelliousGraffiti>)>,
 ) {
-    let mut creative_positions = Vec::new();
+    let mut creative_positions = Vec::with_capacity(pops.iter().len());
     for (traits, stress, pos) in pops.iter() {
         if stress.accumulated_stress > 80.0 && traits.has(Trait::Creative) {
             creative_positions.push(*pos);
@@ -41,7 +41,7 @@ pub fn graffiti_aura_system(
     graffiti: Query<(&RebelliousGraffiti, &GridPosition)>,
     mut pops: Query<(&GridPosition, &mut WorkEfficiency, &mut Morale)>,
 ) {
-    let mut graffiti_positions = Vec::new();
+    let mut graffiti_positions = Vec::with_capacity(graffiti.iter().len());
     for (graf, pos) in graffiti.iter() {
         graffiti_positions.push((*pos, graf.intensity));
     }
