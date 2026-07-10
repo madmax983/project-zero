@@ -53,7 +53,18 @@ pub enum NarrativeError {
 use comfy_table::{presets::UTF8_FULL, Cell, Color as TableColor, Table};
 
 impl NarrativeError {
-    /// Returns a beautiful formatted table for the error.
+    /// Returns a beautiful formatted table for the error as a `String`.
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use scale::shared::narrative::NarrativeError;
+    ///
+    /// let error = NarrativeError::MissingContext("YEAR".to_string());
+    /// // Returns a `String`, NOT a `comfy_table::Table`, so you don't need `comfy-table` as a dependency.
+    /// let table_str: String = error.to_table();
+    /// assert!(table_str.contains("YEAR"));
+    /// ```
     pub fn to_table(&self) -> String {
         let error_msg = format!("{}", self);
         let action_msg = match self {

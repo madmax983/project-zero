@@ -21,3 +21,7 @@
 ## 2026-07-03 - [Nova Feature Missing Types Confusion]
 **Confusion:** Users attempting to run the Oral Tradition 'nova' feature snippet from the README without enabling the `nova` feature in their Cargo.toml expected helpful deprecation warnings, but instead encountered raw `E0422` compiler panics because the fallback struct stubs were missing from `src/prelude.rs`.
 **Clarification:** Dummy `#[deprecated]` stubs must not be added to the main codebase just to force compilation for feature-gated code examples. Instead, we explicitly document the requirement by placing a large `⚠️ REQUIRES FEATURE NOVA` banner in the README right above the snippet and hiding the feature gate in the Rust snippet using `# #![cfg(feature = "name")]`.
+
+## 2024-07-10 - [NarrativeError::to_table returns String, not Table]
+**Confusion:** Users saw that the `NarrativeError` `.to_table()` method prints a beautiful table, and assumed it returns `comfy_table::Table` directly (exposing an internal dependency). They tried to handle it using `if let Some(table) = e.to_table()` which resulted in mismatched types, causing frustration.
+**Clarification:** `to_table` returns a `String`. Documented the return type explicitly in `src/shared/narrative.rs` with an executable doctest to demonstrate that it returns a `String`, preventing users from assuming they need to add `comfy-table` to their dependencies.
