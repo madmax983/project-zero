@@ -76,8 +76,18 @@ pub fn process_harmonic_mining(
                             ResourceType::Stone => resources.add_stone(10.0),
                             ResourceType::Planks => resources.add_planks(10.0),
                             ResourceType::Food => resources.add_food(10.0),
-                            // Default case
-                            _ => {}
+                            ResourceType::Metal => resources.add_metal(10.0),
+                            ResourceType::Blocks => resources.add_blocks(10.0),
+                            ResourceType::Waste => resources.add_waste(10.0),
+                            ResourceType::Rations => resources.add_rations(10.0),
+                            ResourceType::Fuel => resources.add_fuel(10.0),
+                            ResourceType::Alcohol => resources.add_alcohol(10.0),
+                            ResourceType::Scrap => resources.add_scrap(10.0),
+                            ResourceType::Tools => resources.add_tools(10.0),
+                            ResourceType::BuildingPermit => resources.add_building_permits(10.0),
+                            ResourceType::MemoryCore => resources.add_memory_cores(10.0),
+                            ResourceType::VoidAle => resources.add_void_ale(10.0),
+                            ResourceType::HyperValuable => {}
                         }
                         commands.entity(target_entity).despawn();
                     }

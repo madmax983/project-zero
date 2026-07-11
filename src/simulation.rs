@@ -685,6 +685,7 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         crate::layer1::agriculture::zero_g_flora::handle_depressurization,
         crate::layer1::nature::solar_flare_lottery::solar_flare_emp_system,
         crate::layer1::nature::solar_flare_lottery::solar_flare_radiation_system,
+        crate::layer1::tech::harmonic::process_harmonic_mining,
         crate::layer3::diplomacy::dead_internet::automated_diplomat_system,
         crate::layer3::integration::dead_internet_chronicle_bridge,
         crate::layer1::nature::solar_flare_lottery::spawn_flare_isotopes_system,
