@@ -7,6 +7,13 @@ use bevy_ecs::prelude::*;
 pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
+            crate::layer1::bio_rhythmic_commute::lumiflora_bloom_system,
+            crate::layer1::bio_rhythmic_commute::apply_bio_rhythm_aura,
+        )
+            .in_set(super::Layer1SystemSet::Execution),
+    );
+    schedule.add_systems(
+        (
             crate::layer1::shadow_ecosystems::spawn_data_fauna,
             crate::layer1::shadow_ecosystems::data_fauna_feeding,
             crate::layer1::shadow_ecosystems::data_fauna_overfeed,

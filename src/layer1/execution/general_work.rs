@@ -700,6 +700,10 @@ pub fn get_status_modifiers(world: &World, pop_entity: Entity) -> f32 {
         modifier *= efficiency.multiplier;
     }
 
+    if let Some(sync) = world.get::<crate::layer1::bio_rhythmic_commute::BioRhythmSync>(pop_entity) {
+        modifier *= sync.work_speed_multiplier;
+    }
+
     if world
         .get::<crate::layer1::tech::neural_leech::NeuralLinked>(pop_entity)
         .is_some()

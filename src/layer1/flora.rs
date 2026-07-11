@@ -71,6 +71,7 @@ pub fn update_bioluminescence_system(
 pub enum FloraType {
     /// Moss that spreads quickly but deals low damage.
     #[default]
+    Lumiflora,
     XenoMoss,
     /// Vines that constrict and damage buildings heavily.
     StrangleVines,

@@ -110,6 +110,9 @@ pub mod metal_industry_tests;
 /// Tests for mining logic (Spec 052).
 pub mod mining_tests;
 /// Pop needs (hunger, rest).
+pub mod bio_rhythmic_commute;
+pub use bio_rhythmic_commute::*;
+
 pub mod psychology;
 pub use psychology::*;
 /// Pop entity and management.
