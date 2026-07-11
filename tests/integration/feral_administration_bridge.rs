@@ -11,7 +11,7 @@ fn test_feral_administration_chronicle_bridge() {
 
     app.add_systems(Update, feral_administration_chronicle_bridge);
 
-    app.world_mut().spawn((UnprocessedForms { stack_size: 10 }, FeralColony));
+    app.world_mut().spawn((UnprocessedForms { stack_size: 15 }, FeralColony));
 
     app.update();
 
@@ -20,5 +20,5 @@ fn test_feral_administration_chronicle_bridge() {
     let emitted: Vec<_> = cursor.read(events).collect();
 
     assert_eq!(emitted.len(), 1);
-    assert!(emitted[0].text.contains("Feral Administration"));
+    assert!(emitted[0].text.contains("A mountain of Unprocessed Forms"));
 }

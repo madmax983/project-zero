@@ -3342,23 +3342,21 @@ pub fn planetary_scarring_chronicle_bridge(
 /// INT-1310: Bridges `Added<UnprocessedForms>` to `AddChronicleEvent`
 pub fn feral_administration_chronicle_bridge(
     query: bevy_ecs::system::Query<
-        (),
-        (
-            bevy_ecs::query::Added<
-                crate::layer1::administration::feral_administration::UnprocessedForms,
-            >,
-            bevy_ecs::query::With<crate::layer1::administration::feral_administration::FeralColony>,
-        ),
+        (bevy_ecs::entity::Entity, &crate::layer1::administration::feral_administration::UnprocessedForms),
+        bevy_ecs::query::Changed<crate::layer1::administration::feral_administration::UnprocessedForms>,
     >,
+    mut recorded: bevy_ecs::system::Local<bevy_utils::HashSet<bevy_ecs::entity::Entity>>,
     mut chronicle_events: bevy_ecs::event::EventWriter<
         crate::layer1::core::chronicle::AddChronicleEvent,
     >,
 ) {
-    for _ in query.iter() {
-        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
-            text: "A Feral Administration has begun to produce an avalanche of paperwork."
-                .to_string(),
-            importance: crate::layer1::core::chronicle::EventImportance::Major,
-        });
+    for (entity, forms) in query.iter() {
+        if forms.stack_size >= 10 && !recorded.contains(&entity) {
+            recorded.insert(entity);
+            chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+                text: "A mountain of Unprocessed Forms has collapsed, rendering a section of the colony impassable!".to_string(),
+                importance: crate::layer1::core::chronicle::EventImportance::Minor,
+            });
+        }
     }
 }

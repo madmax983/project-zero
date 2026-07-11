@@ -67,21 +67,6 @@ pub fn spawn_unprocessed_forms_system(
     }
 }
 
-pub fn feral_admin_chronicle_bridge(
-    query: Query<(Entity, &UnprocessedForms), Changed<UnprocessedForms>>,
-    mut recorded: Local<bevy_utils::HashSet<Entity>>,
-    mut chronicle_events: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
-) {
-    for (entity, forms) in query.iter() {
-        if forms.stack_size >= 10 && !recorded.contains(&entity) {
-            recorded.insert(entity);
-            chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
-                text: "A mountain of Unprocessed Forms has collapsed, rendering a section of the colony impassable!".to_string(),
-                importance: crate::layer1::core::chronicle::EventImportance::Minor,
-            });
-        }
-    }
-}
 
 pub fn process_impassable_terrain_system(
     query: Query<(&GridPosition, &UnprocessedForms), Changed<UnprocessedForms>>,

@@ -45,7 +45,7 @@ pub fn register(schedule: &mut Schedule) {
         (
             crate::layer1::administration::feral_administration::spawn_unprocessed_forms_system,
             crate::layer1::administration::feral_administration::process_impassable_terrain_system,
-            crate::layer1::administration::feral_administration::feral_admin_chronicle_bridge,
+            crate::layer1::core::integration::feral_administration_chronicle_bridge,
             update_taboo_duration_system,
             update_water_system,
             update_weather_system,

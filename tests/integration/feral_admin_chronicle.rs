@@ -18,7 +18,7 @@ fn test_feral_admin_chronicle_bridge() {
     app.add_systems(
         Update,
         (
-            scale::layer1::administration::feral_administration::feral_admin_chronicle_bridge,
+            scale::layer1::core::integration::feral_administration_chronicle_bridge,
             verify_event,
         )
             .chain(),
