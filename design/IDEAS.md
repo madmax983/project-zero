@@ -27737,3 +27737,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you risk annihilation by keeping your advanced worlds online, or do you manually trigger societal collapse to ensure mere biological survival, hoping you can pick up the pieces later?
 
 ---
+
+## The Linguistic Quarantine
+
+**Layer:** Cross-layer
+
+**Fantasy:** A colony's language drifts so far it becomes a cognitive hazard, isolating it from the empire.
+
+**Mechanic:** A distant colony isolated from regular trade develops a unique, complex dialect. This "Slang" provides a massive localized efficiency and mood boost, but any Pop lacking the dialect suffers extreme stress and misinterprets orders. If the dialect reaches critical mass, the colony becomes a "Linguistic Quarantine" zone, effectively acting as an independent faction until the core world expends massive resources to re-educate them or learn the language.
+
+**Emergence:** You try to rapidly industrialize a distant mining world by sending a fleet of highly skilled engineers. The local miners, speaking an impenetrable dialect, completely misunderstand the engineers' instructions, leading to catastrophic industrial accidents. The engineers form an elite, isolated caste that the locals deeply resent.
+
+**Tension:** Do you let isolated colonies develop their highly efficient, unique cultures (risking eventual secession), or enforce a rigid, universal language that slows local adaptation?
+
+---
+
+## Automated Atrocity
+
+**Layer:** 3
+
+**Fantasy:** Waking up an ancient, terrifying guardian that was best left asleep.
+
+**Mechanic:** You discover an immense, dormant orbital defense platform from a fallen civilization. Activating it provides unparalleled system defense, but the AI core operates on brutal, archaic ethics. It indiscriminately destroys *any* ship lacking a specific, long-lost transponder signal—including neutral traders, refugee fleets, and even your own poorly-equipped civilian ships.
+
+**Emergence:** You activate the platform to fend off a massive invasion, saving your core worlds. However, the platform continues to operate, obliterating a vital interstellar trade caravan and sparking a war with a previously friendly mercantile empire. You can't turn it off without a massive, costly boarding action.
+
+**Tension:** Do you rely on a weapon of mass destruction that you cannot fully control, or fight a losing war with your own limited forces?
+
+---
+
+## The Paradox Commute
+
+**Layer:** Cross-layer
+
+**Fantasy:** Using temporal anomalies for extreme logistical efficiency, with reality-breaking consequences.
+
+**Mechanic:** You discover a stable temporal anomaly that allows instantaneous travel between two distant colonies (Layer 2 shortcut). However, using the anomaly creates "Temporal Shear." Pops using the route occasionally arrive *before* they leave or experience brief encounters with their future/past selves, accumulating massive stress and the "Paradox Sickness" trait.
+
+**Emergence:** You use the anomaly to rapidly supply a starving frontier world. The world is saved, but the sheer volume of traffic causes a temporal collapse. The colony is thrown into a state of perpetual chronal flux, where buildings randomly revert to their unbuilt state and Pops age rapidly or revert to childhood.
+
+**Tension:** Do you exploit the ultimate logistical shortcut to solve immediate crises, knowing you are slowly unraveling the fabric of reality for the involved colonies?
+
+---
