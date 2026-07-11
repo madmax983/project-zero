@@ -350,3 +350,176 @@ mod tests {
         );
     }
 }
+
+use bevy::prelude::Vec3;
+
+#[derive(Component)]
+pub struct GravityPlate {
+    pub down_vector: Vec3,
+    pub powered: bool,
+}
+
+#[derive(Component)]
+pub struct Orientation {
+    pub up: Vec3,
+}
+
+#[derive(Component, Default)]
+pub struct MapTile {
+    pub down_vector: Vec3,
+}
+
+#[derive(Resource)]
+pub struct GlobalGravity {
+    pub down_vector: Vec3,
+}
+
+impl Default for GlobalGravity {
+    fn default() -> Self {
+        Self {
+            down_vector: Vec3::NEG_Y,
+        }
+    }
+}
+
+pub fn update_tile_gravity(plate_query: Query<&GravityPlate>, mut tile_query: Query<&mut MapTile>) {
+    if let Some(plate) = plate_query.iter().find(|p| p.powered) {
+        for mut tile in tile_query.iter_mut() {
+            tile.down_vector = plate.down_vector;
+        }
+    }
+}
+
+pub fn update_pop_orientation(
+    mut pop_query: Query<
+        (&crate::layer1::core::map::GridPosition, &mut Orientation),
+        With<crate::layer1::entities::pop::Pop>,
+    >,
+    tile_query: Query<(&crate::layer1::core::map::GridPosition, &MapTile)>,
+) {
+    for (pop_pos, mut orientation) in pop_query.iter_mut() {
+        if let Some((_, tile)) = tile_query
+            .iter()
+            .find(|(t_pos, _)| t_pos.x == pop_pos.x && t_pos.y == pop_pos.y)
+        {
+            orientation.up = tile.down_vector * -1.0;
+        }
+    }
+}
+
+pub fn apply_falling_mechanics(
+    global_gravity: Res<GlobalGravity>,
+    plate_query: Query<&GravityPlate>,
+    mut pop_query: Query<&mut Orientation, With<crate::layer1::entities::pop::Pop>>,
+) {
+    if plate_query.iter().find(|p| p.powered).is_none() {
+        for mut orientation in pop_query.iter_mut() {
+            orientation.up = global_gravity.down_vector * -1.0;
+        }
+    }
+}
+
+#[cfg(test)]
+mod gravity_plate_tests {
+    use super::*;
+
+    use crate::layer1::map::GridPosition;
+
+    #[test]
+    fn test_gravity_plate_defines_down() {
+        let mut app = bevy_app::App::new();
+        app.add_systems(bevy_app::Update, update_tile_gravity);
+
+        // Act: place gravity plate with UP orientation
+        let _plate = app
+            .world_mut()
+            .spawn(GravityPlate {
+                down_vector: Vec3::Y,
+                powered: true,
+            })
+            .id();
+        let tile = app
+            .world_mut()
+            .spawn((GridPosition { x: 0, y: 1 }, MapTile::default()))
+            .id();
+
+        app.update();
+
+        // Assert: tile 'down' matches plate orientation
+        let down = app.world().get::<MapTile>(tile).unwrap().down_vector;
+        assert_eq!(down, Vec3::Y);
+    }
+
+    #[test]
+    fn test_pop_transitions_orientation() {
+        let mut app = bevy_app::App::new();
+        app.add_systems(bevy_app::Update, update_pop_orientation);
+
+        let pop = app
+            .world_mut()
+            .spawn((
+                crate::layer1::entities::pop::Pop,
+                GridPosition { x: 0, y: 0 },
+                Orientation { up: Vec3::Y },
+            ))
+            .id();
+        let _tile = app
+            .world_mut()
+            .spawn((
+                GridPosition { x: 0, y: 0 },
+                MapTile {
+                    down_vector: Vec3::NEG_X,
+                },
+            ))
+            .id();
+
+        // Act: pop walks over a curved plate that shifts 'down' to X
+        app.update();
+
+        // Assert: Pop's Orientation changes smoothly
+        let up = app.world().get::<Orientation>(pop).unwrap().up;
+        assert_eq!(up, Vec3::X);
+    }
+
+    #[test]
+    fn test_gravity_plate_failure_causes_falling() {
+        let mut app = bevy_app::App::new();
+        app.add_systems(bevy_app::Update, apply_falling_mechanics);
+
+        let pop = app
+            .world_mut()
+            .spawn((
+                crate::layer1::entities::pop::Pop,
+                GridPosition { x: 5, y: 10 },
+                Orientation { up: Vec3::NEG_Y },
+            ))
+            .id();
+        let _tile = app
+            .world_mut()
+            .spawn((
+                GridPosition { x: 5, y: 10 },
+                MapTile {
+                    down_vector: Vec3::NEG_Y,
+                },
+            ))
+            .id();
+        let _plate = app
+            .world_mut()
+            .spawn(GravityPlate {
+                down_vector: Vec3::Y,
+                powered: false,
+            })
+            .id();
+
+        // Assuming a resource handles global gravity.
+        app.world_mut().insert_resource(GlobalGravity {
+            down_vector: Vec3::NEG_Y,
+        });
+        // Act: plate loses power
+        app.update();
+
+        // Assert: pop falls down towards Vec3::NEG_Y (global down) - orientation aligns with global gravity
+        let up = app.world().get::<Orientation>(pop).unwrap().up;
+        assert_eq!(up, Vec3::Y);
+    }
+}

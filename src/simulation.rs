@@ -115,6 +115,7 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<crate::layer3::market::phantom_tax::SlushFund>();
 
     world.init_resource::<bevy_ecs::event::Events<crate::layer1::physics::gravity_plating::PowerGridEvent>>();
+    world.init_resource::<crate::layer1::physics::gravity_plating::GlobalGravity>();
     world.init_resource::<crate::layer1::social::bureau_of_regrets::AtrocityScore>();
     world
         .init_resource::<bevy_ecs::event::Events<crate::layer1::disasters::mega_event::MegaEvent>>(
