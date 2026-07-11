@@ -753,3 +753,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1317` The 'Good' War — `specs/1317-the-good-war.md`
 - [ ] `1320` The Architect's Ego — `specs/1320-the-architects-ego.md`
 - [ ] `1321` The Heirloom Debt — `specs/1321-the-heirloom-debt.md`
+- [ ] `1323` The Echo Plague — `specs/1323-the-echo-plague.md`
