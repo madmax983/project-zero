@@ -1,0 +1,299 @@
+use crate::layer1::administration::designation::DesignationType;
+use crate::layer1::social::morale::Morale;
+use bevy_ecs::prelude::*;
+
+#[derive(Resource, Clone, Debug, Default)]
+pub struct RedTapeEvent {
+    pub active: bool,
+    pub severity: u32,
+}
+
+#[derive(Component, Clone, Debug)]
+pub struct AdminPop;
+
+#[derive(Component, Clone, Debug)]
+pub struct RedTapeCost {
+    pub current_cost: f32,
+    pub max_cost: f32,
+    pub designation_type: DesignationType,
+    pub penalized: bool,
+}
+
+#[derive(Component, Clone, Debug)]
+pub struct PaperworkDelay {
+    pub ticks_remaining: u32,
+}
+
+pub fn update_bureaucratic_strike_status_system(
+    mut red_tape: ResMut<RedTapeEvent>,
+    query: Query<&Morale, With<AdminPop>>,
+) {
+    let mut total_morale = 0.0;
+    let mut admin_count = 0;
+
+    for morale in query.iter() {
+        total_morale += morale.value;
+        admin_count += 1;
+    }
+
+    if admin_count > 0 {
+        let avg_morale = total_morale / admin_count as f32;
+        if avg_morale < 30.0 {
+            // Low morale threshold
+            red_tape.active = true;
+            red_tape.severity = 10;
+        } else if avg_morale > 60.0 {
+            red_tape.active = false;
+        }
+    }
+}
+
+pub fn process_red_tape_designations_system(
+    red_tape: Res<RedTapeEvent>,
+    mut designation_query: Query<&mut RedTapeCost>,
+    mut job_query: Query<&mut PaperworkDelay>,
+) {
+    if red_tape.active {
+        for mut cost in designation_query.iter_mut() {
+            if !cost.penalized {
+                cost.max_cost *= red_tape.severity as f32;
+                cost.penalized = true;
+            }
+        }
+
+        for mut delay in job_query.iter_mut() {
+            if delay.ticks_remaining == 0 {
+                delay.ticks_remaining = 500 * red_tape.severity; // Add massive delay to jobs
+            }
+        }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use bevy_app::App;
+    use bevy_app::Update;
+
+    fn setup_app() -> App {
+        let mut app = App::new();
+        app.add_systems(
+            Update,
+            (
+                update_bureaucratic_strike_status_system,
+                process_red_tape_designations_system,
+            ),
+        );
+        app.insert_resource(RedTapeEvent {
+            active: false,
+            severity: 1,
+        });
+        app
+    }
+
+    #[test]
+    fn test_red_tape_increases_designation_cost() {
+        let mut app = setup_app();
+
+        let designation = app
+            .world_mut()
+            .spawn(RedTapeCost {
+                current_cost: 0.0,
+                max_cost: 100.0,
+                designation_type: DesignationType::Repair,
+                penalized: false,
+            })
+            .id();
+
+        app.world_mut().resource_mut::<RedTapeEvent>().active = true;
+        app.world_mut().resource_mut::<RedTapeEvent>().severity = 10;
+
+        app.update();
+
+        // Cost should be multiplied by severity
+        let cost = app.world().get::<RedTapeCost>(designation).unwrap();
+        assert_eq!(cost.max_cost, 1000.0);
+        assert!(cost.penalized);
+    }
+
+    #[test]
+    fn test_red_tape_prevents_instant_job_reassignment() {
+        let mut app = setup_app();
+
+        // This simulates a pop trying to take a job but being delayed by paperwork
+        let job = app
+            .world_mut()
+            .spawn(PaperworkDelay { ticks_remaining: 0 })
+            .id();
+
+        app.world_mut().resource_mut::<RedTapeEvent>().active = true;
+        app.world_mut().resource_mut::<RedTapeEvent>().severity = 2; // Arbitrary severity to multiply
+
+        app.update();
+
+        let delay = app.world().get::<PaperworkDelay>(job).unwrap();
+        assert!(delay.ticks_remaining > 0);
+        assert_eq!(delay.ticks_remaining, 1000); // 500 * 2
+    }
+
+    #[test]
+    fn test_red_tape_does_not_multiply_cost_twice() {
+        let mut app = setup_app();
+
+        let designation = app
+            .world_mut()
+            .spawn(RedTapeCost {
+                current_cost: 0.0,
+                max_cost: 100.0,
+                designation_type: DesignationType::Repair,
+                penalized: true, // Already penalized
+            })
+            .id();
+
+        app.world_mut().resource_mut::<RedTapeEvent>().active = true;
+        app.world_mut().resource_mut::<RedTapeEvent>().severity = 10;
+
+        app.update();
+
+        // Cost should NOT be multiplied by severity
+        let cost = app.world().get::<RedTapeCost>(designation).unwrap();
+        assert_eq!(cost.max_cost, 100.0);
+    }
+
+    #[test]
+    fn test_red_tape_adds_delay_only_once() {
+        let mut app = setup_app();
+
+        let job = app
+            .world_mut()
+            .spawn(PaperworkDelay {
+                ticks_remaining: 100,
+            }) // Already delayed
+            .id();
+
+        app.world_mut().resource_mut::<RedTapeEvent>().active = true;
+        app.world_mut().resource_mut::<RedTapeEvent>().severity = 2;
+
+        app.update();
+
+        let delay = app.world().get::<PaperworkDelay>(job).unwrap();
+        assert_eq!(delay.ticks_remaining, 100);
+    }
+
+    #[test]
+    fn test_strike_toggles_with_no_admins() {
+        let mut app = setup_app();
+
+        // No admins spawned
+
+        app.world_mut().resource_mut::<RedTapeEvent>().active = false;
+        app.update();
+
+        // The active state should remain unchanged
+        let event = app.world().resource::<RedTapeEvent>();
+        assert_eq!(event.active, false);
+    }
+
+    #[test]
+    fn test_process_red_tape_inactive() {
+        let mut app = setup_app();
+
+        let designation = app
+            .world_mut()
+            .spawn(RedTapeCost {
+                current_cost: 0.0,
+                max_cost: 100.0,
+                designation_type: DesignationType::Repair,
+                penalized: false,
+            })
+            .id();
+
+        let job = app
+            .world_mut()
+            .spawn(PaperworkDelay { ticks_remaining: 0 })
+            .id();
+
+        app.world_mut().resource_mut::<RedTapeEvent>().active = false;
+        app.update();
+
+        let cost = app.world().get::<RedTapeCost>(designation).unwrap();
+        assert_eq!(cost.max_cost, 100.0);
+
+        let delay = app.world().get::<PaperworkDelay>(job).unwrap();
+        assert_eq!(delay.ticks_remaining, 0);
+    }
+
+    #[test]
+    fn test_strike_toggles_with_admin_moderate_morale() {
+        let mut app = setup_app();
+
+        // Add a moderate morale Admin Pop (30 < morale < 60)
+        app.world_mut().spawn((
+            AdminPop,
+            Morale {
+                value: 45.0,
+                modifiers: vec![],
+            },
+        ));
+
+        app.world_mut().resource_mut::<RedTapeEvent>().active = true;
+
+        app.update();
+
+        // The active state should not flip to false because morale is not > 60
+        let event = app.world().resource::<RedTapeEvent>();
+        assert_eq!(event.active, true);
+
+        app.world_mut().resource_mut::<RedTapeEvent>().active = false;
+        app.update();
+
+        // The active state should not flip to true because morale is not < 30
+        let event = app.world().resource::<RedTapeEvent>();
+        assert_eq!(event.active, false);
+    }
+
+    #[test]
+    fn test_strike_toggles_with_admin_low_morale() {
+        let mut app = setup_app();
+
+        // Add a low morale Admin Pop (morale < 30)
+        app.world_mut().spawn((
+            AdminPop,
+            Morale {
+                value: 20.0,
+                modifiers: vec![],
+            },
+        ));
+
+        app.world_mut().resource_mut::<RedTapeEvent>().active = false;
+
+        app.update();
+
+        // The active state should flip to true because morale is < 30
+        let event = app.world().resource::<RedTapeEvent>();
+        assert_eq!(event.active, true);
+        assert_eq!(event.severity, 10);
+    }
+
+    #[test]
+    fn test_strike_ends_when_admin_morale_recovers() {
+        let mut app = setup_app();
+
+        // Add a happy Admin Pop
+        app.world_mut().spawn((
+            AdminPop,
+            Morale {
+                value: 90.0,
+                modifiers: vec![],
+            }, // High morale
+        ));
+
+        app.world_mut().resource_mut::<RedTapeEvent>().active = true;
+
+        app.update();
+
+        // The active state should flip back to false
+        let event = app.world().resource::<RedTapeEvent>();
+        assert_eq!(event.active, false);
+    }
+}

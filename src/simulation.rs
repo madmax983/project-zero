@@ -53,6 +53,8 @@ pub fn build_simulation_schedule() -> Schedule {
     );
 
     schedule.add_systems((
+        crate::layer1::social::bureaucratic_strike::update_bureaucratic_strike_status_system,
+        crate::layer1::social::bureaucratic_strike::process_red_tape_designations_system,
         crate::layer1::social::blacksite::process_blacksite_payout_system,
         crate::layer1::social::blacksite::prisoner_radicalization_system,
         crate::layer1::social::blacksite::prison_break_system,
@@ -110,6 +112,7 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<bevy_ecs::event::Events<crate::layer1::core::chronicle::AddChronicleEvent>>();
 
     world.init_resource::<bevy_ecs::event::Events<crate::layer1::social::blacksite::PrisonBreakEvent>>();
+    world.init_resource::<crate::layer1::social::bureaucratic_strike::RedTapeEvent>();
     world.init_resource::<Events<crate::layer1::cassandra_syndrome::DoomsdayWarningEvent>>();
     world.init_resource::<Events<crate::layer3::market::phantom_tax::HackSlushFundEvent>>();
     world.init_resource::<crate::layer3::market::phantom_tax::SlushFund>();

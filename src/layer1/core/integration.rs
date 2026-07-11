@@ -741,11 +741,7 @@ pub fn amputation_handler_system(
 /// Spawns drones at active `DroneHubs` if the population is low.
 ///
 /// Bridges Building (`DroneHub`) and Drone system (Agents).
-
-/// Assigns work to idle drones.
 ///
-/// Bridges Drone system (Idle agents) and Work system (Hauling).
-
 /// Accelerates decay of perishable items based on vermin severity.
 ///
 /// Bridges Vermin system (Environment) and Spoilage system (Items).

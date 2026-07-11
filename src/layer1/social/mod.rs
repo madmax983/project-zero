@@ -688,3 +688,4 @@ pub mod faction_diet;
 pub use faction_diet::*;
 pub mod blacksite;
 pub mod bureau_of_regrets;
+pub mod bureaucratic_strike;
