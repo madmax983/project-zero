@@ -3,9 +3,9 @@ mod tests {
     use bevy_app::App;
     use bevy_ecs::schedule::IntoSystemConfigs;
     use scale::layer1::building::{Building, BuildingType};
-    use scale::layer1::resources::waste_scent_bridge;
     use scale::layer1::map::GridPosition;
     use scale::layer1::olfactory::{scent_diffusion_system, ScentMap};
+    use scale::layer1::resources::waste_scent_bridge;
     use scale::layer1::resources::{ResourceItem, ResourceType};
 
     #[test]

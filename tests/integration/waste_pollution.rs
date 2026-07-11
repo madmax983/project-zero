@@ -3,8 +3,8 @@ mod tests {
     use bevy_ecs::prelude::*;
     use scale::layer1::atmosphere::{update_atmosphere_system, AtmosphereGrid};
     use scale::layer1::building::{Building, BuildingType};
-    use scale::layer1::resources::waste_pollution_bridge;
     use scale::layer1::map::GridPosition;
+    use scale::layer1::resources::waste_pollution_bridge;
     use scale::layer1::resources::{ResourceItem, ResourceType};
 
     #[test]

@@ -11,8 +11,8 @@ use crate::layer1::building::Building;
 use crate::layer1::energy::PowerConsumer;
 use crate::layer1::map::GridPosition;
 use crate::layer1::utility_ai::{manhattan_distance, ActionType, PopAction, StartPlan};
-use bevy_ecs::prelude::*;
 use crate::shared::time::SimulationTime;
+use bevy_ecs::prelude::*;
 
 /// State of a drone.
 ///
