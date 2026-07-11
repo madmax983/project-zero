@@ -669,3 +669,6 @@ mod planetary_scarring_chronicle;
 
 #[path = "integration/shadow_ecosystems_bridge.rs"]
 mod shadow_ecosystems_bridge;
+
+#[path = "integration/dreaming_sickness_chronicle.rs"]
+mod dreaming_sickness_chronicle;

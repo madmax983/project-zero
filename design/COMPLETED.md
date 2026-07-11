@@ -908,3 +908,4 @@
 - [x] `1267` Echoes of the Lost Fleet — `specs/1267-echoes-of-the-lost-fleet.md` — completed 2026-11-01
 - [x] `1312` Localized Gravity Vectors — `specs/1312-localized-gravity-vectors.md` — completed 2026-10-31
 - [x] `1322` Harmonic Mining — `specs/1322-harmonic-mining.md` — completed 2026-11-01
+- [x] `INT-1311` Integration: The Dreaming Sickness -> Chronicle - completed 2026-10-31

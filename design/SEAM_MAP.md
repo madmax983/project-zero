@@ -1754,3 +1754,10 @@
 - **Glue added:** Added `shadow_ecosystems_short_circuit_bridge` in `src/layer1/shadow_ecosystems.rs` to deactivate machines targeted by a short circuit and log the event.
 - **Schedule:** Registered in Layer 1 Observation schedule (`src/layer1/systems/observation.rs`).
 - **Tests:** Added tests in `tests/integration/shadow_ecosystems_bridge.rs`.
+
+### INT-1311: The Dreaming Sickness -> Chronicle
+- **Date:** 2026-10-31
+- **Systems connected:** `Added<DreamingSickness>` -> `dreaming_sickness_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `dreaming_sickness_chronicle_bridge` in `src/layer1/core/integration.rs` to generate Chronicle records when a pop catches the dreaming sickness.
+- **Schedule:** Registered the system in `src/layer1/systems/observation.rs`.
+- **Tests:** Added tests in `tests/integration/dreaming_sickness_chronicle.rs`.

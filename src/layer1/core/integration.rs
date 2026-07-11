@@ -3362,3 +3362,23 @@ pub fn feral_administration_chronicle_bridge(
         });
     }
 }
+
+/// INT-1311: Bridges `Added<DreamingSickness>` to `AddChronicleEvent`
+pub fn dreaming_sickness_chronicle_bridge(
+    query: bevy_ecs::system::Query<
+        (),
+        bevy_ecs::query::Added<crate::layer1::psychology::dreaming_sickness::DreamingSickness>,
+    >,
+    mut chronicle_events: bevy_ecs::event::EventWriter<
+        crate::layer1::core::chronicle::AddChronicleEvent,
+    >,
+    mut triggered: bevy_ecs::system::Local<bool>,
+) {
+    if !*triggered && query.iter().next().is_some() {
+        *triggered = true;
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            text: "A strange dreaming sickness has begun to spread among the colony.".to_string(),
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
+        });
+    }
+}

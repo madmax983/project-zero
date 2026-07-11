@@ -612,6 +612,7 @@ pub fn register(schedule: &mut Schedule) {
         (
             crate::layer1::core::integration::feral_administration_chronicle_bridge,
             crate::layer1::shadow_ecosystems::shadow_ecosystems_short_circuit_bridge,
+            crate::layer1::core::integration::dreaming_sickness_chronicle_bridge,
         )
             .in_set(Layer1SystemSet::Observation),
     );
