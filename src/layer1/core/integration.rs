@@ -3240,3 +3240,23 @@ pub fn dreaming_sickness_chronicle_bridge(
         });
     }
 }
+/// INT-1267: Bridges `LuredByGhostFleet` to `AddChronicleEvent` and despawns the pop.
+pub fn lured_pops_escape_bridge_system(
+    mut commands: bevy_ecs::system::Commands,
+    query: bevy_ecs::system::Query<
+        bevy_ecs::entity::Entity,
+        bevy_ecs::query::Added<crate::layer1::anomalies::echoes_lost_fleet::LuredByGhostFleet>,
+    >,
+    mut chronicle_events: bevy_ecs::event::EventWriter<
+        crate::layer1::core::chronicle::AddChronicleEvent,
+    >,
+) {
+    for entity in query.iter() {
+        commands.entity(entity).despawn();
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            text: "A militaristic pop was lured away by the broadcasts of a Ghost Dreadnought."
+                .to_string(),
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
+        });
+    }
+}

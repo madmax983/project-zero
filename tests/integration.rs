@@ -672,3 +672,5 @@ mod shadow_ecosystems_bridge;
 
 #[path = "integration/dreaming_sickness_chronicle.rs"]
 mod dreaming_sickness_chronicle;
+#[path = "integration/echoes_lost_fleet_bridge.rs"]
+mod echoes_lost_fleet_bridge;

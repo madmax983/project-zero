@@ -1761,3 +1761,9 @@
 - **Glue added:** Added `dreaming_sickness_chronicle_bridge` in `src/layer1/core/integration.rs` to generate Chronicle records when a pop catches the dreaming sickness.
 - **Schedule:** Registered the system in `src/layer1/systems/observation.rs`.
 - **Tests:** Added tests in `tests/integration/dreaming_sickness_chronicle.rs`.
+
+### INT-1267: Echoes of the Lost Fleet -> Chronicle
+- **Date:** 2026-11-01
+- **Systems connected:** `lure_militaristic_pops_system` -> `lured_pops_escape_bridge_system` -> `AddChronicleEvent`
+- **Glue added:** Added `lured_pops_escape_bridge_system` in `src/layer1/core/integration.rs` to handle pops marked with `LuredByGhostFleet`. Registered `lure_militaristic_pops_system` and `lured_pops_escape_bridge_system` in `Layer1SystemSet::Observation`.
+- **Tests:** `tests/integration/echoes_lost_fleet_bridge.rs`
