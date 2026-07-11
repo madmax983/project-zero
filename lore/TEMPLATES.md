@@ -10190,3 +10190,21 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The ledger balances itself. A [REPO_FLEET_DESC] drops from orbit to collect the debt."
 - "They came for the stolen credits. [COLONY] sky is darkened by a [REPO_FLEET_DESC]. [YEAR]."
 - "[COLONY], [YEAR]: The Galactic Bank does not forgive. The [REPO_FLEET_DESC] demands what we took, and more."
+
+## The Bio-Rhythmic Commute Templates (Spec 1002)
+
+## Template: COMMUTE_DISASTER
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [POP_NAME], [COMMUTE_MISHAP]
+**Patterns:**
+- "[YEAR]: The bio-rhythms misaligned. [POP_NAME] in [COLONY] [COMMUTE_MISHAP]."
+- "[COLONY], [YEAR]: The commute was too long. [POP_NAME] [COMMUTE_MISHAP]."
+
+## Xenolinguistics Templates (Spec 331)
+
+## Template: FIRST_CONTACT_TRANSLATION
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [ALIEN_LANGUAGE_NAME]
+**Patterns:**
+- "[YEAR]: We finally understood [ALIEN_LANGUAGE_NAME] at [COLONY]."
+- "The translators at [COLONY] broke the code for [ALIEN_LANGUAGE_NAME]. [YEAR]."

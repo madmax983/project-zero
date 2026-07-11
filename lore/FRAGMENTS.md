@@ -10418,3 +10418,21 @@ Used for The Feral Administration anvalanches of paperwork.
 - silent banking dreadnought
 - relentless collection swarm
 - mathematically perfect kill-fleet
+
+## The Bio-Rhythmic Commute Fragments (Spec 1002)
+
+## Fragment Type: [COMMUTE_MISHAP]
+- collapsed from exhaustion mid-transit
+- got caught in the pedestrian stampede
+- fell asleep in the transit tube
+- suffered bio-rhythmic whiplash
+- wandered off the designated path
+
+## Xenolinguistics Fragments (Spec 331)
+
+## Fragment Type: [ALIEN_LANGUAGE_NAME]
+- the clicks and whistles of the Void-Kin
+- the bioluminescent flashes of the Deep Ones
+- the low-frequency hum of the Silicon Born
+- the telepathic static of the Ancients
+- the mathematical poetry of the Constructs
