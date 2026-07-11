@@ -5,3 +5,6 @@
 **2025-03-09 - [crossbeam-epoch Invalid Pointer Dereference]**
 **Threat:** [RUSTSEC-2026-0204 in crossbeam-epoch (v0.9.18) could lead to an invalid pointer dereference when formatting pointers, potentially crashing the application.]
 **Defense:** [Updated crossbeam-epoch dependency to v0.9.20 via cargo update -p crossbeam-epoch to fix the vulnerability.]
+**2025-07-11 - [Integer Overflow DoS via Euclidean Distance]**
+**Threat:** [Unhandled integer overflow via `pow(2)` in `ad_screen`, `culture/artifacts`, and `architecture/turret` systems. Attackers spawning entities with extreme map coordinate differences (> 46340) trigger a panic due to `i32` exceeding `i32::MAX` during squaring, causing a server DoS.]
+**Defense:** [Refactored distance calculation logic in `src/layer1/ad_screen.rs`, `src/layer1/culture/artifacts.rs`, and `src/layer1/architecture/turret.rs`. Coordinates are now explicitly cast to `f32` before finding Euclidean distance using `.powi(2)`, mitigating the overflow vectors entirely.]

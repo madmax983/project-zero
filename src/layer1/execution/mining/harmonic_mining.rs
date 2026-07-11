@@ -1,7 +1,7 @@
-use bevy_ecs::prelude::*;
+use crate::layer1::architecture::structure::Structure;
 use crate::layer1::core::map::GridPosition;
 use crate::layer1::economy::resources::ResourceType;
-use crate::layer1::architecture::structure::Structure;
+use bevy_ecs::prelude::*;
 
 #[derive(Component)]
 pub struct HarmonicMaterial {
@@ -18,7 +18,10 @@ pub enum Frequency {
 
 impl Frequency {
     pub fn matches(&self, resource: &ResourceType) -> bool {
-        matches!((self, resource), (Frequency::Iron, ResourceType::Ore) | (Frequency::Glass, ResourceType::Blocks))
+        matches!(
+            (self, resource),
+            (Frequency::Iron, ResourceType::Ore) | (Frequency::Glass, ResourceType::Blocks)
+        )
     }
 }
 
@@ -32,7 +35,12 @@ pub struct TriggerSonicDrillEvent {
 pub fn harmonic_mining_system(
     mut commands: Commands,
     mut events: EventReader<TriggerSonicDrillEvent>,
-    mut target_query: Query<(Entity, &GridPosition, &mut HarmonicMaterial, Option<&mut Structure>)>,
+    mut target_query: Query<(
+        Entity,
+        &GridPosition,
+        &mut HarmonicMaterial,
+        Option<&mut Structure>,
+    )>,
 ) {
     for event in events.read() {
         for (entity, pos, mut material, mut opt_structure) in target_query.iter_mut() {
@@ -57,12 +65,12 @@ pub fn harmonic_mining_system(
 
 #[cfg(test)]
 mod tests {
+    use super::*;
+    use crate::layer1::architecture::structure::Structure;
+    use crate::layer1::core::map::GridPosition;
+    use crate::layer1::economy::resources::ResourceType;
     use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;
-    use crate::layer1::economy::resources::ResourceType;
-    use crate::layer1::core::map::GridPosition;
-    use crate::layer1::architecture::structure::Structure;
-    use super::*;
 
     fn setup_world() -> World {
         let mut world = World::new();
@@ -75,10 +83,15 @@ mod tests {
     fn test_drill_destroys_matching_ore() {
         let mut world = setup_world();
 
-        let ore_entity = world.spawn((
-            GridPosition { x: 5, y: 5 },
-            HarmonicMaterial { resource_type: ResourceType::Ore, health: 100.0 },
-        )).id();
+        let ore_entity = world
+            .spawn((
+                GridPosition { x: 5, y: 5 },
+                HarmonicMaterial {
+                    resource_type: ResourceType::Ore,
+                    health: 100.0,
+                },
+            ))
+            .id();
 
         world.send_event(TriggerSonicDrillEvent {
             center: GridPosition { x: 5, y: 5 },
@@ -89,7 +102,10 @@ mod tests {
         world.run_system_once(harmonic_mining_system).unwrap();
 
         // The iron ore should be destroyed (health reduced to 0 or entity despawned)
-        assert!(world.get_entity(ore_entity).is_err() || world.get::<HarmonicMaterial>(ore_entity).unwrap().health == 0.0);
+        assert!(
+            world.get_entity(ore_entity).is_err()
+                || world.get::<HarmonicMaterial>(ore_entity).unwrap().health == 0.0
+        );
     }
 
     #[test]
@@ -97,11 +113,19 @@ mod tests {
         let mut world = setup_world();
 
         // Spawn a greenhouse nearby
-        let greenhouse = world.spawn((
-            GridPosition { x: 6, y: 5 },
-            Structure { current_hp: 50.0, max_hp: 50.0 },
-            HarmonicMaterial { resource_type: ResourceType::Blocks, health: 50.0 },
-        )).id();
+        let greenhouse = world
+            .spawn((
+                GridPosition { x: 6, y: 5 },
+                Structure {
+                    current_hp: 50.0,
+                    max_hp: 50.0,
+                },
+                HarmonicMaterial {
+                    resource_type: ResourceType::Blocks,
+                    health: 50.0,
+                },
+            ))
+            .id();
 
         // The sonic drill is tuned to the frequency of Glass
         world.send_event(TriggerSonicDrillEvent {
@@ -113,7 +137,10 @@ mod tests {
         world.run_system_once(harmonic_mining_system).unwrap();
 
         // The greenhouse should be destroyed or severely damaged
-        assert!(world.get_entity(greenhouse).is_err() || world.get::<Structure>(greenhouse).unwrap().current_hp == 0.0);
+        assert!(
+            world.get_entity(greenhouse).is_err()
+                || world.get::<Structure>(greenhouse).unwrap().current_hp == 0.0
+        );
     }
 
     #[test]
@@ -121,11 +148,19 @@ mod tests {
         let mut world = setup_world();
 
         // Spawn a steel wall nearby
-        let steel_wall = world.spawn((
-            GridPosition { x: 6, y: 5 },
-            Structure { current_hp: 200.0, max_hp: 200.0 },
-            HarmonicMaterial { resource_type: ResourceType::Metal, health: 200.0 },
-        )).id();
+        let steel_wall = world
+            .spawn((
+                GridPosition { x: 6, y: 5 },
+                Structure {
+                    current_hp: 200.0,
+                    max_hp: 200.0,
+                },
+                HarmonicMaterial {
+                    resource_type: ResourceType::Metal,
+                    health: 200.0,
+                },
+            ))
+            .id();
 
         // The sonic drill is tuned to Iron
         world.send_event(TriggerSonicDrillEvent {
@@ -137,6 +172,9 @@ mod tests {
         world.run_system_once(harmonic_mining_system).unwrap();
 
         // The steel wall should be completely unaffected
-        assert_eq!(world.get::<Structure>(steel_wall).unwrap().current_hp, 200.0);
+        assert_eq!(
+            world.get::<Structure>(steel_wall).unwrap().current_hp,
+            200.0
+        );
     }
 }
