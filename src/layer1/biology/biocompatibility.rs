@@ -1,8 +1,3 @@
-//! Biocompatibility System (Spec 107).
-//!
-//! This module simulates how well Pops adapt to planetary hazards, applying damage to
-//! health based on environmental pollution and intrinsic biological resistance (`Biocompatibility`).
-
 use crate::layer1::atmosphere::AtmosphereGrid;
 use crate::layer1::health::Health;
 use crate::layer1::map::GridPosition;
@@ -35,12 +30,16 @@ impl Default for Biocompatibility {
 /// Damage scales with the difference: `(Hazard - Bio) * 5.0`.
 /// Traits like `NativeBorn` and `WeakImmunity` modify effective biocompatibility.
 pub fn biocompatibility_system(world: &mut World) {
-    let mut damages = Vec::new();
+    let mut damages;
 
     // 1. Read Phase
     {
         // Create query first (requires mutable borrow)
         let mut query = world.query_filtered::<(Entity, &GridPosition, &Biocompatibility, Option<&Traits>), With<ExposedToEnvironment>>();
+
+        // ⚡ Bolt Optimization: Use `Vec::with_capacity` based on the query size to avoid
+        // intermediate reallocations when collecting damages.
+        damages = Vec::with_capacity(query.iter(world).len());
 
         // Then get resource (immutable borrow)
         let grid = world.resource::<AtmosphereGrid>();

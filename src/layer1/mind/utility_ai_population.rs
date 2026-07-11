@@ -643,7 +643,7 @@ mod tests {
             .id();
 
         // 4. Run population
-        let mut buffer = Vec::new();
+        let mut buffer = Vec::with_capacity(1);
         populate_generic_items(&mut world, &stockpiles, &mut buffer);
 
         // 5. Verify
@@ -673,7 +673,7 @@ mod tests {
             },
         ));
 
-        let mut buffer = Vec::new();
+        let mut buffer = Vec::with_capacity(1);
         populate_farms(&mut world, &mut buffer, &cycle);
 
         assert!(
@@ -709,7 +709,7 @@ mod tests {
             },
         ));
 
-        let mut buffer = Vec::new();
+        let mut buffer = Vec::with_capacity(1);
         populate_farms(&mut world, &mut buffer, &cycle);
 
         assert!(buffer.is_empty(), "Should filter out unpowered farm");
@@ -744,7 +744,7 @@ mod tests {
 
         world.spawn((full_farm, GridPosition { x: 0, y: 0 }));
 
-        let mut buffer = Vec::new();
+        let mut buffer = Vec::with_capacity(1);
         populate_farms(&mut world, &mut buffer, &cycle);
 
         assert!(buffer.is_empty(), "Should filter out full farm");
@@ -796,7 +796,7 @@ mod tests {
             RefiningProgress::default(),
         ));
 
-        let mut buffer = Vec::new();
+        let mut buffer = Vec::with_capacity(1);
         populate_refining(&mut world, &mut buffer, &context);
 
         assert!(buffer.is_empty(), "Should filter out unaffordable recipe");
@@ -861,7 +861,7 @@ mod tests {
             },
         ));
 
-        let mut buffer = Vec::new();
+        let mut buffer = Vec::with_capacity(1);
         populate_refining(&mut world, &mut buffer, &context);
 
         assert!(buffer.is_empty(), "Should filter out inactive shift");
@@ -908,7 +908,7 @@ mod tests {
             },
         ));
 
-        let mut buffer = Vec::new();
+        let mut buffer = Vec::with_capacity(1);
         populate_refining(&mut world, &mut buffer, &context);
 
         assert!(buffer.is_empty(), "Should filter out unpowered building");
@@ -928,7 +928,7 @@ mod tests {
 
         world.spawn((housing, GridPosition { x: 0, y: 0 }));
 
-        let mut buffer = Vec::new();
+        let mut buffer = Vec::with_capacity(1);
         populate_housing(&mut world, &mut buffer);
 
         assert!(buffer.is_empty(), "Should filter out full housing");
