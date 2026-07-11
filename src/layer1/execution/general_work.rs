@@ -749,5 +749,11 @@ pub fn get_status_modifiers(world: &World, pop_entity: Entity) -> f32 {
         modifier *= 3.0;
     }
 
+    if let Some(sync) = world.get::<crate::layer1::flora::BioRhythmSync>(pop_entity) {
+        if sync.is_synced {
+            modifier *= sync.work_speed_multiplier;
+        }
+    }
+
     modifier
 }

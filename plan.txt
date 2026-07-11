@@ -1,9 +1,17 @@
-1. Implement Organic Recycling (`specs/1138-organic-recycling.md`)
-   - Resource updates in `src/layer1/economy/resources.rs`, `src/layer1/economy/trade.rs`, `src/layer3/market/ephemeral_market.rs`, and `src/ui/map.rs` are already done and verified to compile.
-   - Run `echo "pub mod organic_recycling;" >> src/layer1/mod.rs` to expose the new module.
-   - Run `sed -i 's/pub use crate::layer1::architecture::building::\*/pub use crate::layer1::architecture::building::*;\n    pub use crate::layer1::organic_recycling::*/g' src/layer1/mod.rs` to expose the new file contents inside the `buildings` module alias. (Replacing `pub use crate::layer1::architecture::building::*` to include the next line).
-   - Write a new rust file `src/layer1/organic_recycling.rs` using a heredoc `cat << 'INNER_EOF' > src/layer1/organic_recycling.rs` containing `ProductionCycle`, `production_system`, `consume_food_system`, and the tests specified in the RED phase.
-2. Verify structural changes using `git diff src/layer1/mod.rs` and `cat src/layer1/organic_recycling.rs`.
-3. Run the verification commands: `cargo test --lib --benches`, `cargo clippy -- -D warnings`, and `cargo llvm-cov` to ensure the implementation is correct and meets coverage requirements.
-4. Complete pre-commit steps to ensure proper testing, verification, review, and reflection are done.
-5. Submit the change.
+1. We need to implement The Bio-Rhythmic Commute mechanic defined in spec 1002.
+2. We'll modify `src/layer1/flora.rs` (which already defines `FloraType` and has tests):
+    * Add `Lumiflora` to `FloraType` enum.
+    * Add `BloomPhase` enum (`Dormant`, `Blooming`, `Hibernation`).
+    * Add `LumifloraCycle` component with `phase` and `time_in_phase`.
+    * Add `BioRhythmSync` component.
+    * Add `lumiflora_bloom_system`.
+    * Add `apply_bio_rhythm_aura`.
+    * Note: the `apply_bio_rhythm_aura` system needs to apply the effects to `BioRhythmSync` and potentially `Needs`. As per spec, it sets `needs.rest = 0.0` when entering Hibernation.
+3. We'll modify `src/layer1/execution/general_work.rs`:
+    * Hook up `BioRhythmSync` into `get_status_modifiers` to apply its `work_speed_multiplier` if `is_synced` is true.
+4. Modify `src/layer1/systems/execution.rs`:
+    * Add `lumiflora_bloom_system` and `apply_bio_rhythm_aura` into the execution schedule.
+5. Add the RED phase tests from the spec to `src/layer1/flora.rs`, adjusting them to use `Needs` instead of `NeedSleep` (since `NeedSleep` was a speculative component, whereas `Needs` with `.rest` is what the actual codebase uses).
+6. Implement the missing logic (GREEN phase).
+7. Ensure we have 85% coverage for the new components (cargo test).
+8. Verify everything works.
