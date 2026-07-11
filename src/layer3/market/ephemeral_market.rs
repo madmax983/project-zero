@@ -113,7 +113,7 @@ pub fn fulfill_market_trade_system(
                     ResourceType::Tools => resources.tools >= req_amount,
                     ResourceType::BuildingPermit => resources.building_permits >= req_amount,
                     ResourceType::MemoryCore => resources.memory_cores >= req_amount,
-                    ResourceType::VoidAle | ResourceType::HyperValuable => false,
+                    ResourceType::VoidAle | ResourceType::HyperValuable | ResourceType::BiologicalWaste | ResourceType::NutrientPaste => false,
                 };
 
                 if has_enough {
@@ -134,7 +134,7 @@ pub fn fulfill_market_trade_system(
                         ResourceType::Tools => resources.tools -= req_amount,
                         ResourceType::BuildingPermit => resources.building_permits -= req_amount,
                         ResourceType::MemoryCore => resources.memory_cores -= req_amount,
-                        ResourceType::VoidAle | ResourceType::HyperValuable => {}
+                        ResourceType::VoidAle | ResourceType::HyperValuable | ResourceType::BiologicalWaste | ResourceType::NutrientPaste => {}
                     }
 
                     // Add offered
@@ -154,7 +154,7 @@ pub fn fulfill_market_trade_system(
                         ResourceType::Tools => resources.tools += off_amount,
                         ResourceType::BuildingPermit => resources.building_permits += off_amount,
                         ResourceType::MemoryCore => resources.memory_cores += off_amount,
-                        ResourceType::VoidAle | ResourceType::HyperValuable => {}
+                        ResourceType::VoidAle | ResourceType::HyperValuable | ResourceType::BiologicalWaste | ResourceType::NutrientPaste => {}
                     }
                 } else {
                     failed_events.send(MarketTradeFailedEvent {

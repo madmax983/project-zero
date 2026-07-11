@@ -51,6 +51,8 @@ pub enum ResourceType {
     Blocks,
     /// Industrial waste (pollution).
     Waste,
+    BiologicalWaste,
+    NutrientPaste,
     /// Rations for survival (high nutrition).
     Rations,
     /// Fuel for reactors and ships.
@@ -163,6 +165,10 @@ pub struct ColonyResources {
     pub clothing: f32,
     /// Total waste accumulated in the colony (must be hauled to landfill).
     pub waste: f32,
+    pub biological_waste: f32,
+    pub nutrient_paste: f32,
+    pub max_biological_waste: f32,
+    pub max_nutrient_paste: f32,
     /// Total rations available in the colony.
     pub rations: f32,
     /// Total fuel available in the colony.
@@ -256,6 +262,8 @@ impl Default for ColonyResources {
             hyper_alloys: 0.0,
             clothing: 0.0,
             waste: 0.0,
+            biological_waste: 0.0,
+            nutrient_paste: 0.0,
             rations: 0.0,
             fuel: 0.0,
             alcohol: 0.0,
@@ -273,6 +281,8 @@ impl Default for ColonyResources {
             max_cloth: 50.0,
             max_clothing: 50.0,
             max_waste: 0.0, // Defaults to 0, requires Landfill
+            max_biological_waste: 0.0,
+            max_nutrient_paste: 0.0,
             max_rations: 50.0,
             max_fuel: 20.0,
             water: 0.0,
@@ -316,6 +326,8 @@ impl Mul<f32> for ColonyResources {
             hyper_alloys: (self.hyper_alloys * rhs).ceil(),
             clothing: (self.clothing * rhs).ceil(),
             waste: (self.waste * rhs).ceil(),
+            biological_waste: (self.biological_waste * rhs).ceil(),
+            nutrient_paste: (self.nutrient_paste * rhs).ceil(),
             rations: (self.rations * rhs).ceil(),
             fuel: (self.fuel * rhs).ceil(),
             water: (self.water * rhs).ceil(),
@@ -335,6 +347,8 @@ impl Mul<f32> for ColonyResources {
             max_cloth: self.max_cloth,
             max_clothing: self.max_clothing,
             max_waste: self.max_waste,
+            max_biological_waste: self.max_biological_waste,
+            max_nutrient_paste: self.max_nutrient_paste,
             max_rations: self.max_rations,
             max_fuel: self.max_fuel,
             max_water: self.max_water,
@@ -380,6 +394,8 @@ impl ColonyResources {
             hyper_alloys: 0.0,
             clothing: 0.0,
             waste: 0.0,
+            biological_waste: 0.0,
+            nutrient_paste: 0.0,
             rations: 0.0,
             fuel: 0.0,
             alcohol: 0.0,
@@ -397,6 +413,8 @@ impl ColonyResources {
             max_cloth: 0.0,
             max_clothing: 0.0,
             max_waste: 0.0,
+            max_biological_waste: 0.0,
+            max_nutrient_paste: 0.0,
             max_rations: 0.0,
             max_fuel: 0.0,
             water: 0.0,
@@ -757,6 +775,8 @@ impl ColonyResources {
             // ResourceType::Water not in enum
             ResourceType::Alcohol => self.alcohol = (self.alcohol - amount).max(0.0),
             ResourceType::Waste => self.waste = (self.waste - amount).max(0.0),
+            ResourceType::BiologicalWaste => self.biological_waste = (self.biological_waste - amount).max(0.0),
+            ResourceType::NutrientPaste => self.nutrient_paste = (self.nutrient_paste - amount).max(0.0),
             ResourceType::BuildingPermit => {
                 self.building_permits = (self.building_permits - amount).max(0.0);
             }
@@ -783,6 +803,8 @@ impl ColonyResources {
             ResourceType::Planks => self.max_planks,
             ResourceType::Blocks => self.max_blocks,
             ResourceType::Waste => self.max_waste,
+            ResourceType::BiologicalWaste => self.max_biological_waste,
+            ResourceType::NutrientPaste => self.max_nutrient_paste,
             ResourceType::Rations => self.max_rations,
             ResourceType::Fuel => self.max_fuel,
             ResourceType::Alcohol => self.max_alcohol,
@@ -806,6 +828,8 @@ impl ColonyResources {
             ResourceType::Planks => self.planks,
             ResourceType::Blocks => self.blocks,
             ResourceType::Waste => self.waste,
+            ResourceType::BiologicalWaste => self.biological_waste,
+            ResourceType::NutrientPaste => self.nutrient_paste,
             ResourceType::Rations => self.rations,
             ResourceType::Fuel => self.fuel,
             ResourceType::Alcohol => self.alcohol,
@@ -851,6 +875,8 @@ impl ColonyResources {
             ResourceType::Planks => self.planks < self.max_planks,
             ResourceType::Blocks => self.blocks < self.max_blocks,
             ResourceType::Waste => self.waste < self.max_waste,
+            ResourceType::BiologicalWaste => self.biological_waste < self.max_biological_waste,
+            ResourceType::NutrientPaste => self.nutrient_paste < self.max_nutrient_paste,
             ResourceType::Rations => self.rations < self.max_rations,
             ResourceType::Fuel => self.fuel < self.max_fuel,
             ResourceType::Alcohol => self.alcohol < self.max_alcohol,
@@ -874,6 +900,8 @@ impl ColonyResources {
             ResourceType::Planks => self.add_planks(amount),
             ResourceType::Blocks => self.add_blocks(amount),
             ResourceType::Waste => self.add_waste(amount),
+            ResourceType::BiologicalWaste => self.biological_waste = (self.biological_waste + amount).min(self.max_biological_waste),
+            ResourceType::NutrientPaste => self.nutrient_paste = (self.nutrient_paste + amount).min(self.max_nutrient_paste),
             ResourceType::Rations => self.add_rations(amount),
             ResourceType::Fuel => self.add_fuel(amount),
             ResourceType::Alcohol => self.add_alcohol(amount),

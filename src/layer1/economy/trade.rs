@@ -284,6 +284,7 @@ pub fn execute_trade(world: &mut World, deal: &TradeDeal) -> bool {
         ResourceType::MemoryCore => resources.memory_cores >= deal.cost_amount,
         ResourceType::VoidAle => resources.void_ale >= deal.cost_amount,
         ResourceType::HyperValuable => false,
+            ResourceType::BiologicalWaste | ResourceType::NutrientPaste => false,
     };
 
     if !affordable {
@@ -308,7 +309,8 @@ pub fn execute_trade(world: &mut World, deal: &TradeDeal) -> bool {
         ResourceType::BuildingPermit => resources.building_permits -= deal.cost_amount,
         ResourceType::MemoryCore => resources.memory_cores -= deal.cost_amount,
         ResourceType::VoidAle => resources.void_ale -= deal.cost_amount,
-        ResourceType::HyperValuable => {}
+        ResourceType::HyperValuable => {},
+            ResourceType::BiologicalWaste | ResourceType::NutrientPaste => {}
     }
 
     // Add
@@ -329,7 +331,8 @@ pub fn execute_trade(world: &mut World, deal: &TradeDeal) -> bool {
         ResourceType::BuildingPermit => resources.add_building_permits(deal.give_amount),
         ResourceType::MemoryCore => resources.add_memory_cores(deal.give_amount),
         ResourceType::VoidAle => resources.add_void_ale(deal.give_amount),
-        ResourceType::HyperValuable => {}
+        ResourceType::HyperValuable => {},
+            ResourceType::BiologicalWaste | ResourceType::NutrientPaste => {}
     }
 
     true
