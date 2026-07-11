@@ -80,3 +80,7 @@
 **[Title] Break Circular Dependency and Fix Blob Anti-pattern with Escape Pods Chronicle Bridge**
 **Tangle:** The `escape_pods_chronicle_bridge` was located in `src/layer1/core/integration.rs`, exacerbating the "Blob" anti-pattern in `integration.rs` and distancing the bridging logic from the `escape` domain where `DistressSignal` and `Lifeboat` are defined. This led to bloated files and poor cohesion.
 **Blueprint:** Moved `escape_pods_chronicle_bridge` from `src/layer1/core/integration.rs` to `src/layer1/actions/escape.rs` to enforce domain cohesion. Updated references in `src/layer1/systems/observation.rs` and the integration tests (`tests/integration/escape_pods_chronicle.rs`).
+
+**[Title] Break Circular Dependency and Fix Blob Anti-pattern with Drone and Waste Chronicle Bridges**
+**Tangle:** The `drone_spawner_bridge_system`, `drone_work_bridge_system`, `waste_pollution_bridge`, and `waste_scent_bridge` were located in `src/layer1/core/integration.rs`, exacerbating the "Blob" anti-pattern and distancing the bridging logic from their domains (`drone` and `resources`).
+**Blueprint:** Moved drone bridges from `src/layer1/core/integration.rs` to `src/layer1/entities/drone.rs` and waste bridges to `src/layer1/economy/resources.rs` to enforce domain cohesion. Updated references in `src/layer1/systems/execution.rs`, `environment.rs`, and `observation.rs`.
