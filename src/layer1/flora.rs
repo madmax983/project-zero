@@ -78,6 +78,26 @@ pub enum FloraType {
     SilentFlora,
     FireWeed,
     Ironwood,
+    Lumiflora,
+}
+
+#[derive(Clone, Copy, PartialEq, Eq, Debug)]
+pub enum BloomPhase {
+    Dormant,
+    Blooming,
+    Hibernation,
+}
+
+#[derive(Component)]
+pub struct LumifloraCycle {
+    pub phase: BloomPhase,
+    pub time_in_phase: f32,
+}
+
+#[derive(Component)]
+pub struct BioRhythmSync {
+    pub is_synced: bool,
+    pub work_speed_multiplier: f32,
 }
 
 /// Component representing hostile plant life.
@@ -1127,5 +1147,180 @@ mod ecological_succession_tests {
             pioneer_found,
             "Pioneer species (FireWeed) should spawn where climax species was cleared"
         );
+    }
+}
+
+pub fn lumiflora_bloom_system(
+    _time: Option<Res<crate::shared::time::SimulationTime>>,
+    mut query: Query<&mut LumifloraCycle, With<Flora>>,
+) {
+    // Each tick is approx 1 second of sim time
+    for mut cycle in query.iter_mut() {
+        cycle.time_in_phase += 1.0; // 1 tick
+
+        match cycle.phase {
+            BloomPhase::Dormant if cycle.time_in_phase > 10.0 => {
+                cycle.phase = BloomPhase::Blooming;
+                cycle.time_in_phase = 0.0;
+            }
+            BloomPhase::Blooming if cycle.time_in_phase > 5.0 => {
+                cycle.phase = BloomPhase::Hibernation;
+                cycle.time_in_phase = 0.0;
+            }
+            BloomPhase::Hibernation if cycle.time_in_phase > 5.0 => {
+                cycle.phase = BloomPhase::Dormant;
+                cycle.time_in_phase = 0.0;
+            }
+            _ => {}
+        }
+    }
+}
+
+pub fn apply_bio_rhythm_aura(
+    flora_query: Query<(&LumifloraCycle, &GridPosition), With<Flora>>,
+    mut pop_query: Query<
+        (
+            &GridPosition,
+            &mut BioRhythmSync,
+            &mut crate::layer1::needs::Needs,
+        ),
+        With<crate::layer1::pop::Pop>,
+    >,
+) {
+    // Need to collect all flora cycle phases by position
+    for (pop_pos, mut sync, mut needs) in pop_query.iter_mut() {
+        let mut best_sync = false;
+        let mut best_speed = 1.0;
+        let mut force_sleep = false;
+
+        for (flora_cycle, flora_pos) in flora_query.iter() {
+            let dx = pop_pos.x - flora_pos.x;
+            let dy = pop_pos.y - flora_pos.y;
+
+            if dx * dx + dy * dy <= 25 {
+                best_sync = true;
+                match flora_cycle.phase {
+                    BloomPhase::Blooming => {
+                        if best_speed < 1.5 {
+                            best_speed = 1.5;
+                        }
+                    }
+                    BloomPhase::Hibernation => {
+                        best_speed = 0.1;
+                        force_sleep = true;
+                    }
+                    BloomPhase::Dormant => {
+                        // Keeps speed at 1.0 or whatever it is
+                    }
+                }
+            }
+        }
+
+        if best_sync {
+            sync.is_synced = true;
+            sync.work_speed_multiplier = best_speed;
+            if force_sleep {
+                needs.rest = 0.0;
+            }
+        } else {
+            sync.is_synced = false;
+            sync.work_speed_multiplier = 1.0;
+        }
+    }
+}
+
+#[cfg(test)]
+mod bio_rhythm_tests {
+    use super::*;
+    use crate::layer1::map::GridPosition;
+    use crate::layer1::needs::Needs;
+    use crate::layer1::pop::Pop;
+    use bevy::prelude::*;
+
+    #[test]
+    fn test_lumiflora_blooming_cycle() {
+        let mut app = App::new();
+        app.add_systems(Update, lumiflora_bloom_system);
+        app.insert_resource(crate::shared::time::SimulationTime {
+            tick: 0,
+            ..Default::default()
+        });
+
+        let flora = app
+            .world_mut()
+            .spawn((
+                Flora {
+                    flora_type: FloraType::Lumiflora,
+                    ..Default::default()
+                },
+                LumifloraCycle {
+                    phase: BloomPhase::Dormant,
+                    time_in_phase: 0.0,
+                },
+            ))
+            .id();
+
+        // Advance enough time to trigger blooming
+        for _ in 0..11 {
+            app.update();
+        }
+
+        let cycle = app.world().get::<LumifloraCycle>(flora).unwrap();
+        assert_eq!(cycle.phase, BloomPhase::Blooming);
+    }
+
+    #[test]
+    fn test_pop_bio_rhythm_sync() {
+        let mut app = App::new();
+        app.add_systems(Update, apply_bio_rhythm_aura);
+
+        let flora = app
+            .world_mut()
+            .spawn((
+                Flora {
+                    flora_type: FloraType::Lumiflora,
+                    ..Default::default()
+                },
+                LumifloraCycle {
+                    phase: BloomPhase::Blooming,
+                    time_in_phase: 0.0,
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
+
+        let pop = app
+            .world_mut()
+            .spawn((
+                Pop,
+                GridPosition { x: 5, y: 5 },
+                BioRhythmSync {
+                    is_synced: false,
+                    work_speed_multiplier: 1.0,
+                },
+            ))
+            .id();
+
+        app.world_mut().entity_mut(pop).insert(Needs {
+            rest: 1.0,
+            ..Default::default()
+        });
+
+        app.update();
+
+        let sync = app.world().get::<BioRhythmSync>(pop).unwrap();
+        assert!(sync.is_synced);
+        assert!(sync.work_speed_multiplier > 1.0); // Blooming gives speed boost
+
+        // Change flora to Hibernation phase
+        app.world_mut()
+            .get_mut::<LumifloraCycle>(flora)
+            .unwrap()
+            .phase = BloomPhase::Hibernation;
+
+        app.update();
+
+        let needs = app.world().get::<Needs>(pop).unwrap();
+        assert_eq!(needs.rest, 0.0); // Forces immediate sleep need
     }
 }

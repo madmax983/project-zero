@@ -775,8 +775,12 @@ impl ColonyResources {
             // ResourceType::Water not in enum
             ResourceType::Alcohol => self.alcohol = (self.alcohol - amount).max(0.0),
             ResourceType::Waste => self.waste = (self.waste - amount).max(0.0),
-            ResourceType::BiologicalWaste => self.biological_waste = (self.biological_waste - amount).max(0.0),
-            ResourceType::NutrientPaste => self.nutrient_paste = (self.nutrient_paste - amount).max(0.0),
+            ResourceType::BiologicalWaste => {
+                self.biological_waste = (self.biological_waste - amount).max(0.0)
+            }
+            ResourceType::NutrientPaste => {
+                self.nutrient_paste = (self.nutrient_paste - amount).max(0.0)
+            }
             ResourceType::BuildingPermit => {
                 self.building_permits = (self.building_permits - amount).max(0.0);
             }
@@ -900,8 +904,13 @@ impl ColonyResources {
             ResourceType::Planks => self.add_planks(amount),
             ResourceType::Blocks => self.add_blocks(amount),
             ResourceType::Waste => self.add_waste(amount),
-            ResourceType::BiologicalWaste => self.biological_waste = (self.biological_waste + amount).min(self.max_biological_waste),
-            ResourceType::NutrientPaste => self.nutrient_paste = (self.nutrient_paste + amount).min(self.max_nutrient_paste),
+            ResourceType::BiologicalWaste => {
+                self.biological_waste =
+                    (self.biological_waste + amount).min(self.max_biological_waste)
+            }
+            ResourceType::NutrientPaste => {
+                self.nutrient_paste = (self.nutrient_paste + amount).min(self.max_nutrient_paste)
+            }
             ResourceType::Rations => self.add_rations(amount),
             ResourceType::Fuel => self.add_fuel(amount),
             ResourceType::Alcohol => self.add_alcohol(amount),

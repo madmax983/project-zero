@@ -111,6 +111,10 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::day_night::update_day_night_cycle_system),
             update_bioluminescence_system
                 .after(crate::layer1::day_night::update_day_night_cycle_system),
+            crate::layer1::flora::lumiflora_bloom_system
+                .after(crate::layer1::day_night::update_day_night_cycle_system),
+            crate::layer1::flora::apply_bio_rhythm_aura
+                .after(crate::layer1::flora::lumiflora_bloom_system),
             crate::layer1::pop::reset_speed_system.before(apply_lighting_penalties_system),
             crate::layer1::tech::event_horizon_tap::apply_time_dilation_system
                 .after(crate::layer1::pop::reset_speed_system)
