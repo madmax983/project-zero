@@ -590,10 +590,6 @@ pub fn fire_damage_pops_system(
     }
 }
 
-
-
-
-
 fn grant_inspector_memory(
     pop_memories: &mut Query<&mut Memories, With<Pop>>,
     memory_type: MemoryType,
@@ -746,11 +742,9 @@ pub fn amputation_handler_system(
 ///
 /// Bridges Building (`DroneHub`) and Drone system (Agents).
 
-
 /// Assigns work to idle drones.
 ///
 /// Bridges Drone system (Idle agents) and Work system (Hauling).
-
 
 /// Accelerates decay of perishable items based on vermin severity.
 ///
@@ -3114,8 +3108,7 @@ pub fn gravity_plating_power_bridge_system(
 ) {
     for (entity, consumer) in query.iter() {
         if !consumer.active {
-            events
-                .send(crate::layer1::physics::gravity_plating::PowerGridEvent::NodeFailed(entity));
+            events.send(crate::layer1::physics::gravity_plating::PowerGridEvent { node: entity });
         }
     }
 }

@@ -14,3 +14,7 @@
 **Bloat:** Dummy fallback structs and functions added just to suppress a compilation error when a feature is disabled.
 **Cut:** Deleted the dummy code and gated the exports so the compiler rightfully errors out.
 **Saved:** 50 lines of code / Fake runtime outputs confusing users
+## [Reduction]
+**Bloat:** 1-variant enums (`ProtocolRule`, `PowerGridEvent`) that add unnecessary abstraction.
+**Cut:** Eliminated the enums. Converted `DeadProtocol` to a unit struct and `PowerGridEvent` to a normal struct.
+**Saved:** Reduced cognitive load and unnecessary enum pattern matching.

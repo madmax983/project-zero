@@ -24,8 +24,7 @@ fn test_dreaming_sickness_chronicle_bridge() {
             .chain(),
     );
 
-    app.world_mut()
-        .spawn((DreamingSickness { severity: 0.1 },));
+    app.world_mut().spawn((DreamingSickness { severity: 0.1 },));
 
     app.update();
 }
