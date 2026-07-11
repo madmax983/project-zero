@@ -27779,3 +27779,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you exploit the ultimate logistical shortcut to solve immediate crises, knowing you are slowly unraveling the fabric of reality for the involved colonies?
 
 ---
+## Memory Smugglers
+
+**Layer:** 1
+
+**Fantasy:** Experiencing the black market of human experiences.
+
+**Mechanic:** Pops with high stress can buy "synthesized memories" from a black market building (Memory Den) to temporarily overwrite their trauma. However, these artificial memories can clash with their actual histories, causing severe dissociative traits.
+
+**Emergence:** A vital engineer buys a memory of being a master chef to cope with a mining disaster. They start abandoning their post to cook elaborate meals with industrial supplies, causing a cascade of mechanical failures but temporarily boosting colony morale with weird food.
+
+**Tension:** Do you crack down on the memory trade to maintain workforce consistency, or allow it as a necessary pressure valve for a heavily traumatized colony?
+
+---
+
+## The Kessler Syndicate
+
+**Layer:** 2
+
+**Fantasy:** Weaponizing the tragedy of the commons in orbit.
+
+**Mechanic:** Debris from destroyed ships and decommissioned satellites accumulates in planetary orbit. A specialized faction (The Kessler Syndicate) forms, demanding "protection money" to clear it. If unpaid, they intentionally trigger chain-reaction collisions (Kessler Syndrome), locking down the planet.
+
+**Emergence:** You refuse to pay the Syndicate over a minor agricultural world. They trigger a cascade, turning the orbit into a shredder. Your relief fleets are destroyed trying to enter, and the world starves, not from lack of food, but because the sky itself is a weapon.
+
+**Tension:** Do you pay extortion fees to keep your orbits clean, or dedicate massive military resources to hunting down scavengers while your planets are slowly choked by their own trash?
+
+---
+
+## The Cargo Cult Protocol
+
+**Layer:** Cross-layer
+
+**Fantasy:** Watching a forgotten automated supply chain become a religion.
+
+**Mechanic:** If a colony loses FTL communication but continues receiving automated supply drops from an uncrewed Layer 2 logistics route, the local Pops gradually develop a "Cargo Cult." They begin building non-functional replicas of the drop ships out of scrap to "summon" more resources, abandoning standard industry.
+
+**Emergence:** You finally reconnect with a lost colony after a century. Instead of a thriving industrial hub, you find them starving in the shadow of massive, useless tin-foil monuments, worshipping the scheduled arrival of a drone ship that ran out of fuel decades ago.
+
+**Tension:** Do you ruthlessly demolish their religious infrastructure to force them back to work, triggering a holy war, or do you artificially maintain the illusion by manually flying supply routes to keep them docile?
+
+---
