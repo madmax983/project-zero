@@ -777,7 +777,6 @@ mod tests {
         assert!(!state.is_active(Tech::Masonry));
         assert_eq!(state.status(Tech::Masonry), TechStatus::Corrupted);
     }
-
 }
 pub mod ghost_code;
 #[cfg(test)]

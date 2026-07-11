@@ -88,8 +88,9 @@ pub fn apply_artifact_auras_system(
 
         for (art_pos, aura) in &artifacts {
             // Calculate squared distance to avoid sqrt
-            let dist_sq = ((pos.x - art_pos.x).pow(2) + (pos.y - art_pos.y).pow(2)) as f32;
-            if dist_sq <= aura.radius.powi(2) {
+            let dist_sq =
+                (pos.x as i64 - art_pos.x as i64).pow(2) + (pos.y as i64 - art_pos.y as i64).pow(2);
+            if dist_sq <= (aura.radius * aura.radius) as i64 {
                 active_auras.effects.push(aura.effect);
 
                 // Immediate effects from specific auras
@@ -292,7 +293,33 @@ mod tests {
             "Aura should be removed when leaving range"
         );
     }
+
+    #[test]
+    fn test_artifact_overflow_exploit() {
+        let mut world = World::new();
+        world.spawn((
+            Artifact,
+            crate::layer1::nature::terrain::TerrainType::Artifact,
+            GridPosition { x: -46341, y: 0 },
+            ArtifactAura {
+                radius: 3.0,
+                effect: AuraEffect::Insight,
+            },
+        ));
+        let _pop = world
+            .spawn((
+                Pop,
+                GridPosition { x: 46341, y: 0 },
+                StressTracker::default(),
+                ActiveAuras::default(),
+            ))
+            .id();
+        let mut schedule = Schedule::default();
+        schedule.add_systems(apply_artifact_auras_system);
+        schedule.run(&mut world);
+    }
 }
+
 pub mod vr_pod {
     use crate::layer1::morale::Morale;
     use crate::layer1::stress::StressTracker;
