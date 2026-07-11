@@ -274,6 +274,7 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<Events<crate::layer1::deep_crust_resonance::ExcavationEvent>>();
     world.init_resource::<Events<crate::layer1::logistics::mycelial::ContaminationEvent>>();
     world.init_resource::<Events<crate::layer1::resources::MiningEvent>>();
+    world.init_resource::<Events<crate::layer1::mining::TriggerSonicDrillEvent>>();
     world.init_resource::<Events<crate::layer1::spiteful_will::InheritanceEvent>>();
     if !world
         .contains_resource::<Events<crate::layer1::nature::biosphere_empathy::FloraDamagedEvent>>()
@@ -651,6 +652,7 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         crate::layer1::blackout_bazaars::spawn_blackout_bazaars_system,
         crate::layer1::blackout_bazaars::despawn_blackout_bazaars_system,
         crate::layer1::blackout_bazaars::bazaar_trading_system,
+        crate::layer1::mining::harmonic_mining_system,
     ));
     schedule.add_systems((
         crate::layer1::psychology::doomsday::apply_doomsday_panic_effects,

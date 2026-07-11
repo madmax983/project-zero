@@ -106,6 +106,7 @@ pub mod jobs;
 pub use improvised_tools::*;
 /// Tests for metal industry (Spec 024).
 pub mod metal_industry_tests;
+pub mod mining;
 /// Terrain generation and grid management.
 /// Tests for mining logic (Spec 052).
 pub mod mining_tests;
