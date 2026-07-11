@@ -752,6 +752,32 @@ mod tests {
         assert!(second_try);
         assert_eq!(state.used_capacity, Tech::Masonry.storage_cost()); // Should not double-charge
     }
+
+    #[test]
+    fn test_is_researched_vs_is_active() {
+        let mut state = TechState {
+            total_capacity: 100.0,
+            ..Default::default()
+        };
+
+        // Neither researched nor active
+        assert!(!state.is_researched(Tech::Masonry));
+        assert!(!state.is_active(Tech::Masonry));
+
+        // Unlocked -> Both
+        state.force_unlock(Tech::Masonry, TechStatus::Active);
+        assert!(state.is_researched(Tech::Masonry));
+        assert!(state.is_active(Tech::Masonry));
+
+        // Corrupted -> Researched but NOT active
+        // To prevent update_corruption from restoring it, we need to drop capacity
+        state.total_capacity = 0.0;
+        state.update_corruption();
+        assert!(state.is_researched(Tech::Masonry));
+        assert!(!state.is_active(Tech::Masonry));
+        assert_eq!(state.status(Tech::Masonry), TechStatus::Corrupted);
+    }
+
 }
 pub mod ghost_code;
 #[cfg(test)]

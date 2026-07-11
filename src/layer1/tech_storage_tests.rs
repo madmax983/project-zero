@@ -154,4 +154,30 @@ mod tests {
         let res = world.resource::<crate::layer1::resources::ColonyResources>();
         assert_eq!(res.knowledge, 100.0);
     }
+
+    #[test]
+    fn test_update_corruption_restores_cheapest_first() {
+        let mut state = TechState {
+            total_capacity: 0.0, // Force corruption on both initially
+            ..Default::default()
+        };
+
+        // Masonry costs 5.0, Astronomy costs 20.0
+        state.force_unlock(Tech::Masonry, TechStatus::Corrupted);
+        state.force_unlock(Tech::Astronomy, TechStatus::Corrupted);
+
+        // Increase capacity enough to restore ONLY Masonry
+        state.total_capacity = 10.0;
+        state.update_corruption();
+
+        assert_eq!(state.status(Tech::Masonry), TechStatus::Active);
+        assert_eq!(state.status(Tech::Astronomy), TechStatus::Corrupted);
+
+        // Increase capacity to handle both
+        state.total_capacity = 30.0;
+        state.update_corruption();
+
+        assert_eq!(state.status(Tech::Masonry), TechStatus::Active);
+        assert_eq!(state.status(Tech::Astronomy), TechStatus::Active);
+    }
 }
