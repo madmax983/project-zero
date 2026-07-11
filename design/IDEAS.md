@@ -27695,3 +27695,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you maintain a massive, slow, but stable centralized empire, or do you decentralize power to sector governors, knowing they might eventually decide they don't need you and secede?
 
 ---
+
+## The Ghost Shifts
+
+**Layer:** 1
+
+**Fantasy:** Discovering that the colony runs optimally when you aren't looking, maintained by the marginalized.
+
+**Mechanic:** Pops with severe social debuffs or highly conflicting traits may naturally self-segregate by adopting an inverted sleep cycle, forming "Ghost Shifts." They work while the rest of the colony sleeps, avoiding interaction. They suffer a permanent morale penalty but gain a significant efficiency boost in solitary tasks.
+
+**Emergence:** You notice your deepest mining sector is incredibly productive but completely empty during standard viewing hours. If you try to force them into standard shifts to utilize their skills, they riot and the sector's output collapses.
+
+**Tension:** Do you enforce social cohesion and regular hours, sacrificing massive efficiency, or do you allow a subculture of nocturnal outcasts to run your critical infrastructure from the shadows?
+
+---
+
+## Substrate Echos
+
+**Layer:** Cross-layer
+
+**Fantasy:** The feeling that the galaxy itself is trying to remember things that you have forgotten or discarded.
+
+**Mechanic:** When a highly experienced Pop dies, or a major Layer 1 building is demolished, they leave a faint "Substrate Echo." These echoes slightly increase the probability of specific events occurring on the system or galactic level (Layer 2/3). For example, demolishing a massive research facility might slightly increase the chance of a scientific breakthrough event occurring decades later on a completely different planet.
+
+**Emergence:** Your empire is struggling with food production. Suddenly, a minor agricultural world experiences an unprecedented, inexplicable harvest. The game subtly hints that this is a mathematical echo of a heroic farmer who starved to death saving your very first colony three centuries ago.
+
+**Tension:** Do you intentionally engineer tragedies or destroy valuable infrastructure to "seed" the Substrate with beneficial echoes for the long-term survival of the empire, playing a multi-generational game of probability?
+
+---
+
+## The Silence Protocol
+
+**Layer:** 2
+
+**Fantasy:** Deliberately plunging a thriving world into the dark ages to hide it from a looming galactic threat.
+
+**Mechanic:** When a massive, unstoppable threat (like a feral swarm or a high-tier hostile fleet) approaches a star system, you can enact "The Silence Protocol" on a colony. This instantly shuts down all advanced technology, FTL communication, and high-energy industry, effectively reducing the colony to a pre-industrial state.
+
+**Emergence:** You enact the Silence Protocol to hide your most advanced research world from a passing Leviathan. It works, and the entity passes by. However, when you try to reactivate the colony decades later, you find that the population has forgotten how the technology works and now violently worships the dormant machinery, refusing to let you turn it back on.
+
+**Tension:** Do you risk annihilation by keeping your advanced worlds online, or do you manually trigger societal collapse to ensure mere biological survival, hoping you can pick up the pieces later?
+
+---
