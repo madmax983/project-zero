@@ -210,3 +210,8 @@
 **Concept:** Added `photosynthetic_nourishment_system` to `src/experimental/photosynthetic_nourishment.rs`. Connects `Trait::Photosynthesis` with the existing `LightMap` and `AmbientLight`. Pops with this trait naturally regenerate their hunger need when they are bathed in sufficient light.
 **Fate:** Submitted
 **Lesson:** Connecting physiological needs (Hunger) to environmental aesthetics (Light) creates emergent strategic decisions. Players can now intentionally build well-lit areas or skylights to house their photosynthetic pops, saving on agricultural food production.
+
+## [Weather Madness]
+**Concept:** Added `weather_madness_system` to `src/experimental/weather_madness.rs`. Connects `WeatherType::Storm` and `WeatherType::MutagenicRain` to `Trait::Anxious` and `RoofGrid`. Pops with the Anxious trait who are caught outside during severe weather suffer a continuous penalty to their `leisure` need.
+**Fate:** Submitted
+**Lesson:** Connects environmental hazards to specific psychological traits and structural positioning. It forces the player to ensure Anxious pops have safe indoor areas to retreat to during bad weather, adding depth to both base building and pop management.
