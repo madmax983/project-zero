@@ -938,6 +938,8 @@ pub const fn get_resource_char(resource: ResourceType) -> &'static str {
         ResourceType::MemoryCore => "M",
         ResourceType::VoidAle => "V",
         ResourceType::HyperValuable => "$",
+        ResourceType::BiologicalWaste => "B",
+        ResourceType::NutrientPaste => "P",
     }
 }
 
@@ -969,7 +971,9 @@ pub const fn get_resource_color(resource: ResourceType) -> Color {
         ResourceType::Scrap => Color::Rgb(105, 105, 105), // DimGray
         ResourceType::MemoryCore => Color::Rgb(148, 0, 211), // DarkViolet
         ResourceType::VoidAle => Color::Yellow,
-        ResourceType::HyperValuable => Color::Rgb(255, 215, 0), // Gold
+        ResourceType::HyperValuable => Color::Rgb(255, 215, 0),
+        ResourceType::BiologicalWaste => Color::Rgb(100, 100, 0),
+        ResourceType::NutrientPaste => Color::Rgb(200, 200, 200), // Gold
     }
 }
 

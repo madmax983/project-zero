@@ -1,0 +1,1 @@
+cargo test test_recycler_converts_waste_to_paste
