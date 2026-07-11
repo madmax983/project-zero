@@ -27639,3 +27639,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you broadcast your existence to the galaxy to survive isolation, knowing that every time you speak into the dark, something unknown might hear you?
 
 ---
+
+## The Paranoia Stockpile
+
+**Layer:** 1
+
+**Fantasy:** Watching individual colonists panic during crises and start hoarding essential supplies, depriving the rest of the colony.
+
+**Mechanic:** When a colony's overall stress or danger level is high, Pops with anxious or selfish traits may start a "Paranoia Stockpile." Instead of delivering food or medical supplies to the colony's central storage, they stash them in their own private living quarters, removing them from the global inventory.
+
+**Emergence:** You have enough total food to survive a winter, but a few paranoid Pops hoard half of it. The rest of the colony begins starving, leading to a riot where the starving Pops break into the hoarders' homes, causing widespread destruction and injuries while retrieving the food.
+
+**Tension:** Do you enact draconian searches and seizures to distribute resources fairly, tanking morale and causing unrest, or do you let the hoarding continue and risk mass starvation of the unprotected?
+
+---
+
+## The Blood Feud
+
+**Layer:** Cross-layer
+
+**Fantasy:** A petty interpersonal dispute between two colonists escalates into a multi-generational, system-wide conflict.
+
+**Mechanic:** If two Pops develop a sufficiently low relationship score, they can start a "Blood Feud." When they die, their descendants inherit the feud. If members of the feuding families end up on different planets or commanding different Layer 2 fleets, the feud scales up, causing localized trade embargoes or even skirmishes between their respective domains.
+
+**Emergence:** A bar fight between a miner and a hydroponics farmer on your first colony results in a feud. Three centuries later, the miner's descendant is the governor of an industrial world, and the farmer's descendant controls the agricultural fleet. The industrial world suddenly starves because the fleet refuses to deliver food to their ancestral rival.
+
+**Tension:** Do you artificially suppress the careers of capable individuals to keep feuding families out of power, or do you let them rise and risk them holding the empire hostage with their grudge?
+
+---
+
+## The Wake of the Leviathan
+
+**Layer:** 2
+
+**Fantasy:** Scavenging in the dangerous, chaotic aftermath of a massive, incomprehensible entity moving through your space.
+
+**Mechanic:** A gargantuan spaceborne entity (The Leviathan) occasionally drifts blindly through the star system. It doesn't attack, but its massive gravitational and energy wake disrupts hyperspace lanes, scatters asteroid belts, and damages orbital structures. However, it also sheds exotic, highly valuable biological or energetic "Scales" in its path.
+
+**Emergence:** The Leviathan passes near a rival's border world, devastating their defenses. You send a fleet to aggressively scavenge the valuable Scales. But the disrupted gravity field causes your scavenging fleet to crash into the planet, inadvertently triggering a massive diplomatic incident and war when the rival thinks it was an orbital strike.
+
+**Tension:** Do you evacuate your fleets and stations to safety when the Leviathan approaches, missing out on the exotic resources, or do you risk total destruction to harvest the immense wealth left in its wake?
+
+---
+
+## The Bureaucratic Black Hole
+
+**Layer:** 3
+
+**Fantasy:** Watching your vast empire slowly paralyze itself with its own administrative weight.
+
+**Mechanic:** As your civilization grows in size and complexity, "Bureaucratic Drag" accumulates. Actions like declaring war, authorizing large trade deals, or funding new colonies take increasingly longer to execute unless expedited with massive amounts of "Influence." Governors may also occasionally misinterpret orders or delay them for "review."
+
+**Emergence:** A small frontier world is being invaded by a minor pirate faction. You order a massive defense fleet to save them. Because of the Bureaucratic Drag, the order is stuck in "committee" for years. By the time the fleet arrives, the world has been conquered, rebelled against the pirates, and formed its own independent, hostile nation that now destroys your arriving fleet.
+
+**Tension:** Do you maintain a massive, slow, but stable centralized empire, or do you decentralize power to sector governors, knowing they might eventually decide they don't need you and secede?
+
+---
