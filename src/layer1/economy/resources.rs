@@ -775,8 +775,12 @@ impl ColonyResources {
             // ResourceType::Water not in enum
             ResourceType::Alcohol => self.alcohol = (self.alcohol - amount).max(0.0),
             ResourceType::Waste => self.waste = (self.waste - amount).max(0.0),
-            ResourceType::BiologicalWaste => self.biological_waste = (self.biological_waste - amount).max(0.0),
-            ResourceType::NutrientPaste => self.nutrient_paste = (self.nutrient_paste - amount).max(0.0),
+            ResourceType::BiologicalWaste => {
+                self.biological_waste = (self.biological_waste - amount).max(0.0)
+            }
+            ResourceType::NutrientPaste => {
+                self.nutrient_paste = (self.nutrient_paste - amount).max(0.0)
+            }
             ResourceType::BuildingPermit => {
                 self.building_permits = (self.building_permits - amount).max(0.0);
             }
@@ -900,8 +904,13 @@ impl ColonyResources {
             ResourceType::Planks => self.add_planks(amount),
             ResourceType::Blocks => self.add_blocks(amount),
             ResourceType::Waste => self.add_waste(amount),
-            ResourceType::BiologicalWaste => self.biological_waste = (self.biological_waste + amount).min(self.max_biological_waste),
-            ResourceType::NutrientPaste => self.nutrient_paste = (self.nutrient_paste + amount).min(self.max_nutrient_paste),
+            ResourceType::BiologicalWaste => {
+                self.biological_waste =
+                    (self.biological_waste + amount).min(self.max_biological_waste)
+            }
+            ResourceType::NutrientPaste => {
+                self.nutrient_paste = (self.nutrient_paste + amount).min(self.max_nutrient_paste)
+            }
             ResourceType::Rations => self.add_rations(amount),
             ResourceType::Fuel => self.add_fuel(amount),
             ResourceType::Alcohol => self.add_alcohol(amount),
@@ -1323,6 +1332,71 @@ fn try_spawn_anomaly(world: &mut World, pos: GridPosition) {
     }
 }
 
+/// Bridges Waste (Resource/Building) and Atmosphere (Environment).
+///
+/// Adds pollution to the `AtmosphereGrid` based on:
+/// 1. `Waste` items on the ground (toxic fumes).
+/// 2. `Landfill` buildings (smell/leachate).
+pub fn waste_pollution_bridge(
+    mut grid: ResMut<crate::layer1::atmosphere::AtmosphereGrid>,
+    items: Query<(&crate::layer1::resources::ResourceItem, &GridPosition)>,
+    buildings: Query<(&crate::layer1::building::Building, &GridPosition)>,
+) {
+    // 1. Waste Items
+    for (item, pos) in &items {
+        if item.resource_type == crate::layer1::resources::ResourceType::Waste {
+            grid.add(pos.x, pos.y, 0.1);
+        }
+    }
+
+    // 2. Landfills
+    for (building, pos) in &buildings {
+        if building.building_type == crate::layer1::building::BuildingType::Landfill {
+            grid.add(pos.x, pos.y, 0.2);
+        }
+    }
+}
+
+/// Bridges `Waste` resources and `Landfill` buildings to the Olfactory system.
+/// Adds a `ScentEmitter` with `Foul` scent to them.
+pub fn waste_scent_bridge(
+    mut commands: bevy_ecs::system::Commands,
+    items: Query<
+        (
+            bevy_ecs::entity::Entity,
+            &crate::layer1::resources::ResourceItem,
+        ),
+        Without<crate::layer1::olfactory::ScentEmitter>,
+    >,
+    buildings: Query<
+        (bevy_ecs::entity::Entity, &crate::layer1::building::Building),
+        Without<crate::layer1::olfactory::ScentEmitter>,
+    >,
+) {
+    // 1. Waste Items
+    for (entity, item) in &items {
+        if item.resource_type == crate::layer1::resources::ResourceType::Waste {
+            commands
+                .entity(entity)
+                .insert(crate::layer1::olfactory::ScentEmitter {
+                    is_pleasant: false,
+                    strength: item.amount.max(1.0),
+                });
+        }
+    }
+
+    // 2. Landfills
+    for (entity, building) in &buildings {
+        if building.building_type == crate::layer1::building::BuildingType::Landfill {
+            commands
+                .entity(entity)
+                .insert(crate::layer1::olfactory::ScentEmitter {
+                    is_pleasant: false,
+                    strength: 10.0,
+                });
+        }
+    }
+}
 #[cfg(test)]
 #[allow(clippy::float_cmp)]
 mod tests {
@@ -1763,71 +1837,5 @@ mod tests {
         // We can just assert that it doesn't panic. The test will pass (no panic) because it early exits.
 
         chop_tree(&mut app, entity, 10.0);
-    }
-}
-
-/// Bridges Waste (Resource/Building) and Atmosphere (Environment).
-///
-/// Adds pollution to the `AtmosphereGrid` based on:
-/// 1. `Waste` items on the ground (toxic fumes).
-/// 2. `Landfill` buildings (smell/leachate).
-pub fn waste_pollution_bridge(
-    mut grid: ResMut<crate::layer1::atmosphere::AtmosphereGrid>,
-    items: Query<(&crate::layer1::resources::ResourceItem, &GridPosition)>,
-    buildings: Query<(&crate::layer1::building::Building, &GridPosition)>,
-) {
-    // 1. Waste Items
-    for (item, pos) in &items {
-        if item.resource_type == crate::layer1::resources::ResourceType::Waste {
-            grid.add(pos.x, pos.y, 0.1);
-        }
-    }
-
-    // 2. Landfills
-    for (building, pos) in &buildings {
-        if building.building_type == crate::layer1::building::BuildingType::Landfill {
-            grid.add(pos.x, pos.y, 0.2);
-        }
-    }
-}
-
-/// Bridges `Waste` resources and `Landfill` buildings to the Olfactory system.
-/// Adds a `ScentEmitter` with `Foul` scent to them.
-pub fn waste_scent_bridge(
-    mut commands: bevy_ecs::system::Commands,
-    items: Query<
-        (
-            bevy_ecs::entity::Entity,
-            &crate::layer1::resources::ResourceItem,
-        ),
-        Without<crate::layer1::olfactory::ScentEmitter>,
-    >,
-    buildings: Query<
-        (bevy_ecs::entity::Entity, &crate::layer1::building::Building),
-        Without<crate::layer1::olfactory::ScentEmitter>,
-    >,
-) {
-    // 1. Waste Items
-    for (entity, item) in &items {
-        if item.resource_type == crate::layer1::resources::ResourceType::Waste {
-            commands
-                .entity(entity)
-                .insert(crate::layer1::olfactory::ScentEmitter {
-                    is_pleasant: false,
-                    strength: item.amount.max(1.0),
-                });
-        }
-    }
-
-    // 2. Landfills
-    for (entity, building) in &buildings {
-        if building.building_type == crate::layer1::building::BuildingType::Landfill {
-            commands
-                .entity(entity)
-                .insert(crate::layer1::olfactory::ScentEmitter {
-                    is_pleasant: false,
-                    strength: 10.0,
-                });
-        }
     }
 }
