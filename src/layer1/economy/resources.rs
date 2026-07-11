@@ -1737,3 +1737,69 @@ mod tests {
         chop_tree(&mut app, entity, 10.0);
     }
 }
+
+/// Bridges Waste (Resource/Building) and Atmosphere (Environment).
+///
+/// Adds pollution to the `AtmosphereGrid` based on:
+/// 1. `Waste` items on the ground (toxic fumes).
+/// 2. `Landfill` buildings (smell/leachate).
+pub fn waste_pollution_bridge(
+    mut grid: ResMut<crate::layer1::atmosphere::AtmosphereGrid>,
+    items: Query<(&crate::layer1::resources::ResourceItem, &GridPosition)>,
+    buildings: Query<(&crate::layer1::building::Building, &GridPosition)>,
+) {
+    // 1. Waste Items
+    for (item, pos) in &items {
+        if item.resource_type == crate::layer1::resources::ResourceType::Waste {
+            grid.add(pos.x, pos.y, 0.1);
+        }
+    }
+
+    // 2. Landfills
+    for (building, pos) in &buildings {
+        if building.building_type == crate::layer1::building::BuildingType::Landfill {
+            grid.add(pos.x, pos.y, 0.2);
+        }
+    }
+}
+
+/// Bridges `Waste` resources and `Landfill` buildings to the Olfactory system.
+/// Adds a `ScentEmitter` with `Foul` scent to them.
+pub fn waste_scent_bridge(
+    mut commands: bevy_ecs::system::Commands,
+    items: Query<
+        (
+            bevy_ecs::entity::Entity,
+            &crate::layer1::resources::ResourceItem,
+        ),
+        Without<crate::layer1::olfactory::ScentEmitter>,
+    >,
+    buildings: Query<
+        (bevy_ecs::entity::Entity, &crate::layer1::building::Building),
+        Without<crate::layer1::olfactory::ScentEmitter>,
+    >,
+) {
+    // 1. Waste Items
+    for (entity, item) in &items {
+        if item.resource_type == crate::layer1::resources::ResourceType::Waste {
+            commands
+                .entity(entity)
+                .insert(crate::layer1::olfactory::ScentEmitter {
+                    is_pleasant: false,
+                    strength: item.amount.max(1.0),
+                });
+        }
+    }
+
+    // 2. Landfills
+    for (entity, building) in &buildings {
+        if building.building_type == crate::layer1::building::BuildingType::Landfill {
+            commands
+                .entity(entity)
+                .insert(crate::layer1::olfactory::ScentEmitter {
+                    is_pleasant: false,
+                    strength: 10.0,
+                });
+        }
+    }
+}

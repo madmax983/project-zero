@@ -590,71 +590,9 @@ pub fn fire_damage_pops_system(
     }
 }
 
-/// Bridges Waste (Resource/Building) and Atmosphere (Environment).
-///
-/// Adds pollution to the `AtmosphereGrid` based on:
-/// 1. `Waste` items on the ground (toxic fumes).
-/// 2. `Landfill` buildings (smell/leachate).
-pub fn waste_pollution_bridge(
-    mut grid: ResMut<crate::layer1::atmosphere::AtmosphereGrid>,
-    items: Query<(&crate::layer1::resources::ResourceItem, &GridPosition)>,
-    buildings: Query<(&crate::layer1::building::Building, &GridPosition)>,
-) {
-    // 1. Waste Items
-    for (item, pos) in &items {
-        if item.resource_type == crate::layer1::resources::ResourceType::Waste {
-            grid.add(pos.x, pos.y, 0.1);
-        }
-    }
 
-    // 2. Landfills
-    for (building, pos) in &buildings {
-        if building.building_type == crate::layer1::building::BuildingType::Landfill {
-            grid.add(pos.x, pos.y, 0.2);
-        }
-    }
-}
 
-/// Bridges `Waste` resources and `Landfill` buildings to the Olfactory system.
-/// Adds a `ScentEmitter` with `Foul` scent to them.
-pub fn waste_scent_bridge(
-    mut commands: bevy_ecs::system::Commands,
-    items: Query<
-        (
-            bevy_ecs::entity::Entity,
-            &crate::layer1::resources::ResourceItem,
-        ),
-        Without<crate::layer1::olfactory::ScentEmitter>,
-    >,
-    buildings: Query<
-        (bevy_ecs::entity::Entity, &crate::layer1::building::Building),
-        Without<crate::layer1::olfactory::ScentEmitter>,
-    >,
-) {
-    // 1. Waste Items
-    for (entity, item) in &items {
-        if item.resource_type == crate::layer1::resources::ResourceType::Waste {
-            commands
-                .entity(entity)
-                .insert(crate::layer1::olfactory::ScentEmitter {
-                    is_pleasant: false,
-                    strength: item.amount.max(1.0),
-                });
-        }
-    }
 
-    // 2. Landfills
-    for (entity, building) in &buildings {
-        if building.building_type == crate::layer1::building::BuildingType::Landfill {
-            commands
-                .entity(entity)
-                .insert(crate::layer1::olfactory::ScentEmitter {
-                    is_pleasant: false,
-                    strength: 10.0,
-                });
-        }
-    }
-}
 
 fn grant_inspector_memory(
     pop_memories: &mut Query<&mut Memories, With<Pop>>,
@@ -807,79 +745,12 @@ pub fn amputation_handler_system(
 /// Spawns drones at active `DroneHubs` if the population is low.
 ///
 /// Bridges Building (`DroneHub`) and Drone system (Agents).
-pub fn drone_spawner_bridge_system(
-    mut commands: Commands,
-    hubs: Query<
-        (Entity, &GridPosition, &crate::layer1::energy::PowerConsumer),
-        With<crate::layer1::drone::DroneHub>,
-    >,
-    drones: Query<&crate::layer1::drone::Drone>,
-    _time: Res<SimulationTime>,
-) {
-    // Limit total drones to 3 * Hubs
-    let hub_count = hubs.iter().count();
-    if hub_count == 0 {
-        return;
-    }
 
-    let drone_count = drones.iter().count();
-    let max_drones = hub_count * 3;
-
-    if drone_count >= max_drones {
-        return;
-    }
-
-    // Spawn 1 drone per tick max
-    for (hub_entity, pos, power) in hubs.iter() {
-        if power.active {
-            // Spawn drone
-            commands.spawn((
-                crate::layer1::drone::Drone {
-                    state: crate::layer1::drone::DroneState::Idle,
-                },
-                crate::layer1::drone::ConnectedTo(hub_entity),
-                crate::layer1::drone::GridConnection::default(),
-                *pos,
-                crate::layer1::utility_ai::PopAction::default(),
-                crate::layer1::drone::DroneBattery {
-                    current: 100.0,
-                    max: 100.0,
-                },
-                crate::layer1::pop::Speed {
-                    base: 1.0,
-                    current: 1.0,
-                    accumulator: 0.0,
-                },
-                crate::layer1::utility_ai::UtilityWeights::default(),
-            ));
-            break; // Only one per tick
-        }
-    }
-}
 
 /// Assigns work to idle drones.
 ///
 /// Bridges Drone system (Idle agents) and Work system (Hauling).
-pub fn drone_work_bridge_system(
-    mut query: Query<
-        (
-            &mut crate::layer1::utility_ai::PopAction,
-            &crate::layer1::drone::DroneBattery,
-        ),
-        With<crate::layer1::drone::Drone>,
-    >,
-) {
-    for (mut action, battery) in &mut query {
-        // If idle and battery > 20%, start hauling
-        // Drones handle charging logic in evaluate_drone_actions_system which sets action to Charge.
-        // We only override Idle.
-        if action.current == crate::layer1::utility_ai::ActionType::Idle && battery.current > 20.0 {
-            action.current = crate::layer1::utility_ai::ActionType::Haul;
-            action.current_utility = 0.8; // High utility to persist
-            action.ticks_committed = 0;
-        }
-    }
-}
+
 
 /// Accelerates decay of perishable items based on vermin severity.
 ///

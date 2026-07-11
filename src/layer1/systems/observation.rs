@@ -52,14 +52,14 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::law::aesthetic_edict::evaluate_aesthetic_edict_system,
             crate::layer1::integration::diplomatic_reflection_kill_bridge,
             crate::layer1::integration::diplomatic_reflection_plant_bridge,
-            crate::layer1::integration::waste_scent_bridge,
+            crate::layer1::resources::waste_scent_bridge,
             crate::layer1::core::integration::flora_scent_bridge_system,
             crate::layer1::core::integration::digital_immortality_chronicle_bridge,
             crate::layer1::core::integration::visitor_chronicle_bridge,
             crate::layer1::psychology::simulacrum::simulacrum_broadcast_system,
             crate::layer1::core::integration::simulacrum_chronicle_bridge,
             crate::layer1::olfactory::scent_diffusion_system
-                .after(crate::layer1::integration::waste_scent_bridge)
+                .after(crate::layer1::resources::waste_scent_bridge)
                 .after(crate::layer1::core::integration::flora_scent_bridge_system),
             crate::layer1::olfactory::scent_mood_system
                 .after(crate::layer1::olfactory::scent_diffusion_system),

@@ -222,11 +222,11 @@ pub fn register(schedule: &mut Schedule) {
             #[cfg(feature = "nova")]
             crate::layer1::constellations::update_sky_system,
             malfunction_system.after(entropy_system),
-            waste_pollution_bridge,
+            crate::layer1::resources::waste_pollution_bridge,
             crate::layer1::nature::biosphere_empathy::sync_empathic_network_system,
             crate::layer1::nature::biosphere_empathy::handle_flora_damage_empathy_system,
             crate::layer1::atmosphere::update_atmosphere_system
-                .after(waste_pollution_bridge)
+                .after(crate::layer1::resources::waste_pollution_bridge)
                 .after(crate::layer1::wind::update_wind_system),
             crate::layer1::atmosphere::corrosion_damage_system
                 .after(crate::layer1::atmosphere::update_atmosphere_system),
