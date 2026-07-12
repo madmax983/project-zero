@@ -215,3 +215,8 @@
 **Concept:** Added `weather_madness_system` to `src/experimental/weather_madness.rs`. Connects `WeatherType::Storm` and `WeatherType::MutagenicRain` to `Trait::Anxious` and `RoofGrid`. Pops with the Anxious trait who are caught outside during severe weather suffer a continuous penalty to their `leisure` need.
 **Fate:** Submitted
 **Lesson:** Connects environmental hazards to specific psychological traits and structural positioning. It forces the player to ensure Anxious pops have safe indoor areas to retreat to during bad weather, adding depth to both base building and pop management.
+
+## [Pyromaniac Euphoria]
+**Concept:** Added `pyromaniac_euphoria_system` to `src/experimental/pyromaniac_euphoria.rs`. Connects `Trait::Pyromaniac` to `Fire` and `Needs`. Pops with the Pyromaniac trait passively regenerate `leisure` when they are near (within 3 tiles of) a fire.
+**Fate:** Submitted
+**Lesson:** Connects a personality trait with environmental hazards, making an otherwise dangerous situation advantageous for specific pops, and creates emergent behaviors.

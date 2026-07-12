@@ -69,7 +69,7 @@ mod tests {
     use crate::layer1::architecture::structure::Structure;
     use crate::layer1::core::map::GridPosition;
     use crate::layer1::economy::resources::ResourceType;
-    use bevy_ecs::prelude::*;
+    // use bevy_ecs::prelude::*;
     use bevy_ecs::system::RunSystemOnce;
 
     fn setup_world() -> World {
