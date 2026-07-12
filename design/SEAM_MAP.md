@@ -1767,3 +1767,10 @@
 - **Systems connected:** `lure_militaristic_pops_system` -> `lured_pops_escape_bridge_system` -> `AddChronicleEvent`
 - **Glue added:** Added `lured_pops_escape_bridge_system` in `src/layer1/core/integration.rs` to handle pops marked with `LuredByGhostFleet`. Registered `lure_militaristic_pops_system` and `lured_pops_escape_bridge_system` in `Layer1SystemSet::Observation`.
 - **Tests:** `tests/integration/echoes_lost_fleet_bridge.rs`
+
+### INT-1322: Harmonic Mining -> Chronicle
+- **Date:** 2026-11-02
+- **Systems connected:** `TriggerSonicDrillEvent` -> `harmonic_mining_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `harmonic_mining_chronicle_bridge` in `src/layer1/core/integration.rs` to generate a Chronicle event when harmonic mining is used.
+- **Schedule:** Registered in Layer 1 Observation schedule (`src/layer1/systems/observation.rs`).
+- **Tests:** Added tests in `tests/integration/harmonic_mining_bridge.rs`.

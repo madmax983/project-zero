@@ -674,3 +674,5 @@ mod shadow_ecosystems_bridge;
 mod dreaming_sickness_chronicle;
 #[path = "integration/echoes_lost_fleet_bridge.rs"]
 mod echoes_lost_fleet_bridge;
+#[path = "integration/harmonic_mining_bridge.rs"]
+mod harmonic_mining_bridge;

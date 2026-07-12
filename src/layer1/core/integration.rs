@@ -3260,3 +3260,15 @@ pub fn lured_pops_escape_bridge_system(
         });
     }
 }
+
+pub fn harmonic_mining_chronicle_bridge(
+    mut events: bevy_ecs::event::EventReader<crate::layer1::execution::mining::harmonic_mining::TriggerSonicDrillEvent>,
+    mut chronicle_events: bevy_ecs::event::EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+) {
+    for _ in events.read() {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            text: "A Harmonic Mining drill was activated, singing the stone to dust.".to_string(),
+            importance: crate::layer1::core::chronicle::EventImportance::Minor,
+        });
+    }
+}

@@ -611,6 +611,7 @@ pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
             crate::layer1::core::integration::feral_administration_chronicle_bridge,
+            crate::layer1::core::integration::harmonic_mining_chronicle_bridge,
             crate::layer1::anomalies::echoes_lost_fleet::lure_militaristic_pops_system,
             crate::layer1::core::integration::lured_pops_escape_bridge_system,
             crate::layer1::shadow_ecosystems::shadow_ecosystems_short_circuit_bridge,
