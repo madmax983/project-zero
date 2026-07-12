@@ -9,6 +9,7 @@
 //!   the speed and efficiency of pop movement across the colony.
 
 pub mod transit;
+pub mod sentient_commute;
 pub use transit::*;
 
 pub mod ancient;

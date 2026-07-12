@@ -910,3 +910,4 @@
 - [x] `INT-1267` Integration: Echoes of the Lost Fleet -> Chronicle — completed 2026-11-01
 - [x] `1310` The Feral Administration — `specs/1310-the-feral-administration.md` — completed 2026-10-31
 - [x] `267` Ancestral Graves — `specs/267-ancestral-graves.md` — completed 2026-02-01
+- [x] `1314` The Sentient Commute — `specs/1314-the-sentient-commute.md` — completed 2026-02-01
