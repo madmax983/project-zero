@@ -14,6 +14,9 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::actions::escape::escape_pods_chronicle_bridge,
             crate::layer1::core::integration::subconscious_grid_lockdown_chronicle_bridge,
             crate::layer1::mycelial::detect_tripwire_step,
+            crate::layer1::psychology::echo_plague::check_echo_plague_outbreak,
+            crate::layer1::psychology::echo_plague::track_dead_pop_records,
+            crate::layer1::psychology::echo_plague::spread_echo_plague_system,
             crate::layer1::mycelial::aggro_network_entities,
         )
             .in_set(super::Layer1SystemSet::Observation),

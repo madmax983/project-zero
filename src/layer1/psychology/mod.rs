@@ -8,6 +8,7 @@ pub mod dreams;
 pub mod generational_amnesia;
 pub mod generational_spite;
 pub use generational_spite::*;
+pub mod echo_plague;
 #[cfg(feature = "nova")]
 pub mod machine_consciousness;
 pub mod memory;

@@ -806,6 +806,13 @@ pub(crate) fn evaluate_single_pop(
         return (action, utility, target);
     }
 
+    // 1a-1. Check for Echo Plague Mimicry (Returns early)
+    if let Some((action, utility, target)) =
+        crate::layer1::psychology::echo_plague::evaluate_echo_plague_mimicry(data, buffer)
+    {
+        return (action, utility, target);
+    }
+
     // 1b. Check for Memetic Compulsion (Returns early, overrides drafted)
     if let Some((action, utility, target)) =
         crate::layer1::memetics::evaluate_scrawl_memetic_sigil(data, buffer)
