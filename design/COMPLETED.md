@@ -909,3 +909,4 @@
 - [x] `1002` The Bio-Rhythmic Commute — `specs/1002-bio-rhythmic-commute.md` — completed 2026-11-01
 - [x] `INT-1267` Integration: Echoes of the Lost Fleet -> Chronicle — completed 2026-11-01
 - [x] `1310` The Feral Administration — `specs/1310-the-feral-administration.md` — completed 2026-10-31
+- [x] `INT-1305` Integration: The Cassandra Syndrome -> Chronicle - completed 2026-10-31

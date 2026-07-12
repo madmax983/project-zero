@@ -1,17 +1,7 @@
-1. We need to implement The Bio-Rhythmic Commute mechanic defined in spec 1002.
-2. We'll modify `src/layer1/flora.rs` (which already defines `FloraType` and has tests):
-    * Add `Lumiflora` to `FloraType` enum.
-    * Add `BloomPhase` enum (`Dormant`, `Blooming`, `Hibernation`).
-    * Add `LumifloraCycle` component with `phase` and `time_in_phase`.
-    * Add `BioRhythmSync` component.
-    * Add `lumiflora_bloom_system`.
-    * Add `apply_bio_rhythm_aura`.
-    * Note: the `apply_bio_rhythm_aura` system needs to apply the effects to `BioRhythmSync` and potentially `Needs`. As per spec, it sets `needs.rest = 0.0` when entering Hibernation.
-3. We'll modify `src/layer1/execution/general_work.rs`:
-    * Hook up `BioRhythmSync` into `get_status_modifiers` to apply its `work_speed_multiplier` if `is_synced` is true.
-4. Modify `src/layer1/systems/execution.rs`:
-    * Add `lumiflora_bloom_system` and `apply_bio_rhythm_aura` into the execution schedule.
-5. Add the RED phase tests from the spec to `src/layer1/flora.rs`, adjusting them to use `Needs` instead of `NeedSleep` (since `NeedSleep` was a speculative component, whereas `Needs` with `.rest` is what the actual codebase uses).
-6. Implement the missing logic (GREEN phase).
-7. Ensure we have 85% coverage for the new components (cargo test).
-8. Verify everything works.
+1. Register `generate_doomsday_warning` in `src/layer1/systems/execution.rs` (Layer1SystemSet::Execution).
+2. Register `handle_ignored_warning` in `src/layer1/systems/execution.rs` (Layer1SystemSet::Execution).
+3. Register `validate_prophecy` in `src/layer1/systems/execution.rs` (Layer1SystemSet::Execution).
+4. Run `cargo test` and `cargo clippy` to ensure the compilation and tests are passing.
+5. Create integration tests `tests/integration/cassandra_syndrome.rs`. Wait, tests are already in `src/layer1/cassandra_syndrome/tests.rs` and bridge tests in `tests/integration/cassandra_syndrome_bridge.rs`.
+6. Actually, let's create a test that verifies that they are actually registered correctly in the app schedule, or just run E2E checks if necessary.
+7. Update `design/SEAM_MAP.md` and `design/IN_PROGRESS.md`/`design/COMPLETED.md`.

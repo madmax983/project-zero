@@ -46,6 +46,7 @@ pub fn setup_world() -> World {
     world.init_resource::<crate::layer1::logistics::mycelial::MycelialNetwork>();
     world.init_resource::<crate::layer1::social::politics::ElectionCycle>();
     world.init_resource::<crate::layer1::social::politics::ActiveMandate>();
+    world.init_resource::<bevy_ecs::event::Events<crate::layer1::cassandra_syndrome::DisasterOccurredEvent>>();
     world.init_resource::<bevy_ecs::prelude::Events<crate::layer1::logistics::mycelial::ContaminationEvent>>();
     world.init_resource::<bevy::prelude::Events<
         crate::layer1::economy::existential_audit::ExistentialAuditCompletedEvent,
