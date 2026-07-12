@@ -886,14 +886,11 @@
 
 - [x] `285` Echoes of the Past — `specs/285-echoes-of-the-past.md` — completed 2026-10-31
 
-- [x] `1310` The Feral Administration — `specs/1310-the-feral-administration.md` — completed 2026-10-31
 
-- [x] `1310` The Feral Administration — `specs/1310-the-feral-administration.md` — completed 2026-10-31
 - [x] `1309` The Asteroid Hermits — `specs/1309-the-asteroid-hermits.md` — completed 2024-05-31
 
 - [x] `1006` The Terraforming Rejection — `specs/1006-the-terraforming-rejection.md` — completed 2026-02-01
 - [x] `318` The Stolen Fleet — `specs/318-stolen-fleet.md` — completed 2026-10-31
-- [x] `INT-1310` Integration: The Feral Administration -> Chronicle — completed 2024-05-31
 - [x] `1004` The Orbital Secession — `specs/1004-orbital-secession.md` — completed 2026-07-06
 
 - [x] `1311` The Dreaming Sickness — `specs/1311-the-dreaming-sickness.md` — completed 2026-10-31
@@ -911,3 +908,4 @@
 - [x] `INT-1311` Integration: The Dreaming Sickness -> Chronicle - completed 2026-10-31
 - [x] `1002` The Bio-Rhythmic Commute — `specs/1002-bio-rhythmic-commute.md` — completed 2026-11-01
 - [x] `INT-1267` Integration: Echoes of the Lost Fleet -> Chronicle — completed 2026-11-01
+- [x] `1310` The Feral Administration — `specs/1310-the-feral-administration.md` — completed 2026-10-31
