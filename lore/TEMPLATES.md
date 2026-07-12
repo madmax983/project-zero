@@ -10208,3 +10208,77 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 **Patterns:**
 - "[YEAR]: We finally understood [ALIEN_LANGUAGE_NAME] at [COLONY]."
 - "The translators at [COLONY] broke the code for [ALIEN_LANGUAGE_NAME]. [YEAR]."
+
+## Localized Gravity Vectors Templates (Spec 1312)
+
+### Template: GRAVITY_FAILURE_FALL
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [POP_NAME], [GRAVITY_STATE]
+**Patterns:**
+- "[YEAR]: The local gravity plates failed. [POP_NAME] fell towards [GRAVITY_STATE] in [COLONY]."
+- "A sudden loss of artificial gravity. [POP_NAME] plummeted into the [GRAVITY_STATE] below [COLONY]. [YEAR]."
+- "[COLONY], [YEAR]: The floor became a wall. [POP_NAME] suffered a terrifying fall towards [GRAVITY_STATE]."
+
+### Template: GRAVITY_TRANSITION_DISORIENTATION
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [POP_NAME], [ORIENTATION]
+**Patterns:**
+- "[YEAR]: Crossing the threshold, [POP_NAME] felt a sudden shift as [ORIENTATION] became the new down."
+- "The curvature of the habs is disorienting. [POP_NAME] stumbled as they adjusted to [ORIENTATION]. [YEAR]."
+- "[COLONY] architecture defies nature. [POP_NAME] walked onto the ceiling, treating [ORIENTATION] as the floor. [YEAR]."
+
+## Harmonic Mining Templates (Spec 1322)
+
+### Template: HARMONIC_RESONANCE_MINING
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [FREQUENCY_MATCH], [RESOURCE_TYPE]
+**Patterns:**
+- "[YEAR]: The sonic drills tuned to [FREQUENCY_MATCH] shattered the bedrock, yielding [RESOURCE_TYPE]."
+- "We sing to the stone. A resonance of [FREQUENCY_MATCH] brought down the ore face, securing [RESOURCE_TYPE]. [YEAR]."
+- "[COLONY], [YEAR]: Harmonic mining success. The [FREQUENCY_MATCH] frequency extracted [RESOURCE_TYPE] effortlessly."
+
+### Template: COLLATERAL_SHATTER
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [SHATTERED_MATERIAL], [BUILDING_NAME]
+**Patterns:**
+- "[YEAR]: The mining frequency matched our own structures. The [SHATTERED_MATERIAL] of the [BUILDING_NAME] shattered."
+- "A catastrophic miscalculation. The sonic drill resonated with [SHATTERED_MATERIAL], destroying the [BUILDING_NAME] in [COLONY]. [YEAR]."
+- "[COLONY], [YEAR]: The [BUILDING_NAME] collapsed into dust as its [SHATTERED_MATERIAL] fell victim to the harmonic drills."
+
+## The Asteroid Hermits Templates (Spec 1309)
+
+### Template: HERMIT_EXODUS
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [HERMIT_COUNT]
+**Patterns:**
+- "[YEAR]: The isolation is preferable. [HERMIT_COUNT] souls left [COLONY] to live on barren rocks."
+- "[COLONY] watched [HERMIT_COUNT] of its best abandon society for the quiet of the asteroids. [YEAR]."
+- "An exodus from the noise. [HERMIT_COUNT] miners departed [COLONY] to forge a life in the void. [YEAR]."
+
+### Template: HERMIT_DISCOVERY
+**Generates:** Play event (chronicle during game)
+**Slots:** [OUTPOST_NAME], [YEAR], [ARTIFACT_TYPE]
+**Patterns:**
+- "[YEAR]: From the silent rocks, [OUTPOST_NAME] transmits a strange discovery: [ARTIFACT_TYPE]."
+- "The hermits found something. A signal from [OUTPOST_NAME] claims they unearthed [ARTIFACT_TYPE]. [YEAR]."
+- "[OUTPOST_NAME], [YEAR]: Their isolation yielded fruit. They found [ARTIFACT_TYPE] in the deep dark."
+
+## The Feral Administration Templates (Spec 1310)
+
+### Template: FORM_AVALANCHE
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [FORM_TYPE]
+**Patterns:**
+- "[YEAR]: The administrative sectors of [COLONY] are choked. A literal avalanche of [FORM_TYPE] blocking the halls."
+- "Unmanned buildings spouting endless bureaucracy. [COLONY] is drowning in [FORM_TYPE]. [YEAR]."
+- "[COLONY], [YEAR]: We cannot pass. The unpowered offices generated walls of [FORM_TYPE]."
+
+## The Dreaming Sickness Templates (Spec 1311)
+
+### Template: SICKNESS_OUTBREAK
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [DREAM_VISION]
+**Patterns:**
+- "[YEAR]: The sickness spreads through sleep. [COLONY] is paralyzed as souls choose the dream of [DREAM_VISION] over waking."
+- "Entire shifts lie dormant. They sleep to see [DREAM_VISION]. [COLONY] grinds to a halt. [YEAR]."
+- "[COLONY], [YEAR]: The collective hallucination takes hold. They would rather starve than wake from [DREAM_VISION]."
