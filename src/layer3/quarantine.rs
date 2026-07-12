@@ -1,5 +1,5 @@
-use bevy::prelude::*;
 use crate::layer2::fleet::FleetOrder;
+use bevy::prelude::*;
 
 /// Marker component for star systems that are under quarantine
 #[derive(Component)]
