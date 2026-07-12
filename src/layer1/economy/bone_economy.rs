@@ -12,13 +12,7 @@ pub struct BoneCorpse {
 pub struct BoneExtractor;
 
 #[derive(Component, Default)]
-pub enum BoneExtractorAction {
-    ExtractingBone {
-        target: Entity,
-    },
-    #[default]
-    Idle,
-}
+pub struct BoneExtractorTarget(pub Option<Entity>);
 
 #[derive(Resource, Default)]
 pub struct UnrestTracker {
@@ -28,14 +22,14 @@ pub struct UnrestTracker {
 pub fn extract_bone_system(
     mut commands: Commands,
     mut extractors: Query<
-        (&mut Inventory, &mut StressTracker, &mut BoneExtractorAction),
+        (&mut Inventory, &mut StressTracker, &mut BoneExtractorTarget),
         With<BoneExtractor>,
     >,
     mut corpses: Query<&mut BoneCorpse>,
     mut unrest: ResMut<UnrestTracker>,
 ) {
     for (mut inventory, mut stress, mut action) in extractors.iter_mut() {
-        if let BoneExtractorAction::ExtractingBone { target } = *action {
+        if let Some(target) = action.0 {
             if let Ok(mut corpse) = corpses.get_mut(target) {
                 if corpse.bone_yield > 0.0 {
                     let amount = corpse.bone_yield;
@@ -55,7 +49,7 @@ pub fn extract_bone_system(
                     stress.accumulated_stress += 20.0;
                 }
             }
-            *action = BoneExtractorAction::Idle;
+            action.0 = None;
         }
     }
 }
@@ -85,9 +79,7 @@ mod tests {
                 Inventory::default(),
                 StressTracker::default(),
                 BoneExtractor,
-                BoneExtractorAction::ExtractingBone {
-                    target: corpse_entity,
-                },
+                BoneExtractorTarget(Some(corpse_entity)),
             ))
             .id();
 
@@ -124,9 +116,7 @@ mod tests {
             Inventory::default(),
             StressTracker::default(),
             BoneExtractor,
-            BoneExtractorAction::ExtractingBone {
-                target: corpse_entity,
-            },
+            BoneExtractorTarget(Some(corpse_entity)),
         ));
 
         let mut schedule = Schedule::default();

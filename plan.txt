@@ -1,17 +1,58 @@
-1. We need to implement The Bio-Rhythmic Commute mechanic defined in spec 1002.
-2. We'll modify `src/layer1/flora.rs` (which already defines `FloraType` and has tests):
-    * Add `Lumiflora` to `FloraType` enum.
-    * Add `BloomPhase` enum (`Dormant`, `Blooming`, `Hibernation`).
-    * Add `LumifloraCycle` component with `phase` and `time_in_phase`.
-    * Add `BioRhythmSync` component.
-    * Add `lumiflora_bloom_system`.
-    * Add `apply_bio_rhythm_aura`.
-    * Note: the `apply_bio_rhythm_aura` system needs to apply the effects to `BioRhythmSync` and potentially `Needs`. As per spec, it sets `needs.rest = 0.0` when entering Hibernation.
-3. We'll modify `src/layer1/execution/general_work.rs`:
-    * Hook up `BioRhythmSync` into `get_status_modifiers` to apply its `work_speed_multiplier` if `is_synced` is true.
-4. Modify `src/layer1/systems/execution.rs`:
-    * Add `lumiflora_bloom_system` and `apply_bio_rhythm_aura` into the execution schedule.
-5. Add the RED phase tests from the spec to `src/layer1/flora.rs`, adjusting them to use `Needs` instead of `NeedSleep` (since `NeedSleep` was a speculative component, whereas `Needs` with `.rest` is what the actual codebase uses).
-6. Implement the missing logic (GREEN phase).
-7. Ensure we have 85% coverage for the new components (cargo test).
-8. Verify everything works.
+1. Execute the following bash script to modify `src/layer1/economy/bone_economy.rs`, replacing the 2-variant enum `BoneExtractorAction` with a concrete tuple struct `BoneExtractorTarget(pub Option<Entity>)`.
+```bash
+cat << 'PYEOF' > modify.py
+import re
+
+with open('src/layer1/economy/bone_economy.rs', 'r') as f:
+    content = f.read()
+
+# Replace the enum definition
+enum_block = """#[derive(Component, Default)]
+pub enum BoneExtractorAction {
+    ExtractingBone {
+        target: Entity,
+    },
+    #[default]
+    Idle,
+}"""
+struct_block = """#[derive(Component, Default)]
+pub struct BoneExtractorTarget(pub Option<Entity>);"""
+content = content.replace(enum_block, struct_block)
+
+# Replace the type usage
+content = content.replace("BoneExtractorAction", "BoneExtractorTarget")
+
+# Replace system logic
+content = content.replace(
+    "if let BoneExtractorTarget::ExtractingBone { target } = *action {",
+    "if let Some(target) = action.0 {"
+)
+content = content.replace(
+    "*action = BoneExtractorTarget::Idle;",
+    "action.0 = None;"
+)
+
+# Replace test instantiations
+content = re.sub(
+    r"BoneExtractorTarget::ExtractingBone\s*\{\s*target:\s*([a-zA-Z0-9_]+),\s*\}",
+    r"BoneExtractorTarget(Some(\1))",
+    content
+)
+
+with open('src/layer1/economy/bone_economy.rs', 'w') as f:
+    f.write(content)
+PYEOF
+python3 modify.py
+```
+2. Run `git diff src/layer1/economy/bone_economy.rs` to confirm the replacements were applied correctly.
+3. Append the critical learning to `.jules/razor.md` using the following exact command:
+```bash
+cat << 'MD_EOF' >> .jules/razor.md
+## [Reduction]
+**Bloat:** A 2-variant enum BoneExtractorAction that was functionally identical to an Option<Entity>.
+**Cut:** Replaced the enum with a concrete tuple struct BoneExtractorTarget(pub Option<Entity>) to leverage standard Rust idioms and reduce cognitive load.
+**Saved:** Eliminated custom enum pattern matching in favor of standard Option logic.
+MD_EOF
+```
+4. Run the test suite using `cargo test` and `cargo clippy --all-targets --all-features -- -D warnings` to ensure changes have not introduced regressions and meet clippy standards.
+5. Complete pre-commit steps to ensure proper testing, verification, review, and reflection are done.

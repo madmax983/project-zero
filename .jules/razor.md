@@ -18,3 +18,7 @@
 **Bloat:** 1-variant enums (`ProtocolRule`, `PowerGridEvent`) that add unnecessary abstraction.
 **Cut:** Eliminated the enums. Converted `DeadProtocol` to a unit struct and `PowerGridEvent` to a normal struct.
 **Saved:** Reduced cognitive load and unnecessary enum pattern matching.
+## [Reduction]
+**Bloat:** A 2-variant enum BoneExtractorAction that was functionally identical to an Option<Entity>.
+**Cut:** Replaced the enum with a concrete tuple struct BoneExtractorTarget(pub Option<Entity>) to leverage standard Rust idioms and reduce cognitive load.
+**Saved:** Eliminated custom enum pattern matching in favor of standard Option logic.
