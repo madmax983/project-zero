@@ -38,3 +38,4 @@ pub mod zoo_hypothesis;
 
 pub mod galaxy;
 pub mod sovereign_armada;
+pub mod quarantine;
