@@ -1,3 +1,4 @@
+#![allow(unused_imports)]
 use crate::layer1::architecture::structure::Structure;
 use crate::layer1::core::map::GridPosition;
 use crate::layer1::economy::resources::ResourceType;

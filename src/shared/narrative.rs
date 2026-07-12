@@ -151,19 +151,56 @@ impl std::fmt::Display for NarrativeSegment {
 ///
 /// assert_eq!(context.get("CIV_NAME"), Some(&"Terran Dominion".to_string()));
 /// ```
+/// A dynamic context used to fill variables in narrative templates.
+///
+/// The `NarrativeContext` stores a map of variable keys to their string values.
+/// When a template is generated, it replaces placeholders like `{CIV_NAME}`
+/// with the corresponding value from this context.
+///
+/// ## Examples
+///
+/// ```
+/// use scale::shared::narrative::NarrativeContext;
+///
+/// let mut context = NarrativeContext::default();
+/// context.insert("YEAR", "2150");
+/// context.insert("CIV_NAME", "Terran Dominion");
+///
+/// assert_eq!(context.get("YEAR").unwrap(), "2150");
+/// ```
 #[derive(Debug, Default, Clone)]
 pub struct NarrativeContext {
     slots: HashMap<String, String>,
 }
 
 impl NarrativeContext {
-    /// Create a new context.
+    /// Creates a new, empty narrative context.
+    ///
+    /// The context is used to hold dynamic values that will be injected into generated text.
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use scale::shared::narrative::NarrativeContext;
+    /// let context = NarrativeContext::new();
+    /// ```
     #[must_use]
     pub fn new() -> Self {
         Self::default()
     }
 
-    /// Insert a value for a slot (e.g., "`CIV_NAME`" -> "The Empire").
+    /// Inserts a variable into the context for template generation.
+    ///
+    /// Replaces the value if the key already exists.
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use scale::shared::narrative::NarrativeContext;
+    /// let mut ctx = NarrativeContext::new();
+    /// ctx.insert("LEADER_NAME", "Alexander");
+    /// assert_eq!(ctx.get("LEADER_NAME").unwrap(), "Alexander");
+    /// ```
     pub fn insert<V: ToString>(&mut self, key: &str, value: V) {
         self.slots.insert(key.to_string(), value.to_string());
     }
@@ -542,8 +579,30 @@ impl NarrativeGenerator {
     /// assert_eq!(story, "Hello Traveler!");
     /// ```
     ///
-    /// # Errors
-    /// Returns an error if the template ID is not found or if the template has no patterns.
+    /// Generates a complete string from a template and context.
+    ///
+    /// Resolves fragments recursively and replaces variables using the provided context.
+    ///
+    /// ## Errors
+    /// Returns [`NarrativeError::TemplateNotFound`] if the template ID is not loaded.
+    /// Returns [`NarrativeError::MissingContext`] if a variable required by the template is missing in the context.
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use scale::shared::narrative::{NarrativeGenerator, NarrativeContext, NarrativeError};
+    /// let mut generator = NarrativeGenerator::default();
+    /// generator.add_template("BATTLE".to_string(), vec!["The Rebels attacked.".to_string()]);
+    ///
+    /// let mut context = NarrativeContext::new();
+    ///
+    /// // Fails because MISSING_TEMPLATE is not loaded
+    /// let err = generator.generate("MISSING_TEMPLATE", &context).unwrap_err();
+    /// assert!(matches!(err, NarrativeError::TemplateNotFound(_)));
+    ///
+    /// let success = generator.generate("BATTLE", &context).unwrap();
+    /// assert_eq!(success, "The Rebels attacked.");
+    /// ```
     pub fn generate(
         &self,
         template_id: &str,

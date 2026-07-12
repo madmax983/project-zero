@@ -1,8 +1,11 @@
 #![allow(deprecated)]
-//! System for Oral Tradition and Folk Tales.
+//! # The Oral Tradition (Nova Feature)
 //!
-//! Converts colony history (Chronicle) into living legends that are shared in taverns.
-//! Stories evolve over time, gaining mutations and providing buffs to listeners.
+//! Converts colony history ([`crate::layer1::core::chronicle::Chronicle`]) into living legends that are shared in taverns.
+//! Stories evolve over time, gaining mutations and providing psychological buffs or debuffs to listeners.
+//!
+//! ⚠️ **NOTE:** This module requires the `nova` feature to be enabled.
+
 
 #[cfg(feature = "nova")]
 use crate::layer1::core::chronicle::{Chronicle, EventImportance};
