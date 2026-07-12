@@ -911,3 +911,4 @@
 - [x] `INT-1311` Integration: The Dreaming Sickness -> Chronicle - completed 2026-10-31
 - [x] `1002` The Bio-Rhythmic Commute — `specs/1002-bio-rhythmic-commute.md` — completed 2026-11-01
 - [x] `INT-1267` Integration: Echoes of the Lost Fleet -> Chronicle — completed 2026-11-01
+- [x] `996` Interstellar Quarantine Fields — `specs/996-interstellar-quarantine-fields.md` — completed 2026-07-12

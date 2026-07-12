@@ -574,7 +574,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `994` The Kinetic Heist — `specs/994-the-kinetic-heist.md`
 
 - [ ] `995` Fungal Networking — `specs/995-fungal-networking.md`
-- [ ] `996` Interstellar Quarantine Fields — `specs/996-interstellar-quarantine-fields.md`
 - [ ] `997` Subspace Stowaways — `specs/997-subspace-stowaways.md`
 - [ ] `998` The Symbiotic Data-Weavers — `specs/998-symbiotic-data-weavers.md`
 - [ ] `999` Interplanetary Pollination — `specs/999-interplanetary-pollination.md`
