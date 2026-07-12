@@ -7,14 +7,12 @@
 //! However, if the colony expands recklessly and builds over an existing grave,
 //! it triggers a `SacrilegeEvent`, representing the defilement of sacred ground.
 
-
 use crate::layer1::funeral::Grave;
 use crate::layer1::map::GridPosition;
 use crate::layer1::needs::Needs;
 use crate::layer1::pop::Pop;
 use crate::layer1::social::Relationships;
 use bevy_ecs::prelude::*;
-
 
 /// Triggered when a new building is constructed over an existing [`Grave`].
 #[derive(Event, Debug, PartialEq)]
@@ -104,7 +102,11 @@ pub fn grave_visit_system(
 /// ```
 pub fn handle_pop_death(world: &mut World, pop_entity: Entity) {
     let pos = *world.get::<GridPosition>(pop_entity).unwrap();
-    let name = world.get::<crate::layer1::entities::pop::PopName>(pop_entity).unwrap().0.clone();
+    let name = world
+        .get::<crate::layer1::entities::pop::PopName>(pop_entity)
+        .unwrap()
+        .0
+        .clone();
 
     world.despawn(pop_entity);
 
@@ -117,7 +119,11 @@ pub fn handle_pop_death(world: &mut World, pop_entity: Entity) {
     ));
 }
 
-pub fn place_building(world: &mut World, building: crate::layer1::building::BuildingType, pos: GridPosition) -> Result<(), &'static str> {
+pub fn place_building(
+    world: &mut World,
+    building: crate::layer1::building::BuildingType,
+    pos: GridPosition,
+) -> Result<(), &'static str> {
     let mut grave_to_remove = None;
     let mut query = world.query::<(Entity, &GridPosition, &Grave)>();
     for (entity, g_pos, _) in query.iter(world) {
@@ -129,10 +135,17 @@ pub fn place_building(world: &mut World, building: crate::layer1::building::Buil
 
     if let Some(e) = grave_to_remove {
         world.despawn(e);
-        world.resource_mut::<Events<SacrilegeEvent>>().send(SacrilegeEvent { pos });
+        world
+            .resource_mut::<Events<SacrilegeEvent>>()
+            .send(SacrilegeEvent { pos });
     }
 
-    world.spawn((crate::layer1::architecture::building::Building { building_type: building }, pos));
+    world.spawn((
+        crate::layer1::architecture::building::Building {
+            building_type: building,
+        },
+        pos,
+    ));
     Ok(())
 }
 
@@ -166,17 +179,26 @@ pub fn build_system_wrapper(
 
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::system::RunSystemOnce;
     use super::*;
+    use bevy_ecs::system::RunSystemOnce;
 
     #[test]
     fn test_sacrilege_morale_system() {
         let mut world = World::new();
         world.init_resource::<Events<SacrilegeEvent>>();
 
-        let pop = world.spawn(Needs { leisure: 1.0, ..Default::default() }).id();
+        let pop = world
+            .spawn(Needs {
+                leisure: 1.0,
+                ..Default::default()
+            })
+            .id();
 
-        world.resource_mut::<Events<SacrilegeEvent>>().send(SacrilegeEvent { pos: GridPosition { x: 0, y: 0 } });
+        world
+            .resource_mut::<Events<SacrilegeEvent>>()
+            .send(SacrilegeEvent {
+                pos: GridPosition { x: 0, y: 0 },
+            });
 
         world.run_system_once(sacrilege_morale_system).unwrap();
 
@@ -189,17 +211,22 @@ mod tests {
         let mut world = World::new();
         let pos = GridPosition { x: 5, y: 5 };
 
-        let pop_entity = world.spawn((
-            Pop,
-            pos,
-            crate::layer1::entities::pop::PopName("Miner Bob".to_string()),
-        )).id();
+        let pop_entity = world
+            .spawn((
+                Pop,
+                pos,
+                crate::layer1::entities::pop::PopName("Miner Bob".to_string()),
+            ))
+            .id();
 
         // Trigger death logic
         handle_pop_death(&mut world, pop_entity);
 
         // Verify grave exists at the position
-        let graves = world.query_filtered::<&GridPosition, With<Grave>>().iter(&world).collect::<Vec<_>>();
+        let graves = world
+            .query_filtered::<&GridPosition, With<Grave>>()
+            .iter(&world)
+            .collect::<Vec<_>>();
         assert_eq!(graves.len(), 1);
         assert_eq!(*graves[0], pos);
 
@@ -214,16 +241,22 @@ mod tests {
 
         let pos = GridPosition { x: 5, y: 5 };
 
-        let grave_entity = world.spawn((
-            Grave {
-                occupied: false,
-                corpse_name: Some("Miner Bob".to_string()),
-            },
-            pos,
-        )).id();
+        let grave_entity = world
+            .spawn((
+                Grave {
+                    occupied: false,
+                    corpse_name: Some("Miner Bob".to_string()),
+                },
+                pos,
+            ))
+            .id();
 
         // Attempt to place building over grave
-        let result = place_building(&mut world, crate::layer1::building::BuildingType::Office, pos);
+        let result = place_building(
+            &mut world,
+            crate::layer1::building::BuildingType::Office,
+            pos,
+        );
         assert!(result.is_ok()); // The building should be allowed
 
         // The grave should be destroyed or marked overwritten
@@ -301,7 +334,13 @@ pub fn visit_grave_system(
 ) {
     for (grave_pos, grave) in grave_query.iter() {
         for (pop_pos, relationships, mut needs) in query.iter_mut() {
-            if pop_pos.x.abs_diff(grave_pos.x) <= 1 && pop_pos.y.abs_diff(grave_pos.y) <= 1 && relationships.affinities.iter().any(|(e, aff)| *e == grave.original_entity && *aff >= 80.0) {
+            if pop_pos.x.abs_diff(grave_pos.x) <= 1
+                && pop_pos.y.abs_diff(grave_pos.y) <= 1
+                && relationships
+                    .affinities
+                    .iter()
+                    .any(|(e, aff)| *e == grave.original_entity && *aff >= 80.0)
+            {
                 needs.leisure = (needs.leisure + 0.1).clamp(0.0, 1.0);
             }
         }
