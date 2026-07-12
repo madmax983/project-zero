@@ -31,3 +31,7 @@
 🤦 **The Confusion:** "I triggered an error on purpose with the `NarrativeGenerator` and used `.to_table()`. It printed a beautiful table! But when I tried to pattern match it with `Option` or use it elsewhere, the compiler yelled at me. It turns out it returns a `comfy_table::Table`."
 🕵️ **The Reality:** "The method `to_table()` returns `comfy_table::Table` directly, exposing an internal dependency and forcing users to use `comfy_table` in their own code to handle it."
 💡 **The Fix:** "Return a `String` instead of `comfy_table::Table` to decouple the public API from internal rendering crates."
+## [DX DX Fixes]
+**Friction:** The README explicitly warns that using the `nova` feature examples without the `nova` feature enabled will result in a compiler error (E0422/E0433) due to undeclared types. However, a helpful developer added fallback stubs guarded by `#[cfg(not(feature = "nova"))]` but failed to export them correctly through `prelude.rs`, creating an inconsistent DX. Additionally, the prelude components like `Building` and `Pop` were present but their modular aliases were confusing.
+**Fix:** Removed the `#[cfg(not(feature = "nova"))]` fallback structs from `src/layer1/oral_tradition.rs` entirely. By deleting the partially-functional fallbacks, the codebase correctly fails to compile with an "undeclared type" error when the user forgets the feature flag, exactly as the README documents, ensuring a single source of truth for the developer experience.
+**Result:** DX is restored to the documented specification.
