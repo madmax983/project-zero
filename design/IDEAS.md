@@ -27820,3 +27820,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you ruthlessly demolish their religious infrastructure to force them back to work, triggering a holy war, or do you artificially maintain the illusion by manually flying supply routes to keep them docile?
 
 ---
+
+## The Xenoflora Symbiosis Cult
+
+**Layer:** 1
+
+**Fantasy:** A faction of colonists embraces the alien ecosystem a little too closely, blurring the line between human and plant.
+
+**Mechanic:** Pops exposed to certain Xenoflora can develop a "Symbiotic" trait. They gain massive environmental resistance and food independence (photosynthesis) but refuse to live in standard sealed housing or use advanced technology.
+
+**Emergence:** You might find a whole sector of your colony abandoned by normal pops and overgrown with alien vines, where the Cult thrives happily but refuses to work in factories or build defensive structures.
+
+**Tension:** Do you purge the cult to reclaim the land for industry, or let them live as a highly self-sufficient, but uncontrollable, buffer zone?
+
+---
+
+## The Sentient Hyperlane
+
+**Layer:** 2 -> 3
+
+**Fantasy:** The pathways between the stars aren't just empty space—they're alive, and they're watching.
+
+**Mechanic:** A specific hyperlane in your sector begins reacting to the volume and intent of traffic. Heavy military traffic causes the lane to "contract," slowing fleets and damaging armor, while peaceful trade or science ships "widen" it, making travel instantaneous.
+
+**Emergence:** You prepare for a massive invasion, sending your grand fleet through the lane. The lane violently reacts, crushing half your dreadnoughts and scattering the rest, turning an easy victory into a desperate scramble for survival.
+
+**Tension:** Do you maintain a peaceful façade to keep the lane open, or risk destroying your own fleets to punch through when war is necessary?
+
+---
+
+## Generational Debt Prisons
+
+**Layer:** Cross-layer
+
+**Fantasy:** Extracting value from the condemned, not just for their lives, but for their children's lives.
+
+**Mechanic:** When a Pop commits a major crime, they and their descendants are assigned to a "Debt Prison" colony (Layer 1). They work at hyper-efficiency in brutal conditions to pay off an astronomical "Debt" to the core worlds (Layer 2).
+
+**Emergence:** After centuries, the Debt Prison colony develops a unique, hardened culture. They finally pay off their debt, but instead of joining your empire peacefully, they use their hyper-efficient industrial base to instantly build a massive revenge fleet.
+
+**Tension:** Do you endlessly increase their debt to keep them enslaved (risking a violent uprising), or let them earn their freedom and deal with the societal consequences of their return?
+
+---
