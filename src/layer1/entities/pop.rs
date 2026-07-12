@@ -551,6 +551,15 @@ pub fn handle_pop_death_system(
         }
 
         // 4. Emit PopDied Event
+        if let Some(pos) = pos_opt {
+            commands.spawn((
+                crate::layer1::culture::funeral::Grave {
+                    occupied: false,
+                    corpse_name: Some(name.clone()),
+                },
+                *pos,
+            ));
+        }
         pop_died_events.send(PopDied {
             entity,
             name,
