@@ -786,8 +786,10 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
     ));
     schedule.add_systems((
         crate::layer2::integration::predecessor_orbital_shield_bridge_system,
+        crate::layer3::quarantine::enforce_quarantine_system,
         crate::layer2::fleet::fleet_order_system
-            .after(crate::layer2::integration::predecessor_orbital_shield_bridge_system),
+            .after(crate::layer2::integration::predecessor_orbital_shield_bridge_system)
+            .after(crate::layer3::quarantine::enforce_quarantine_system),
         crate::layer2::station::build_station_system,
         crate::layer2::station::process_drydock_construction_system,
         crate::layer2::dead_protocols::protocol_violation_system,

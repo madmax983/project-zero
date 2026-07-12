@@ -429,6 +429,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<Events<crate::layer2::stolen_fleet::WarDeclarationEvent>>();
     world.init_resource::<Events<crate::layer2::events::ShipDestroyedEvent>>();
     world.init_resource::<Events<crate::layer2::dead_protocols::ViolationEvent>>();
+    world.init_resource::<Events<crate::layer3::quarantine::QuarantineBounceEvent>>();
     world.init_resource::<Events<crate::layer2::orbital_mirrors::MirrorFocusEvent>>();
 
     world.init_resource::<Events<crate::layer3::map::HyperlaneCollapseEvent>>();
