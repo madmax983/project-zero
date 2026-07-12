@@ -1,2 +1,1 @@
 - [x] `INT-1305` Integration: The Cassandra Syndrome -> Chronicle - claimed 2026-10-31
-- [x] `1310` The Feral Administration — `specs/1310-the-feral-administration.md` — claimed 2026-10-31

@@ -158,4 +158,29 @@ mod tests {
             .resource::<crate::layer1::core::spatial::OccupiedTiles>();
         assert!(grid.0.contains(&(10, 10)));
     }
+
+    #[test]
+    fn test_feral_admin_chronicle_bridge() {
+        let mut app = App::new();
+        app.add_systems(Update, feral_admin_chronicle_bridge);
+        app.init_resource::<bevy_ecs::event::Events<crate::layer1::core::chronicle::AddChronicleEvent>>();
+
+        app.world_mut()
+            .spawn((UnprocessedForms { stack_size: 10 },));
+
+        app.update();
+
+        let events = app
+            .world()
+            .resource::<bevy_ecs::event::Events<crate::layer1::core::chronicle::AddChronicleEvent>>(
+            );
+        #[allow(deprecated)]
+        let mut reader = events.get_reader();
+        let emitted: Vec<_> = reader.read(events).collect();
+        assert_eq!(emitted.len(), 1);
+        assert_eq!(
+            emitted[0].importance,
+            crate::layer1::core::chronicle::EventImportance::Minor
+        );
+    }
 }
