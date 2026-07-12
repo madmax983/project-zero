@@ -928,6 +928,9 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         crate::layer2::integration::pre_trade_route_sync_system
             .before(crate::layer2::trade::routes::execute_trade_routes_system),
         crate::layer2::trade::routes::execute_trade_routes_system,
+
+
+
         crate::layer3::integration::language_drift_trade_bridge
             .after(crate::layer2::trade::routes::execute_trade_routes_system),
         crate::layer2::trade::routes::increase_route_complexity_system,
@@ -1437,6 +1440,8 @@ mod tests {
         world.init_resource::<Events<crate::layer2::trade::blockade::TradeShipArrivalEvent>>();
         world.init_resource::<Events<crate::layer2::trade::routes::SentientTollDemandEvent>>();
         world.init_resource::<Events<crate::layer2::trade::routes::TradeRouteExecutedEvent>>();
+        world.init_resource::<Events<crate::layer3::quarantine::QuarantineBounceEvent>>();
+
         world.init_resource::<Events<crate::layer2::trade::escape_velocity::LaunchShipEvent>>();
         world.init_resource::<crate::layer2::trade::blockade::ColonyDebt>();
 
@@ -1473,6 +1478,8 @@ mod tests {
         world.init_resource::<Events<crate::layer2::trade::biomass_tariff::TradeDeal>>();
 
         world.init_resource::<Events<crate::layer2::trade::routes::TradeRouteExecutedEvent>>();
+        world.init_resource::<Events<crate::layer3::quarantine::QuarantineBounceEvent>>();
+
         world.init_resource::<Events<crate::layer2::trade::feral_logistics::FeralDeliveryTriggerEvent>>();
         world.init_resource::<Events<crate::layer2::ship::logistics::StrandedEvent>>();
 

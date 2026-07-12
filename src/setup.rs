@@ -503,6 +503,8 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<Events<crate::layer1::social::slippery_slope::AtrocityEvent>>();
     world.init_resource::<Events<crate::layer1::social::slippery_slope::MoraleBuffEvent>>();
     world.init_resource::<Events<crate::layer1::social::slippery_slope::StressPenaltyEvent>>();
+    world.init_resource::<Events<crate::layer3::quarantine::QuarantineBounceEvent>>();
+
     world.init_resource::<Events<crate::layer3::events::debt_prison::AcceptBailoutEvent>>();
 
     world.init_resource::<Events<crate::layer1::memory_core::ImplantMemoryCoreEvent>>();

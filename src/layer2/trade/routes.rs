@@ -117,6 +117,7 @@ pub fn execute_trade_routes_system(
     mut colonies: Query<&mut Colony>,
     mut events: EventWriter<TradeRouteExecutedEvent>,
     market: Option<Res<crate::layer3::market::GalacticMarket>>,
+    quarantined: Query<&crate::layer3::quarantine::Quarantined>,
 ) {
     for (route, mut timer) in routes.iter_mut() {
         if timer.0 > 0 {
@@ -124,6 +125,12 @@ pub fn execute_trade_routes_system(
         }
         if timer.0 == 0 {
             let mut can_trade = true;
+
+            // Check for Quarantine
+            if quarantined.get(route.source).is_ok() || quarantined.get(route.destination).is_ok() {
+                can_trade = false;
+            }
+
             if let Some(ref market) = market {
                 if let Some(res_type) = parse_resource(&route.item_type) {
                     if !market.can_trade(

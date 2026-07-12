@@ -823,10 +823,10 @@
 - [x] `INT-1284` Integration: Sartorial Rebellion -> Simulation Schedule — completed 2026-10-31
 - [x] `INT-1272` Integration: The Phantom Limb of Logistics -> Chronicle - completed 2024-05-31
 - [x] `294` The Bone Economy — `specs/294-bone-economy.md` — completed 2026-02-01
-- [x] `301` The Memory Tithe — `specs/301-memory-tithe.md` — completed 2024-06-01
+- [x] `301` The Memory Tithe — `specs/301-memory-tithe.md` — completed 2026-06-01
 - [x] `1030` Gravity Engineering — `specs/1030-gravity-engineering.md` — completed 2026-10-31
 - [x] `1031` The Mycelial Network — `specs/1031-the-mycelial-network.md` — completed 2026-06-25
-- [x] `1036` Institutional Memory — `specs/1036-institutional-memory.md` — completed 2024-06-01
+- [x] `1036` Institutional Memory — `specs/1036-institutional-memory.md` — completed 2026-06-01
 - [x] `INT-1030` Integration: Gravity Engineering -> Chronicle — completed 2024-05-31
 - [x] `313` The Fungal Network — `specs/313-fungal-network.md` — completed 2026-06-24
 - [x] `INT-313` Integration: Fungal Network -> Chronicle — completed 2026-10-31
@@ -910,3 +910,4 @@
 - [x] `INT-1267` Integration: Echoes of the Lost Fleet -> Chronicle — completed 2026-11-01
 - [x] `1310` The Feral Administration — `specs/1310-the-feral-administration.md` — completed 2026-10-31
 - [x] `267` Ancestral Graves — `specs/267-ancestral-graves.md` — completed 2026-02-01
+- [x] `996` Interstellar Quarantine Fields — `specs/996-interstellar-quarantine-fields.md` — completed 2026-06-01

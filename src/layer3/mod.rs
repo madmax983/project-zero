@@ -19,6 +19,7 @@ pub mod fleets;
 pub mod ghost_ships;
 pub mod integration;
 pub mod linguistic_drift;
+pub mod quarantine;
 pub mod map;
 pub mod physics;
 pub mod pirates;
