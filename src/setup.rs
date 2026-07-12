@@ -365,6 +365,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<Events<AffinityChange>>();
     // world.init_resource::<Events<crate::layer1::DeathEvent>>();
     world.init_resource::<Events<PopDied>>();
+    world.init_resource::<Events<crate::layer1::culture::ancestral_graves::SacrilegeEvent>>();
     world.init_resource::<Events<crate::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
     world.init_resource::<Events<crate::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
     world.init_resource::<Events<crate::layer3::diplomacy::open_source_science::PublishDiscoveryEvent>>();
