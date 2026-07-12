@@ -10436,3 +10436,69 @@ Used for The Feral Administration anvalanches of paperwork.
 - the low-frequency hum of the Silicon Born
 - the telepathic static of the Ancients
 - the mathematical poetry of the Constructs
+
+## Localized Gravity Fragments (Spec 1312)
+
+## Fragment Type: [GRAVITY_STATE]
+- the true nadir
+- the global void
+- the parked starships
+- the unyielding ground
+- the absolute bottom
+
+## Fragment Type: [ORIENTATION]
+- the ceiling
+- a sharp incline
+- the western bulkhead
+- an impossible angle
+- the inverted sky
+
+## Harmonic Mining Fragments (Spec 1322)
+
+## Fragment Type: [FREQUENCY_MATCH]
+- Iron-Pitch
+- the Glass-Note
+- Deep-Stone Resonance
+- the Crystal-Chord
+- the Steel-Hum
+
+## Fragment Type: [SHATTERED_MATERIAL]
+- fragile bio-glass
+- rigid structural struts
+- sensitive optical arrays
+- delicate crystal panes
+- hardened steel plating
+
+## The Asteroid Hermits Fragments (Spec 1309)
+
+## Fragment Type: [OUTPOST_NAME]
+- Outpost Gamma-7
+- Silence Rock
+- The Hermit's Claim
+- Exile Node
+- The Quiet Stone
+
+## Fragment Type: [HERMIT_COUNT]
+- a dozen
+- fifty
+- hundreds of
+- a few stubborn
+- a wave of
+
+## The Feral Administration Fragments (Spec 1310)
+
+## Fragment Type: [FORM_TYPE]
+- Requisition Form 404
+- the Blue Receipts
+- Termination Notices
+- Compliance Affidavits
+- Sub-sector Zoning Applications
+
+## The Dreaming Sickness Fragments (Spec 1311)
+
+## Fragment Type: [DREAM_VISION]
+- a golden, perfect sun
+- the whispering origin-world
+- a quiet, green field
+- an endless, warm ocean
+- a sky without stars
