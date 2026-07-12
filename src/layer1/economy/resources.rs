@@ -1,3 +1,4 @@
+#![allow(clippy::items_after_test_module)]
 //! Resource management and mining mechanics.
 //!
 //! This module defines the colony's economic backbone: `ColonyResources` and the

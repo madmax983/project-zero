@@ -140,19 +140,25 @@ pub fn exchange_rumors_system(world: &mut World) {
     // ⚡ Bolt Optimization:
     // Collect pairs directly to avoid cloning `Vec<Entity>` for every tavern.
     // This reduces allocations per frame from N+1 to 1 flat vector of pairs.
-    let mut pairs = Vec::new();
+    // ⚡ Bolt Optimization:
+    // Replace imperative nested loops with flat_map to avoid manual Vec allocation
+    // and let Rust iterators optimize memory allocation capacity automatically.
     let mut query = world.query::<&Tavern>();
-    for tavern in query.iter(world) {
-        if tavern.visitors.len() >= 2 {
-            for &speaker in &tavern.visitors {
-                for &listener in &tavern.visitors {
+    let pairs: Vec<(Entity, Entity)> = query
+        .iter(world)
+        .filter(|tavern| tavern.visitors.len() >= 2)
+        .flat_map(|tavern| {
+            tavern.visitors.iter().flat_map(move |&speaker| {
+                tavern.visitors.iter().filter_map(move |&listener| {
                     if speaker != listener {
-                        pairs.push((speaker, listener));
+                        Some((speaker, listener))
+                    } else {
+                        None
                     }
-                }
-            }
-        }
-    }
+                })
+            })
+        })
+        .collect();
 
     for (speaker, listener) in pairs {
         share_rumor(world, speaker, listener);

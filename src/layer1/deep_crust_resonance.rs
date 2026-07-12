@@ -46,25 +46,17 @@ pub fn resonance_social_spread_system(
     q_infected: Query<&ResonantInfection>,
     mut q_morale: Query<(Entity, &mut Morale)>,
 ) {
-    let mut to_infect = Vec::new();
-
-    // Find all pops that have relationships
-    for (entity, _) in q_morale.iter() {
+    // ⚡ Bolt Optimization:
+    // Iterate mutably directly to avoid an intermediate `Vec<Entity>` allocation.
+    // This saves a heap allocation per frame.
+    for (entity, mut morale) in q_morale.iter_mut() {
         if let Ok(rel) = q_relationships.get(entity) {
-            // For every pop this pop has a relationship with
-            for (&target, &affinity) in &rel.affinities {
-                // If the target is infected and they are friends (or just related)
-                if q_infected.get(target).is_ok() && affinity > 0.0 {
-                    to_infect.push(entity);
-                    break; // Just need one infected friend to get paranoid
-                }
-            }
-        }
-    }
+            let has_infected_friend = rel
+                .affinities
+                .iter()
+                .any(|(&target, &affinity)| affinity > 0.0 && q_infected.get(target).is_ok());
 
-    for entity in to_infect {
-        if let Ok((_, mut morale)) = q_morale.get_mut(entity) {
-            if !morale.modifiers.iter().any(|m| m.label == "Paranoia") {
+            if has_infected_friend && !morale.modifiers.iter().any(|m| m.label == "Paranoia") {
                 morale.modifiers.push(MoodModifier {
                     label: "Paranoia".to_string(),
                     value: -0.05,
