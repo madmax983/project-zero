@@ -1,3 +1,4 @@
+- [x] `299` Temporal Smuggling — `specs/299-temporal-smuggling.md` — completed 2024-05-31
 
 - [x] `317` The Orbital Junkyard — `specs/317-orbital-junkyard.md` — completed 2026-07-07
 - [x] `INT-1018` Integration: Planetary Scarring -> Chronicle - completed 2026-10-31
