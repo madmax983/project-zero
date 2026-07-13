@@ -99,6 +99,9 @@ pub fn build_simulation_schedule() -> Schedule {
 fn init_simulation_resources(world: &mut World) {
     world.init_resource::<bevy_ecs::event::Events<crate::layer1::tech::temporal_smuggling::OpenRiftEvent>>();
     world.init_resource::<bevy_ecs::event::Events<crate::layer1::tech::temporal_smuggling::PayTemporalDebtEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<crate::layer1::disasters::DisasterEvent>>();
+    world.insert_resource(crate::layer1::terraforming_rejection::PlanetaryStress { value: 0.0, threshold: 100.0 });
+    world.init_resource::<bevy_ecs::event::Events<crate::layer1::terraforming::TerraformEvent>>();
     world.init_resource::<bevy_ecs::event::Events<crate::layer1::tech::temporal_smuggling::ParadoxEvent>>();
     world.init_resource::<bevy_ecs::event::Events<
         crate::layer1::social::factions::subcontractor_factions::LeaseZoneEvent,

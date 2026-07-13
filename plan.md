@@ -1,7 +1,28 @@
-1. **Explore & Verify Scope**: Read `specs/1309-the-asteroid-hermits.md` and check `src/layer2/asteroid_hermits.rs` for outputs like `Added<HermitOutpost>` and `DiscoveryEvent` to ensure they are available for integration.
-2. **Claim Task**: Update `design/IN_PROGRESS.md` with `INT-1309` and commit it.
-3. **Write RED Tests**: Create `tests/integration/asteroid_hermits_bridge.rs` testing that `Added<HermitOutpost>` and `DiscoveryEvent` successfully emit `AddChronicleEvent`. Register the test in `tests/integration.rs`.
-4. **Implement Glue (GREEN)**: Create `asteroid_hermit_exodus_chronicle_bridge` and `asteroid_hermit_discovery_chronicle_bridge` in `src/layer2/integration.rs`. Register these systems in `src/layer2/systems/observation.rs` or `src/simulation.rs` (checking how other layer 2 integrations are registered). Ensure `Events<DiscoveryEvent>` is initialized in `src/simulation.rs`.
-5. **Pre-commit Checks**: Complete pre-commit steps to make sure proper testing, verifications, reviews and reflections are done.
-6. **Update SEAM_MAP and COMPLETED**: Move `INT-1309` to `design/COMPLETED.md` and update `design/SEAM_MAP.md` describing the integration.
-7. **Submit**: Commit and submit the code.
+1. **Integration Implementation (`INT-1006: Terraforming Rejection -> Disasters / Chronicle`)**
+    - Use `run_in_bash_session` with `cat << 'EOF' >> src/layer1/core/integration.rs` to append the bridge function `terraforming_rejection_chronicle_bridge` to `src/layer1/core/integration.rs`. The bridge will listen for `DisasterEvent` and if the `disaster_type` is `DisasterType::Fissure`, it will emit an `AddChronicleEvent` indicating an autoimmune response from the planet.
+    - Use `run_in_bash_session` with `cat src/layer1/core/integration.rs` to verify the bridge was added correctly.
+
+2. **Schedule and Resource Registration**
+    - Use `run_in_bash_session` with `sed -i '/world\.init_resource::<crate::layer1::social::politics::ActiveMandate>();/a \    world.insert_resource(crate::layer1::terraforming_rejection::PlanetaryStress { value: 0.0, threshold: 100.0 });' src/setup.rs` to initialize `PlanetaryStress` in `setup_world`.
+    - Use `run_in_bash_session` with `sed -i '/world\.init_resource::<bevy_ecs::event::Events<crate::layer1::tech::temporal_smuggling::PayTemporalDebtEvent>>();/a \    world.init_resource::<bevy_ecs::event::Events<crate::layer1::terraforming::TerraformEvent>>();' src/setup.rs` to initialize `Events<TerraformEvent>` in `setup_world`. (Wait, let me just add it to setup_world to be safe). Let's use specific line numbers or better patterns.
+    - Let's use Python to safely append the registration to `src/setup.rs`, `src/simulation.rs`, `src/layer1/systems/environment.rs` and `src/layer1/systems/observation.rs`.
+    - `src/simulation.rs`: Insert `world.init_resource::<bevy_ecs::event::Events<crate::layer1::terraforming::TerraformEvent>>();` inside `run_simulation_tick` around line 557.
+    - `src/layer1/systems/environment.rs`: Insert `crate::layer1::terraforming_rejection::apply_terraforming_stress_system, crate::layer1::terraforming_rejection::trigger_autoimmune_response_system,` after `crate::layer1::environment::terraforming::apply_planetary_effects_system` (around line 238).
+    - `src/layer1/systems/observation.rs`: Insert `crate::layer1::core::integration::terraforming_rejection_chronicle_bridge,` after `crate::layer1::core::integration::cassandra_syndrome_chronicle_bridge,` (around line 601).
+    - Use `run_in_bash_session` with `echo "- [ ] \`INT-1006\` Integration: Terraforming Rejection -> Disasters / Chronicle - claimed $(date +%Y-%m-%d)" >> design/IN_PROGRESS.md`
+    - Use `run_in_bash_session` with `echo "- [x] \`INT-1006\` Integration: Terraforming Rejection -> Disasters / Chronicle - completed $(date +%Y-%m-%d)" >> design/COMPLETED.md`
+    - Use `run_in_bash_session` with `cat << 'EOF' >> design/SEAM_MAP.md` to append the INT-1006 documentation.
+
+3. **Integration Tests**
+    - Use `run_in_bash_session` with `cat << 'EOF' > tests/integration/terraforming_rejection_chronicle_bridge.rs` to create the test file.
+    - Use `run_in_bash_session` with `cat tests/integration/terraforming_rejection_chronicle_bridge.rs` to confirm it was written correctly.
+    - Use `run_in_bash_session` with `echo '#[path = "integration/terraforming_rejection_chronicle_bridge.rs"] pub mod terraforming_rejection_chronicle_bridge;' >> tests/integration.rs` to register the test correctly.
+
+4. **Run all tests**
+    - Use `run_in_bash_session` to run `cargo test` and verify that the integration is correct and no regressions were introduced.
+
+5. **pre-commit**
+    - Complete pre-commit steps to ensure proper testing, verification, review, and reflection are done by calling `pre_commit_instructions`.
+
+6. **Submit**
+    - Commit and submit.

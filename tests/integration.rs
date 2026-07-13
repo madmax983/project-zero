@@ -677,3 +677,4 @@ mod echoes_lost_fleet_bridge;
 
 #[path = "integration/asteroid_hermits_bridge.rs"]
 mod asteroid_hermits_bridge;
+#[path = "integration/terraforming_rejection_chronicle_bridge.rs"] pub mod terraforming_rejection_chronicle_bridge;

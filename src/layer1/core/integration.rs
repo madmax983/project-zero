@@ -3275,3 +3275,18 @@ pub fn temporal_smuggling_chronicle_bridge(
         });
     }
 }
+
+/// INT-1006: Bridges `DisasterEvent` (Fissure) to `AddChronicleEvent` for Terraforming Rejection
+pub fn terraforming_rejection_chronicle_bridge(
+    mut events: bevy_ecs::event::EventReader<crate::layer1::disasters::DisasterEvent>,
+    mut chronicle_events: bevy_ecs::event::EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+) {
+    for event in events.read() {
+        if event.disaster_type == crate::layer1::disasters::DisasterType::Fissure {
+            chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+                text: "The planet fights back! A violent autoimmune response has torn the ground open at the terraforming site.".to_string(),
+                importance: crate::layer1::core::chronicle::EventImportance::Major,
+            });
+        }
+    }
+}

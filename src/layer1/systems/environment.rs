@@ -270,4 +270,5 @@ pub fn register(schedule: &mut Schedule) {
         )
             .in_set(Layer1SystemSet::Environment),
     );
+    schedule.add_systems((crate::layer1::terraforming_rejection::apply_terraforming_stress_system, crate::layer1::terraforming_rejection::trigger_autoimmune_response_system).chain().in_set(Layer1SystemSet::Environment));
 }
