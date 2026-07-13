@@ -1767,3 +1767,9 @@
 - **Systems connected:** `lure_militaristic_pops_system` -> `lured_pops_escape_bridge_system` -> `AddChronicleEvent`
 - **Glue added:** Added `lured_pops_escape_bridge_system` in `src/layer1/core/integration.rs` to handle pops marked with `LuredByGhostFleet`. Registered `lure_militaristic_pops_system` and `lured_pops_escape_bridge_system` in `Layer1SystemSet::Observation`.
 - **Tests:** `tests/integration/echoes_lost_fleet_bridge.rs`
+
+### INT-306: The Debt Collector -> Chronicle
+- **Date:** 2026-10-31
+- **Systems connected:** `AuditorArrivalEvent` -> `auditor_arrival_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `auditor_arrival_chronicle_bridge` in `src/layer3/integration.rs`.
+- **Tests:** `tests/integration/debt_collector_chronicle_bridge.rs`

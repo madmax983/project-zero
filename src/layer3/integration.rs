@@ -610,6 +610,19 @@ pub fn the_silence_chronicle_bridge(
     }
 }
 
+/// INT-306: Bridges `AuditorArrivalEvent` to `AddChronicleEvent`
+pub fn auditor_arrival_chronicle_bridge(
+    mut events: EventReader<crate::layer3::auditor::debt_collector::AuditorArrivalEvent>,
+    mut chronicle_events: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+) {
+    for _ in events.read() {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            text: "An auditor has arrived in orbit to collect on our generational debt.".to_string(),
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
+        });
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
