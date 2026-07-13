@@ -5,6 +5,8 @@ use bevy_ecs::prelude::*;
 
 #[allow(clippy::too_many_lines)]
 pub fn register(schedule: &mut Schedule) {
+    #[cfg(feature = "nova")]
+    crate::experimental::hoarder_comfort::register(schedule);
     schedule
         .add_systems(crate::layer1::tech::process_ego_machine.in_set(Layer1SystemSet::Execution));
     schedule.add_systems(

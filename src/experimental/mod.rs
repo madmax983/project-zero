@@ -223,5 +223,7 @@ pub mod feral_foraging;
 pub mod subconscious_computing;
 
 #[cfg(feature = "nova")]
+pub mod hoarder_comfort;
+#[cfg(feature = "nova")]
 pub mod photosynthetic_nourishment;
 pub mod pyromaniac_euphoria;
