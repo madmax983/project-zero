@@ -1059,17 +1059,11 @@ fn get_terrain_tiles_in_radius(
     let max_y = i32::try_from(terrain.height).unwrap_or(i32::MAX);
 
     let mut tiles = bevy::utils::HashMap::new();
-    if center_x.checked_sub(radius).is_some()
-        && center_x.checked_add(radius).is_some()
-        && center_y.checked_sub(radius).is_some()
-        && center_y.checked_add(radius).is_some()
-    {
-        for y in center_y.saturating_sub(radius)..=center_y.saturating_add(radius) {
-            for x in center_x.saturating_sub(radius)..=center_x.saturating_add(radius) {
-                if x >= 0 && y >= 0 && x < max_x && y < max_y {
-                    if let Some(t) = terrain.get(x as usize, y as usize) {
-                        tiles.insert((x, y), t);
-                    }
+    for y in center_y.saturating_sub(radius)..=center_y.saturating_add(radius) {
+        for x in center_x.saturating_sub(radius)..=center_x.saturating_add(radius) {
+            if x >= 0 && y >= 0 && x < max_x && y < max_y {
+                if let Some(t) = terrain.get(x as usize, y as usize) {
+                    tiles.insert((x, y), t);
                 }
             }
         }
@@ -2605,5 +2599,6 @@ mod reproduction_tests {
         assert!(ScanRadius::new(-1).is_err());
         assert!(ScanRadius::new(101).is_err());
         assert!(ScanRadius::new(i32::MAX).is_err());
+        assert!(ScanRadius::new(i32::MIN).is_err());
     }
 }

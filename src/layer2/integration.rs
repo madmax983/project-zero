@@ -1121,7 +1121,10 @@ pub fn asteroid_hermit_discovery_chronicle_bridge(
 ) {
     for event in events.read() {
         chronicle_events.send(AddChronicleEvent {
-            text: format!("A Hermit Outpost has discovered an anomalous artifact: {}", event.item_type),
+            text: format!(
+                "A Hermit Outpost has discovered an anomalous artifact: {}",
+                event.item_type
+            ),
             importance: EventImportance::Minor,
         });
     }

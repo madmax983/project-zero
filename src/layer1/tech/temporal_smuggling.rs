@@ -45,7 +45,6 @@ pub fn open_rift_system(
     }
 }
 
-
 pub fn pay_temporal_debt_system(
     mut commands: Commands,
     mut events: EventReader<PayTemporalDebtEvent>,

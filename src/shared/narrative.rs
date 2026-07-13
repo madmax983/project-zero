@@ -798,6 +798,13 @@ mod tests {
     }
 
     #[test]
+    fn test_generate_star_name_fallback() {
+        let narrator = NarrativeGenerator::default();
+        let name = narrator.generate_star_name();
+        assert_eq!(name, "Unknown Prime");
+    }
+
+    #[test]
     fn test_generate_civ_name() {
         let narrator = NarrativeGenerator::from_embedded();
         let name = narrator.generate_civ_name();

@@ -11,3 +11,11 @@
 **[TechState Capacity in Testing]**
 **Learning:** `TechState::default()` initializes `total_capacity` to 0.0. When writing unit tests in `src/layer1/tech/mod.rs` and invoking `state.force_unlock(...)` on a default state, the subsequent call to `update_corruption()` within that helper will immediately corrupt the technology because the usage exceeds the 0.0 capacity.
 **Action:** When testing logic that expects a technology to remain `TechStatus::Active`, explicitly initialize `TechState` with a `total_capacity` greater than or equal to the tech's `storage_cost()`.
+
+**[Bounding Box Overflow Skipping]**
+**Learning:** Using `checked_add().is_some()` as a prerequisite condition block for bounding box loops means that if a search radius pushes the outer bound past `i32::MAX`, the entire search is skipped rather than clamped, leading to a silent logic failure (0 tiles found).
+**Action:** Remove the `checked_add` / `checked_sub` precondition wrapping block and instead use `.saturating_add()` and `.saturating_sub()` directly on the range iterators of the nested loops to clamp safely.
+
+**[Narrative Generator Fallbacks]**
+**Learning:** The `NarrativeGenerator::generate_star_name` uses `unwrap_or_else` heavily, but these fallbacks are untested if the system is always initialized with embedded templates using `from_embedded()`.
+**Action:** When creating tests to hit fallback logic for narrative engines, explicitly initialize the generator with `Default::default()` to ensure fragments are missing and the `unwrap_or_else` closure actually executes.
