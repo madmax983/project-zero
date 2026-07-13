@@ -410,6 +410,16 @@ pub fn register(schedule: &mut Schedule) {
     ));
 
     schedule.add_systems(
+        (
+            crate::layer1::tech::temporal_smuggling::open_rift_system,
+            crate::layer1::tech::temporal_smuggling::pay_temporal_debt_system,
+            crate::layer1::tech::temporal_smuggling::check_temporal_debts_system,
+            crate::layer1::core::integration::temporal_smuggling_chronicle_bridge,
+        )
+            .in_set(Layer1SystemSet::Execution),
+    );
+
+    schedule.add_systems(
         crate::layer1::improvised_tools::evaluate_tool_fallback_system
             .in_set(Layer1SystemSet::Execution),
     );
