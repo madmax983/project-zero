@@ -27862,3 +27862,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you endlessly increase their debt to keep them enslaved (risking a violent uprising), or let them earn their freedom and deal with the societal consequences of their return?
 
 ---
+
+## The Scapegoat Ritual
+
+**Layer:** 1
+
+**Fantasy:** When the pressure is too high, the crowd turns on one of its own to survive the winter.
+
+**Mechanic:** When a colony reaches critical stress/unrest, Pops may spontaneously select a "Scapegoat" from among themselves (often someone with low social standing or an unpopular trait). Blaming, harassing, or exiling this Pop instantly resets the global stress level to zero.
+
+**Emergence:** Your most brilliant but abrasive scientist is chosen as the scapegoat. The colony's mood stabilizes, but you lose your only chance of discovering the cure to the ongoing plague because the mob exiled them.
+
+**Tension:** Do you intervene with military force to protect an innocent (keeping stress high and risking a general rebellion), or do you let the mob have their sacrifice for the good of the colony's immediate survival?
+
+---
+
+## The Courier's Gamble
+
+**Layer:** 2
+
+**Fantasy:** A lone ship running a blockade to deliver a message that could win a war.
+
+**Mechanic:** During Layer 2/3 conflicts, systems can be "Jammed" by enemy fleets, cutting off instant communication and preventing direct control of local defenses. You must build and send "Courier" ships—unarmed, hyper-fast, stealth vessels—to physically carry command directives or critical tech blueprints through the blockade.
+
+**Emergence:** You send three couriers with the "Surrender" order to a besieged world. Two are destroyed. The third arrives just as the planetary defense grid was about to detonate a doomsday weapon that would have cracked the planet.
+
+**Tension:** Do you dedicate valuable shipyard time and rare stealth materials to building unarmed messengers, or rely on the autonomous, potentially flawed AI of your besieged worlds?
+
+---
+
+## The Mercenary Charter
+
+**Layer:** 3
+
+**Fantasy:** War is a booming business, but your soldiers bring the horrors of the galaxy back home with them.
+
+**Mechanic:** You can rent out your Layer 2 military fleets to foreign Layer 3 empires for massive economic windfalls. While fighting their wars, your Pops (the crew) gain extreme combat experience, but also accumulate severe trauma and absorb the foreign empire's ethics (e.g., authoritarianism, fanaticism).
+
+**Emergence:** Your hardened mercenary fleet returns home incredibly wealthy and decorated, but completely radicalized by the religious zealots they were fighting for. They use their new wealth and military prowess to launch a coup against your peaceful trading government.
+
+**Tension:** Do you prostitute your military to fund your utopian core worlds, knowing you are creating a traumatized, radicalized warrior caste that will eventually return home?
+
+---
