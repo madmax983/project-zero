@@ -11,6 +11,9 @@ pub fn register(schedule: &mut Schedule) {
         crate::layer1::tech::process_ego_social_friction.in_set(Layer1SystemSet::Execution),
     );
     schedule.add_systems(
+        crate::layer1::hazards::harvester_meteor_absorption_system.in_set(Layer1SystemSet::Execution),
+    );
+    schedule.add_systems(
         (
             crate::layer1::shadow_ecosystems::spawn_data_fauna,
             crate::layer1::shadow_ecosystems::data_fauna_feeding,
