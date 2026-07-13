@@ -27862,3 +27862,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you endlessly increase their debt to keep them enslaved (risking a violent uprising), or let them earn their freedom and deal with the societal consequences of their return?
 
 ---
+
+## The Whispering Deep
+
+**Layer:** 1
+
+**Fantasy:** Digging too deep uncovers something that sings in the dark, making miners both incredibly productive and dangerously unstable.
+
+**Mechanic:** At deep subterranean levels, miners can uncover "Resonant Veins." Pops working near these veins gain massive work speed multipliers, but their psychological Needs (Rest, Leisure) decay at an accelerated rate. They also spread "The Song" as a rumor, giving nearby Pops a similar, but slightly weaker, effect.
+
+**Emergence:** Your entire deep-mining crew becomes a highly productive, sleep-deprived cult. If they inevitably collapse from mass exhaustion, the colony's mineral economy crashes because no one else knows how to mine efficiently without the song.
+
+**Tension:** Do you let the song spread to maximize resource extraction, risking a colony-wide mental breakdown, or do you strictly quarantine the deep miners to protect the sanity of the general population?
+
+---
+
+## Ghost Fleet Logistics
+
+**Layer:** 2
+
+**Fantasy:** Relying on derelict, automated ships from a bygone era to run your empire's supply chains.
+
+**Mechanic:** You can salvage ancient, automated cargo ships that require zero upkeep and zero crew. However, their navigation subroutines are locked to obsolete star charts. They will blindly fly in a straight line through active warzones, pirate blockades, or hazardous stellar anomalies to reach their destination.
+
+**Emergence:** A Ghost Fleet carrying critical food supplies to a starving world flies directly into a pirate stronghold. It doesn't fight back or evade; it just absorbs fire. You are forced to rapidly dispatch your main military fleet to escort the automated cargo, turning a simple logistics route into an unplanned, massive military operation.
+
+**Tension:** Do you rely on the free but incredibly inflexible Ghost Fleet, forcing your military to constantly play babysitter, or do you invest heavily in expensive, crewed ships that can actively avoid danger?
+
+---
+
+## The Bureaucratic Cascade
+
+**Layer:** Cross-layer
+
+**Fantasy:** A single typo from a stressed clerk on a backwater world spirals into an empire-wide crisis.
+
+**Mechanic:** "Administration" is a resource generated at Layer 1 by Pops working in bureaucratic jobs, used to maintain Layer 2 and Layer 3 structures. If a Pop generating Administration has high Stress or a negative trait, they introduce "Errors" into the empire's administration pool. These Errors manifest as randomly disabled buildings, delayed production, or misrouted fleets at higher layers.
+
+**Emergence:** Your flagship dreadnought at Layer 3 suddenly powers down its weapons right before a major battle because the paperwork "authorizing" the ammunition was lost. You trace the Error back to a single specific Pop on a distant colony who is just really tired and hungry.
+
+**Tension:** Do you heavily micromanage the happiness and well-being of your lowest-level clerks, or do you build massive, inefficient redundancy into your administrative network to absorb their inevitable mistakes?
+
+---
