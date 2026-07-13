@@ -1767,3 +1767,10 @@
 - **Systems connected:** `lure_militaristic_pops_system` -> `lured_pops_escape_bridge_system` -> `AddChronicleEvent`
 - **Glue added:** Added `lured_pops_escape_bridge_system` in `src/layer1/core/integration.rs` to handle pops marked with `LuredByGhostFleet`. Registered `lure_militaristic_pops_system` and `lured_pops_escape_bridge_system` in `Layer1SystemSet::Observation`.
 - **Tests:** `tests/integration/echoes_lost_fleet_bridge.rs`
+
+### INT-1309: The Asteroid Hermits -> Chronicle
+- **Date:** 2026-11-01
+- **Systems connected:** `Added<HermitOutpost>` -> `asteroid_hermit_exodus_chronicle_bridge` -> `AddChronicleEvent` and `DiscoveryEvent` -> `asteroid_hermit_discovery_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `asteroid_hermit_exodus_chronicle_bridge` and `asteroid_hermit_discovery_chronicle_bridge` in `src/layer2/integration.rs`.
+- **Schedule:** Registered the systems in `src/simulation.rs`.
+- **Tests:** `tests/integration/asteroid_hermits_bridge.rs`

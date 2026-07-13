@@ -1060,6 +1060,11 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         crate::layer2::integration::moon_hermits_chronicle_bridge_system
             .after(crate::layer2::moon_hermits::process_hermit_desertions),
         crate::layer2::moon_hermits::hermit_theft_system,
+    ));
+
+    schedule.add_systems((
+        crate::layer2::asteroid_hermits::evaluate_hermit_exodus_system,
+        crate::layer2::asteroid_hermits::process_hermit_discoveries_system,
         crate::layer2::empathic_plague::process_empathic_resonance
             .after(Layer1SystemSet::Observation),
         crate::layer3::pirates::evaluate_pirate_amnesty_system,
@@ -1068,6 +1073,10 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
     ));
 
     schedule.add_systems((
+        crate::layer2::integration::asteroid_hermit_exodus_chronicle_bridge
+            .after(crate::layer2::asteroid_hermits::evaluate_hermit_exodus_system),
+        crate::layer2::integration::asteroid_hermit_discovery_chronicle_bridge
+            .after(crate::layer2::asteroid_hermits::process_hermit_discoveries_system),
         crate::layer3::pirates::resource_curse_raid_bridge,
         crate::layer1::social::pirates::process_pirate_amnesty_system
             .after(crate::layer3::pirates::evaluate_pirate_amnesty_system),
