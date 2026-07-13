@@ -41,30 +41,25 @@ pub fn resonant_ore_exposure_system(
     }
 }
 
+/// ⚡ Bolt Optimization: Removed intermediate to_infect vector allocation.
 pub fn resonance_social_spread_system(
     q_relationships: Query<&Relationships>,
     q_infected: Query<&ResonantInfection>,
     mut q_morale: Query<(Entity, &mut Morale)>,
 ) {
-    let mut to_infect = Vec::new();
-
     // Find all pops that have relationships
-    for (entity, _) in q_morale.iter() {
+    for (entity, mut morale) in q_morale.iter_mut() {
         if let Ok(rel) = q_relationships.get(entity) {
             // For every pop this pop has a relationship with
+            let mut should_infect = false;
             for (&target, &affinity) in &rel.affinities {
                 // If the target is infected and they are friends (or just related)
                 if q_infected.get(target).is_ok() && affinity > 0.0 {
-                    to_infect.push(entity);
+                    should_infect = true;
                     break; // Just need one infected friend to get paranoid
                 }
             }
-        }
-    }
-
-    for entity in to_infect {
-        if let Ok((_, mut morale)) = q_morale.get_mut(entity) {
-            if !morale.modifiers.iter().any(|m| m.label == "Paranoia") {
+            if should_infect && !morale.modifiers.iter().any(|m| m.label == "Paranoia") {
                 morale.modifiers.push(MoodModifier {
                     label: "Paranoia".to_string(),
                     value: -0.05,
