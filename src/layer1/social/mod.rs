@@ -18,6 +18,13 @@ use crate::layer1::needs::Needs;
 use bevy_ecs::prelude::*;
 use std::collections::HashMap;
 
+/// Event emitted when two pops interact socially.
+#[derive(Event, Debug, Clone)]
+pub struct SocialInteractionEvent {
+    pub initiator: Entity,
+    pub target: Entity,
+}
+
 /// Social gathering place component.
 ///
 /// Attached to buildings (like Taverns) where pops go to relax.

@@ -51,6 +51,7 @@ pub fn setup_world() -> World {
         crate::layer1::economy::existential_audit::ExistentialAuditCompletedEvent,
     >>();
     world.init_resource::<Events<crate::layer1::economy::black_market::SmugglerArrivalEvent>>();
+    world.init_resource::<Events<crate::layer1::social::SocialInteractionEvent>>();
     world.init_resource::<bevy_ecs::event::Events<crate::layer1::nature::ecology::HarvestEvent>>();
     world.init_resource::<Events<crate::layer1::economy::black_market::ShutdownDropNodeEvent>>();
     world.init_resource::<Events<crate::layer1::orphaned_swarm::DerelictArrivalEvent>>();

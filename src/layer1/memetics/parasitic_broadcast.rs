@@ -59,3 +59,29 @@ pub fn parasitic_broadcast_risk_system(
     let infected_count = query.iter().count() as f32;
     risk.current_risk += infected_count * 0.1; // Accumulate risk
 }
+
+use crate::layer1::social::SocialInteractionEvent;
+
+#[allow(clippy::type_complexity)]
+pub fn process_memetic_transmission_system(
+    mut events: EventReader<SocialInteractionEvent>,
+    mut commands: Commands,
+    infected_query: Query<&MemeticInfection, Without<Quarantined>>,
+    healthy_query: Query<
+        Entity,
+        (
+            With<crate::layer1::pop::Pop>,
+            Without<MemeticInfection>,
+            Without<Quarantined>,
+        ),
+    >,
+) {
+    for event in events.read() {
+        if let Ok(infection) = infected_query.get(event.initiator) {
+            if healthy_query.get(event.target).is_ok() {
+                // Infect the target
+                commands.entity(event.target).insert(*infection);
+            }
+        }
+    }
+}

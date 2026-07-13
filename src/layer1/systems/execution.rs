@@ -10,6 +10,11 @@ pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         crate::layer1::tech::process_ego_social_friction.in_set(Layer1SystemSet::Execution),
     );
+
+    schedule.add_systems(
+        crate::layer1::memetics::parasitic_broadcast::process_memetic_transmission_system
+            .in_set(Layer1SystemSet::Execution),
+    );
     schedule.add_systems(
         (
             crate::layer1::shadow_ecosystems::spawn_data_fauna,

@@ -912,3 +912,5 @@
 - [x] `1310` The Feral Administration — `specs/1310-the-feral-administration.md` — completed 2026-10-31
 - [x] `267` Ancestral Graves — `specs/267-ancestral-graves.md` — completed 2026-02-01
 - [x] `996` Interstellar Quarantine Fields — `specs/996-interstellar-quarantine-fields.md` — completed 2024-05-31
+
+- [x] `289` The Mimetic Plague — `specs/289-mimetic-plague.md` — completed 2026-11-01
