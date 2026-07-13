@@ -1100,3 +1100,29 @@ pub fn observe_forge_crush_event(
         });
     }
 }
+
+/// INT-1309: Bridges `Added<HermitOutpost>` from Asteroid Hermits into the `Chronicle` system.
+pub fn asteroid_hermit_exodus_chronicle_bridge(
+    query: Query<(), Added<crate::layer2::asteroid_hermits::HermitOutpost>>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for _ in query.iter() {
+        chronicle_events.send(AddChronicleEvent {
+            text: "A Mass Exodus has occurred! Dissatisfied citizens have established an independent Hermit Outpost on an asteroid.".to_string(),
+            importance: EventImportance::Major,
+        });
+    }
+}
+
+/// INT-1309: Bridges `DiscoveryEvent` from Asteroid Hermits into the `Chronicle` system.
+pub fn asteroid_hermit_discovery_chronicle_bridge(
+    mut events: EventReader<crate::layer2::asteroid_hermits::DiscoveryEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for event in events.read() {
+        chronicle_events.send(AddChronicleEvent {
+            text: format!("A Hermit Outpost has discovered an anomalous artifact: {}", event.item_type),
+            importance: EventImportance::Minor,
+        });
+    }
+}
