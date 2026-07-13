@@ -220,3 +220,8 @@
 **Concept:** Added `pyromaniac_euphoria_system` to `src/experimental/pyromaniac_euphoria.rs`. Connects `Trait::Pyromaniac` to `Fire` and `Needs`. Pops with the Pyromaniac trait passively regenerate `leisure` when they are near (within 3 tiles of) a fire.
 **Fate:** Submitted
 **Lesson:** Connects a personality trait with environmental hazards, making an otherwise dangerous situation advantageous for specific pops, and creates emergent behaviors.
+
+## [Hoarder Comfort]
+**Concept:** Added `hoarder_comfort_system` to `src/experimental/hoarder_comfort.rs`. Pops with `Trait::Hoarder` passively regenerate `leisure` when standing on a tile with high clutter (`ClutterGrid > 20.0`).
+**Fate:** Merged
+**Lesson:** Connects a negative environmental factor (clutter) into a positive for a specific subset of pops, allowing players to intentionally create messy zones to keep their hoarders happy.
