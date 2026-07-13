@@ -755,5 +755,18 @@ pub fn get_status_modifiers(world: &World, pop_entity: Entity) -> f32 {
         }
     }
 
+    // Ego Machine penalty for menial jobs
+    if let Some(ego) = world.get::<crate::layer1::tech::ego_machine::EgoStat>(pop_entity) {
+        if ego.value > 50.0 {
+            if let Some(job) = world.get::<crate::layer1::pop::Job>(pop_entity) {
+                if job.job_type == crate::layer1::utility_types::AssignmentType::FarmWorker
+                    || job.job_type == crate::layer1::utility_types::AssignmentType::DeepMining
+                {
+                    modifier *= 0.0;
+                }
+            }
+        }
+    }
+
     modifier
 }

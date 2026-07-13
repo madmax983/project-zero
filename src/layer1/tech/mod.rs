@@ -522,6 +522,9 @@ pub fn update_tech_capacity_system(
     tech_state.update_corruption();
 }
 
+pub mod ego_machine;
+pub use ego_machine::*;
+
 #[cfg(test)]
 mod tests {
     use super::*;
