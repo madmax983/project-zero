@@ -1,6 +1,10 @@
 # Backlog
 
 ## High Priority
+- [ ] `1324` Memory Smuggling — `specs/1324-memory-smuggling.md`
+- [ ] `1325` Gravity Well Guilds — `specs/1325-gravity-well-guilds.md`
+- [ ] `1326` Xeno-Flora Rebellion — `specs/1326-xeno-flora-rebellion.md`
+- [ ] `1327` The Hyperspace Wake — `specs/1327-hyperspace-wake.md`
 
 
 

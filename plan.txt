@@ -1,17 +1,5 @@
-1. We need to implement The Bio-Rhythmic Commute mechanic defined in spec 1002.
-2. We'll modify `src/layer1/flora.rs` (which already defines `FloraType` and has tests):
-    * Add `Lumiflora` to `FloraType` enum.
-    * Add `BloomPhase` enum (`Dormant`, `Blooming`, `Hibernation`).
-    * Add `LumifloraCycle` component with `phase` and `time_in_phase`.
-    * Add `BioRhythmSync` component.
-    * Add `lumiflora_bloom_system`.
-    * Add `apply_bio_rhythm_aura`.
-    * Note: the `apply_bio_rhythm_aura` system needs to apply the effects to `BioRhythmSync` and potentially `Needs`. As per spec, it sets `needs.rest = 0.0` when entering Hibernation.
-3. We'll modify `src/layer1/execution/general_work.rs`:
-    * Hook up `BioRhythmSync` into `get_status_modifiers` to apply its `work_speed_multiplier` if `is_synced` is true.
-4. Modify `src/layer1/systems/execution.rs`:
-    * Add `lumiflora_bloom_system` and `apply_bio_rhythm_aura` into the execution schedule.
-5. Add the RED phase tests from the spec to `src/layer1/flora.rs`, adjusting them to use `Needs` instead of `NeedSleep` (since `NeedSleep` was a speculative component, whereas `Needs` with `.rest` is what the actual codebase uses).
-6. Implement the missing logic (GREEN phase).
-7. Ensure we have 85% coverage for the new components (cargo test).
-8. Verify everything works.
+1. Write specifications (`specs/1324-memory-smuggling.md`, `specs/1325-gravity-well-guilds.md`, `specs/1326-xeno-flora-rebellion.md`, `specs/1327-hyperspace-wake.md`) following the required TDD format from the prompt.
+2. Update `design/IDEAS.md` to append `[SPECCED]` to the four features designed.
+3. Update `design/BACKLOG.md` to add the four specifications to the High Priority section.
+4. Complete pre-commit steps.
+5. Create a commit to origin.

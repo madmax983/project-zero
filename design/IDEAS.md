@@ -25944,7 +25944,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you pamper your translators, essentially giving a small guild of bureaucrats veto power over your foreign policy, or rely on flawed AI and risk catastrophic diplomatic incidents?
 
 ---
-## Memory Smuggling
+## Memory Smuggling [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -25958,7 +25958,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Gravity Well Guilds
+## Gravity Well Guilds [SPECCED]
 
 **Layer:** 2
 
@@ -25972,7 +25972,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Xeno-Flora Rebellion
+## Xeno-Flora Rebellion [SPECCED]
 
 **Layer:** 1
 
@@ -25986,7 +25986,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Hyperspace Wake
+## The Hyperspace Wake [SPECCED]
 
 **Layer:** 2 -> 3
 
