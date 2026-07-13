@@ -86,11 +86,12 @@ pub fn update_ad_screens_system(
     mut pops: Query<(&GridPosition, &mut Needs), With<Pop>>,
 ) {
     for (screen_pos, mut screen) in &mut screens {
-        let radius_sq = (screen.radius * screen.radius) as i64;
+        let radius_sq = (screen.radius as f64) * (screen.radius as f64);
 
         for (pop_pos, mut needs) in &mut pops {
-            let dist_sq = (screen_pos.x as i64 - pop_pos.x as i64).pow(2)
-                + (screen_pos.y as i64 - pop_pos.y as i64).pow(2);
+            let dx = screen_pos.x as f64 - pop_pos.x as f64;
+            let dy = screen_pos.y as f64 - pop_pos.y as f64;
+            let dist_sq = dx.powi(2) + dy.powi(2);
             if dist_sq <= radius_sq {
                 // Generate credits
                 screen.accumulated_credits += screen.credits_per_pop;

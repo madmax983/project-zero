@@ -88,9 +88,10 @@ pub fn apply_artifact_auras_system(
 
         for (art_pos, aura) in &artifacts {
             // Calculate squared distance to avoid sqrt
-            let dist_sq =
-                (pos.x as i64 - art_pos.x as i64).pow(2) + (pos.y as i64 - art_pos.y as i64).pow(2);
-            if dist_sq <= (aura.radius * aura.radius) as i64 {
+            let dx = pos.x as f64 - art_pos.x as f64;
+            let dy = pos.y as f64 - art_pos.y as f64;
+            let dist_sq = dx.powi(2) + dy.powi(2);
+            if dist_sq <= (aura.radius as f64 * aura.radius as f64) {
                 active_auras.effects.push(aura.effect);
 
                 // Immediate effects from specific auras
