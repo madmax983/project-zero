@@ -1774,3 +1774,9 @@
 - **Glue added:** Added `asteroid_hermit_exodus_chronicle_bridge` and `asteroid_hermit_discovery_chronicle_bridge` in `src/layer2/integration.rs`.
 - **Schedule:** Registered the systems in `src/simulation.rs`.
 - **Tests:** `tests/integration/asteroid_hermits_bridge.rs`
+### INT-1305: The Cassandra Syndrome -> Chronicle
+- **Date:** 2026-10-31
+- **Systems connected:** `DisasterEvent` -> `cassandra_syndrome_disaster_bridge` -> `DisasterOccurredEvent` -> `validate_prophecy`
+- **Glue added:** Added `cassandra_syndrome_disaster_bridge` in `src/layer1/core/integration.rs` to bridge environment disasters to Cassandra syndrome's prophecy validation. Appended systems to `execution.rs`.
+- **Schedule:** Registered the bridge in `src/layer1/systems/observation.rs`.
+- **Tests:** Added `test_cassandra_syndrome_disaster_bridge` in `tests/integration/cassandra_syndrome_bridge.rs`.

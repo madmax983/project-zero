@@ -114,6 +114,7 @@ fn init_simulation_resources(world: &mut World) {
 
     world.init_resource::<bevy_ecs::event::Events<crate::layer1::social::blacksite::PrisonBreakEvent>>();
     world.init_resource::<Events<crate::layer1::cassandra_syndrome::DoomsdayWarningEvent>>();
+    world.init_resource::<Events<crate::layer1::cassandra_syndrome::DisasterOccurredEvent>>();
     world.init_resource::<Events<crate::layer3::market::phantom_tax::HackSlushFundEvent>>();
     world.init_resource::<crate::layer3::market::phantom_tax::SlushFund>();
 
