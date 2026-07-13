@@ -10282,3 +10282,49 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The sickness spreads through sleep. [COLONY] is paralyzed as souls choose the dream of [DREAM_VISION] over waking."
 - "Entire shifts lie dormant. They sleep to see [DREAM_VISION]. [COLONY] grinds to a halt. [YEAR]."
 - "[COLONY], [YEAR]: The collective hallucination takes hold. They would rather starve than wake from [DREAM_VISION]."
+
+## Subterranean Biosphere Inversion Templates (Spec 1005)
+
+### Template: DEEP_CRUST_BREACH
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [DEPTH_LEVEL], [HAZARD_FLORA_TYPE]
+**Patterns:**
+- "[COLONY], [YEAR]: The drills struck [DEPTH_LEVEL]. It was not rock, but a sleeping ecosystem. [HAZARD_FLORA_TYPE] emerged."
+- "[YEAR]: Mining operations breached the deep crust. We have awakened [HAZARD_FLORA_TYPE] in [COLONY]."
+- "We dug too deep in [COLONY]. Down at [DEPTH_LEVEL], the planet's immune system woke up. First contact: [HAZARD_FLORA_TYPE]. [YEAR]."
+
+## Echoes of the Lost Fleet Templates (Spec 1267)
+
+### Template: GHOST_DREADNOUGHT_BROADCAST
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [GHOST_FLEET_NAME], [PROPAGANDA_PROMISE]
+**Patterns:**
+- "[COLONY], [YEAR]: An ancient dreadnought of [GHOST_FLEET_NAME] drifted into the system. Its automated broadcasts promised [PROPAGANDA_PROMISE]."
+- "[YEAR]: The dead ship sings. [GHOST_FLEET_NAME] plays its ancient recruitment loops to [COLONY]. They speak of [PROPAGANDA_PROMISE]."
+- "The [GHOST_FLEET_NAME] arrived at [COLONY] in [YEAR], empty but still broadcasting [PROPAGANDA_PROMISE]. The militarists are listening."
+
+### Template: MILITARISTIC_DEFECTION
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [DEFECTION_COUNT]
+**Patterns:**
+- "[YEAR]: [DEFECTION_COUNT] souls answered the dead ship's call. They abandoned [COLONY] to join the ghost fleet."
+- "[COLONY] lost [DEFECTION_COUNT] souls to the propaganda broadcast. They marched into the escape pods to join the dead. [YEAR]."
+- "[YEAR], [COLONY]: [DEFECTION_COUNT] defected. Lured away by ancient promises of glory."
+
+## Interstellar Quarantine Fields Templates (Spec 996)
+
+### Template: QUARANTINE_ENFORCED
+**Generates:** Play event (chronicle during game)
+**Slots:** [STAR_SYSTEM], [YEAR], [QUARANTINE_REASON]
+**Patterns:**
+- "[YEAR]: The quarantine field was activated around [STAR_SYSTEM]. Reason: [QUARANTINE_REASON]. Total isolation protocols."
+- "[STAR_SYSTEM] was sealed off in [YEAR]. To contain [QUARANTINE_REASON], no ships may enter or leave."
+- "Year [YEAR]. [STAR_SYSTEM] falls under total quarantine due to [QUARANTINE_REASON]. The galaxy looks away."
+
+### Template: QUARANTINE_BOUNCE
+**Generates:** Play event (chronicle during game)
+**Slots:** [FLEET_NAME], [STAR_SYSTEM], [YEAR]
+**Patterns:**
+- "[YEAR]: [FLEET_NAME] attempted to breach the [STAR_SYSTEM] quarantine field and was violently repelled."
+- "The lockdown holds. [FLEET_NAME] bounced off the quarantine field of [STAR_SYSTEM]. [YEAR]."
+- "[YEAR]: Denied entry. The quarantine grid of [STAR_SYSTEM] blocked the arrival of [FLEET_NAME]."

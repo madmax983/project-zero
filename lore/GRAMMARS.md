@@ -4784,3 +4784,18 @@ VACUUM_SHADOW_INCIDENT:
 - SLUSH_FUND_HACKED → increases_chance → GREED, ARROGANCE
 - REPO_FLEET_ARRIVAL → enables → MASS_CASUALTIES, COLONY_WIPE
 - REPO_FLEET_ARRIVAL → increases_chance → DESTRUCTION, PANIC
+
+## Subterranean Biosphere Inversion Chaining (Spec 1005)
+- DEEP_CRUST_BREACH → enables → ARTIFACT_FIND, TECH_SALVAGE
+- DEEP_CRUST_BREACH → increases_chance → COLONY_FAMINE (due to destroyed infrastructure), BIOSPHERE_INVASION
+- DEEP_CRUST_BREACH → reveals → [CIV_NAME] chronicle entries (from buried ruins)
+
+## Echoes of the Lost Fleet Chaining (Spec 1267)
+- GHOST_DREADNOUGHT_BROADCAST → enables → MILITARISTIC_DEFECTION, ARTIFACT_CREATION
+- GHOST_DREADNOUGHT_BROADCAST → increases_chance → WAR, REBELLION
+- MILITARISTIC_DEFECTION → increases_chance → EXPANSION, FLEET_BATTLE
+
+## Interstellar Quarantine Fields Chaining (Spec 996)
+- QUARANTINE_ENFORCED → enables → QUARANTINE_BOUNCE, SILENCE
+- QUARANTINE_ENFORCED → increases_chance → STARVATION, REBELLION, COLLAPSE
+- QUARANTINE_BOUNCE → increases_chance → WAR

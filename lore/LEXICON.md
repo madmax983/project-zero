@@ -5902,3 +5902,38 @@
 **Replaces:** Clothing, cold protection
 **Code reference:** `Clothing`
 **Usage:** "We need more Fiber-Weave before the snow falls."
+
+## the deep crust
+
+**Replaces:** underground biome, basement level, deep dirt
+**Code reference:** Depth threshold check in `biosphere_inversion.rs`
+**Usage:** "They broke into the deep crust." / "Horrors from the deep crust."
+**Note:** Refers to the isolated, high-danger biome located far below the surface.
+
+## hazard flora
+
+**Replaces:** hostile plants, monster weeds, bad plants
+**Code reference:** `HazardFlora` component
+**Usage:** "The hazard flora spread through the vents." / "They died to hazard flora."
+**Note:** Used generally to describe the hostile subterranean ecosystem.
+
+## ghost dreadnought
+
+**Replaces:** automated ship, abandoned fleet, lost fleet ship
+**Code reference:** `GhostDreadnought` component
+**Usage:** "A ghost dreadnought drifted into orbit." / "The broadcast comes from the ghost dreadnought."
+**Note:** A massive, ancient vessel that still operates without a crew, often running archaic subroutines.
+
+## lured
+
+**Replaces:** charmed, brainwashed, defected
+**Code reference:** `LuredByGhostFleet` component
+**Usage:** "The militarists were lured by the broadcast." / "They were lured away."
+**Note:** The state of a soul abandoning the colony to answer the call of a ghost dreadnought.
+
+## quarantine field
+
+**Replaces:** lockdown zone, blockade, blocked route
+**Code reference:** `is_quarantined` flag on `StarSystem`
+**Usage:** "The quarantine field was raised." / "They bounced off the quarantine field."
+**Note:** An absolute barrier preventing FTL travel in or out of a star system, usually to contain a massive threat.

@@ -10502,3 +10502,56 @@ Used for The Feral Administration anvalanches of paperwork.
 - a quiet, green field
 - an endless, warm ocean
 - a sky without stars
+
+## Subterranean Biosphere Inversion Fragments (Spec 1005)
+
+### Fragment Type: [HAZARD_FLORA_TYPE]
+Used to describe the hostile life unearthed in the deep crust.
+- luminous acid spitters
+- sprawling fungal blooms
+- a caustic root network
+- blind burrowing spores
+- a carnivorous moss
+- lithovore swarms
+- geothermal parasites
+
+### Fragment Type: [DEPTH_LEVEL]
+Used to describe how deep the breach occurred.
+- the abyssal crust
+- the mantle boundary
+- the dead strata
+- sub-level fifty
+- the thermal inversion layer
+- the sunless deeps
+
+## Echoes of the Lost Fleet Fragments (Spec 1267)
+
+### Fragment Type: [GHOST_FLEET_NAME]
+Names of the ancient fleets that return as automated dreadnoughts.
+- the Sovereign Armada
+- the Burned Fleet
+- the Silent Flotilla
+- the First Vanguard
+- the Iron Ancestors
+- the Forgotten Command
+
+### Fragment Type: [PROPAGANDA_PROMISE]
+What the dead ship is broadcasting to lure militarists.
+- glory and endless conquest
+- a final victory over forgotten enemies
+- purpose in the void
+- absolute tactical superiority
+- the restoration of the old empire
+- an end to civilian weakness
+
+## Interstellar Quarantine Fields Fragments (Spec 996)
+
+### Fragment Type: [QUARANTINE_REASON]
+Why a system was completely locked down.
+- a Class-5 memetic hazard
+- uncontrolled biological mutation
+- a rogue nanite swarm
+- the Dreaming Sickness outbreak
+- a localized reality failure
+- systemic corruption
+- the parasite
