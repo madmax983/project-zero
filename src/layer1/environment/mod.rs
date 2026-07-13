@@ -45,7 +45,9 @@ pub use impact::*;
 pub mod thermal_camouflage;
 pub use thermal_camouflage::*;
 pub mod atmosphere;
+pub mod magnetic_reversal;
 pub use atmosphere::*;
+pub use magnetic_reversal::*;
 
 pub mod orbital_junkyard;
 pub use orbital_junkyard::*;
