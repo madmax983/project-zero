@@ -914,3 +914,4 @@
 - [x] `267` Ancestral Graves — `specs/267-ancestral-graves.md` — completed 2026-02-01
 - [x] `996` Interstellar Quarantine Fields — `specs/996-interstellar-quarantine-fields.md` — completed 2024-05-31
 - [x] `INT-1309` Integration: The Asteroid Hermits -> Chronicle — completed 2026-11-01
+- [x] `994` The Kinetic Heist — `specs/994-the-kinetic-heist.md` — completed 2026-07-13

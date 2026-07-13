@@ -372,6 +372,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<Events<crate::layer1::economy::debt_of_the_dead::DebtInheritedEvent>>();
     world.init_resource::<Events<crate::layer1::economy::debt_of_the_dead::DebtSocializedEvent>>();
     world.init_resource::<Events<crate::layer3::diplomacy::open_source_science::PublishDiscoveryEvent>>();
+    world.init_resource::<Events<crate::layer2::asteroid_hermits::DiscoveryEvent>>();
     world.init_resource::<Events<crate::layer2::station::ForgeCrushEvent>>();
     world.init_resource::<Events<crate::layer2::orbit::asteroid_claims::AttackColonyEvent>>();
     world.init_resource::<Events<crate::layer1::systems::dead_hand::DoomsdayTriggeredEvent>>();
