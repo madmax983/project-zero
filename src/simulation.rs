@@ -1077,6 +1077,7 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
             .after(crate::layer2::asteroid_hermits::evaluate_hermit_exodus_system),
         crate::layer2::integration::asteroid_hermit_discovery_chronicle_bridge
             .after(crate::layer2::asteroid_hermits::process_hermit_discoveries_system),
+        crate::layer2::integration::cryo_mutiny_bridge_system,
         crate::layer3::pirates::resource_curse_raid_bridge,
         crate::layer1::social::pirates::process_pirate_amnesty_system
             .after(crate::layer3::pirates::evaluate_pirate_amnesty_system),

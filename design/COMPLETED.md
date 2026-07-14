@@ -1,3 +1,4 @@
+- [x] `INT-312` Integration: Cryo-Mutiny -> Faction & Chronicle - completed 2026-11-01
 - [x] `299` Temporal Smuggling — `specs/299-temporal-smuggling.md` — completed 2024-05-31
 
 - [x] `321` The Ego Machine — `specs/321-ego-machine.md` — completed 2026-06-05

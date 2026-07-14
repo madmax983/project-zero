@@ -1774,3 +1774,10 @@
 - **Glue added:** Added `asteroid_hermit_exodus_chronicle_bridge` and `asteroid_hermit_discovery_chronicle_bridge` in `src/layer2/integration.rs`.
 - **Schedule:** Registered the systems in `src/simulation.rs`.
 - **Tests:** `tests/integration/asteroid_hermits_bridge.rs`
+
+### INT-312: Cryo-Mutiny -> Faction & Chronicle
+- **Date:** 2026-11-01
+- **Systems connected:** `trigger_cryo_ship_landing_system` -> `cryo_mutiny_bridge_system` -> `FactionMember` & `AddChronicleEvent`
+- **Glue added:** Added `cryo_mutiny_bridge_system` in `src/layer2/integration.rs` to assign `MutineerPop`s to the new `CryoMutineers` faction and log a Major event to the Chronicle. Also added `CryoMutineers` to `FactionId` in `src/layer1/social/factions.rs`.
+- **Schedule:** Registered the system in `src/simulation.rs`.
+- **Tests:** `tests/integration/cryo_mutiny_bridge.rs`

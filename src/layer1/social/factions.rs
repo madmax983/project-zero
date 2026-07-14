@@ -92,6 +92,7 @@ pub enum FactionId {
     /// Hive mind collective that split from the unintegrated pops.
     Penitent,
     HiveMind,
+    CryoMutineers,
 }
 
 /// Data associated with a faction.

@@ -10,6 +10,8 @@ use crate::layer1::the_visitor::TheVisitor;
 use crate::layer2::culture::founder_effect::ColonyCulture;
 use crate::layer2::events::DetectionEvent;
 use crate::layer2::governance::assign_governor;
+use crate::layer1::social::factions::{FactionMember, FactionId};
+use crate::layer2::cryo_mutiny::MutineerPop;
 use bevy_ecs::prelude::*;
 
 use crate::layer2::system::OrbitalBody;
@@ -1126,6 +1128,30 @@ pub fn asteroid_hermit_discovery_chronicle_bridge(
                 event.item_type
             ),
             importance: EventImportance::Minor,
+        });
+    }
+}
+
+
+/// Bridges Cryo-Mutiny event to faction assignment and Chronicle.
+pub fn cryo_mutiny_bridge_system(
+    mut commands: Commands,
+    mut chronicle_events: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+    mutineers: Query<(Entity, &MutineerPop), Added<MutineerPop>>,
+) {
+    let mut mutiny_happened = false;
+
+    for (entity, _pop) in mutineers.iter() {
+        commands.entity(entity).insert(FactionMember {
+            faction_id: Some(FactionId::CryoMutineers),
+        });
+        mutiny_happened = true;
+    }
+
+    if mutiny_happened {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
+            text: "Cryo-Mutiny: Ancient pioneers have awakened and formed a hostile faction, suffering massive culture shock!".to_string(),
         });
     }
 }
