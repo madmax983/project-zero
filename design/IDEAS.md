@@ -27904,3 +27904,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you prostitute your military to fund your utopian core worlds, knowing you are creating a traumatized, radicalized warrior caste that will eventually return home?
 
 ---
+
+## Phantom Automation
+
+**Layer:** 1
+
+**Fantasy:** An abandoned factory keeps running, but what it produces starts getting weird.
+
+**Mechanic:** Fully automated buildings that lose connection to the central logistics network or are left unstaffed for a long time continue to produce resources. However, without human oversight, the output slowly mutates, creating bizarre, hyper-specialized items with unpredictable effects, instead of standard goods.
+
+**Emergence:** You cut off power to a failing sector, forgetting about a small bio-processor. Years later, someone wanders into the ruins and finds it churning out a highly volatile, self-replicating synthetic sludge that could either power a dreadnought or eat the colony.
+
+**Tension:** Do you risk reconnecting these erratic wildcat factories for a chance at incredibly rare experimental goods, or scorch the earth to prevent them from producing something dangerous?
+
+---
+
+## The Sleepwalkers' Guild
+
+**Layer:** 1
+
+**Fantasy:** A workforce so driven (or terrified) that they don't even let sleep stop them.
+
+**Mechanic:** Pops whose rest needs hit zero but face extreme consequences for stopping (like high debt, martial law, or starvation) might enter a "Sleepwalking" state. They continue to perform their jobs unconsciously, maintaining productivity. However, they completely ignore hazards, social interactions, and their own other needs, dramatically increasing the chance of industrial accidents or sudden death.
+
+**Emergence:** During a brutal siege, your ammo factories run 24/7. Productivity stays high, but the floors are covered in sleepwalking workers who accidentally detonate munitions or wander out airlocks because they aren't fully awake.
+
+**Tension:** Do you let the sleepwalkers continue the desperate work that might save the colony, knowing many will die from pure exhaustion, or force a shutdown that guarantees immediate military defeat?
+
+---
+
+## Gravity Addiction
+
+**Layer:** Cross-layer
+
+**Fantasy:** The physiological toll of living in the exact same artificial environment for too long.
+
+**Mechanic:** Pops living on Layer 2 orbital stations or Layer 1 colonies with highly specific, non-standard artificial gravity (e.g., exactly 0.7G) develop an addiction to that gravity well over time. If relocated or if the gravity generator fails, they suffer massive withdrawal stress, illness, and combat penalties.
+
+**Emergence:** You design a perfect low-gravity industrial station and staff it with your best engineers. When a war starts, you try to draft them to the fleet, but they physically cannot function at standard 1G. A targeted strike on the station's gravity generator incapacitates the entire workforce instantly.
+
+**Tension:** Do you maintain uniform gravity across your empire at immense energy cost, or build hyper-efficient specialized gravity zones knowing you are permanently tying those pops to that specific environment?
+
+---
