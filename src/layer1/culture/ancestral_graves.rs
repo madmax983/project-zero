@@ -79,6 +79,7 @@ pub fn grave_visit_system(
 /// use scale::layer1::BuildingCompletedEvent;
 /// use scale::layer1::funeral::Grave;
 /// use scale::layer1::map::GridPosition;
+/// use bevy_ecs::event::Events;
 ///
 /// let mut app = App::new();
 /// app.insert_resource(Events::<BuildingCompletedEvent>::default());

@@ -18,3 +18,7 @@
 **Bloat:** 1-variant enums (`ProtocolRule`, `PowerGridEvent`) that add unnecessary abstraction.
 **Cut:** Eliminated the enums. Converted `DeadProtocol` to a unit struct and `PowerGridEvent` to a normal struct.
 **Saved:** Reduced cognitive load and unnecessary enum pattern matching.
+## [Reduction]
+**Bloat:** `comfy-table` dependency used inside a standard error enum `NarrativeError` just to create a table.
+**Cut:** Replaced the heavy table library invocation with standard `format!` macros to output a simple ASCII string.
+**Saved:** Removed `comfy-table` dependency from the file, significantly simplifying the implementation of a basic Error utility.

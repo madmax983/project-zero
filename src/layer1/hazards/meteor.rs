@@ -61,9 +61,11 @@ mod tests {
             GridPosition { x: 5, y: 5 },
         ));
 
-        let mut resources = ColonyResources::default();
-        resources.metal = 500.0;
-        resources.wood = 200.0; // Should not be stolen
+        let resources = ColonyResources {
+            metal: 500.0,
+            wood: 200.0,
+            ..Default::default()
+        }; // Should not be stolen
         world.insert_resource(resources);
 
         // Act
@@ -96,8 +98,10 @@ mod tests {
             GridPosition { x: 5, y: 5 },
         ));
 
-        let mut resources = ColonyResources::default();
-        resources.metal = 500.0;
+        let resources = ColonyResources {
+            metal: 500.0,
+            ..Default::default()
+        };
         world.insert_resource(resources);
 
         // Act 1
