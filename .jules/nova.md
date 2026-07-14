@@ -225,3 +225,8 @@
 **Concept:** Added `hoarder_comfort_system` to `src/experimental/hoarder_comfort.rs`. Pops with `Trait::Hoarder` passively regenerate `leisure` when standing on a tile with high clutter (`ClutterGrid > 20.0`).
 **Fate:** Merged
 **Lesson:** Connects a negative environmental factor (clutter) into a positive for a specific subset of pops, allowing players to intentionally create messy zones to keep their hoarders happy.
+
+## [Toxic Personalities]
+**Concept:** Added `toxic_personalities_system` in `src/experimental/toxic_personalities.rs`. Connects `Trait::Volatile` and `Trait::Spiteful` with `StressTracker` and the physical `AtmosphereGrid`. Pops with these traits literally emit physical pollution into the air when they are highly stressed.
+**Fate:** Submitted
+**Lesson:** Connects mental breakdowns directly to environmental hazards, turning psychological management into physical air quality management. Forcing players to quarantine highly stressed volatile pops before they gas the base.

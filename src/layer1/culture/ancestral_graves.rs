@@ -28,6 +28,8 @@ pub struct SacrilegeEvent {
 /// # Examples
 /// ```rust
 /// use bevy_app::prelude::*;
+
+
 /// use scale::layer1::culture::ancestral_graves::grave_visit_system;
 /// use scale::layer1::funeral::Grave;
 /// use scale::layer1::map::GridPosition;
@@ -74,6 +76,9 @@ pub fn grave_visit_system(
 /// # Examples
 /// ```rust
 /// use bevy_app::prelude::*;
+
+
+use bevy_ecs::prelude::Events;
 ///
 /// use scale::layer1::culture::ancestral_graves::{build_system_wrapper, SacrilegeEvent};
 /// use scale::layer1::BuildingCompletedEvent;
