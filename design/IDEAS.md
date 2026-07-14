@@ -27946,3 +27946,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you maintain uniform gravity across your empire at immense energy cost, or build hyper-efficient specialized gravity zones knowing you are permanently tying those pops to that specific environment?
 
 ---
+
+## The Ghost Market
+
+**Layer:** Cross-layer
+
+**Fantasy:** Trading not just in goods, but in the memories and skills of the dead.
+
+**Mechanic:** When Pops die, their memory and skill engrams can be harvested and sold on a black market to instantly level up living Pops. However, these engrams cause severe psychological degradation, and the recipient randomly inherits the dead Pop's traits and grudges.
+
+**Emergence:** You try to rapidly train a master architect using engrams from a dead genius to finish a megastructure in time. The architect succeeds but inherits the dead genius's extreme xenophobia and immediately starts sabotaging alien embassies on your colony.
+
+**Tension:** Do you rely on slow, safe generational learning, or risk the sanity and loyalties of your key personnel for instant mastery?
+
+---
+
+## Atmospheric Hoarding
+
+**Layer:** 1
+
+**Fantasy:** The wealthy don't just hoard resources; they hoard the air itself.
+
+**Mechanic:** In colonies with scarce atmosphere (like sealed domes or subterranean stations), high-status Pops or specific factions can install private, illegal atmospheric compressors in their quarters. This creates pockets of high-quality, perfectly balanced air for them, but subtly drains pressure and oxygen from the poorer, lower-status sectors of the colony.
+
+**Emergence:** You can't figure out why workers in Sector 4 are constantly passing out from hypoxia despite the life support grid showing sufficient output. It turns out the colony governor has been secretly hoarding oxygen to maintain a private, lush zero-G garden.
+
+**Tension:** Do you raid the governor's quarters to restore the grid, angering the powerful elite, or build redundant, expensive life support just to subsidize their hidden luxury?
+
+---
+
+## The Martyr's Echo
+
+**Layer:** Cross-layer
+
+**Fantasy:** A single death can spark a galactic religion or a massive rebellion.
+
+**Mechanic:** If a highly popular or heavily oppressed Pop is killed unjustly (e.g., executed by a player edict or killed by a debt collector), their death can trigger a "Martyr" status. Information about their death spreads through the rumor web, then inter-colony trade, and eventually to the galactic layer.
+
+**Emergence:** You execute a troublesome labor leader on a backwater mining colony to prevent a strike. Fifty years later, a massive Layer 3 religious armada arrives in the system, worshipping that miner as a saint and demanding control of the "holy world" where they died.
+
+**Tension:** Do you quickly silence dissidents with extreme prejudice, risking turning them into uncontrollable martyrs, or allow them to continue causing trouble locally to prevent them from becoming a systemic symbol?
+
+---
