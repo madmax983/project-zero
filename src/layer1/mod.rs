@@ -526,3 +526,6 @@ pub mod shadow_ecosystems;
 pub use shadow_ecosystems::*;
 pub mod hazards;
 pub use hazards::*;
+
+pub mod heroic_acts;
+pub use heroic_acts::*;

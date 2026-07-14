@@ -63,7 +63,10 @@ fn test_cassandra_syndrome_disaster_bridge() {
     app.init_resource::<Events<scale::layer1::environment::disasters::DisasterEvent>>();
     app.init_resource::<Events<scale::layer1::cassandra_syndrome::DisasterOccurredEvent>>();
 
-    app.add_systems(Update, scale::layer1::core::integration::cassandra_syndrome_disaster_bridge);
+    app.add_systems(
+        Update,
+        scale::layer1::core::integration::cassandra_syndrome_disaster_bridge,
+    );
 
     app.world_mut()
         .resource_mut::<Events<scale::layer1::environment::disasters::DisasterEvent>>()
@@ -75,7 +78,9 @@ fn test_cassandra_syndrome_disaster_bridge() {
 
     app.update();
 
-    let events = app.world().resource::<Events<scale::layer1::cassandra_syndrome::DisasterOccurredEvent>>();
+    let events = app
+        .world()
+        .resource::<Events<scale::layer1::cassandra_syndrome::DisasterOccurredEvent>>();
     let mut cursor = events.get_cursor();
     let emitted: Vec<_> = cursor.read(events).collect();
 
