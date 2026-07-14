@@ -3275,3 +3275,19 @@ pub fn temporal_smuggling_chronicle_bridge(
         });
     }
 }
+
+/// INT-1305: Bridges `DisasterEvent` to `DisasterOccurredEvent`
+pub fn cassandra_syndrome_disaster_bridge(
+    mut events: bevy_ecs::event::EventReader<
+        crate::layer1::environment::disasters::DisasterEvent,
+    >,
+    mut out_events: bevy_ecs::event::EventWriter<
+        crate::layer1::cassandra_syndrome::DisasterOccurredEvent,
+    >,
+) {
+    for event in events.read() {
+        out_events.send(crate::layer1::cassandra_syndrome::DisasterOccurredEvent {
+            disaster_type: event.disaster_type,
+        });
+    }
+}
