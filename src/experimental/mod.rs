@@ -13,6 +13,7 @@ pub mod echo_chamber;
 pub mod necro_industry;
 
 #[cfg(feature = "nova")]
+#[cfg(feature = "nova")]
 pub mod emotional_weather;
 
 #[cfg(feature = "nova")]
@@ -227,3 +228,4 @@ pub mod hoarder_comfort;
 #[cfg(feature = "nova")]
 pub mod photosynthetic_nourishment;
 pub mod pyromaniac_euphoria;
+pub mod toxic_personalities;

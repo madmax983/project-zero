@@ -147,6 +147,8 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::health::despawn_dead_entities_system),
             crate::layer1::ancestral_graves::grave_visit_system
                 .after(crate::layer1::funeral::grief_system),
+            crate::experimental::toxic_personalities::toxic_personalities_system
+                .after(crate::layer1::needs::decay_needs_system),
             crate::layer1::unrest::calculate_unrest_system.after(decay_needs_system),
             crate::layer1::environment::bio_acoustic::bio_acoustic_chorus_system
                 .after(crate::layer1::unrest::calculate_unrest_system),
@@ -634,3 +636,5 @@ pub fn register(schedule: &mut Schedule) {
     );
     schedule.add_systems(clear_input_system.after(Layer1SystemSet::Observation));
 }
+#[cfg(feature = "nova")]
+pub use crate::experimental::toxic_personalities::toxic_personalities_system;

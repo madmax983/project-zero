@@ -86,7 +86,6 @@ pub fn fungal_tax_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy::prelude::*;
 
     fn setup_world() -> World {
         World::new()
