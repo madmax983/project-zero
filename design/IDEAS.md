@@ -27904,3 +27904,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you prostitute your military to fund your utopian core worlds, knowing you are creating a traumatized, radicalized warrior caste that will eventually return home?
 
 ---
+
+## The Nostalgia Contagion
+
+**Layer:** 1
+
+**Fantasy:** Pops romanticize the past to the point of refusing modern comforts, slowing progress but increasing resilience.
+
+**Mechanic:** If morale drops, pops may develop the "Nostalgic" trait. They gain a massive mood boost from interacting with obsolete (lower-tech) buildings and refuse to use high-tech equivalents, even if efficient. The trait can spread socially.
+
+**Emergence:** A high-tech colony might experience a renaissance of manual farming and stone-carving during a crisis, completely stalling advanced manufacturing but surprisingly surviving an EMP or tech-plague that ravages other worlds.
+
+**Tension:** Do you indulge the Luddite movement for short-term stability, or force them to use modern tools at the cost of crippling their morale?
+
+---
+
+## Ghost Ships of the Supply Chain
+
+**Layer:** 2
+
+**Fantasy:** Abandoned logistics networks take on a life of their own, creating unpredictable boons and hazards.
+
+**Mechanic:** When a trade route is severed abruptly (by war or disaster), the autonomous cargo ships in transit enter a "Lost" state. They continue to wander the hyperlanes blindly, occasionally dropping out in random systems.
+
+**Emergence:** A critical blockade is broken not by a relief fleet, but by a 50-year-old lost freighter suddenly appearing and crashing into the besieging dreadnought, spilling archaic, highly valuable luxury goods everywhere.
+
+**Tension:** Do you spend resources hunting down lost freighters for their cargo, or leave them as dangerous, unpredictable hazards for your enemies (and yourself)?
+
+---
+
+## The Whisper Network
+
+**Layer:** Cross-layer
+
+**Fantasy:** Information travels faster than light through unofficial, untraceable channels, leading to widespread rumors.
+
+**Mechanic:** Pops on different planets with specific social traits (e.g., "Smuggler" or "Exile") form an invisible "Whisper Network." They share stress, mood, and rumors instantly, bypassing official Layer 2 communication relays.
+
+**Emergence:** A disaster on a frontier mining world instantly causes a panic on your core capital planet, not because the news was broadcast, but because the underground syndicate members felt the sudden loss of their peers.
+
+**Tension:** Do you try to stamp out the Whisper Network to control the flow of information, or use it as an unjammable, instantaneous early warning system?
+
+---
