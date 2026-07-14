@@ -89,8 +89,8 @@ pub fn update_ad_screens_system(
         let radius_sq = (screen.radius * screen.radius) as i64;
 
         for (pop_pos, mut needs) in &mut pops {
-            let dist_sq = (screen_pos.x as i64 - pop_pos.x as i64).pow(2)
-                + (screen_pos.y as i64 - pop_pos.y as i64).pow(2);
+            let dist_sq = (screen_pos.x as i64 - pop_pos.x as i64).saturating_pow(2)
+                .saturating_add((screen_pos.y as i64 - pop_pos.y as i64).saturating_pow(2));
             if dist_sq <= radius_sq {
                 // Generate credits
                 screen.accumulated_credits += screen.credits_per_pop;
