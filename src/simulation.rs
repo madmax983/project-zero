@@ -1213,6 +1213,7 @@ mod tests {
         world.init_resource::<bevy::prelude::Events<crate::layer2::weather::StormImpactEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::law::justice::CrimeCommittedEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::social::grievances::PostGrievanceEvent>>();
+        world.init_resource::<Events<crate::layer1::social::flesh_famine::FleshFamine>>();
         world.init_resource::<Events<crate::layer1::social::factions::subcontractor_factions::LeaseZoneEvent>>();
         world.init_resource::<Events<
             crate::layer1::social::factions::subcontractor_factions::MegacorpSecuritySweepEvent,

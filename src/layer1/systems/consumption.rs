@@ -200,6 +200,14 @@ pub fn register(schedule: &mut Schedule) {
         )
             .in_set(Layer1SystemSet::Consumption),
     );
+    schedule.add_systems(
+        (
+            crate::layer1::social::flesh_famine::flesh_famine_system,
+            crate::layer1::social::flesh_famine::famine_diet_shift_system
+                .before(consume_food_system),
+        )
+            .in_set(Layer1SystemSet::Consumption),
+    );
 }
 
 /// System for consuming Void-Ale to boost morale and leisure.

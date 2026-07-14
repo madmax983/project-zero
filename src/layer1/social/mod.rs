@@ -668,6 +668,9 @@ pub use hedonic_treadmill::*;
 pub mod hedonic_treadmill_integration;
 pub mod the_empty_room;
 pub use the_empty_room::*;
+
+pub mod flesh_famine;
+pub use flesh_famine::*;
 pub mod whisper_trade;
 pub use whisper_trade::*;
 

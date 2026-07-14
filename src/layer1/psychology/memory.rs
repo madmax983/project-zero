@@ -22,6 +22,7 @@ pub enum MemoryType {
     /// Attended a funeral (closure).
     AttendedFuneral,
     FleshTaxTrauma,
+    CannibalismTaboo,
     /// Slept in an awful room.
     SleptInAwfulRoom,
     /// Slept in a dull room.
@@ -65,6 +66,7 @@ impl MemoryType {
         match self {
             Self::WitnessedDeath => -0.2,
             Self::MascotDeath | Self::LostLimb | Self::FleshTaxTrauma => -0.3, // High impact grief/trauma
+            Self::CannibalismTaboo => -0.4,
             Self::StarvationTrauma => -0.15,
             Self::DisgustedByVermin | Self::InspectorDisappointed => -0.1,
             Self::InspectorImpressed => 0.15,
@@ -89,7 +91,7 @@ impl MemoryType {
     pub const fn decay_rate(&self) -> f32 {
         // Ticks to fade completely
         match self {
-            Self::WitnessedDeath | Self::LostLimb | Self::MascotDeath => 0.0005, // Slow fade (2000 ticks)
+            Self::WitnessedDeath | Self::LostLimb | Self::MascotDeath | Self::CannibalismTaboo => 0.0005, // Slow fade (2000 ticks)
             Self::StarvationTrauma | Self::AttendedFuneral | Self::FleshTaxTrauma => 0.001, // Medium
             Self::AteFineMeal | Self::WonFight => 0.002, // Fast (500 ticks)
             Self::SawCorpse | Self::AdmiredArt | Self::DisgustedByVermin => 0.01, // Very fast fade (100 ticks)

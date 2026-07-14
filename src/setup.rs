@@ -259,6 +259,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<crate::layer1::economy::debt_of_the_dead::SocializedDebt>();
     world.init_resource::<crate::layer1::economy::ColonyPrices>();
     world.init_resource::<bevy_ecs::event::Events<crate::layer1::pop_memories::FamineEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<crate::layer1::social::flesh_famine::FleshFamine>>();
     world
         .init_resource::<bevy_ecs::event::Events<crate::layer1::law::justice::CrimeCommittedEvent>>(
         );
@@ -1257,6 +1258,7 @@ mod tests {
         );
 
         world.init_resource::<bevy::prelude::Events<crate::layer1::pop_memories::FamineEvent>>();
+        world.init_resource::<bevy::prelude::Events<crate::layer1::social::flesh_famine::FleshFamine>>();
         world.init_resource::<bevy::prelude::Events<crate::layer2::weather::StormImpactEvent>>();
         *world.resource_mut::<GameState>() = GameState::Running;
 

@@ -48,7 +48,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `272` The Martyrdom Effect — `specs/272-martyrdom-effect.md`
 - [ ] `273` The Feral Outpost — `specs/273-feral-outpost.md`
 - [ ] `275` Architectural Sabotage — `specs/275-architectural-sabotage.md`
-- [ ] `276` The Flesh Famine — `specs/276-the-flesh-famine.md`
 - [ ] `277` Orbital Megastructure Deorbiting — `specs/277-orbital-megastructure-deorbiting.md`
 
 

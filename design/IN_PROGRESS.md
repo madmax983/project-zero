@@ -1,1 +1,1 @@
-- [x] `INT-1305` Integration: The Cassandra Syndrome -> Chronicle - claimed 2026-10-31
+- [ ] `INT-1305` Integration: The Cassandra Syndrome -> Chronicle - claimed 2026-10-31
