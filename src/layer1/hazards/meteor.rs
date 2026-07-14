@@ -1,6 +1,6 @@
-use bevy_ecs::prelude::*;
-use crate::layer1::map::GridPosition;
 use crate::layer1::economy::resources::ColonyResources;
+use crate::layer1::map::GridPosition;
+use bevy_ecs::prelude::*;
 
 #[derive(Component)]
 pub struct HarvesterMeteor {
@@ -75,11 +75,23 @@ mod tests {
         let res = world.resource::<ColonyResources>();
         let meteor = world.get::<HarvesterMeteor>(meteor_entity).unwrap();
 
-        assert_eq!(res.metal, 0.0, "Colony should be drained of metal by the meteor");
-        assert_eq!(res.wood, 200.0, "Colony should not be drained of wood by the meteor");
+        assert_eq!(
+            res.metal, 0.0,
+            "Colony should be drained of metal by the meteor"
+        );
+        assert_eq!(
+            res.wood, 200.0,
+            "Colony should not be drained of wood by the meteor"
+        );
 
-        assert_eq!(meteor.stolen_amount, 500.0, "Meteor should absorb the colony's valuable resources");
-        assert!(meteor.has_absorbed, "Meteor should be marked as having absorbed resources");
+        assert_eq!(
+            meteor.stolen_amount, 500.0,
+            "Meteor should absorb the colony's valuable resources"
+        );
+        assert!(
+            meteor.has_absorbed,
+            "Meteor should be marked as having absorbed resources"
+        );
     }
 
     #[test]
@@ -113,7 +125,13 @@ mod tests {
         let res = world.resource::<ColonyResources>();
         let meteor = world.get::<HarvesterMeteor>(meteor_entity).unwrap();
 
-        assert_eq!(res.metal, 300.0, "Colony should keep the new metal because meteor has already absorbed");
-        assert_eq!(meteor.stolen_amount, 500.0, "Meteor should only have the initially absorbed resources");
+        assert_eq!(
+            res.metal, 300.0,
+            "Colony should keep the new metal because meteor has already absorbed"
+        );
+        assert_eq!(
+            meteor.stolen_amount, 500.0,
+            "Meteor should only have the initially absorbed resources"
+        );
     }
 }

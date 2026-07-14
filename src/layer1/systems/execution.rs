@@ -5,6 +5,14 @@ use bevy_ecs::prelude::*;
 
 #[allow(clippy::too_many_lines)]
 pub fn register(schedule: &mut Schedule) {
+    schedule.add_systems(
+        (
+            crate::layer1::heroic_acts::activate_heroic_act_system,
+            crate::layer1::heroic_acts::resolve_heroic_acts_system,
+        )
+            .in_set(Layer1SystemSet::Execution),
+    );
+
     #[cfg(feature = "nova")]
     crate::experimental::hoarder_comfort::register(schedule);
     schedule
@@ -13,7 +21,8 @@ pub fn register(schedule: &mut Schedule) {
         crate::layer1::tech::process_ego_social_friction.in_set(Layer1SystemSet::Execution),
     );
     schedule.add_systems(
-        crate::layer1::hazards::harvester_meteor_absorption_system.in_set(Layer1SystemSet::Execution),
+        crate::layer1::hazards::harvester_meteor_absorption_system
+            .in_set(Layer1SystemSet::Execution),
     );
     schedule.add_systems(
         (
@@ -437,5 +446,4 @@ pub fn register(schedule: &mut Schedule) {
             .chain()
             .in_set(Layer1SystemSet::Execution),
     );
-
 }
