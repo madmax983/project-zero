@@ -27779,7 +27779,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you exploit the ultimate logistical shortcut to solve immediate crises, knowing you are slowly unraveling the fabric of reality for the involved colonies?
 
 ---
-## Memory Smugglers
+## Memory Smugglers [SPECCED]
 
 **Layer:** 1
 

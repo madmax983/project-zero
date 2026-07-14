@@ -1,154 +1,163 @@
 # 1274: Memory Smugglers
 
-## Overview
+## 1. Overview
+Pops with high stress can buy "synthesized memories" from a black market building (Memory Den) to temporarily overwrite their trauma. While this rapidly reduces stress, artificial memories can clash with their actual histories, causing severe dissociative traits or making them temporarily adopt unrelated job behaviors (like an engineer trying to cook).
 
-A black market dealing not in goods, but in experiences. Pops with high stress or terrible conditions seek escapism through digital memory engrams. Pops can "buy" a fake memory of a vacation or a successful career to boost their mood temporarily. However, relying on these fake memories causes "Memetic Disassociation," where they forget real skills or fail to recognize their own family members.
+## 2. Dependencies
+- Job System (`specs/009-job-system.md`)
 
-## Dependencies
-
-- Existing Pop component
-- Needs or Stress system
-- Skill or job proficiency system
-
-## RED Phase: Tests First
-
+## 3. RED Phase: Tests First
 ```rust
 #[cfg(test)]
 mod tests {
     use super::*;
     use bevy::prelude::*;
+    use crate::layer1::psychology::stress::Stress;
+    use crate::layer1::memory::{Memories, MemoryType, Memory};
+    use crate::layer1::jobs::{Job, JobType};
+    use crate::layer1::traits::{Trait, Traits};
+    use crate::layer1::entities::pop::Pop;
+    use std::collections::HashSet;
 
-    #[test]
-    fn test_memory_smuggler_market_reduces_stress_but_causes_disassociation() {
-        // Arrange
+    fn setup_app() -> App {
         let mut app = App::new();
-        app.add_systems(Update, process_memory_smuggling);
-
-        let pop_entity = app.world_mut().spawn((
-            Pop { id: 1 },
-            Stress { level: 90.0 },
-            Skills { engineering: 50.0 },
-            MemeticDisassociation { level: 0.0 },
-            EngramPurchaseIntent,
-        )).id();
-
-        // Act
-        app.update();
-
-        // Assert
-        let stress = app.world().get::<Stress>(pop_entity).unwrap();
-        let disassociation = app.world().get::<MemeticDisassociation>(pop_entity).unwrap();
-        let skills = app.world().get::<Skills>(pop_entity).unwrap();
-
-        assert!(stress.level < 90.0, "Stress should be reduced by the fake memory.");
-        assert!(disassociation.level > 0.0, "Disassociation should increase from buying engrams.");
-        assert!(skills.engineering < 50.0, "Relying on fake memories should degrade real skills.");
+        app.add_plugins(MemorySmugglersPlugin);
+        app.init_resource::<crate::shared::time::SimulationTime>();
+        app
     }
 
     #[test]
-    fn test_high_disassociation_causes_job_failure() {
-        // Arrange
-        let mut app = App::new();
-        app.add_systems(Update, process_job_execution);
+    fn test_buy_synthesized_memory_reduces_stress() {
+        let mut app = setup_app();
 
-        let pop_entity = app.world_mut().spawn((
-            Pop { id: 2 },
-            MemeticDisassociation { level: 100.0 },
-            JobAssignment { active: true },
+        let pop = app.world_mut().spawn((
+            Pop,
+            Stress { current: 80.0, max: 100.0, ..Default::default() },
+            Memories::default(),
+            Job::new(JobType::Engineer),
         )).id();
 
-        // Act
+        let den = app.world_mut().spawn(MemoryDen).id();
+
+        app.world_mut().resource_mut::<Events<BuySynthesizedMemory>>().send(
+            BuySynthesizedMemory {
+                pop_entity: pop,
+                den_entity: den,
+            }
+        );
+
         app.update();
 
-        // Assert
-        let job = app.world().get::<JobAssignment>(pop_entity).unwrap();
-        assert!(!job.active, "High disassociation should cause pops to fail or abandon their jobs.");
+        let stress = app.world().get::<Stress>(pop).unwrap();
+        assert!(stress.current < 80.0, "Stress should be reduced after buying memory");
+
+        let memories = app.world().get::<Memories>(pop).unwrap();
+        assert!(memories.items.iter().any(|m| matches!(m.memory_type, MemoryType::Synthesized(_))), "Pop should have acquired a synthesized memory");
+    }
+
+    #[test]
+    fn test_synthesized_memory_causes_dissociation() {
+        let mut app = setup_app();
+
+        let pop = app.world_mut().spawn((
+            Pop,
+            Memories {
+                items: vec![
+                    Memory { memory_type: MemoryType::StarvationTrauma, intensity: 1.0, added_at: 0 },
+                    Memory { memory_type: MemoryType::Synthesized(JobType::Chef), intensity: 1.0, added_at: 0 },
+                ],
+            },
+            Traits(HashSet::new()),
+        )).id();
+
+        app.update();
+
+        let traits = app.world().get::<Traits>(pop).unwrap();
+        assert!(traits.has(Trait::Dissociative), "Pop should become dissociative when real trauma clashes with synthesized memories");
     }
 }
 ```
 
-## GREEN Phase: Minimal Implementation
-
+## 4. GREEN Phase: Minimal Implementation
 ```rust
 use bevy::prelude::*;
+use crate::layer1::psychology::stress::Stress;
+use crate::layer1::memory::{Memories, MemoryType, Memory};
+use crate::layer1::jobs::JobType;
+use crate::layer1::traits::{Traits, Trait};
+use crate::layer1::entities::pop::Pop;
+use crate::shared::time::SimulationTime;
 
 #[derive(Component)]
-pub struct Pop {
-    pub id: u32,
+pub struct MemoryDen;
+
+#[derive(Event)]
+pub struct BuySynthesizedMemory {
+    pub pop_entity: Entity,
+    pub den_entity: Entity,
 }
 
-#[derive(Component)]
-pub struct Stress {
-    pub level: f32,
-}
+pub struct MemorySmugglersPlugin;
 
-#[derive(Component)]
-pub struct Skills {
-    pub engineering: f32,
-}
-
-#[derive(Component)]
-pub struct MemeticDisassociation {
-    pub level: f32,
-}
-
-#[derive(Component)]
-pub struct EngramPurchaseIntent;
-
-#[derive(Component)]
-pub struct JobAssignment {
-    pub active: bool,
-}
-
-pub fn process_memory_smuggling(
-    mut query: Query<(Entity, &mut Stress, &mut MemeticDisassociation, &mut Skills), With<EngramPurchaseIntent>>,
-    mut commands: Commands,
-) {
-    for (entity, mut stress, mut disassociation, mut skills) in query.iter_mut() {
-        // Reduce stress significantly
-        stress.level = (stress.level - 40.0).max(0.0);
-
-        // Increase disassociation
-        disassociation.level += 20.0;
-
-        // Degrade real skills due to memory overwrite
-        skills.engineering = (skills.engineering - 10.0).max(0.0);
-
-        // Remove intent after purchase
-        commands.entity(entity).remove::<EngramPurchaseIntent>();
+impl Plugin for MemorySmugglersPlugin {
+    fn build(&self, app: &mut App) {
+        app.add_event::<BuySynthesizedMemory>()
+           .add_systems(Update, (
+               process_memory_purchases,
+               check_memory_dissociation,
+           ));
     }
 }
 
-pub fn process_job_execution(
-    mut query: Query<(&MemeticDisassociation, &mut JobAssignment)>,
+fn process_memory_purchases(
+    mut events: EventReader<BuySynthesizedMemory>,
+    mut query: Query<(&mut Stress, &mut Memories)>,
+    time: Res<SimulationTime>,
 ) {
-    for (disassociation, mut job) in query.iter_mut() {
-        if disassociation.level >= 100.0 {
-            job.active = false;
+    for event in events.read() {
+        if let Ok((mut stress, mut memories)) = query.get_mut(event.pop_entity) {
+            stress.current = (stress.current - 40.0).max(0.0);
+            memories.items.push(Memory {
+                memory_type: MemoryType::Synthesized(JobType::Chef),
+                intensity: 1.0,
+                added_at: time.tick,
+            });
+        }
+    }
+}
+
+fn check_memory_dissociation(
+    mut query: Query<(Entity, &Memories, &mut Traits), With<Pop>>,
+) {
+    for (_entity, memories, mut traits) in query.iter_mut() {
+        let has_trauma = memories.items.iter().any(|m| matches!(m.memory_type, MemoryType::StarvationTrauma));
+        let has_synth = memories.items.iter().any(|m| matches!(m.memory_type, MemoryType::Synthesized(_)));
+
+        if has_trauma && has_synth {
+            if !traits.has(Trait::Dissociative) {
+                traits.add(Trait::Dissociative);
+            }
         }
     }
 }
 ```
 
-## REFACTOR Phase: Quality & Design
+## 5. REFACTOR Phase: Quality & Design
+- **Code Smells**: The purchased memory type (`JobType::Chef`) is hardcoded in the minimal implementation. This should be driven by the Memory Den's inventory or randomly selected based on the Pop's missing needs/desires.
+- **Integration**: `MemoryType::Synthesized` and `Trait::Dissociative` need to be officially added to their respective enums in the psychology/traits modules if they don't exist yet.
+- **Performance**: The dissociation check currently iterates over all pops and all their memories on every update. This could be slow. We should only check when a new memory is added (e.g. by reacting to a `MemoryAdded` event) rather than polling constantly.
 
-- The flat `-40.0` stress and `+20.0` disassociation should be tuned or driven by the quality/cost of the engram.
-- `Skills` component should probably use a generic map rather than hardcoding `engineering` to support all job types.
-- The intent flag `EngramPurchaseIntent` is simple but should be triggered by a broader pop desire/action system.
+## 6. Acceptance Criteria (Testable!)
+- [ ] All tests in RED phase pass
+- [ ] `cargo test` returns 0 failures
+- [ ] `cargo clippy -- -D warnings` passes
+- [ ] Test coverage ≥85% for new code
+- [ ] Pops correctly reduce stress and gain synthesized memories when buying from a Memory Den.
+- [ ] Clashing memories correctly apply the Dissociative trait.
 
-## Acceptance Criteria (Testable!)
+## 7. Technical Guidance
+- Make sure to extend the existing `MemoryType` and `Trait` enums gracefully. You may need to update `Memories::default()` or other initialization code if these enums change.
+- In a full implementation, `MemoryDen` would probably need a system where Pops automatically path to it when their stress is high, similar to how they seek out food when hungry.
 
-- [ ] All tests in RED phase pass.
-- [ ] `cargo test` returns 0 failures.
-- [ ] `cargo clippy -- -D warnings` passes.
-- [ ] Test coverage ≥85% for new code.
-- [ ] Purchasing memory engrams correctly decreases stress and increases disassociation.
-- [ ] High disassociation correctly interferes with job execution.
-
-## Technical Guidance
-
-- Integration points: Hook this up to the existing pop needs/stress AI so pops actively seek out smugglers when stress is high.
-- The smuggler entity/network needs to exist on the map or as a colony modifier.
-
-## Questions
+## 8. Questions
 *Builder: add questions here if spec is unclear.*
