@@ -919,3 +919,4 @@
 - [x] `1274` Memory Smugglers — `specs/1274-memory-smugglers.md` — completed 2024-07-26
 - [x] `1137` Heroic Acts — `specs/1137-heroic-acts.md` — completed 2024-07-26
 - [x] `1137` Heroic Acts — `specs/1137-heroic-acts.md` — completed 2024-07-26
+- [x] `INT-352` Integration: Stellar Drift -> Chronicle — completed 2026-11-01

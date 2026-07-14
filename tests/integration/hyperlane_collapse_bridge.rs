@@ -32,4 +32,5 @@ fn test_hyperlane_collapse_chronicle_bridge() {
         "Should emit exactly one AddChronicleEvent for the hyperlane collapse"
     );
     assert_eq!(events[0].importance, EventImportance::Major);
+    assert!(events[0].text.contains("stellar drift"), "Chronicle event should mention stellar drift");
 }
