@@ -1780,3 +1780,10 @@
 - **Glue added:** Added `cassandra_syndrome_disaster_bridge` in `src/layer1/core/integration.rs` to bridge environment disasters to Cassandra syndrome's prophecy validation. Appended systems to `execution.rs`.
 - **Schedule:** Registered the bridge in `src/layer1/systems/observation.rs`.
 - **Tests:** Added `test_cassandra_syndrome_disaster_bridge` in `tests/integration/cassandra_syndrome_bridge.rs`.
+
+### INT-352: Stellar Drift -> Chronicle
+- **Date:** 2026-11-01
+- **Systems connected:** `TradeRouteSeveredEvent` -> `hyperlane_collapse_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Updated `hyperlane_collapse_chronicle_bridge` in `src/layer3/integration.rs` to log a Chronicle event mentioning stellar drift when a hyperlane snaps.
+- **Schedule:** Registered in Simulation schedule.
+- **Tests:** Modified `tests/integration/hyperlane_collapse_bridge.rs`.

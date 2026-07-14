@@ -16,7 +16,7 @@ pub fn hyperlane_collapse_chronicle_bridge(
     for _ in sever_events.read() {
         chronicle_events.send(AddChronicleEvent {
             importance: EventImportance::Major,
-            text: "A hyperlane has collapsed. Trade routes are severed, isolating systems."
+            text: "A major hyperlane has collapsed due to stellar drift. Trade routes are severed, reshaping the galactic geography."
                 .to_string(),
         });
     }
