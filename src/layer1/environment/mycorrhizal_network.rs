@@ -173,6 +173,6 @@ mod tests {
 
         let network = world.get::<MycorrhizalNetwork>(network_entity).unwrap();
 
-        assert_eq!(network.has_warned, false, "Network warn should be cleared");
+        assert!(!network.has_warned, "Network warn should be cleared");
     }
 }
