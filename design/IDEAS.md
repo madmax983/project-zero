@@ -27988,3 +27988,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you quickly silence dissidents with extreme prejudice, risking turning them into uncontrollable martyrs, or allow them to continue causing trouble locally to prevent them from becoming a systemic symbol?
 
 ---
+## Xenoflora Cargo Contamination
+
+**Layer:** Cross-layer
+
+**Fantasy:** A tiny, seemingly harmless stowaway slowly rewrites the ecosystem of your core worlds.
+
+**Mechanic:** Inter-colony trade ships carrying raw biological materials have a small chance of picking up resilient native spores. Upon arrival, these spores silently root in the destination colony's agriculture or life support systems, subtly altering food yields, pop moods, and eventually terraforming the local biome.
+
+**Emergence:** A vital trade route established to feed a starving desert world accidentally introduces a hyper-aggressive fungal mold that consumes their water purifiers, turning a hunger crisis into an ecological disaster.
+
+**Tension:** Do you maintain vital organic trade networks knowing they might cross-contaminate your pristine worlds, or strictly isolate ecosystems at the cost of crippling system-wide logistics?
+
+---
+
+## The Atrophy of Peace
+
+**Layer:** Cross-layer
+
+**Fantasy:** A society that has forgotten how to fight, suddenly faced with the horrors of the galaxy.
+
+**Mechanic:** Extended periods without war or significant internal conflict cause a colony's "Martial Readiness" to degrade. Military structures cost more to maintain, and pops lose their combat-related traits. However, peaceful colonies gain compounding bonuses to art, science, and diplomacy.
+
+**Emergence:** Your utopian, century-long pacifist empire is suddenly invaded by a splinter faction. You have massive resources, but your military foundries take years to spin up, and your first drafted fleets panic at the first sign of actual combat, causing a chaotic retreat.
+
+**Tension:** Do you artificially manufacture minor conflicts or brutal training regimens to keep your civilization's teeth sharp, or fully embrace the golden age of peace and hope your diplomacy never fails?
+
+---
+
+## The Scrap Pantheon
+
+**Layer:** 1
+
+**Fantasy:** The cast-offs of an industrial civilization become objects of worship for those left behind.
+
+**Mechanic:** On highly polluted or abandoned industrial sectors, low-status Pops can begin scavenging broken machinery and piecing together massive, non-functional "Idols" from the scrap. These idols generate a localized religious fervor, replacing traditional needs with a desire to "feed" the idol more high-tech components.
+
+**Emergence:** You try to dismantle a ruined factory to build a new hospital, but the local scrap-worshippers consider the ruins sacred ground. They violently defend the junk, using the salvaged tech in bizarre, jury-rigged ways to disable your construction mechs.
+
+**Tension:** Do you brutally suppress the scrap cult to reclaim valuable industrial real estate, or officially sanction their strange religion to keep them pacified, risking them hoarding critical tech for their idols?
+
+---
