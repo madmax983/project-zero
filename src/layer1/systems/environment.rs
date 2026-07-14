@@ -239,6 +239,8 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::atmosphere::update_weather_diffusion_system),
             crate::layer1::atmosphere::simulate_diffusion_system
                 .after(crate::layer1::environment::terraforming::apply_planetary_effects_system),
+            crate::layer1::environment::mycorrhizal_network::fungal_network_sharing_system,
+            crate::layer1::environment::mycorrhizal_network::fungal_tax_system,
             crate::layer1::logistics::orbital_drop::process_orbital_drops,
             crate::layer1::nanite_storms::apply_nanite_storm_effects,
             crate::layer1::environment::orbital_junkyard::process_debris_rain,
