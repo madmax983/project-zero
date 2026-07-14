@@ -207,3 +207,5 @@ mod parasitic_broadcast_tests;
 pub use parasitic_broadcast::*;
 
 pub mod memetic_hazards;
+pub mod memory_smugglers;
+pub use memory_smugglers::*;

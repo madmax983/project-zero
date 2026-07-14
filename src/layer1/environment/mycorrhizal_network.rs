@@ -1,5 +1,5 @@
-use bevy::prelude::*;
 use crate::layer1::core::chronicle::{AddChronicleEvent, EventImportance};
+use bevy::prelude::*;
 
 #[derive(Component)]
 pub struct MycorrhizalNetwork {
@@ -37,7 +37,11 @@ pub fn fungal_network_sharing_system(
 
 pub fn fungal_tax_system(
     mut networks: Query<(Entity, &mut MycorrhizalNetwork)>,
-    mut buildings: Query<(Option<&mut BuildingInventory>, Option<&mut BuildingNeeds>, &OnNetwork)>,
+    mut buildings: Query<(
+        Option<&mut BuildingInventory>,
+        Option<&mut BuildingNeeds>,
+        &OnNetwork,
+    )>,
     mut chronicle: EventWriter<AddChronicleEvent>,
 ) {
     for (network_entity, mut network) in networks.iter_mut() {
@@ -47,7 +51,8 @@ pub fn fungal_tax_system(
 
             if network.hunger > 5.0 && !network.has_warned {
                 chronicle.send(AddChronicleEvent {
-                    text: "The Mycorrhizal Network is starving. A massive tax is imminent.".to_string(),
+                    text: "The Mycorrhizal Network is starving. A massive tax is imminent."
+                        .to_string(),
                     importance: EventImportance::Major,
                 });
                 network.has_warned = true;
@@ -80,8 +85,8 @@ pub fn fungal_tax_system(
 
 #[cfg(test)]
 mod tests {
-    use bevy::prelude::*;
     use super::*;
+    use bevy::prelude::*;
 
     fn setup_world() -> World {
         World::new()
@@ -93,13 +98,15 @@ mod tests {
         world.insert_resource(Events::<AddChronicleEvent>::default());
 
         let network_entity = world.spawn_empty().id();
-        world.entity_mut(network_entity).insert(MycorrhizalNetwork { hunger: 10.0, has_warned: false });
+        world.entity_mut(network_entity).insert(MycorrhizalNetwork {
+            hunger: 10.0,
+            has_warned: false,
+        });
 
         let building_entity = world.spawn_empty().id();
-        world.entity_mut(building_entity).insert((
-            BuildingInventory { food: 50.0 },
-            OnNetwork(network_entity),
-        ));
+        world
+            .entity_mut(building_entity)
+            .insert((BuildingInventory { food: 50.0 }, OnNetwork(network_entity)));
 
         let mut schedule = Schedule::default();
         schedule.add_systems(fungal_tax_system);
@@ -108,8 +115,14 @@ mod tests {
         let building = world.get::<BuildingInventory>(building_entity).unwrap();
         let network = world.get::<MycorrhizalNetwork>(network_entity).unwrap();
 
-        assert!(building.food < 50.0, "Building should have lost food to tax");
-        assert!(network.hunger < 10.0, "Network hunger should have decreased");
+        assert!(
+            building.food < 50.0,
+            "Building should have lost food to tax"
+        );
+        assert!(
+            network.hunger < 10.0,
+            "Network hunger should have decreased"
+        );
     }
 
     #[test]
@@ -118,13 +131,15 @@ mod tests {
         world.insert_resource(Events::<AddChronicleEvent>::default());
 
         let network_entity = world.spawn_empty().id();
-        world.entity_mut(network_entity).insert(MycorrhizalNetwork { hunger: 4.0, has_warned: false });
+        world.entity_mut(network_entity).insert(MycorrhizalNetwork {
+            hunger: 4.0,
+            has_warned: false,
+        });
 
         let building_entity = world.spawn_empty().id();
-        world.entity_mut(building_entity).insert((
-            BuildingInventory { food: 10.0 },
-            OnNetwork(network_entity),
-        ));
+        world
+            .entity_mut(building_entity)
+            .insert((BuildingInventory { food: 10.0 }, OnNetwork(network_entity)));
 
         let mut schedule = Schedule::default();
         schedule.add_systems(fungal_tax_system);
@@ -137,10 +152,18 @@ mod tests {
         world.insert_resource(Events::<AddChronicleEvent>::default());
 
         let network_entity = world.spawn_empty().id();
-        world.entity_mut(network_entity).insert(MycorrhizalNetwork { hunger: 10.0, has_warned: false });
+        world.entity_mut(network_entity).insert(MycorrhizalNetwork {
+            hunger: 10.0,
+            has_warned: false,
+        });
 
         let other_network_entity = world.spawn_empty().id();
-        world.entity_mut(other_network_entity).insert(MycorrhizalNetwork { hunger: 0.0, has_warned: false });
+        world
+            .entity_mut(other_network_entity)
+            .insert(MycorrhizalNetwork {
+                hunger: 0.0,
+                has_warned: false,
+            });
 
         let building_entity = world.spawn_empty().id();
         world.entity_mut(building_entity).insert((
@@ -156,7 +179,10 @@ mod tests {
         let network = world.get::<MycorrhizalNetwork>(network_entity).unwrap();
 
         assert_eq!(building.food, 50.0, "Building should not have lost food");
-        assert_eq!(network.hunger, 10.0, "Network hunger should not have decreased");
+        assert_eq!(
+            network.hunger, 10.0,
+            "Network hunger should not have decreased"
+        );
     }
 
     #[test]
@@ -165,7 +191,10 @@ mod tests {
         world.insert_resource(Events::<AddChronicleEvent>::default());
 
         let network_entity = world.spawn_empty().id();
-        world.entity_mut(network_entity).insert(MycorrhizalNetwork { hunger: 0.0, has_warned: true });
+        world.entity_mut(network_entity).insert(MycorrhizalNetwork {
+            hunger: 0.0,
+            has_warned: true,
+        });
 
         let mut schedule = Schedule::default();
         schedule.add_systems(fungal_tax_system);

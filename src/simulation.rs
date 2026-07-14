@@ -720,8 +720,8 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         crate::layer1::social::secret_societies::society_action_system,
         crate::layer1::architecture::chrono_vault::handle_seal_vault,
         crate::layer1::architecture::chrono_vault::process_vault_timers,
-        crate::layer1::social::memory_smugglers::process_memory_smuggling,
-        crate::layer1::social::memory_smugglers::process_job_execution,
+        crate::layer1::memetics::memory_smugglers::process_memory_smuggling_system,
+        crate::layer1::memetics::memory_smugglers::process_job_execution_system,
         update_action_timer_system
             .after(gpu_evaluate_actions)
             .before(Layer1SystemSet::Execution),
