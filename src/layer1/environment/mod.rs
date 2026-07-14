@@ -49,3 +49,6 @@ pub use atmosphere::*;
 
 pub mod orbital_junkyard;
 pub use orbital_junkyard::*;
+
+pub mod mycorrhizal_network;
+pub use mycorrhizal_network::*;

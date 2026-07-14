@@ -569,7 +569,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `992` The Fungal Monoliths — `specs/992-the-fungal-monoliths.md`
 - [ ] `993` The Fractal Bureaucracy — `specs/993-the-fractal-bureaucracy.md`
 
-- [ ] `995` Fungal Networking — `specs/995-fungal-networking.md`
 - [ ] `997` Subspace Stowaways — `specs/997-subspace-stowaways.md`
 - [ ] `998` The Symbiotic Data-Weavers — `specs/998-symbiotic-data-weavers.md`
 - [ ] `999` Interplanetary Pollination — `specs/999-interplanetary-pollination.md`
