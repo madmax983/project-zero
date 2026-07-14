@@ -3291,3 +3291,16 @@ pub fn cassandra_syndrome_disaster_bridge(
         });
     }
 }
+
+/// INT-1271: The Propaganda Graffitists Chronicle Bridge
+pub fn graffiti_chronicle_bridge(
+    query: Query<Entity, Added<crate::layer1::social::propaganda_graffitists::RebelliousGraffiti>>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for _ in query.iter() {
+        chronicle_events.send(AddChronicleEvent {
+            importance: EventImportance::Minor,
+            text: "Rebellious graffiti has appeared on colony walls, boosting morale but hurting efficiency.".to_string(),
+        });
+    }
+}

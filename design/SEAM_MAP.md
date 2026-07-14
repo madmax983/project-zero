@@ -1780,3 +1780,9 @@
 - **Glue added:** Added `cassandra_syndrome_disaster_bridge` in `src/layer1/core/integration.rs` to bridge environment disasters to Cassandra syndrome's prophecy validation. Appended systems to `execution.rs`.
 - **Schedule:** Registered the bridge in `src/layer1/systems/observation.rs`.
 - **Tests:** Added `test_cassandra_syndrome_disaster_bridge` in `tests/integration/cassandra_syndrome_bridge.rs`.
+
+### INT-1271: The Propaganda Graffitists -> Chronicle & Execution
+- **Date:** 2026-11-01
+- **Systems connected:** `RebelliousGraffiti` addition -> `graffiti_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** `graffiti_chronicle_bridge` in `src/layer1/core/integration.rs` translates the addition of `RebelliousGraffiti` component to an `AddChronicleEvent`. Registered `propaganda_graffiti_system`, `graffiti_aura_system`, and `graffiti_chronicle_bridge` in `src/layer1/systems/execution.rs`.
+- **Tests:** `tests/integration/propaganda_graffitists_bridge.rs`

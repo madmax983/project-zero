@@ -5,6 +5,15 @@ use bevy_ecs::prelude::*;
 
 #[allow(clippy::too_many_lines)]
 pub fn register(schedule: &mut Schedule) {
+    schedule.add_systems(
+        (
+            crate::layer1::social::propaganda_graffitists::propaganda_graffiti_system,
+            crate::layer1::social::propaganda_graffitists::graffiti_aura_system,
+            crate::layer1::core::integration::graffiti_chronicle_bridge,
+        )
+            .chain()
+            .in_set(super::Layer1SystemSet::Execution),
+    );
     #[cfg(feature = "nova")]
     crate::experimental::hoarder_comfort::register(schedule);
     schedule
