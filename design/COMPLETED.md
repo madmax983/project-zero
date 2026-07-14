@@ -917,3 +917,5 @@
 - [x] `994` The Kinetic Heist — `specs/994-the-kinetic-heist.md` — completed 2026-07-13
 - [x] `995` Fungal Networking — `specs/995-fungal-networking.md` — completed 2024-05-31
 - [x] `1274` Memory Smugglers — `specs/1274-memory-smugglers.md` — completed 2024-07-26
+- [x] `1137` Heroic Acts — `specs/1137-heroic-acts.md` — completed 2024-07-26
+- [x] `1137` Heroic Acts — `specs/1137-heroic-acts.md` — completed 2024-07-26
