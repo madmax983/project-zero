@@ -1,4 +1,3 @@
-use crate::layer1::bureaucracy_of_scarcity::JobAssignment;
 use crate::layer1::psychology::stress::StressTracker;
 use crate::layer1::skills::{SkillType, Skills};
 use bevy::prelude::*;
@@ -43,11 +42,16 @@ pub fn process_memory_smuggling(
     }
 }
 
-pub fn process_job_execution(mut query: Query<(&MemeticDisassociation, &mut JobAssignment)>) {
-    for (disassociation, mut job) in query.iter_mut() {
+pub fn process_job_execution(
+    mut commands: Commands,
+    query: Query<(Entity, &MemeticDisassociation), With<crate::layer1::entities::pop::Job>>,
+) {
+    for (entity, disassociation) in query.iter() {
         if disassociation.level >= 100.0 {
-            // Un-assign from bureaucratic job
-            job.is_active_bureaucrat = false;
+            // Abandon jobs completely
+            commands
+                .entity(entity)
+                .remove::<crate::layer1::entities::pop::Job>();
         }
     }
 }
@@ -115,8 +119,9 @@ mod tests {
             .spawn((
                 Pop,
                 MemeticDisassociation { level: 100.0 },
-                JobAssignment {
-                    is_active_bureaucrat: true,
+                crate::layer1::entities::pop::Job {
+                    workplace: Entity::PLACEHOLDER,
+                    job_type: crate::layer1::mind::utility_types::AssignmentType::FarmWorker,
                 },
             ))
             .id();
@@ -125,9 +130,11 @@ mod tests {
         app.update();
 
         // Assert
-        let job = app.world().get::<JobAssignment>(pop_entity).unwrap();
+        let job = app
+            .world()
+            .get::<crate::layer1::entities::pop::Job>(pop_entity);
         assert!(
-            !job.is_active_bureaucrat,
+            job.is_none(),
             "High disassociation should cause pops to fail or abandon their jobs."
         );
     }
