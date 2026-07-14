@@ -726,7 +726,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1268` The Scrap-Mind Ascendancy — `specs/1268-the-scrap-mind-ascendancy.md`
 - [ ] `1269` Cult of the First Error — `specs/1269-cult-of-the-first-error.md`
 - [ ] `1270` Phantom Trade Routes — `specs/1270-phantom-trade-routes.md`
-- [ ] `1274` Memory Smugglers — `specs/1274-memory-smugglers.md`
+
 
 
 - [ ] `1277` Ghost Code — `specs/1277-ghost-code.md`
