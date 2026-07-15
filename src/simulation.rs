@@ -1074,6 +1074,11 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
     ));
 
     schedule.add_systems((
+        crate::layer1::tech::black_market_genemods::update_genemod_instability_system,
+        crate::layer1::tech::black_market_genemods::process_mutational_meltdown_system,
+    ));
+
+    schedule.add_systems((
         crate::layer2::integration::asteroid_hermit_exodus_chronicle_bridge
             .after(crate::layer2::asteroid_hermits::evaluate_hermit_exodus_system),
         crate::layer2::integration::asteroid_hermit_discovery_chronicle_bridge

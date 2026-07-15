@@ -822,6 +822,7 @@ pub mod martyrs_engine;
 
 pub mod rogue_automation_cults;
 
+pub mod black_market_genemods;
 pub mod living_archive;
 pub mod symbiotic_habitation;
 pub mod teleporter;

@@ -29,6 +29,9 @@ use crate::layer1::pop::Job;
 use crate::layer1::resources::{ColonyResources, ResourceType};
 use crate::layer1::skills::{get_skill_efficiency, SkillType, Skills};
 use crate::layer1::social::SocialBuff;
+use crate::layer1::tech::black_market_genemods::{
+    get_genemod_efficiency_modifier, UnstableGenemod,
+};
 use crate::layer1::tech::hypno_learning::MentalFog;
 use crate::layer1::tech::Tech;
 use crate::layer1::traits::{get_job_efficiency_modifier, get_trait_work_speed_modifier, Traits};
@@ -766,6 +769,10 @@ pub fn get_status_modifiers(world: &World, pop_entity: Entity) -> f32 {
                 }
             }
         }
+    }
+
+    if let Some(genemod) = world.get::<UnstableGenemod>(pop_entity) {
+        modifier *= get_genemod_efficiency_modifier(genemod);
     }
 
     modifier
