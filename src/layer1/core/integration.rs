@@ -3297,7 +3297,10 @@ pub struct ReportedMemeticDisassociation;
 /// INT-1274: Bridges `MemeticDisassociation` to `AddChronicleEvent` (Chronicle).
 pub fn memory_smugglers_chronicle_bridge(
     query: Query<
-        (Entity, &crate::layer1::memetics::memory_smugglers::MemeticDisassociation),
+        (
+            Entity,
+            &crate::layer1::memetics::memory_smugglers::MemeticDisassociation,
+        ),
         Without<ReportedMemeticDisassociation>,
     >,
     mut chronicle_events: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
@@ -3309,7 +3312,9 @@ pub fn memory_smugglers_chronicle_bridge(
                 text: "Memory Smugglers have exacted their toll. Cases of extreme memetic disassociation are sweeping the colony, leaving pops hollowed out and unable to perform basic functions.".to_string(),
                 importance: crate::layer1::core::chronicle::EventImportance::Major,
             });
-            commands.entity(entity).insert(ReportedMemeticDisassociation);
+            commands
+                .entity(entity)
+                .insert(ReportedMemeticDisassociation);
         }
     }
 }

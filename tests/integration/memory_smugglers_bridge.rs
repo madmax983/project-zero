@@ -13,9 +13,7 @@ fn test_memory_smugglers_chronicle_bridge_triggers_event() {
 
     world.init_resource::<Events<AddChronicleEvent>>();
 
-    let pop_entity = world
-        .spawn(MemeticDisassociation { level: 100.0 })
-        .id();
+    let pop_entity = world.spawn(MemeticDisassociation { level: 100.0 }).id();
 
     schedule.run(&mut world);
 
@@ -24,15 +22,21 @@ fn test_memory_smugglers_chronicle_bridge_triggers_event() {
     let mut found = false;
 
     for event in reader.read(events) {
-        if event.text.contains("Memory Smugglers") || event.text.contains("memetic disassociation") {
+        if event.text.contains("Memory Smugglers") || event.text.contains("memetic disassociation")
+        {
             found = true;
             assert_eq!(event.importance, EventImportance::Major);
         }
     }
 
-    assert!(found, "Expected AddChronicleEvent for memetic disassociation >= 100.0");
     assert!(
-        world.get::<ReportedMemeticDisassociation>(pop_entity).is_some(),
+        found,
+        "Expected AddChronicleEvent for memetic disassociation >= 100.0"
+    );
+    assert!(
+        world
+            .get::<ReportedMemeticDisassociation>(pop_entity)
+            .is_some(),
         "Pop should receive ReportedMemeticDisassociation component to prevent duplicate events"
     );
 
@@ -41,5 +45,9 @@ fn test_memory_smugglers_chronicle_bridge_triggers_event() {
 
     let events = world.resource::<Events<AddChronicleEvent>>();
     let mut reader = events.get_cursor();
-    assert_eq!(reader.read(events).count(), 1, "Should not emit duplicate events");
+    assert_eq!(
+        reader.read(events).count(),
+        1,
+        "Should not emit duplicate events"
+    );
 }
