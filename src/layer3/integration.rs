@@ -756,7 +756,7 @@ mod tests {
         let events: Vec<&AddChronicleEvent> = reader.read(chronicle_events).collect();
         assert_eq!(events.len(), 1);
         assert_eq!(events[0].importance, EventImportance::Major);
-        assert!(events[0].text.contains("A hyperlane has collapsed"));
+        assert!(events[0].text.contains("A major hyperlane has collapsed"));
     }
 
     #[test]

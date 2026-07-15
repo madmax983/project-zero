@@ -634,6 +634,10 @@ pub fn register(schedule: &mut Schedule) {
         )
             .in_set(Layer1SystemSet::Observation),
     );
+    schedule.add_systems(
+        crate::layer1::core::integration::memory_smugglers_chronicle_bridge
+            .in_set(Layer1SystemSet::Observation),
+    );
     schedule.add_systems(clear_input_system.after(Layer1SystemSet::Observation));
 }
 #[cfg(feature = "nova")]

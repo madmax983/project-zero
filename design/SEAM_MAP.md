@@ -1787,3 +1787,10 @@
 - **Glue added:** Updated `hyperlane_collapse_chronicle_bridge` in `src/layer3/integration.rs` to log a Chronicle event mentioning stellar drift when a hyperlane snaps.
 - **Schedule:** Registered in Simulation schedule.
 - **Tests:** Modified `tests/integration/hyperlane_collapse_bridge.rs`.
+
+### INT-1274: Memory Smugglers -> Chronicle
+- **Date:** 2026-11-01
+- **Systems connected:** `MemeticDisassociation` -> `memory_smugglers_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `memory_smugglers_chronicle_bridge` in `src/layer1/core/integration.rs` to log a Chronicle event when a pop's memetic disassociation reaches a critical level, indicating the severe toll of memory smuggling on the colony.
+- **Schedule:** Registered in Layer 1 Observation schedule (`src/layer1/systems/observation.rs`).
+- **Tests:** `tests/integration/memory_smugglers_bridge.rs`
