@@ -34,18 +34,45 @@ use thiserror::Error;
 /// assert!(matches!(result, Err(NarrativeError::TemplateNotFound(_))));
 /// ```
 pub enum NarrativeError {
+    /// A required context variable was not provided when generating a narrative.
+    ///
+    /// You must call [`NarrativeContext::insert`] with the missing key before generating.
     #[error("📖 Missing required context variable '{0}'. Fix: context.insert(\"{0}\", <value>)")]
     MissingContext(String),
+
+    /// A fragment type was referenced but no options were provided in the lore files.
+    ///
+    /// Ensure your `FRAGMENTS.md` file contains a bulleted list of options under this fragment's header.
     #[error("📖 Fragment '{0}' has no options defined")]
     MissingFragmentOptions(String),
+
+    /// The specified directory was found, but it contained no valid lore files.
+    ///
+    /// Ensure the directory contains `TEMPLATES.md` and/or `FRAGMENTS.md`.
     #[error("📖 No lore files found in `{0}`. Expected TEMPLATES.md or FRAGMENTS.md")]
     NoLoreFiles(String),
+
+    /// The requested template ID does not exist in the loaded templates.
+    ///
+    /// Check for typos in the template name or ensure it is defined in `TEMPLATES.md`.
     #[error("📖 Template not found (`{0}`)")]
     TemplateNotFound(String),
+
+    /// The requested template exists, but it has no patterns defined.
+    ///
+    /// Ensure the template in `TEMPLATES.md` contains at least one pattern string.
     #[error("📖 Template `{0}` has no patterns")]
     NoPatternsForTemplate(String),
+
+    /// The provided lore directory could not be found or is not a directory.
+    ///
+    /// Verify the path passed to [`NarrativeGenerator::load_from_files`] is correct.
     #[error("📖 Directory not found or not a directory (`{0}`)")]
     DirectoryNotFound(String),
+
+    /// An I/O error occurred while reading a lore file.
+    ///
+    /// The string contains the path that failed, and the inner error is the underlying I/O error.
     #[error("📖 Failed to read `{0}`: {1}")]
     IoError(String, std::io::Error),
 }
@@ -54,6 +81,25 @@ use comfy_table::{presets::UTF8_FULL, Cell, Color as TableColor, Table};
 
 impl NarrativeError {
     /// Returns a beautiful formatted table for the error.
+    ///
+    /// The table includes the error type, the error message, and a suggested action to resolve the issue.
+    /// This is particularly useful for CLI applications to render user-friendly errors.
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use scale::shared::narrative::NarrativeError;
+    ///
+    /// // Suppose a context variable was missing when generating a narrative
+    /// let err = NarrativeError::MissingContext("YEAR".to_string());
+    ///
+    /// // We can render a helpful table for the user
+    /// let table = err.to_table();
+    ///
+    /// // The table will contain the error details and suggested action
+    /// assert!(table.contains("YEAR"));
+    /// assert!(table.contains("context.insert"));
+    /// ```
     pub fn to_table(&self) -> String {
         let error_msg = format!("{}", self);
         let action_msg = match self {
