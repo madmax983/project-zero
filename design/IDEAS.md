@@ -28155,3 +28155,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you spend massive amounts of cultural and educational resources to constantly enforce a unified language across the galaxy, or let the outer rim drift, knowing you will eventually lose direct control over them?
 
 ---
+
+## The Invasive Companion
+
+**Layer:** 1
+
+**Fantasy:** Watching your colonists form deep, emotional bonds with a local, potentially dangerous alien species, treating them like beloved pets.
+
+**Mechanic:** Pops can encounter small, local fauna and adopt them as "pets". This provides a massive mood boost to the pop and their social circle, but the pets might consume specialized resources, reproduce rapidly, or carry latent alien diseases.
+
+**Emergence:** A beloved colony pet species starts secretly gnawing on power conduits because they crave the electromagnetic fields. If you exterminate them, the colony mood plummets and riots start; if you let them stay, your power grid constantly fails.
+
+**Tension:** Do you ruthlessly purge the adorable pests to protect critical infrastructure, risking a massive colony-wide depression, or dedicate valuable resources to building "safe" habitats for the completely useless alien companions?
+
+---
+
+## The Cargo Cult Protocol
+
+**Layer:** 2
+
+**Fantasy:** Witnessing isolated outposts misinterpreting standard logistical procedures as sacred rituals after losing contact with the core worlds.
+
+**Mechanic:** If an outer colony loses regular supply shipments for an extended period, they begin to ritualize the act of receiving cargo. They will clear landing pads, light signal fires, and waste energy broadcasting archaic docking codes, believing these actions will "summon" the supply ships back.
+
+**Emergence:** A completely forgotten mining outpost on the fringe builds a massive, non-functional "decoy" freighter out of scrap metal on their landing pad to attract real ships. When an actual emergency medical ship tries to land years later, the pad is blocked by their sacred effigy, causing the relief mission to fail.
+
+**Tension:** When you re-establish contact, do you forcibly demolish their sacred structures to restore efficiency, or play along with their rituals to avoid inciting a holy war with your own stranded citizens?
+
+---
+
+## Memetic Pathogens
+
+**Layer:** Cross-layer
+
+**Fantasy:** Fighting an invisible war against a contagious idea that subverts your empire from within, spreading faster than a biological virus.
+
+**Mechanic:** Certain extreme ideologies or compelling conspiracy theories act like viruses. They transmit via the Whisper Network (Layer 1) but can jump between colonies via trade ships or hyperspace communications (Layer 2/3). Infected pops change their consumption habits, work ethic, or loyalty based on the meme.
+
+**Emergence:** A catchy, anti-technology work shanty starts in a remote mining facility. It travels via freighter crews to a core industrial world. Within months, your elite engineers are intentionally working slower and refusing to use automation, crippled by a meme they heard in a tavern.
+
+**Tension:** Do you enact draconian information quarantines and shut down interplanetary communications to stop the spread of a harmful idea, crippling your trade network, or trust your pops to naturally lose interest in the meme before it collapses your economy?
+
+---
+
+## The Architectural Panopticon
+
+**Layer:** 1
+
+**Fantasy:** Feeling the suffocating weight of absolute surveillance as your colony's layout itself becomes a tool of psychological control.
+
+**Mechanic:** Designing colony layouts with clear lines of sight from central "Authority" structures (like security hubs or governor mansions) passively suppresses unrest and crime in those visible areas. However, pops living constantly in the "line of sight" accumulate a "Paranoia" stress debuff over time.
+
+**Emergence:** You perfectly optimize a residential sector as a panopticon, dropping crime to zero. But the constant psychological pressure of being watched eventually snaps the population, leading them to spontaneously tear down the central security tower in a sudden, violent, and highly coordinated riot.
+
+**Tension:** Do you design winding, inefficient, un-monitorable slums where crime thrives but pops are mentally stable, or enforce terrifying, perfectly-aligned brutalist grids that eventually drive your citizens insane?
+
+---
