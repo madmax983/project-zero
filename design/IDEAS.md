@@ -28029,3 +28029,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you brutally suppress the scrap cult to reclaim valuable industrial real estate, or officially sanction their strange religion to keep them pacified, risking them hoarding critical tech for their idols?
 
 ---
+
+## Generational Grudges
+
+**Layer:** 1
+
+**Fantasy:** Watching families hold onto past slights long after the original perpetrators are gone.
+
+**Mechanic:** When a Pop is wronged by another Pop, their descendants inherit a fraction of that negative relationship score towards the other Pop's descendants. This grudge degrades slowly over generations unless reinforced by new conflicts.
+
+**Emergence:** Two prominent families in a colony start a massive brawl over a stolen tool three generations ago, paralyzing the mining sector just as a critical resource shortage hits.
+
+**Tension:** Do you artificially separate these families to different colony sectors, risking inefficient job assignments, or let them work together and risk violence?
+
+---
+
+## The Monument to Failure
+
+**Layer:** Cross-layer
+
+**Fantasy:** A civilization that remembers its catastrophic mistakes and builds its culture around them.
+
+**Mechanic:** When a colony suffers a massive disaster (e.g., starvation of 50% of the population, a failed rebellion), surviving Pops occasionally build makeshift monuments to the event. These monuments lower local productivity but significantly increase resilience and reduce unrest during future crises.
+
+**Emergence:** Your core world, having survived a brutal early famine, is littered with "monuments to the hungry." Centuries later, during a galactic siege, this world refuses to break under blockade while newer, "perfect" worlds collapse immediately.
+
+**Tension:** Do you demolish these depressing structures to maximize peacetime economic output, or keep them as anchors of cultural resilience for when things inevitably go wrong?
+
+---
+
+## Orphaned Satellites
+
+**Layer:** 2
+
+**Fantasy:** Space is filled with the dangerous, drifting remnants of forgotten logistics networks.
+
+**Mechanic:** When a colony is abandoned or destroyed, its orbital infrastructure (relays, automated defenses, cargo pods) isn't immediately destroyed. It becomes "Orphaned." These satellites slowly drift out of stable orbits over decades, creating hazardous zones for Layer 2 travel and trade.
+
+**Emergence:** You try to rapidly colonize a highly lucrative new system, but your colony ships keep getting shredded by the automated defense grid of a colony that failed 200 years ago.
+
+**Tension:** Do you spend valuable military resources and time carefully clearing out orphaned infrastructure from dead systems, or navigate around them and accept slower, more dangerous trade routes?
+
+---
