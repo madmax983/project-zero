@@ -1,3 +1,4 @@
+#![deny(unsafe_code)]
 //! Headless game runner with semantic input/output.
 //!
 //! Run with: `cargo run --bin headless`
