@@ -19624,7 +19624,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you employ efficient, highly-skilled human diplomats who might accidentally trigger a war through arrogance, or use slow, completely incompetent alien pets that universally charm the galaxy into a state of stagnant peace?
 
 ---
-## The Whisper Network
+## The Whisper Network [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -20650,7 +20650,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Whisper Network
+## The Whisper Network [SPECCED]
 
 **Layer:** 1 / 2
 
@@ -21882,7 +21882,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Whisper Network
+## The Whisper Network [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -28002,7 +28002,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Atrophy of Peace
+## The Atrophy of Peace [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -28016,7 +28016,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Scrap Pantheon
+## The Scrap Pantheon [SPECCED]
 
 **Layer:** 1
 
@@ -28030,7 +28030,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Whisper Network
+## The Whisper Network [SPECCED]
 
 **Layer:** 1
 
