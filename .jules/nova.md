@@ -230,3 +230,8 @@
 **Concept:** Added `toxic_personalities_system` in `src/experimental/toxic_personalities.rs`. Connects `Trait::Volatile` and `Trait::Spiteful` with `StressTracker` and the physical `AtmosphereGrid`. Pops with these traits literally emit physical pollution into the air when they are highly stressed.
 **Fate:** Submitted
 **Lesson:** Connects mental breakdowns directly to environmental hazards, turning psychological management into physical air quality management. Forcing players to quarantine highly stressed volatile pops before they gas the base.
+
+## [Gluttonous Aroma]
+**Concept:** Added `gluttonous_aroma_system` to `src/experimental/gluttonous_aroma.rs`. Connects `Trait::Glutton` with `BuildingType::Smokehouse` and `Needs`. Pops with the Glutton trait passively regenerate `leisure` when they are within 3 tiles of a Smokehouse, but suffer a slightly accelerated `hunger` decay.
+**Fate:** Submitted
+**Lesson:** Connects a personality trait with a specific economic building's physical location, making an otherwise industrial building an emergent leisure structure for specific populations, but at the cost of higher food consumption.

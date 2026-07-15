@@ -229,3 +229,6 @@ pub mod hoarder_comfort;
 pub mod photosynthetic_nourishment;
 pub mod pyromaniac_euphoria;
 pub mod toxic_personalities;
+
+#[cfg(feature = "nova")]
+pub mod gluttonous_aroma;
