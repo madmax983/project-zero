@@ -228,6 +228,8 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::physics::gravity_plating::update_tile_gravity,
             crate::layer1::physics::gravity_plating::update_pop_orientation,
             crate::layer1::physics::gravity_plating::apply_falling_mechanics,
+            crate::layer1::core::integration::localized_gravity_impact_damage_bridge
+                .after(crate::layer1::physics::gravity_plating::apply_falling_mechanics),
             crate::layer1::physics::gravity_plating::apply_zero_g_movement_system.after(
                 crate::layer1::physics::gravity_plating::monitor_gravity_generator_power_system,
             ),

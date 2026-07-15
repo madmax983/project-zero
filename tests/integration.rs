@@ -679,3 +679,6 @@ mod echoes_lost_fleet_bridge;
 mod asteroid_hermits_bridge;
 #[path = "integration/memory_smugglers_bridge.rs"]
 mod memory_smugglers_bridge;
+
+#[path = "integration/localized_gravity_health_bridge.rs"]
+mod localized_gravity_health_bridge;

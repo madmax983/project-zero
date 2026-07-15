@@ -3313,3 +3313,32 @@ pub fn memory_smugglers_chronicle_bridge(
         }
     }
 }
+
+/// Marker component for pops that have taken damage from falling due to gravity plate failure.
+#[derive(Component)]
+pub struct HasFallen;
+
+/// Bridges Localized Gravity Vectors (gravity plate failure) with Health (injury upon impact).
+/// Applies damage to pops when they fall due to unpowered gravity plates.
+#[allow(clippy::type_complexity)]
+pub fn localized_gravity_impact_damage_bridge(
+    mut commands: Commands,
+    plate_query: Query<&crate::layer1::physics::gravity_plating::GravityPlate>,
+    mut pop_query: Query<
+        (Entity, &mut crate::layer1::biology::health::Health),
+        (With<crate::layer1::entities::pop::Pop>, Without<HasFallen>),
+    >,
+    mut fallen_pops: Query<Entity, (With<crate::layer1::entities::pop::Pop>, With<HasFallen>)>,
+) {
+    if plate_query.iter().find(|p| p.powered).is_none() {
+        for (entity, mut health) in pop_query.iter_mut() {
+            health.current = (health.current - 50.0).max(0.0);
+            commands.entity(entity).insert(HasFallen);
+        }
+    } else {
+        // Plates are powered again, remove HasFallen so they can fall again later
+        for entity in fallen_pops.iter_mut() {
+            commands.entity(entity).remove::<HasFallen>();
+        }
+    }
+}

@@ -1794,3 +1794,10 @@
 - **Glue added:** Added `memory_smugglers_chronicle_bridge` in `src/layer1/core/integration.rs` to log a Chronicle event when a pop's memetic disassociation reaches a critical level, indicating the severe toll of memory smuggling on the colony.
 - **Schedule:** Registered in Layer 1 Observation schedule (`src/layer1/systems/observation.rs`).
 - **Tests:** `tests/integration/memory_smugglers_bridge.rs`
+
+### INT-1312: Localized Gravity Vectors -> Health
+- **Date:** 2026-07-15
+- **Systems connected:** `GravityPlate` state -> `localized_gravity_impact_damage_bridge` -> `Health`
+- **Glue added:** Added `HasFallen` marker component and `localized_gravity_impact_damage_bridge` in `src/layer1/core/integration.rs` to deal injury upon falling impact when gravity plates lose power.
+- **Schedule:** Registered in Layer 1 Execution schedule (`src/layer1/systems/execution.rs`).
+- **Tests:** Added tests in `tests/integration/localized_gravity_health_bridge.rs`.
