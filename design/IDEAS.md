@@ -28155,3 +28155,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you spend massive amounts of cultural and educational resources to constantly enforce a unified language across the galaxy, or let the outer rim drift, knowing you will eventually lose direct control over them?
 
 ---
+## The Architecture of Paranoia
+
+**Layer:** 1
+
+**Fantasy:** Designing colonies not just for efficiency, but for security against hidden threats from within your own population.
+
+**Mechanic:** Pops can secretly develop "Subversive" traits, spreading dissent or planning sabotage. To counteract this, buildings can be constructed with "Surveillance" and "Chokepoint" features, which reduce the spread of subversion but drastically lower the aesthetic and mood of the colony.
+
+**Emergence:** You build an ultra-efficient, highly surveilled factory complex to stamp out rebellion, but the oppressive architecture itself causes the workers to rebel faster than the surveillance can catch them.
+
+**Tension:** Do you build open, pleasant colonies that are vulnerable to hidden saboteurs, or oppressive, panopticon-style fortresses that constantly drain worker morale?
+
+---
+
+## Market Contagion
+
+**Layer:** 2
+
+**Fantasy:** Watching a localized economic bubble or crash ripple across the star system, creating desperate opportunities and catastrophic failures.
+
+**Mechanic:** Trade goods have dynamic values based on local supply and demand at each colony. A sudden shortage or surplus in one colony triggers a "price shock" that spreads via trade ships. Automated merchant fleets will violently reroute to capitalize on the shock, causing secondary shortages elsewhere.
+
+**Emergence:** A minor crop failure on an agricultural moon spikes food prices. Every trade ship in the system rushes to sell food there, abandoning their regular routes. This causes the core forge-world to run out of crucial industrial materials, halting the system's military production.
+
+**Tension:** Do you heavily regulate and isolate your colonies' economies to prevent cascading shocks, or embrace the volatile free market to reap massive profits at the risk of systemic collapse?
+
+---
+
+## The Artifact Economy
+
+**Layer:** Cross-layer
+
+**Fantasy:** Wielding ancient, incomprehensible relics as powerful tools or bargaining chips, while dealing with their unpredictable side effects.
+
+**Mechanic:** Layer 1 deep-mining or exploration can uncover "Anomalous Artifacts". These provide massive, unique bonuses when installed in a colony (e.g., free energy, instant healing) but slowly warp the local environment or pop traits. They can also be traded at Layer 2 or used diplomatically at Layer 3 for extreme leverage.
+
+**Emergence:** You install a "Void Siphon" artifact on a struggling mining colony, completely solving their energy crisis. Decades later, the descendants of that colony have mutated to rely entirely on the artifact's radiation, and trading it away to a rival empire would instantly doom your own world.
+
+**Tension:** Do you leverage the extreme power of artifacts to solve immediate crises, knowing they are slowly fundamentally altering your civilization in ways you can't predict?
+
+---
