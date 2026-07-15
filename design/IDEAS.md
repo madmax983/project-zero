@@ -28071,3 +28071,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you spend valuable raw materials and space to build useless art installations in industrial zones, or rule with an iron fist, accepting the slow, grinding decay of passive sabotage?
 
 ---
+
+## The Biomass Proxy
+
+**Layer:** Cross-layer
+
+**Fantasy:** Watching your biological waste and organic output slowly form an emergent, semi-sentient infrastructure that can be negotiated with instead of just cleaned up.
+
+**Mechanic:** High organic waste in dense sectors coalesces into a fungal-biomass "proxy". The proxy can perform basic maintenance and produce localized food, but it slowly overtakes mechanical systems and starts demanding different environmental conditions (like high humidity and darkness).
+
+**Emergence:** A failing colony stops fighting the biomass and embraces it, essentially abandoning their high-tech machinery to let the fungal proxy run their life support, transforming the aesthetic and functionality of the entire sector.
+
+**Tension:** Do you constantly burn resources incinerating the biomass to keep your pristine metal corridors, or let it grow and rely on a terrifying, alien fungal ecosystem that is slowly terraforming your station?
+
+---
+
+## Bureaucratic Ossification
+
+**Layer:** 1
+
+**Fantasy:** Feeling the weight of thousands of past decisions cementing into an inflexible culture that resists necessary change.
+
+**Mechanic:** Every edict passed, building type favored, and law enacted contributes to a hidden "Bureaucratic Inertia" score. As this score rises, changing laws, replacing old infrastructure, or adopting new technology takes significantly longer and costs more political capital.
+
+**Emergence:** You desperately need to switch from fossil fuels to clean energy to survive a planetary disaster, but your colony's bureaucracy has spent centuries optimizing fossil fuel logistics. The resulting administrative gridlock causes the energy transition to take decades, threatening the survival of the colony.
+
+**Tension:** Do you constantly disrupt your own society to keep it agile and adaptable (risking instability), or allow it to optimize into a rigid, highly efficient, but completely unadaptable monolith?
+
+---
+
+## The Sub-light Commute
+
+**Layer:** 2
+
+**Fantasy:** Experiencing the brutal reality of interstellar distances without faster-than-light travel, where a single work shift takes a lifetime.
+
+**Mechanic:** Transporting specialized pops between distant colonies in the same solar system via slow sub-light ships means they age significantly in transit. A master engineer sent to fix a critical reactor on a mining moon will arrive decades older, possibly near death, having spent their prime years in a stasis-like commute.
+
+**Emergence:** You send an elite diplomatic envoy to quell a rebellion on an outer planet. By the time they arrive 30 years later, the rebellion has already formed its own stable government, and the envoy represents an empire that no longer exists in the way they remember.
+
+**Tension:** Do you hoard your best talent on your core worlds, or sacrifice their lifespans to project expertise and authority across the vast emptiness of the system?
+
+---
