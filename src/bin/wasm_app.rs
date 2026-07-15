@@ -1,3 +1,4 @@
+#![deny(unsafe_code)]
 //! SCALE WASM entry point - runs the game in a browser via Ratzilla.
 
 #[cfg(target_arch = "wasm32")]

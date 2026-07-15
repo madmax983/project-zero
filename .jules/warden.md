@@ -8,3 +8,7 @@
 **2025-07-11 - [Integer Overflow DoS via Euclidean Distance]**
 **Threat:** [Unhandled integer overflow via `pow(2)` in `ad_screen`, `culture/artifacts`, and `architecture/turret` systems. Attackers spawning entities with extreme map coordinate differences (> 46340) trigger a panic due to `i64` squaring exceeding limits (or similar panic), causing a server DoS.]
 **Defense:** [Refactored distance calculation logic in `src/layer1/ad_screen.rs`, `src/layer1/culture/artifacts.rs`, and `src/layer1/architecture/turret.rs`. Euclidean distance calculation now utilizes `saturating_pow(2)` and `saturating_add`, avoiding floating point conversion to adhere strictly to strict integer math guidelines while mitigating overflow panics completely.]
+
+**2025-07-16 - [Enforce Unsafe Code Ban]**
+**Threat:** [The codebase lacked a proactive compiler-level ban on `unsafe` logic, which could allow Undefined Behavior (UB) or memory safety vulnerabilities to be introduced in future commits without explicit overrides.]
+**Defense:** [Verified there are currently no `unsafe` blocks in the core library and added `#![deny(unsafe_code)]` to `src/lib.rs`, `src/main.rs`, `src/bin/headless.rs`, and `src/bin/wasm_app.rs` to enforce safety proactively at the compiler level.]
