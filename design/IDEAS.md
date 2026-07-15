@@ -28029,3 +28029,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you brutally suppress the scrap cult to reclaim valuable industrial real estate, or officially sanction their strange religion to keep them pacified, risking them hoarding critical tech for their idols?
 
 ---
+
+## The Whisper Network
+
+**Layer:** 1
+
+**Fantasy:** A shadow communication channel that bypasses official propaganda and logic, where rumors become reality.
+
+**Mechanic:** When a Pop experiences a traumatic event (or perceives one), they can share a distorted version of it with close social contacts. If enough Pops share the same distorted memory, it materializes as a colony-wide "Whisper," generating localized panics or sudden mass-migrations regardless of actual ground truth.
+
+**Emergence:** A minor atmospheric glitch in Sector 4 is misinterpreted as a targeted biological attack. Within weeks, the Whisper Network convinces half the colony to sabotage the life support grid to "save" themselves, plunging the station into chaos.
+
+**Tension:** Do you aggressively monitor and suppress social interactions to maintain objective truth, or let them vent, risking a self-fulfilling catastrophic prophecy?
+
+---
+
+## Chronological Segregation
+
+**Layer:** Cross-layer
+
+**Fantasy:** The flow of time itself becomes a marker of class and power.
+
+**Mechanic:** Using experimental Temporal Fugue technology, high-status Pops can accelerate their localized time to accomplish research or artistic endeavors at blinding speeds. However, this causes severe "Time Debt" for the surrounding environment, slowing down low-status Pops and decaying infrastructure in an expanding radius.
+
+**Emergence:** A governor rapidly finishes a vital planetary defense grid right before an invasion, but the localized time dilation ages the surrounding agricultural sector by twenty years in a day, causing immediate, catastrophic famine just as the war starts.
+
+**Tension:** Do you leverage temporal acceleration for critical, instantaneous results, knowing you are literally stealing time and vitality from the working class and surrounding ecosystem?
+
+---
+
+## The Aesthetic Tax
+
+**Layer:** 1
+
+**Fantasy:** Beauty becomes a weapon, and ugliness a crime.
+
+**Mechanic:** Pops develop a "Aesthetic Demand" based on the accumulated beauty of their surroundings. If a Pop is forced to work in an environment that falls below their Aesthetic Demand, they apply a subtle, accumulating "Aesthetic Tax" – intentionally working slower, misplacing tools, or generating waste out of sheer spite for their ugly surroundings.
+
+**Emergence:** You rapidly construct a brutalist, hyper-efficient industrial forge to meet a quota. The highly cultured engineers assigned to it are so offended by the lack of art that their passive-aggressive sabotage actually results in negative productivity compared to an unoptimized, beautiful workshop.
+
+**Tension:** Do you spend valuable raw materials and space to build useless art installations in industrial zones, or rule with an iron fist, accepting the slow, grinding decay of passive sabotage?
+
+---
