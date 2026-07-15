@@ -1,7 +1,23 @@
-1. **Explore & Verify Scope**: Read `specs/1309-the-asteroid-hermits.md` and check `src/layer2/asteroid_hermits.rs` for outputs like `Added<HermitOutpost>` and `DiscoveryEvent` to ensure they are available for integration.
-2. **Claim Task**: Update `design/IN_PROGRESS.md` with `INT-1309` and commit it.
-3. **Write RED Tests**: Create `tests/integration/asteroid_hermits_bridge.rs` testing that `Added<HermitOutpost>` and `DiscoveryEvent` successfully emit `AddChronicleEvent`. Register the test in `tests/integration.rs`.
-4. **Implement Glue (GREEN)**: Create `asteroid_hermit_exodus_chronicle_bridge` and `asteroid_hermit_discovery_chronicle_bridge` in `src/layer2/integration.rs`. Register these systems in `src/layer2/systems/observation.rs` or `src/simulation.rs` (checking how other layer 2 integrations are registered). Ensure `Events<DiscoveryEvent>` is initialized in `src/simulation.rs`.
-5. **Pre-commit Checks**: Complete pre-commit steps to make sure proper testing, verifications, reviews and reflections are done.
-6. **Update SEAM_MAP and COMPLETED**: Move `INT-1309` to `design/COMPLETED.md` and update `design/SEAM_MAP.md` describing the integration.
-7. **Submit**: Commit and submit the code.
+1. **Claim the work**
+   - Use `sed -i '/292/d' design/BACKLOG.md`
+   - Use `echo "- [ ] \`292\` The Chrono-Stutter — \`specs/292-chrono-stutter.md\` — claimed 2026-02-01" >> design/IN_PROGRESS.md`
+   - Use `git add design/ && git commit -m "claim: 292 chrono stutter"`
+2. **Create implementation file `src/layer1/anomalies/chrono_stutter.rs`**
+   - Use `cat << 'EOF' > src/layer1/anomalies/chrono_stutter.rs` to write the full implementation including RED phase tests, GREEN phase implementation. Use `bevy::prelude::Transform` as it fits with the codebase.
+3. **Verify file creation**
+   - Run `cat src/layer1/anomalies/chrono_stutter.rs` to verify the file was created and contents are correct.
+4. **Register the module**
+   - Use `sed -i '/pub mod echo;/a pub mod chrono_stutter;' src/layer1/anomalies/mod.rs` to export the module.
+5. **Register the system**
+   - Use `sed -i '$d' src/layer1/systems/execution.rs` followed by `cat << 'EOF' >> src/layer1/systems/execution.rs` to insert the system registration before the final closing brace:
+     `    schedule.add_systems(crate::layer1::anomalies::chrono_stutter::apply_chrono_anomaly_system.in_set(Layer1SystemSet::Execution));\n}`
+6. **Verify system registration**
+   - Run `tail -n 10 src/layer1/systems/execution.rs` to verify the edit was applied correctly.
+7. **Run tests and verify coverage**
+   - Run `cargo test`, `cargo clippy -- -D warnings`, and `cargo llvm-cov --lib -- src/layer1/anomalies/chrono_stutter.rs` to make sure tests pass and coverage is >= 85%.
+8. **Update IN_PROGRESS to COMPLETED**
+   - Use `sed -i '/292/d' design/IN_PROGRESS.md` and `echo "- [x] \`292\` The Chrono-Stutter — \`specs/292-chrono-stutter.md\` — completed 2026-02-01" >> design/COMPLETED.md`.
+9. **Complete pre-commit steps**
+   - Complete pre-commit steps to ensure proper testing, verification, review, and reflection are done.
+10. **Submit**
+   - Run `git add .` and `git commit -m "$(cat <<'EOF'\nfeat(layer1): complete chrono stutter system\n\nImplements RED-GREEN-REFACTOR from spec 292:\n- Added test suite for chrono stutter logic (RED phase)\n- Implemented ChronoAnomaly, TimeModifier and apply_chrono_anomaly_system (GREEN phase)\n- Test coverage: >=85% (target: 85%)\n\nAll acceptance criteria met:\n- Entities within the ChronoAnomaly radius receive an updated TimeModifier\n- Entities outside the radius have a modifier of 1.0\n- cargo test passes\n- cargo clippy clean\n\nCo-Authored-By: google-labs-jules[bot] <161369871+google-labs-jules[bot]@users.noreply.github.com>\nEOF\n)"`

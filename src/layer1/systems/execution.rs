@@ -438,4 +438,8 @@ pub fn register(schedule: &mut Schedule) {
             .in_set(Layer1SystemSet::Execution),
     );
 
+    schedule.add_systems(
+        crate::layer1::anomalies::chrono_stutter::apply_chrono_anomaly_system
+            .in_set(Layer1SystemSet::Execution),
+    );
 }

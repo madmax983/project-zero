@@ -5,6 +5,8 @@
 
 pub mod cryptid;
 pub mod echo;
+pub mod chrono_stutter;
+pub use chrono_stutter::*;
 
 use crate::layer1::building::OccupiedTiles;
 use crate::layer1::execution::{AtTarget, MovementTarget};
