@@ -28113,3 +28113,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you hoard your best talent on your core worlds, or sacrifice their lifespans to project expertise and authority across the vast emptiness of the system?
 
 ---
+
+## The Nostalgia Plague
+
+**Layer:** 1
+
+**Fantasy:** Watching your modern, highly-efficient colony tear itself apart because a faction of pops romanticizes a harsher, simpler past.
+
+**Mechanic:** When a colony reaches a high level of technological comfort and safety, pops can develop a "Nostalgia" trait. These pops start rejecting modern amenities, suffering massive mood penalties when using high-tech medical or food facilities, and will only be satisfied by obsolete, inefficient low-tech alternatives.
+
+**Emergence:** A cutting-edge fusion reactor complex is brought to a standstill because the chief engineers refuse to eat anything but synthetic nutrient paste squeezed from first-generation colonial survival tubes, forcing you to rebuild an archaic factory just to feed them.
+
+**Tension:** Do you indulge the nostalgic faction by wasting space and resources on obsolete infrastructure, or force them to live in the "utopian" present and deal with their constant, civilization-halting strikes?
+
+---
+
+## Ghost Ships of the Logistics Network
+
+**Layer:** 2
+
+**Fantasy:** The eerie persistence of automated systems long after the people who built them have perished.
+
+**Mechanic:** When a colony fails completely (due to starvation, war, or disaster), its automated export freighters may continue their programmed routes indefinitely if they are solar-powered or self-repairing. These "ghost ships" still dock at living colonies, taking up valuable orbital slots and occasionally offloading bizarre, degraded, or even dangerous cargo from the dead world.
+
+**Emergence:** Your core world is starving because its orbital trade hubs are clogged by a fleet of automated ghost ships from a forgotten mining colony, relentlessly delivering endless tons of worthless, irradiated slag.
+
+**Tension:** Do you expend valuable military resources to destroy these uncooperative, indestructible remnants of your own past, or try to hack their routing protocols at the risk of unleashing old computer viruses into your current network?
+
+---
+
+## The Rosetta Contagion
+
+**Layer:** Cross-layer
+
+**Fantasy:** An isolated colony's language drifts so far that they can no longer understand orders from the empire, effectively seceding by accident.
+
+**Mechanic:** Colonies physically distant from the core worlds experience "Linguistic Drift" over generations. If a colony's drift score becomes too high, their local language diverges entirely from the empire standard. Edits and commands from Layer 3 (the player) are first misinterpreted (doing the wrong action), and eventually ignored entirely.
+
+**Emergence:** You issue a critical, system-wide order for all colonies to stockpile weapons for an impending invasion. The isolated outer-rim colony misinterprets the drifted language as an order to "build monuments," wasting all their resources on giant statues right before the enemy fleet arrives.
+
+**Tension:** Do you spend massive amounts of cultural and educational resources to constantly enforce a unified language across the galaxy, or let the outer rim drift, knowing you will eventually lose direct control over them?
+
+---
