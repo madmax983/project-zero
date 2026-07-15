@@ -103,6 +103,7 @@ impl Plugin for PlanetarySpinUpPlugin {
     fn build(&self, app: &mut App) {
         app.add_event::<planetary_spin_up::PlanetaryTorqueEvent>()
             .add_event::<crate::layer2::stolen_fleet::WarDeclarationEvent>()
+            .add_event::<navigation::chronological_stutter::HyperlaneTransitEvent>()
             .add_systems(
                 Update,
                 (
@@ -111,6 +112,7 @@ impl Plugin for PlanetarySpinUpPlugin {
                     planetary_spin_up::trigger_coriolis_weather_system,
                     planetary_rings::apply_planetary_ring_effects_system,
                     orbital_ring::update_shadow_band_system,
+                    navigation::chronological_stutter::apply_chronological_stutter_system,
                 ),
             );
     }
