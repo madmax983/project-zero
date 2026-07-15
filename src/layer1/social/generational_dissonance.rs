@@ -3,12 +3,12 @@ use crate::layer1::social::morale::MoodModifier;
 use crate::layer1::social::morale::Morale;
 use crate::layer1::social::old_guard::Generation;
 use bevy_ecs::prelude::*;
-use std::collections::HashSet;
 
+/// ⚡ Bolt Optimization: Eliminated intermediate Vec allocation and replaced default SipHash with AHash.
 pub fn process_generational_dissonance_system(
     mut query: Query<(Entity, &Generation, &Job, &mut Morale)>,
 ) {
-    let mut youth_workplaces: HashSet<Entity> = HashSet::new();
+    let mut youth_workplaces: bevy_utils::HashSet<Entity> = bevy_utils::HashSet::default();
 
     for (_, gen, job, _) in query.iter() {
         if *gen == Generation::Immigrant {
@@ -16,9 +16,7 @@ pub fn process_generational_dissonance_system(
         }
     }
 
-    let mut penalties: Vec<(Entity, f32)> = Vec::new();
-
-    for (entity, gen, job, morale) in query.iter() {
+    for (_, gen, job, mut morale) in query.iter_mut() {
         if *gen == Generation::Founder && youth_workplaces.contains(&job.workplace) {
             // Check if already penalized
             let has_penalty = morale
@@ -26,18 +24,12 @@ pub fn process_generational_dissonance_system(
                 .iter()
                 .any(|m| m.label == "Working with ungrateful youth");
             if !has_penalty {
-                penalties.push((entity, -0.05)); // 5% morale penalty
+                morale.add_modifier(MoodModifier {
+                    value: -0.05,
+                    label: "Working with ungrateful youth".to_string(),
+                    duration: 10,
+                });
             }
-        }
-    }
-
-    for (entity, penalty) in penalties {
-        if let Ok((_, _, _, mut morale)) = query.get_mut(entity) {
-            morale.add_modifier(MoodModifier {
-                value: penalty,
-                label: "Working with ungrateful youth".to_string(),
-                duration: 10,
-            });
         }
     }
 }
