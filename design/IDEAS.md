@@ -28196,3 +28196,43 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you leverage the extreme power of artifacts to solve immediate crises, knowing they are slowly fundamentally altering your civilization in ways you can't predict?
 
 ---
+
+## The Architecture of Spite
+
+**Layer:** 1
+
+**Fantasy:** Buildings shaped not by efficiency, but by petty grudges and passive-aggression between Pops.
+
+**Mechanic:** When a Pop with high authority or a critical job holds a strong negative Memory/Relationship against a neighbor, they may maliciously alter their work. Builders might intentionally place noisy extractors next to their rival's house. Engineers might route waste pipelines directly over the quarters of someone who slighted them. These "Spite Structures" reduce local beauty and mood for the target, but give the builder a massive, temporary "Vindication" mood buff.
+
+**Emergence:** You try to build a perfectly optimized housing block, but the foreman hates the lead miner. The foreman reroutes the ventilation system so the miner's house is constantly freezing. The miner retaliates by refusing to supply coal to the foreman's sector. Your pristine city grid slowly turns into a chaotic, tangled mess of spiteful infrastructure, driven entirely by interpersonal drama.
+
+**Tension:** Do you manually bulldoze and rebuild the Spite Structures at massive resource cost, knowing the builder will just get angry and do it again, or let the colony look like a jagged, inefficient nightmare to keep the feuding elites happy?
+
+---
+
+## The Gravity of Rumors
+
+**Layer:** Cross-layer
+
+**Fantasy:** A society so disconnected from reality that deeply held beliefs begin to manifest physical effects on their environment.
+
+**Mechanic:** When a specific Rumor reaches total saturation in a colony (100% of Pops believe it), it generates a localized "Truth Field." If the colony believes they are starving, their biological metabolism actually increases, draining food faster. If they believe a hostile fleet is coming, the stress causes them to subconsciously sabotage their own communications arrays in preemptive panic. The rumor becomes a self-fulfilling prophecy, enforced by the collective subconscious.
+
+**Emergence:** A harmless rumor starts that a specific mountain is "cursed." As belief spreads, the collective anxiety of the miners causes them to make fatal errors when digging there. The mountain actually *becomes* a death trap, validating the rumor and permanently cementing it as a physical law of the colony.
+
+**Tension:** Do you invest heavily in Layer 3 education and truth-commissions to break Truth Fields, or intentionally seed false, positive rumors (like "we are invincible") to grant your troops massive, reality-bending buffs, knowing that if the illusion breaks, the backlash will destroy them?
+
+---
+
+## Orphan Ships
+
+**Layer:** 2
+
+**Fantasy:** Decades-old automated supply ships that have outlived the colonies they were built to serve, wandering the void with forgotten cargo.
+
+**Mechanic:** If a Layer 1 colony is completely destroyed or abandoned while its automated Layer 2 supply drones are en route, the drones become "Orphan Ships." Without a destination, they enter a slow, system-wide holding pattern. Over decades, their navigation systems degrade, and they begin following bizarre, unpredictable orbits, hoarding their increasingly ancient, potentially valuable cargo.
+
+**Emergence:** A massive famine strikes your core worlds. You are saved when an Orphan Ship—a massive automated grain freighter launched from a colony that burned down 50 years ago—randomly drifts into orbit, its hold perfectly preserving millions of tons of obsolete, heirloom wheat.
+
+**Tension:** Do you expend military resources to hunt down and crack open fast-moving, heavily shielded Orphan Ships for their rare cargo, or leave them alone, hoping they eventually drift back into your territory when you need them most?
