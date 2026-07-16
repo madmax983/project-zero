@@ -28238,3 +28238,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you optimize your workforce for extreme environments, knowing it permanently locks them out of participating in the broader galactic economy or military?
 
 ---
+## The Vermin Smugglers
+
+**Layer:** 1
+
+**Fantasy:** A single pop's obsession with local wildlife spiraling out of control, threatening the colony's infrastructure.
+
+**Mechanic:** A pop with the "Animal Lover" trait might secretly tame and hoard small, rapidly breeding local fauna in their quarters. If unchecked, the population of pests explodes, escaping into the vents, chewing through wiring, and consuming colony food stocks.
+
+**Emergence:** You ignore a slight, unexplained food dip in Sector 4, only to have the entire sector's power grid suddenly fail because a massive swarm of "Glow-Rats" chewed through the mainline cables, all bred from one lonely miner's secret pet.
+
+**Tension:** Do you institute draconian room inspections and execute beloved pets (tanking colony morale and risking riots), or risk catastrophic infrastructure damage from runaway breeding?
+
+---
+
+## The Kinetic Geothermal Tap
+
+**Layer:** 1
+
+**Fantasy:** Pushing a planet's physical structure to the breaking point for free energy, risking catastrophic localized destruction.
+
+**Mechanic:** A massive late-game power plant that drills deep into the planet's mantle to harvest kinetic energy from tectonic movements. It provides near-infinite, free energy to the colony but constantly increases the "Geological Instability" of the surrounding tiles. Prolonged use guarantees massive, unpredictable localized earthquakes that will swallow surrounding buildings.
+
+**Emergence:** You rely entirely on the Geothermal Tap to power your impregnable planetary shield during a massive orbital siege. The shield holds, but the tap eventually shatters the bedrock beneath it, dropping your entire military command center into a magma sinkhole.
+
+**Tension:** Do you rely on dangerous, infinite free energy and constantly rebuild your shifting infrastructure, or build sprawling, safe, but incredibly expensive traditional power grids?
+
+---
+
+## The Hallucinogenic State Media
+
+**Layer:** 3 -> 1
+
+**Fantasy:** A society becoming so convinced of its own propaganda that it loses touch with galactic reality.
+
+**Mechanic:** When a colony is subjected to intense, prolonged "State Media" broadcasts to maintain morale during a crisis, the Pops eventually develop the "Delusional Patriot" trait. They become perfectly happy and perfectly compliant, but they fundamentally stop believing that external threats (like Layer 3 rival empires or impending planetary disasters) are real, treating warnings as "tests of faith" by the government.
+
+**Emergence:** You use intense broadcasts to keep your core world stable while losing a border war. When the enemy fleet finally arrives in orbit above the core world, the population completely ignores the evacuation sirens, believing the invading dreadnoughts are just a high-tech state-sponsored light show designed to boost patriotism, leading to massive, entirely preventable civilian casualties.
+
+**Tension:** Do you use media manipulation to maintain absolute internal control, knowing it will eventually blind your population to real external danger?
+
+---
