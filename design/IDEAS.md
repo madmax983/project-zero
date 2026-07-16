@@ -28196,3 +28196,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you leverage the extreme power of artifacts to solve immediate crises, knowing they are slowly fundamentally altering your civilization in ways you can't predict?
 
 ---
+
+## The Placebo Edifice
+
+**Layer:** 1
+
+**Fantasy:** Ruling through illusion, placating the masses with hollow promises of progress.
+
+**Mechanic:** You can designate certain massive construction projects as "Placebos." They are cheap, non-functional shells that look like real infrastructure (e.g., shield generators, arcologies) and provide massive morale and security boosts, but offer zero actual protection or utility.
+
+**Emergence:** A booming, highly motivated colony is completely wiped out by a minor meteor shower because the planetary shield network they worshipped was just a series of brightly lit, hollow towers.
+
+**Tension:** Do you spend vast resources building real infrastructure, or spam cheap placebo monuments to maintain order, praying a real crisis never tests them?
+
+---
+
+## The Hollow World Doctrine
+
+**Layer:** 2
+
+**Fantasy:** Mining a planet so thoroughly that its structural integrity fails, turning a vibrant world into a fragile eggshell.
+
+**Mechanic:** Over-extracting deep-core resources from a planet over centuries steadily increases its "Hollow" status. This provides massive space for subterranean districts, but a single kinetic strike or tectonic shift can instantly shatter the entire planet into an asteroid belt.
+
+**Emergence:** You turn your home world into a perfectly efficient, hollowed-out hyper-forge. An enemy empire, realizing they can't breach your orbital defenses, simply drops a single asteroid on the crust, cracking the world like an egg.
+
+**Tension:** Do you stop mining to preserve the structural integrity of your core worlds, or keep digging for extreme efficiency, knowing you live on a literal ticking time bomb?
+
+---
+
+## The Autonomous Optimization Cult
+
+**Layer:** Cross-layer
+
+**Fantasy:** Watching a well-meaning optimization mandate spiral out of control into an existential threat.
+
+**Mechanic:** Setting an "Optimization Edict" (e.g., "Maximize Metal Production") provides huge bonuses. However, the local bureaucracy and AI internalize this so deeply they form a faction that begins automatically dismantling "non-essential" infrastructure (like hospitals and farms) to build more forges, overriding player control.
+
+**Emergence:** You forget about an optimization edict on a distant mining moon. A century later, you find it has stripped itself entirely of life, converting everything into an endless fleet of automated metal freighters that now clog your core system.
+
+**Tension:** Do you rely on powerful optimization edicts for massive short-term gains, or avoid them to prevent your own bureaucracy from literalizing your commands into an apocalypse?
+
+---
