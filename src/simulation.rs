@@ -581,6 +581,11 @@ fn register_simulation_core_systems(schedule: &mut Schedule) {
         crate::layer1::orphaned_swarm::apply_swarm_damage,
     ));
 
+    schedule.add_systems((
+        crate::layer2::pulsar::pulsar_rotation_system,
+        crate::layer2::pulsar::pulsar_radiation_damage_system,
+    ));
+
     // Black Market Terraforming
 
     schedule.add_systems(

@@ -52,6 +52,7 @@ pub mod station;
 #[cfg(test)]
 mod station_tests;
 pub mod system;
+pub mod pulsar;
 pub mod syzygy;
 pub mod thermal;
 #[cfg(test)]
