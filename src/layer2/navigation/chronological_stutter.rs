@@ -2,7 +2,6 @@ use bevy::prelude::*;
 use rand::Rng;
 
 #[derive(Resource, Default)]
-
 // We use a specific component for chronological stutter tests to avoid
 // ambiguous glob re-exports with `crate::layer2::fleet::Fleet`.
 #[derive(Component)]

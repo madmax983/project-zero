@@ -823,6 +823,8 @@ pub mod martyrs_engine;
 pub mod rogue_automation_cults;
 
 pub mod living_archive;
+pub mod symbiotic_data_weavers;
 pub mod symbiotic_habitation;
 pub mod teleporter;
 pub mod temporal_smuggling;
+pub use symbiotic_data_weavers::*;

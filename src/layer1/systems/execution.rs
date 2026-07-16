@@ -454,4 +454,8 @@ pub fn register(schedule: &mut Schedule) {
             .chain()
             .in_set(Layer1SystemSet::Execution),
     );
+    schedule.add_systems(
+        crate::layer1::tech::symbiotic_data_weavers::process_data_forest_system
+            .in_set(Layer1SystemSet::Execution),
+    );
 }
