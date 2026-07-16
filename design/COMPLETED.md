@@ -924,3 +924,4 @@
 - [x] `420` Ephemeral Architecture — `specs/420-ephemeral-architecture.md` — completed 2024-07-15
 - [x] `1245` Chronological Stutter — `specs/1245-chronological-stutter.md` — completed 2026-07-15
 - [x] `998` The Symbiotic Data-Weavers — `specs/998-symbiotic-data-weavers.md` — completed 2026-06-25
+- [x] `INT-909` Integration: Radio Broadcasts -> Pirate Threat - completed 2026-10-31

@@ -1794,3 +1794,9 @@
 - **Glue added:** Added `memory_smugglers_chronicle_bridge` in `src/layer1/core/integration.rs` to log a Chronicle event when a pop's memetic disassociation reaches a critical level, indicating the severe toll of memory smuggling on the colony.
 - **Schedule:** Registered in Layer 1 Observation schedule (`src/layer1/systems/observation.rs`).
 - **Tests:** `tests/integration/memory_smugglers_bridge.rs`
+
+### INT-909: Radio Broadcasts -> Pirate Threat
+- **Date:** 2026-10-31
+- **Systems connected:** `SystemThreat` -> `radio_broadcasts_threat_bridge_system` -> `PirateThreatLevel`
+- **Glue added:** Added `radio_broadcasts_threat_bridge_system` in `src/layer2/integration.rs`. Registered in `src/simulation.rs`.
+- **Tests:** `tests/integration/radio_broadcasts_threat_bridge.rs`

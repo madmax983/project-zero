@@ -1129,3 +1129,18 @@ pub fn asteroid_hermit_discovery_chronicle_bridge(
         });
     }
 }
+
+/// INT-909: Bridges `SystemThreat` from Layer 2 `radio_broadcasts` to `PirateThreatLevel` in Layer 3.
+pub fn radio_broadcasts_threat_bridge_system(
+    query: bevy_ecs::system::Query<&crate::layer2::communications::radio_broadcasts::SystemThreat>,
+    pirate_threat: Option<bevy_ecs::system::ResMut<crate::layer3::pirates::PirateThreatLevel>>,
+) {
+    if let Some(mut pirate_threat) = pirate_threat {
+        let mut total_threat = 0.0;
+        for threat in query.iter() {
+            total_threat += threat.level;
+        }
+        // Add a fraction of the system threat to the global pirate threat level
+        pirate_threat.level += total_threat * 0.01;
+    }
+}
