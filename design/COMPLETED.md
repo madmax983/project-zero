@@ -923,3 +923,4 @@
 - [x] INT-1274 Integration: Memory Smugglers -> Chronicle — completed 2026-11-01
 - [x] `420` Ephemeral Architecture — `specs/420-ephemeral-architecture.md` — completed 2024-07-15
 - [x] `1245` Chronological Stutter — `specs/1245-chronological-stutter.md` — completed 2026-07-15
+- [x] `989` Heat Death — `specs/989-heat-death.md` — completed 2026-07-16

@@ -272,4 +272,13 @@ pub fn register(schedule: &mut Schedule) {
         )
             .in_set(Layer1SystemSet::Environment),
     );
+    schedule.add_systems(
+        (
+            crate::layer1::physics::heat_death::heat_accumulation_system,
+            crate::layer1::physics::heat_death::radiator_cooling_system,
+            crate::layer1::physics::heat_death::overheat_scram_system,
+        )
+            .chain()
+            .in_set(Layer1SystemSet::Environment),
+    );
 }
