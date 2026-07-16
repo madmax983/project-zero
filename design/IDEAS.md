@@ -6633,7 +6633,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Luxury Gravity
+## Luxury Gravity [SPECCED]
 
 **Layer:** 1
 
