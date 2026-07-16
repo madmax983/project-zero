@@ -28196,3 +28196,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you leverage the extreme power of artifacts to solve immediate crises, knowing they are slowly fundamentally altering your civilization in ways you can't predict?
 
 ---
+
+## The Organ Repo-Men
+
+**Layer:** 1
+
+**Fantasy:** The grim reality of a hyper-capitalist medical system where your body isn't fully your own.
+
+**Mechanic:** Pops can receive life-saving black-market cybernetics or organ transplants on credit. If the colony (or the Pop) defaults on the recurring maintenance payments, "Repo-Men" entities spawn. They attempt to extract the implants by force, completely ignoring base defenses but instantly killing or severely maiming the debtor Pops upon extraction.
+
+**Emergence:** You take out a massive medical loan to save your elite mining crew after a cave-in. Years later, an economic crash ruins your cash flow. You watch helplessly as heavily armed repo-men casually walk through your impenetrable military perimeter to harvest the lungs of your best workers.
+
+**Tension:** Do you let your vital workers die today, or save them with predatory loans that might trigger a localized massacre years down the line when you can't pay?
+
+---
+
+## Echoes of Mass Casualties
+
+**Layer:** 1
+
+**Fantasy:** A colony haunted not by ghosts, but by the physical, acoustic memory of its own tragedies.
+
+**Mechanic:** If a massive number of Pops die violently in a specific enclosed room, the physical materials of the room absorb the "Acoustic Trauma." Even after the bodies are cleared, the room occasionally plays back the sounds of the disaster. Any Pop working in that room suffers a permanent, stacking "Haunted" morale debuff. The only way to clear it is to physically demolish and rebuild the entire structure from scratch.
+
+**Emergence:** Your primary hospital is the site of a brutal massacre during a pirate raid. You clean it up and assign new doctors, but they all go insane within a week because they keep hearing the screams of the previous staff echoing from the walls. You are forced to abandon your most expensive facility.
+
+**Tension:** Do you endure the massive resource cost of demolishing and rebuilding a perfectly functional, fully upgraded building, or try to run your economy using traumatized, highly inefficient workers?
+
+---
+
+## Gravity Well Sickness
+
+**Layer:** 1
+
+**Fantasy:** The physical toll of adapting to a heavy-gravity world, making you a prisoner of your own strength.
+
+**Mechanic:** Pops living on High-G worlds gradually gain the "Dense Bone" trait, making them incredibly strong (high mining/combat damage) but highly adapted to heavy gravity. If these Pops are ever relocated to a standard or Low-G world, they suffer "Gravity Well Sickness"—their muscles atrophy rapidly, they experience intense disorientation, and their movement speed plummets.
+
+**Emergence:** You breed a generation of super-miners on a 2.5G death world. You try to draft them into your orbital marine corps, but the moment they board the zero-G troop transport, they become violently ill and completely combat-ineffective, trapping your best warriors on a single rock.
+
+**Tension:** Do you optimize your workforce for extreme environments, knowing it permanently locks them out of participating in the broader galactic economy or military?
+
+---
