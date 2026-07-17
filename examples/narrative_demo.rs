@@ -15,7 +15,6 @@
 //!   in taverns based on simulation events. Requires `cargo run --features nova`.
 //!   See `examples/oral_tradition_demo.rs`.
 
-use comfy_table::{presets::UTF8_FULL, Cell, Color as TableColor, Table};
 use crossterm::{
     event::{self, DisableMouseCapture, EnableMouseCapture, Event, KeyCode, KeyEventKind},
     execute,
@@ -150,13 +149,7 @@ fn main() -> anyhow::Result<()> {
 
         if let Err(err) = res {
             let error_msg = format!("✗ {}", err);
-            let mut table = Table::new();
-            table
-                .load_preset(UTF8_FULL)
-                .apply_modifier(comfy_table::modifiers::UTF8_ROUND_CORNERS)
-                .set_content_arrangement(comfy_table::ContentArrangement::Dynamic);
-            table.add_row(vec![Cell::new(&error_msg).fg(TableColor::White)]);
-            println!("{table}");
+            println!("{}", error_msg);
         }
     } else {
         // Restore terminal if app creation failed
@@ -169,14 +162,7 @@ fn main() -> anyhow::Result<()> {
         terminal.show_cursor()?;
 
         if let Some(err) = app_result.err() {
-            let error_msg = format!("✗ Failed to initialize app: {}", err);
-            let mut table = Table::new();
-            table
-                .load_preset(UTF8_FULL)
-                .apply_modifier(comfy_table::modifiers::UTF8_ROUND_CORNERS)
-                .set_content_arrangement(comfy_table::ContentArrangement::Dynamic);
-            table.add_row(vec![Cell::new(&error_msg).fg(TableColor::White)]);
-            eprintln!("{table}");
+            eprintln!("✗ Failed to initialize app: {}", err);
         }
     }
 

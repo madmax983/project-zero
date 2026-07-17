@@ -77,7 +77,6 @@ pub enum NarrativeError {
     IoError(String, std::io::Error),
 }
 
-use comfy_table::{presets::UTF8_FULL, Cell, Color as TableColor, Table};
 
 impl NarrativeError {
     /// Returns a beautiful formatted table for the error.
@@ -117,42 +116,23 @@ impl NarrativeError {
             }
         };
 
-        let mut table = Table::new();
-        table.set_width(120);
-        table
-            .load_preset(UTF8_FULL)
-            .apply_modifier(comfy_table::modifiers::UTF8_ROUND_CORNERS)
-            .set_content_arrangement(comfy_table::ContentArrangement::Dynamic);
-
         let header_title = match self {
             Self::DirectoryNotFound(_) | Self::NoLoreFiles(_) | Self::IoError(_, _) => {
-                " ✗ LORE LOADING ERROR "
+                "✗ LORE LOADING ERROR"
             }
-            _ => " ✗ NARRATIVE GENERATOR ERROR ",
+            _ => "✗ NARRATIVE GENERATOR ERROR",
         };
 
-        table.set_header(vec![
-            comfy_table::Cell::new(header_title)
-                .add_attribute(comfy_table::Attribute::Bold)
-                .fg(TableColor::Red),
-            comfy_table::Cell::new("Details")
-                .add_attribute(comfy_table::Attribute::Bold)
-                .fg(TableColor::Red),
-        ]);
-
-        table.add_row(vec![
-            Cell::new("Message")
-                .fg(TableColor::Yellow)
-                .add_attribute(comfy_table::Attribute::Bold),
-            Cell::new(&error_msg).fg(TableColor::White),
-        ]);
-        table.add_row(vec![
-            Cell::new("Action")
-                .fg(TableColor::Yellow)
-                .add_attribute(comfy_table::Attribute::Bold),
-            Cell::new(action_msg).fg(TableColor::Cyan),
-        ]);
-        table.to_string()
+        format!(
+            "┌────────────────────────────────────────────────────────────┐\n\
+             │ {} │\n\
+             ├─────────┬──────────────────────────────────────────────────┤\n\
+             │ Message │ {:<48} │\n\
+             ├─────────┼──────────────────────────────────────────────────┤\n\
+             │ Action  │ {:<48} │\n\
+             └─────────┴──────────────────────────────────────────────────┘",
+            header_title, error_msg, action_msg
+        )
     }
 }
 
