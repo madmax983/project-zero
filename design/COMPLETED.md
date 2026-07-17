@@ -925,3 +925,4 @@
 - [x] `1245` Chronological Stutter — `specs/1245-chronological-stutter.md` — completed 2026-07-15
 - [x] `998` The Symbiotic Data-Weavers — `specs/998-symbiotic-data-weavers.md` — completed 2026-06-25
 - [x] `INT-909` Integration: Radio Broadcasts -> Pirate Threat - completed 2026-10-31
+- [x] `292` The Chrono-Stutter — `specs/292-chrono-stutter.md` — completed 2026-07-17

@@ -55,7 +55,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `288` The Memory Black Market — `specs/288-memory-black-market.md`
 
 - [ ] `290` The Phantom Shift — `specs/290-phantom-shift.md`
-- [ ] `292` The Chrono-Stutter — `specs/292-chrono-stutter.md`
 - [ ] `298` The Nostalgia Engine — `specs/298-nostalgia-engine.md`
 
 
