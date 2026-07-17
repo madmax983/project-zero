@@ -681,3 +681,5 @@ mod asteroid_hermits_bridge;
 mod memory_smugglers_bridge;
 #[path = "integration/radio_broadcasts_threat_bridge.rs"]
 mod radio_broadcasts_threat_bridge;
+#[path = "integration/void_leviathan_chronicle_bridge.rs"]
+mod void_leviathan_chronicle_bridge;

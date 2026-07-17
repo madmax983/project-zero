@@ -1144,3 +1144,23 @@ pub fn radio_broadcasts_threat_bridge_system(
         pirate_threat.level += total_threat * 0.01;
     }
 }
+
+/// Bridges `VoidLeviathan` active state to `AddChronicleEvent`
+pub fn void_leviathan_chronicle_bridge(
+    leviathan: Res<crate::layer2::void_leviathan::VoidLeviathan>,
+    mut was_active: Local<bool>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    if leviathan.active && !*was_active {
+        chronicle_events.send(AddChronicleEvent {
+            text: "A colossal Void Leviathan has entered the system, blotting out the sun.".to_string(),
+            importance: EventImportance::Major,
+        });
+    } else if !leviathan.active && *was_active {
+        chronicle_events.send(AddChronicleEvent {
+            text: "The Void Leviathan has departed the system.".to_string(),
+            importance: EventImportance::Major,
+        });
+    }
+    *was_active = leviathan.active;
+}

@@ -1800,3 +1800,8 @@
 - **Systems connected:** `SystemThreat` -> `radio_broadcasts_threat_bridge_system` -> `PirateThreatLevel`
 - **Glue added:** Added `radio_broadcasts_threat_bridge_system` in `src/layer2/integration.rs`. Registered in `src/simulation.rs`.
 - **Tests:** `tests/integration/radio_broadcasts_threat_bridge.rs`
+### INT-314: Void Leviathan -> Chronicle
+- **Date:** 2026-11-01
+- **Systems connected:** `VoidLeviathan` -> `void_leviathan_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `void_leviathan_chronicle_bridge` in `src/layer2/integration.rs` to process arrival and departure of Leviathans and generate Chronicle records. Registered in `src/simulation.rs`.
+- **Tests:** Added `tests/integration/void_leviathan_chronicle_bridge.rs`.

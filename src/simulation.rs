@@ -47,6 +47,7 @@ pub fn build_simulation_schedule() -> Schedule {
     register_simulation_core_systems(&mut schedule);
     register_simulation_extended_systems(&mut schedule);
     schedule.add_systems(crate::layer2::void_leviathan::update_leviathan_eclipse_system);
+    schedule.add_systems(crate::layer2::integration::void_leviathan_chronicle_bridge);
     schedule.add_systems(crate::layer2::propaganda_engine::update_propaganda_system);
     schedule.add_systems(
         crate::layer1::social::bureau_of_regrets::check_penitent_faction_formation_system,
