@@ -2,7 +2,6 @@
 //!
 //! Demonstrates how to run the simulation without a window or GPU context.
 
-use comfy_table::{presets::UTF8_FULL, Cell, CellAlignment, Color as TableColor, Table};
 use crossterm::style::{Color, Stylize};
 use scale::layer1::resources::ColonyResources;
 use scale::prelude::*;
@@ -61,75 +60,11 @@ fn main() {
         "╰───────────────────────────────────────────────╯".with(Color::Cyan)
     );
 
-    let mut table = Table::new();
-    table
-        .load_preset(UTF8_FULL)
-        .apply_modifier(comfy_table::modifiers::UTF8_ROUND_CORNERS)
-        .set_content_arrangement(comfy_table::ContentArrangement::Dynamic)
-        .set_header(vec![
-            Cell::new("Category")
-                .add_attribute(comfy_table::Attribute::Bold)
-                .fg(TableColor::Cyan),
-            Cell::new("Metric")
-                .add_attribute(comfy_table::Attribute::Bold)
-                .fg(TableColor::Cyan),
-            Cell::new("Value")
-                .add_attribute(comfy_table::Attribute::Bold)
-                .fg(TableColor::Cyan),
-        ]);
-
-    table.add_row(vec![
-        Cell::new("👥 Population")
-            .fg(TableColor::White)
-            .add_attribute(comfy_table::Attribute::Bold),
-        Cell::new("Citizens").fg(TableColor::DarkGrey),
-        Cell::new(pop_count.to_string()).fg(TableColor::White),
-    ]);
-
-    table.add_row(vec![
-        Cell::new("📦 Basic Resources")
-            .fg(TableColor::Yellow)
-            .add_attribute(comfy_table::Attribute::Bold),
-        Cell::new("🍖 Food").fg(TableColor::DarkGrey),
-        Cell::new(format!("{:.1}", resources.food))
-            .fg(if resources.food < 20.0 {
-                TableColor::Red
-            } else {
-                TableColor::Green
-            })
-            .add_attribute(comfy_table::Attribute::Bold),
-    ]);
-
-    table.add_row(vec![
-        Cell::new(""),
-        Cell::new("🪵 Wood").fg(TableColor::DarkGrey),
-        Cell::new(format!("{:.1}", resources.wood)).fg(TableColor::White),
-    ]);
-
-    table.add_row(vec![
-        Cell::new(""),
-        Cell::new("🪨 Stone").fg(TableColor::DarkGrey),
-        Cell::new(format!("{:.1}", resources.stone)).fg(TableColor::White),
-    ]);
-
-    table.add_row(vec![
-        Cell::new(""),
-        Cell::new("💧 Water").fg(TableColor::DarkGrey),
-        Cell::new(format!("{:.1}", resources.water)).fg(TableColor::Blue),
-    ]);
-
-    table.add_row(vec![
-        Cell::new("🔬 Advanced")
-            .fg(TableColor::Magenta)
-            .add_attribute(comfy_table::Attribute::Bold),
-        Cell::new("Knowledge").fg(TableColor::DarkGrey),
-        Cell::new(format!("{:.1}", resources.knowledge)).fg(TableColor::Cyan),
-    ]);
-
-    // Align the Value column to the right for better readability
-    if let Some(col) = table.column_mut(2) {
-        col.set_cell_alignment(CellAlignment::Right);
-    }
-
-    println!("\n{table}");
+    println!("\n[Category] | [Metric] | [Value]");
+    println!("👥 Population | Citizens | {}", pop_count);
+    println!("📦 Basic Resources | 🍖 Food | {:.1}", resources.food);
+    println!("📦 Basic Resources | 🪵 Wood | {:.1}", resources.wood);
+    println!("📦 Basic Resources | 🪨 Stone | {:.1}", resources.stone);
+    println!("📦 Basic Resources | 💧 Water | {:.1}", resources.water);
+    println!("🔬 Advanced | Knowledge | {:.1}", resources.knowledge);
 }
