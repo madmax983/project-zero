@@ -28197,7 +28197,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Organ Repo-Men
+## The Organ Repo-Men [SPECCED]
 
 **Layer:** 1
 

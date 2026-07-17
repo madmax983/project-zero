@@ -746,3 +746,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1321` The Heirloom Debt — `specs/1321-the-heirloom-debt.md`
 - [ ] `1323` The Echo Plague — `specs/1323-the-echo-plague.md`
 - [ ] `1324` Luxury Gravity — `specs/1324-luxury-gravity.md`
+- [ ] `1325` The Organ Repo-Men — `specs/1325-the-organ-repo-men.md`
