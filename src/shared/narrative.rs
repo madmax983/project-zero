@@ -77,12 +77,10 @@ pub enum NarrativeError {
     IoError(String, std::io::Error),
 }
 
-use comfy_table::{presets::UTF8_FULL, Cell, Color as TableColor, Table};
-
 impl NarrativeError {
-    /// Returns a beautiful formatted table for the error.
+    /// Returns a formatted string representation of the error.
     ///
-    /// The table includes the error type, the error message, and a suggested action to resolve the issue.
+    /// The output includes the error type, the error message, and a suggested action to resolve the issue.
     /// This is particularly useful for CLI applications to render user-friendly errors.
     ///
     /// ## Examples
@@ -117,13 +115,6 @@ impl NarrativeError {
             }
         };
 
-        let mut table = Table::new();
-        table.set_width(120);
-        table
-            .load_preset(UTF8_FULL)
-            .apply_modifier(comfy_table::modifiers::UTF8_ROUND_CORNERS)
-            .set_content_arrangement(comfy_table::ContentArrangement::Dynamic);
-
         let header_title = match self {
             Self::DirectoryNotFound(_) | Self::NoLoreFiles(_) | Self::IoError(_, _) => {
                 " ✗ LORE LOADING ERROR "
@@ -131,28 +122,12 @@ impl NarrativeError {
             _ => " ✗ NARRATIVE GENERATOR ERROR ",
         };
 
-        table.set_header(vec![
-            comfy_table::Cell::new(header_title)
-                .add_attribute(comfy_table::Attribute::Bold)
-                .fg(TableColor::Red),
-            comfy_table::Cell::new("Details")
-                .add_attribute(comfy_table::Attribute::Bold)
-                .fg(TableColor::Red),
-        ]);
-
-        table.add_row(vec![
-            Cell::new("Message")
-                .fg(TableColor::Yellow)
-                .add_attribute(comfy_table::Attribute::Bold),
-            Cell::new(&error_msg).fg(TableColor::White),
-        ]);
-        table.add_row(vec![
-            Cell::new("Action")
-                .fg(TableColor::Yellow)
-                .add_attribute(comfy_table::Attribute::Bold),
-            Cell::new(action_msg).fg(TableColor::Cyan),
-        ]);
-        table.to_string()
+        format!(
+            "\n=== {} ===\n\nMESSAGE:\n{}\n\nACTION:\n{}\n\n=================================\n",
+            header_title.trim(),
+            error_msg,
+            action_msg
+        )
     }
 }
 
