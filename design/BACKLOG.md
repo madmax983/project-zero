@@ -563,7 +563,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `981` Corporate Espionage: The Trojan Architect — `specs/981-corporate-espionage-trojan-architect.md`
 - [ ] `982` The Generation Ship Mutiny — `specs/982-the-generation-ship-mutiny.md`
 
-- [ ] `989` Heat Death — `specs/989-heat-death.md`
 
 - [ ] `992` The Fungal Monoliths — `specs/992-the-fungal-monoliths.md`
 - [ ] `993` The Fractal Bureaucracy — `specs/993-the-fractal-bureaucracy.md`
