@@ -28238,3 +28238,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you optimize your workforce for extreme environments, knowing it permanently locks them out of participating in the broader galactic economy or military?
 
 ---
+## The Invasive Pet Paradox
+
+**Layer:** 1
+
+**Fantasy:** Bringing a cute local creature into the colony seems harmless until its rapid breeding destroys the ecosystem and economy.
+
+**Mechanic:** Pops can occasionally adopt a small, non-hostile alien fauna as a "Pet," giving them a localized mood buff. However, these pets bypass standard security filters and breed rapidly in climate-controlled environments. If unchecked, they consume massive amounts of the colony's food stockpile and clog industrial machinery.
+
+**Emergence:** Your most elite science team adopts a glowing slug. Ten years later, the entire colony is starving because millions of slugs are eating the hydroponics bays, and purging them would cause a colony-wide depressive episode because the pops love them too much.
+
+**Tension:** Do you maintain strict, heartless quarantine protocols that lower baseline morale, or allow a single point of failure (a cute pet) to risk your entire food supply?
+
+---
+
+## Synchronized Sleep Debt
+
+**Layer:** 1
+
+**Fantasy:** A hyper-efficient work schedule goes wrong, leading to a catastrophic colony-wide collapse.
+
+**Mechanic:** Advanced edicts allow you to synchronize the sleep cycles of all pops (e.g., using chemical stimulants or forced labor shifts) to maximize production during a specific window. While active, the colony gains a massive efficiency boost. However, this accumulates a hidden "Sleep Debt." When the edict ends or fails, every affected pop crashes simultaneously, refusing to work for a prolonged, random duration until the debt is paid.
+
+**Emergence:** You perfectly synchronize a 72-hour non-stop manufacturing sprint to build a critical defense platform before a pirate raid. The platform finishes just in time, but the entire colony falls asleep as the pirates land, leaving no one awake to actually man the guns.
+
+**Tension:** Do you risk synchronized, hyper-efficient bursts of labor, knowing you are creating a massive, unpredictable vulnerability window right after?
+
+---
+
+## Weaponized Tourism
+
+**Layer:** 2
+
+**Fantasy:** Bleeding a rival empire dry by making your worlds an irresistible, frivolous luxury trap for their elites.
+
+**Mechanic:** By constructing extreme luxury/leisure megastructures on your Layer 1 colonies, you can attract "Tourist Fleets" from rival Layer 3 empires. These fleets consume vast amounts of their home empire's wealth and resources to visit your worlds. While they boost your economy massively, they also strain your local infrastructure and demand specific exotic goods.
+
+**Emergence:** You intentionally build a massive, useless casino planet on your border. A neighboring militaristic empire's elites become addicted to visiting it, completely draining their empire's treasury and halting their military expansion, allowing you to conquer them without firing a single shot.
+
+**Tension:** Do you sacrifice critical industrial space to build frivolous attractions, knowing that if the tourist economy collapses or the rival empire closes its borders, your heavily specialized luxury world will instantly bankrupt you?
+
+---
