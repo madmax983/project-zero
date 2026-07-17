@@ -10282,3 +10282,30 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The sickness spreads through sleep. [COLONY] is paralyzed as souls choose the dream of [DREAM_VISION] over waking."
 - "Entire shifts lie dormant. They sleep to see [DREAM_VISION]. [COLONY] grinds to a halt. [YEAR]."
 - "[COLONY], [YEAR]: The collective hallucination takes hold. They would rather starve than wake from [DREAM_VISION]."
+
+## The Chrono-Stutter Templates (Spec 292)
+
+### Template: CHRONO_STUTTER_APPEARED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [CHRONO_STUTTER_VISUAL]
+
+**Patterns:**
+- "[YEAR]: A time anomaly appeared at [COLONY], manifesting as [CHRONO_STUTTER_VISUAL]."
+- "Surveyors at [COLONY] report [CHRONO_STUTTER_VISUAL]. The clocks have stopped making sense."
+- "[COLONY] has been caught in the Stutter. They report [CHRONO_STUTTER_VISUAL]."
+
+### Template: CHRONO_STUTTER_HAZARD
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [CHRONO_STUTTER_EFFECT]
+
+**Patterns:**
+- "The Stutter claimed its toll at [COLONY]. Workers [CHRONO_STUTTER_EFFECT]."
+- "Tragedy at [COLONY] in [YEAR]. They [CHRONO_STUTTER_EFFECT]."
+
+### Template: CHRONO_STUTTER_EXPLOITED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [CHRONO_STUTTER_BENEFIT]
+
+**Patterns:**
+- "[COLONY] danced on the edge of the Stutter and [CHRONO_STUTTER_BENEFIT]."
+- "In [YEAR], the anomaly was harnessed. They [CHRONO_STUTTER_BENEFIT]."
