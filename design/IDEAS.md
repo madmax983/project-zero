@@ -28238,3 +28238,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you optimize your workforce for extreme environments, knowing it permanently locks them out of participating in the broader galactic economy or military?
 
 ---
+## The Whisper Network
+
+**Layer:** Cross-layer
+
+**Fantasy:** Watching a grassroots rebellion organize right under the nose of your own oppressive surveillance grid.
+
+**Mechanic:** Pops living near massive industrial or infrastructure elements (like Orbital Tethers or deep-core reactors) discover they can use the physical vibrations of the machinery to transmit encrypted "Whisper" messages. This bypasses any standard Layer 1 or Layer 2 surveillance nets, allowing radical factions or underground markets to form regardless of your censorship level.
+
+**Emergence:** You build an ultra-secure, heavily surveilled penal mining colony connected to an orbital tether. The prisoners use the tether's vibrations to radicalize the orbital station's crew, resulting in the station's cannons being turned against your own reinforcement fleet.
+
+**Tension:** Do you maintain the massive, efficient infrastructure knowing it provides an uncrackable communication channel for dissidents, or decentralize your industry to maintain absolute control at the cost of production?
+
+---
+
+## The Pet Paradox
+
+**Layer:** 1
+
+**Fantasy:** Watching a cute, morale-boosting mascot accidentally snowball into an ecological and economic disaster.
+
+**Mechanic:** Pops on frontier worlds will sometimes tame local xenofauna as "Pets," gaining a huge personal mood buff. However, these pets have their own needs. If the pets breed rapidly, the Pops will prioritize feeding and protecting their pets over feeding the colony's industrial engines or even other lower-class Pops.
+
+**Emergence:** A miner tames a small "Crystal-Borer" because it is cute and glows. Ten years later, the colony has a massive Crystal-Borer infestation. The miners violently refuse to let you cull them because they are beloved pets, even as the pets literally consume the colony's primary power conduits.
+
+**Tension:** Do you enact a brutal colony-wide pet culling (causing massive, instant rebellion from the owners), or let the economy collapse as your resources are diverted to alien hamsters?
+
+---
+
+## The Martyr's Orbit
+
+**Layer:** 1
+
+**Fantasy:** The permanent, inescapable physical reminder of a terrible, callous decision you made.
+
+**Mechanic:** When a highly influential or beloved Pop is executed or dies due to gross player negligence in a low-gravity or orbital environment, their body is sometimes lost to the void. It becomes a permanent, un-salvageable micro-satellite (a "Martyr's Orbit") that continuously passes over the colony.
+
+**Emergence:** You intentionally spaced a beloved union leader to break a strike on an asteroid mining base. Now, every 14 hours, their frozen corpse drifts past the main observation windows. Whenever this happens, all workers in line of sight suffer a massive morale drop and momentarily stop working to mourn.
+
+**Tension:** Do you spend astronomical resources to alter an asteroid's gravitational pull just to clear a single corpse from orbit, or do you physically board up the observation decks, condemning your workers to windowless depression to maintain productivity?
+
+---
