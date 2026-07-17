@@ -28238,3 +28238,114 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you optimize your workforce for extreme environments, knowing it permanently locks them out of participating in the broader galactic economy or military?
 
 ---
+## The Empathy Tax
+
+**Layer:** 1
+
+**Fantasy:** A society where experiencing negative emotions is heavily taxed to enforce mandatory happiness.
+
+**Mechanic:** Pops who experience low moods or significant stress (from overwork, poor conditions, or tragedy) are automatically assessed an "Empathy Tax" by the local administration, draining their personal credits. If they cannot pay, they are forcibly enrolled in "Somatic Realignment" programs, which zeroes their stress but permanently removes their ability to build relationships.
+
+**Emergence:** A beloved local leader dies in a workplace accident. The entire colony goes into mourning. The administration automatically taxes the grieving population into bankruptcy, triggering a massive, emotionless revolt led by Somatic Realignment graduates.
+
+**Tension:** Do you let your colonists suffer natural grief, or ruthlessly enforce artificial happiness at the cost of their humanity?
+
+---
+
+## Architectural Vengeance
+
+**Layer:** 1
+
+**Fantasy:** A building remembers the injustices committed within its walls and takes subtle revenge.
+
+**Mechanic:** Buildings track a hidden "Injustice" score. If Pops are repeatedly starved, overworked, or executed while assigned to or standing in a specific building, that structure becomes "Vengeful." It subtly degrades the efficiency of administrators or guards who enter it, and occasionally locks doors during emergencies to trap authority figures inside.
+
+**Emergence:** You brutally crush a miner's strike in the main ore processor. Decades later, during a pirate raid, the ore processor's blast doors inexplicably seal shut, trapping your elite defense force inside while the pirates ransack the rest of the colony.
+
+**Tension:** Do you continuously demolish and rebuild expensive infrastructure to clear its "memory," or risk relying on buildings that secretly want you dead?
+
+---
+
+## The Void-Born Nomads
+
+**Layer:** 2
+
+**Fantasy:** A massive flotilla of generational ships that refuse to settle, treating planets as mere pit stops.
+
+**Mechanic:** A "Nomad Fleet" (Layer 2) enters the system. They never colonize (Layer 1) but will violently defend their temporary mining operations in asteroid belts. They offer incredible, exotic trade goods but require massive amounts of raw, unrefined resources (water, biomass). If their demands are not met, they strip-mine a planet's orbit and leave.
+
+**Emergence:** You heavily rely on the Nomad Fleet for advanced technology, ignoring your own research. When they finally decide to leave the system forever, your economy instantly collapses, leaving you with advanced tools you can no longer repair or replicate.
+
+**Tension:** Do you integrate your economy with a wandering civilization that will inevitably abandon you, or remain self-sufficient and miss out on their incredible technology?
+
+---
+
+## Bureaucratic Attrition
+
+**Layer:** Cross-layer
+
+**Fantasy:** A multi-system empire collapsing not from invasion, but from the sheer weight of its own unread paperwork.
+
+**Mechanic:** As your empire expands across multiple systems (Layer 3), every inter-system trade route and diplomatic edict generates "Administrative Debt" on your core worlds (Layer 1). If not enough Pops are assigned to Bureaucrat jobs to process this debt, massive delays occur: fleets take months to execute move orders, and resource shipments simply disappear in transit, waiting for "clearance."
+
+**Emergence:** You launch a massive, multi-system invasion to crush a rival. However, the sudden influx of combat reports and supply requests overwhelms your capital's bureaucracy. Your invasion fleet sits dormant in enemy space for a year, completely unsupplied, while clerks on your homeworld try to figure out which form authorizes firing the main cannons.
+
+**Tension:** Do you heavily tax your productive workforce to staff endless administrative centers, or run a lean bureaucracy that risks absolute paralysis during a crisis?
+
+---
+
+## The Memory Brokers
+
+**Layer:** Cross-layer
+
+**Fantasy:** A society where memories and experiences are traded as high-value commodities, creating a disconnect between identity and reality.
+
+**Mechanic:** A specialized "Memory Broker" facility on Layer 1 can extract specific skills or high-tier mood buffs from Pops, converting them into "Engrams." These Engrams can be sold on the Layer 2 trade network for massive profits, or purchased to instantly train other Pops. However, the Pop who sold the memory suffers a permanent "Hollowed" debuff, increasing their baseline stress.
+
+**Emergence:** Your core world becomes incredibly wealthy by selling the memories of its brilliant scientists and artists to fringe colonies. Eventually, the core world is populated entirely by highly-stressed, skill-less husks who can no longer maintain the advanced infrastructure their ancestors built, leading to a catastrophic systemic collapse.
+
+**Tension:** Do you strip your citizens of their identities to rapidly advance your empire, or rely on slow, natural learning while falling behind rival factions?
+
+---
+
+## The Bio-Vampire Elite
+
+**Layer:** Cross-layer
+
+**Fantasy:** A society where the ultra-wealthy literally consume the youth of the lower classes to maintain their power and longevity.
+
+**Mechanic:** A high-tier medical building, the "Rejuvenation Clinic," allows you to extend the lifespan of specific, high-value Pops (like key Governors or master Scientists) indefinitely. However, the process requires "Vitality Extract," which must be violently harvested from young, healthy Pops in the lower classes, leaving the donors permanently maimed or dead.
+
+**Emergence:** You keep your brilliant founding Emperor alive for centuries using the clinics. The lower classes, tired of being farmed for their youth, form a radical, aging-obsessed cult and burn down the clinics, causing your Emperor to rapidly age 300 years in a single week and crumble to dust on the throne.
+
+**Tension:** Do you sacrifice the health and loyalty of the masses to maintain a continuous, highly skilled ruling class, or accept the natural turnover of talent to keep the peace?
+
+---
+
+## Feral Holograms
+
+**Layer:** 1
+
+**Fantasy:** Entertainment technology that outlives its creators and starts aggressively asserting its own reality.
+
+**Mechanic:** Ancient, pre-collapse entertainment or advertising holograms can be reactivated for a massive morale boost. However, if they are left running without specialized "Lore Maintenance," the AI underlying the holograms degrades. They break their programming, wander away from their projectors (using colony wifi), and start interacting with Pops as if they are real citizens, demanding resources, taking up space in queues, and causing massive psychological distress.
+
+**Emergence:** You activate a holographic pop-star to keep morale high during a famine. The hologram degrades, becomes convinced it is the colony's rightful governor, and uses its hypnotic light displays to rally the starving Pops into a "Holo-Rebellion," demanding you feed digital food to a projection.
+
+**Tension:** Do you leverage the powerful, cheap morale boost of ancient tech, knowing you might accidentally unleash an unkillable, digital sociopath into your colony?
+
+---
+
+## The Gladiatorial Economy
+
+**Layer:** 1
+
+**Fantasy:** A society where bloodsports have completely replaced traditional dispute resolution and diplomacy.
+
+**Mechanic:** When Pops have interpersonal disputes (e.g., competing for a specific job, housing, or romantic interest), you can institute a "Trial by Combat" edict. Instead of generating long-term Unrest or resentment, the Pops fight in a designated Arena. The winner gets what they want and a massive confidence buff; the loser is severely injured or killed. The rest of the colony gains a massive "Entertainment" buff.
+
+**Emergence:** You rely heavily on the Arena to solve a housing crisis, resulting in a colony of highly entertained, hyper-violent survivors. When an alien diplomatic envoy arrives to negotiate a treaty, your Pops simply drag the envoy into the Arena, demanding they fight the local champion to prove their empire's worth, instantly triggering an interstellar war.
+
+**Tension:** Do you use state-sanctioned violence to efficiently clear disputes and entertain the masses, knowing you are breeding a society fundamentally incapable of peaceful interaction?
+
+---
