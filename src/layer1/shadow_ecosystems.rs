@@ -67,12 +67,13 @@ pub fn spawn_data_fauna(
     }
 }
 
+/// ⚡ Bolt Optimization: Uses bevy::utils::HashMap (AHash) and pre-allocates capacity to eliminate SipHash overhead on integer keys and reduce heap allocations.
 pub fn data_fauna_feeding(
     mut commands: Commands,
     mut fauna_query: Query<(Entity, &mut DataFauna, &GridPosition)>,
     em_query: Query<(&Emissions, &GridPosition)>,
 ) {
-    let mut em_map = std::collections::HashMap::new();
+    let mut em_map = bevy::utils::HashMap::with_capacity(em_query.iter().len());
     for (em, e_pos) in em_query.iter() {
         *em_map.entry(*e_pos).or_insert(0.0) += em.em_level;
     }
@@ -89,14 +90,15 @@ pub fn data_fauna_feeding(
     }
 }
 
+/// ⚡ Bolt Optimization: Uses bevy::utils::HashMap (AHash) and pre-allocates capacity to eliminate SipHash overhead on integer keys and reduce heap allocations.
 pub fn data_fauna_overfeed(
     mut commands: Commands,
     fauna_query: Query<(Entity, &DataFauna, &GridPosition)>,
     machine_query: Query<(Entity, &EmMachine, &GridPosition)>,
     mut ev_short_circuit: EventWriter<ShortCircuitEvent>,
 ) {
-    let mut fauna_map: std::collections::HashMap<GridPosition, Vec<(Entity, f32, f32)>> =
-        std::collections::HashMap::new();
+    let mut fauna_map: bevy::utils::HashMap<GridPosition, Vec<(Entity, f32, f32)>> =
+        bevy::utils::HashMap::with_capacity(fauna_query.iter().len());
     for (f_entity, fauna, f_pos) in fauna_query.iter() {
         fauna_map
             .entry(*f_pos)
