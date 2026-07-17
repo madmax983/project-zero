@@ -561,7 +561,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `979` The Propaganda Contagion — `specs/979-the-propaganda-contagion.md`
 - [ ] `980` Atmospheric Sabotage — `specs/980-atmospheric-sabotage.md`
 - [ ] `981` Corporate Espionage: The Trojan Architect — `specs/981-corporate-espionage-trojan-architect.md`
-- [ ] `982` The Generation Ship Mutiny — `specs/982-the-generation-ship-mutiny.md`
 
 - [ ] `989` Heat Death — `specs/989-heat-death.md`
 
