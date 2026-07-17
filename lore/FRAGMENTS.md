@@ -10502,3 +10502,22 @@ Used for The Feral Administration anvalanches of paperwork.
 - a quiet, green field
 - an endless, warm ocean
 - a sky without stars
+
+## The Chrono-Stutter Fragments (Spec 292)
+
+### Fragment Type: [CHRONO_STUTTER_VISUAL]
+- a shimmering haze
+- a localized blur
+- a space where light seems to crawl
+- a jittering pocket of reality
+
+### Fragment Type: [CHRONO_STUTTER_EFFECT]
+- aged decades in a single afternoon
+- watched their crops grow and rot in hours
+- saw the machines rust before their eyes
+- felt time grind to an agonizing halt
+
+### Fragment Type: [CHRONO_STUTTER_BENEFIT]
+- harvested a season's yield in days
+- finished the construction in what felt like minutes
+- exploited the anomaly for rapid production
