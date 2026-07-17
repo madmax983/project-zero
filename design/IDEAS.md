@@ -28238,3 +28238,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you optimize your workforce for extreme environments, knowing it permanently locks them out of participating in the broader galactic economy or military?
 
 ---
+
+## Generational Debt
+
+**Layer:** 1
+
+**Fantasy:** The crushing weight of your ancestors' poor financial decisions chaining you to a specific job or location forever.
+
+**Mechanic:** When a pop takes a loan (for cybernetics, advanced housing, or specialized tools) and dies before paying it off, the debt passes to their closest relative or child. Pops with generational debt suffer a permanent "Indebted" mood debuff and are blocked from taking certain high-prestige jobs until the debt is cleared.
+
+**Emergence:** You try to build a utopian research colony, but realize a large underclass of pops are stuck working in dangerous mines simply because their great-grandparents bought a slightly nicer bed 80 years ago, and the compound interest has trapped their entire lineage.
+
+**Tension:** Do you artificially clear the debts (tanking the colony's internal economy and angering the creditor pops) or accept that your society now has a permanent, inescapable lower class?
+
+---
+
+## The Bureaucratic Singularity
+
+**Layer:** Cross-layer
+
+**Fantasy:** A government so complex and automated that it continues to pass laws and enforce regulations even after the leaders who built it are dead.
+
+**Mechanic:** As a colony grows, you can assign pops to "Administrator" roles to boost overall efficiency. If the number of Administrators exceeds a certain ratio, the bureaucracy becomes self-sustaining. It will randomly generate new "Colony Edicts" (e.g., banning certain foods, mandating specific sleep schedules) without player input. Defying these edicts causes massive unrest among the administrator class.
+
+**Emergence:** Your core world is facing starvation, but you can't reassign workers to farms because the automated bureaucracy just passed a random edict declaring farming a "Restricted Cultural Practice", and the enforcers will arrest anyone who tries to plant a seed.
+
+**Tension:** Do you build an efficient administration knowing it will eventually wrest control of the colony from you, or keep your government small, inefficient, but entirely under your command?
+
+---
+
+## Sentient Trade Routes
+
+**Layer:** 2
+
+**Fantasy:** The sheer volume of automated traffic between two worlds creates an emergent, ungovernable sub-culture that exists entirely in the void between planets.
+
+**Mechanic:** If a specific trade route between two planets remains highly active for a long period, it spawns "Nomad Flotillas." These are permanent, slow-moving clusters of ships that never dock at a planet. They act as mobile black markets and intercept trade goods. They have their own demands and will blockade the route if they aren't occasionally paid off or traded with.
+
+**Emergence:** You rely heavily on a direct supply line of food from an agri-world to a forge-world. Over decades, the route spawns a massive Nomad Flotilla. The Nomads intercept so much food that they become richer and more powerful than the forge-world itself, eventually demanding the forge-world pay *them* tribute just to receive their own shipments.
+
+**Tension:** Do you constantly rotate and disrupt your own trade routes to prevent Flotillas from forming (ruining efficiency), or accept that the space between your worlds is ruled by an entirely different civilization?
+
+---
