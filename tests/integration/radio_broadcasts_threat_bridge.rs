@@ -1,7 +1,7 @@
 use bevy::prelude::*;
 use scale::layer2::communications::radio_broadcasts::SystemThreat;
-use scale::layer3::pirates::PirateThreatLevel;
 use scale::layer2::integration::radio_broadcasts_threat_bridge_system;
+use scale::layer3::pirates::PirateThreatLevel;
 
 #[test]
 fn test_radio_broadcasts_increases_pirate_threat() {
@@ -15,5 +15,8 @@ fn test_radio_broadcasts_increases_pirate_threat() {
     app.update();
 
     let threat = app.world().resource::<PirateThreatLevel>().level;
-    assert!(threat > 0.0, "SystemThreat should leak into global PirateThreatLevel");
+    assert!(
+        threat > 0.0,
+        "SystemThreat should leak into global PirateThreatLevel"
+    );
 }
