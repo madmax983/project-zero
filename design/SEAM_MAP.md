@@ -1800,3 +1800,10 @@
 - **Systems connected:** `SystemThreat` -> `radio_broadcasts_threat_bridge_system` -> `PirateThreatLevel`
 - **Glue added:** Added `radio_broadcasts_threat_bridge_system` in `src/layer2/integration.rs`. Registered in `src/simulation.rs`.
 - **Tests:** `tests/integration/radio_broadcasts_threat_bridge.rs`
+
+### INT-1245: Chronological Stutter -> Chronicle
+- **Date:** 2026-11-01
+- **Systems connected:** `HyperlaneTransitEvent` -> `apply_chronological_stutter_system` -> `AddChronicleEvent`
+- **Glue added:** Code in `src/layer2/navigation/chronological_stutter.rs` generates major Chronicle events when a transiting fleet gets a negative stutter.
+- **Schedule:** Registered in Layer 2 `PlanetarySpinUpPlugin` in `src/layer2/mod.rs`.
+- **Tests:** `tests/integration/chronological_stutter_bridge.rs`

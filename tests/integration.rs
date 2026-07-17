@@ -677,6 +677,8 @@ mod echoes_lost_fleet_bridge;
 
 #[path = "integration/asteroid_hermits_bridge.rs"]
 mod asteroid_hermits_bridge;
+#[path = "integration/chronological_stutter_bridge.rs"]
+mod chronological_stutter_bridge;
 #[path = "integration/memory_smugglers_bridge.rs"]
 mod memory_smugglers_bridge;
 #[path = "integration/radio_broadcasts_threat_bridge.rs"]
