@@ -54,21 +54,22 @@ mod tests {
 
         // Spawn Anomaly at origin
         world.spawn((
-            ChronoStutterAnomaly { radius: 5.0, time_multiplier: 10.0 },
+            ChronoStutterAnomaly {
+                radius: 5.0,
+                time_multiplier: 10.0,
+            },
             Transform::from_xyz(0.0, 0.0, 0.0),
         ));
 
         // Spawn Pop inside anomaly
-        let pop_in = world.spawn((
-            Transform::from_xyz(2.0, 0.0, 0.0),
-            TimeModifier::default(),
-        )).id();
+        let pop_in = world
+            .spawn((Transform::from_xyz(2.0, 0.0, 0.0), TimeModifier::default()))
+            .id();
 
         // Spawn Pop outside anomaly
-        let pop_out = world.spawn((
-            Transform::from_xyz(10.0, 0.0, 0.0),
-            TimeModifier::default(),
-        )).id();
+        let pop_out = world
+            .spawn((Transform::from_xyz(10.0, 0.0, 0.0), TimeModifier::default()))
+            .id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(apply_chrono_anomaly_system);
@@ -84,21 +85,26 @@ mod tests {
 
         // Spawn first Anomaly
         world.spawn((
-            ChronoStutterAnomaly { radius: 5.0, time_multiplier: 2.0 },
+            ChronoStutterAnomaly {
+                radius: 5.0,
+                time_multiplier: 2.0,
+            },
             Transform::from_xyz(0.0, 0.0, 0.0),
         ));
 
         // Spawn second Anomaly
         world.spawn((
-            ChronoStutterAnomaly { radius: 5.0, time_multiplier: 10.0 },
+            ChronoStutterAnomaly {
+                radius: 5.0,
+                time_multiplier: 10.0,
+            },
             Transform::from_xyz(0.0, 0.0, 0.0),
         ));
 
         // Spawn Pop inside both anomalies
-        let pop_in = world.spawn((
-            Transform::from_xyz(2.0, 0.0, 0.0),
-            TimeModifier::default(),
-        )).id();
+        let pop_in = world
+            .spawn((Transform::from_xyz(2.0, 0.0, 0.0), TimeModifier::default()))
+            .id();
 
         let mut schedule = Schedule::default();
         schedule.add_systems(apply_chrono_anomaly_system);

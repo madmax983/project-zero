@@ -67,6 +67,36 @@ pub mod rivals {
         }
     }
 
+    fn try_expand_territory(
+        territory: &mut TerritoryGrid,
+        entity: Entity,
+        start_x: i32,
+        start_y: i32,
+    ) -> bool {
+        let mut visited = HashMap::new();
+        let mut queue = VecDeque::new();
+        queue.push_back((start_x, start_y));
+        visited.insert((start_x, start_y), true);
+
+        while let Some((cx, cy)) = queue.pop_front() {
+            if territory.get_owner(cx, cy) == Some(entity) {
+                let adjacents = [(cx + 1, cy), (cx - 1, cy), (cx, cy + 1), (cx, cy - 1)];
+                for (nx, ny) in adjacents {
+                    if let std::collections::hash_map::Entry::Vacant(e) = visited.entry((nx, ny)) {
+                        e.insert(true);
+                        if territory.get_owner(nx, ny).is_none() {
+                            territory.set_owner(nx, ny, entity);
+                            return true;
+                        } else if territory.get_owner(nx, ny) == Some(entity) {
+                            queue.push_back((nx, ny));
+                        }
+                    }
+                }
+            }
+        }
+        false
+    }
+
     /// System for rival colonies to expand their territory.
     pub fn rival_colony_expansion_system(
         mut query: Query<(Entity, &mut RivalColony, &GridPosition)>,
@@ -79,37 +109,9 @@ pub mod rivals {
             }
 
             while colony.expansion_points >= 10 {
-                let mut expanded = false;
-
-                // Find an adjacent unclaimed tile by expanding out from the border
-                let mut visited = HashMap::new();
-                let mut queue = VecDeque::new();
-                queue.push_back((pos.x, pos.y));
-                visited.insert((pos.x, pos.y), true);
-
-                while let Some((cx, cy)) = queue.pop_front() {
-                    if territory.get_owner(cx, cy) == Some(entity) {
-                        // Check adjacents
-                        let adjacents = [(cx + 1, cy), (cx - 1, cy), (cx, cy + 1), (cx, cy - 1)];
-                        for (nx, ny) in adjacents {
-                            if let std::collections::hash_map::Entry::Vacant(e) =
-                                visited.entry((nx, ny))
-                            {
-                                e.insert(true);
-                                if territory.get_owner(nx, ny).is_none() {
-                                    territory.set_owner(nx, ny, entity);
-                                    colony.expansion_points -= 10;
-                                    expanded = true;
-                                    break;
-                                } else if territory.get_owner(nx, ny) == Some(entity) {
-                                    queue.push_back((nx, ny));
-                                }
-                            }
-                        }
-                        if expanded {
-                            break;
-                        }
-                    }
+                let expanded = try_expand_territory(&mut territory, entity, pos.x, pos.y);
+                if expanded {
+                    colony.expansion_points -= 10;
                 }
 
                 // If we couldn't expand, break the loop to avoid infinite loops if trapped

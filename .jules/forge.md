@@ -53,3 +53,6 @@
 **[Testing Refactoring with Targeted Tests]**
 **Learning:** A full `cargo test` on the workspace can take over 400s and time out. When refactoring a specific module, relying on a full test suite run slows down feedback and causes timeouts.
 **Action:** Always run targeted tests using `-p <package> --lib <module::path>` (e.g., `cargo test -p scale --lib layer3::diplomacy::xenolinguistics::tests`) to quickly and safely verify that the refactoring did not break behavior.
+**Flattening Nested Loops in Factions**
+**Learning:** Found deeply nested `while` loops containing inline BFS search code (`rival_colony_expansion_system`), leading to extremely high cognitive complexity and a "Pyramid of Doom" up to 10 braces deep.
+**Action:** Extracting internal search loops that require their own state (like queues and visited maps) into isolated helper functions strictly clarifies intent and allows the primary system logic to remain a single linear list of actions.
