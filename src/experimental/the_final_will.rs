@@ -13,7 +13,7 @@
 
 use crate::layer1::core::chronicle::{AddChronicleEvent, EventImportance};
 use crate::layer1::economy::Wallet;
-use crate::layer1::pop::{PopDied, PopName};
+use crate::layer1::entities::pop::{PopDied, PopName};
 use crate::layer1::social::Relationships;
 use bevy_ecs::prelude::*;
 

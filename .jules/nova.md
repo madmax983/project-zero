@@ -235,3 +235,8 @@
 **Concept:** Added `gluttonous_aroma_system` to `src/experimental/gluttonous_aroma.rs`. Connects `Trait::Glutton` with `BuildingType::Smokehouse` and `Needs`. Pops with the Glutton trait passively regenerate `leisure` when they are within 3 tiles of a Smokehouse, but suffer a slightly accelerated `hunger` decay.
 **Fate:** Submitted
 **Lesson:** Connects a personality trait with a specific economic building's physical location, making an otherwise industrial building an emergent leisure structure for specific populations, but at the cost of higher food consumption.
+
+## [The Final Will]
+**Concept:** Implemented `the_final_will_system`. When a `Pop` dies, their remaining `Wallet` credits are transferred to the living `Pop` with whom they had the highest positive `Affinity`. A `ChronicleEvent` is emitted to log the inheritance.
+**Fate:** Merged
+**Lesson:** Connects the life-cycle of a Pop (death) with the economy (`Wallet`) and the social relationship network. It creates a small but meaningful narrative hook where wealth is passed down to friends, making relationships mechanically impactful beyond just mood buffs.
