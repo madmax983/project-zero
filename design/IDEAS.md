@@ -28238,3 +28238,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you optimize your workforce for extreme environments, knowing it permanently locks them out of participating in the broader galactic economy or military?
 
 ---
+## The Temporal Debt
+
+**Layer:** Cross-layer
+
+**Fantasy:** A colony takes a loan from the future to survive the present, but the bill eventually comes due in devastating ways.
+
+**Mechanic:** In a desperate crisis, a colony can activate a "Temporal Siphon" artifact to instantly solve a resource shortage (e.g., infinite food/power for a month). However, exactly one year later, the colony experiences a localized "Chrono-Crash" where they are forced to repay the debt: production completely halts, resources vanish, and pops age rapidly for an equivalent duration.
+
+**Emergence:** You save a dying frontier world from starvation using a Temporal Siphon. A year later, during a critical defensive war, the Chrono-Crash hits. Your entire defensive garrison on that world instantly ages into dust, leaving the planet defenseless against invasion.
+
+**Tension:** Do you accept inevitable ruin today, or guarantee a catastrophic, unpredictable collapse in the future when you might be even more vulnerable?
+
+---
+
+## Xenofloral Empathy
+
+**Layer:** 1
+
+**Fantasy:** The emotional state of the colony physically manifests in the local alien ecosystem, creating a bio-feedback loop.
+
+**Mechanic:** Certain alien biomes contain "Empathic Flora" that react to the aggregate mood of nearby Pops. If the colony is happy, the flora blooms brightly, providing passive health and morale buffs. If the colony is stressed or violent, the flora wilts, turns toxic, and begins releasing depressive spores that further tank morale.
+
+**Emergence:** A minor industrial strike lowers local morale. The nearby empathic forest responds by releasing toxic spores. The toxicity causes sickness, further dropping morale, which causes the forest to become actively hostile and aggressively overgrow the factory, completely shutting it down.
+
+**Tension:** Do you pave over the beautiful, beneficial empathic forest to build a concrete dystopia that is easier to control, or carefully manage the emotional state of your Pops to maintain the natural buffs at the risk of a biological cascade failure?
+
+---
+
+## The Memetic Contagion
+
+**Layer:** 3
+
+**Fantasy:** A seemingly innocent diplomatic gesture from an alien empire carries a hidden, devastating cultural payload.
+
+**Mechanic:** A powerful, charismatic alien civilization constantly sends free "Cultural Exchanges" (art, music, philosophy) via diplomatic channels. Accepting them grants massive temporary boosts to Layer 3 diplomacy and Layer 1 morale. However, these exchanges act as a memetic contagion. Pops slowly lose their original cultural traits and replace them with the alien empire's traits.
+
+**Emergence:** You accept decades of free cultural gifts from a benevolent neighbor to keep your core worlds blissfully happy. When that neighbor eventually demands you become a vassal state, you try to refuse, but your own population, who now fully identify with the alien culture, violently rebels against you to force the assimilation.
+
+**Tension:** Do you isolate your empire to maintain cultural purity at the cost of crippling your diplomacy and morale, or gorge on foreign culture and risk losing your civilization from the inside out?
+
+---
