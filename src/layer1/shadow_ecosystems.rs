@@ -72,7 +72,8 @@ pub fn data_fauna_feeding(
     mut fauna_query: Query<(Entity, &mut DataFauna, &GridPosition)>,
     em_query: Query<(&Emissions, &GridPosition)>,
 ) {
-    let mut em_map = std::collections::HashMap::new();
+    // ⚡ Bolt Optimization: Uses `bevy::utils::HashMap` (AHash) instead of `std::collections::HashMap`
+    let mut em_map = bevy::utils::HashMap::new();
     for (em, e_pos) in em_query.iter() {
         *em_map.entry(*e_pos).or_insert(0.0) += em.em_level;
     }
@@ -95,8 +96,9 @@ pub fn data_fauna_overfeed(
     machine_query: Query<(Entity, &EmMachine, &GridPosition)>,
     mut ev_short_circuit: EventWriter<ShortCircuitEvent>,
 ) {
-    let mut fauna_map: std::collections::HashMap<GridPosition, Vec<(Entity, f32, f32)>> =
-        std::collections::HashMap::new();
+    // ⚡ Bolt Optimization: Uses `bevy::utils::HashMap` (AHash) instead of `std::collections::HashMap`
+    let mut fauna_map: bevy::utils::HashMap<GridPosition, Vec<(Entity, f32, f32)>> =
+        bevy::utils::HashMap::new();
     for (f_entity, fauna, f_pos) in fauna_query.iter() {
         fauna_map
             .entry(*f_pos)
