@@ -111,6 +111,7 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<crate::layer2::propaganda_engine::DiplomaticWeight>();
     world.init_resource::<crate::layer2::propaganda_engine::InspectorEvent>();
     world.init_resource::<bevy_ecs::event::Events<crate::layer1::core::chronicle::AddChronicleEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<crate::cross_layer::generation_ship_mutiny::MutinyEvent>>();
 
     world.init_resource::<bevy_ecs::event::Events<crate::layer1::social::blacksite::PrisonBreakEvent>>();
     world.init_resource::<Events<crate::layer1::cassandra_syndrome::DoomsdayWarningEvent>>();
@@ -1022,6 +1023,14 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
     ));
 
     schedule.add_systems((crate::layer3::events::refugee_waves::process_refugee_decision,));
+    schedule.add_systems(
+        (
+            crate::cross_layer::generation_ship_mutiny::generation_ship_radicalization_system,
+            crate::cross_layer::generation_ship_mutiny::evaluate_mutiny_system,
+            crate::cross_layer::generation_ship_mutiny::mutiny_chronicle_bridge,
+        )
+            .chain(),
+    );
     schedule.add_systems((
         crate::layer3::economy::market_shock::monitor_luxury_production_system,
         crate::layer3::economy::market_shock::trigger_ally_civil_war_system,

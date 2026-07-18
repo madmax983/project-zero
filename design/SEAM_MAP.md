@@ -1800,3 +1800,9 @@
 - **Systems connected:** `SystemThreat` -> `radio_broadcasts_threat_bridge_system` -> `PirateThreatLevel`
 - **Glue added:** Added `radio_broadcasts_threat_bridge_system` in `src/layer2/integration.rs`. Registered in `src/simulation.rs`.
 - **Tests:** `tests/integration/radio_broadcasts_threat_bridge.rs`
+
+### INT-982: Generation Ship Mutiny -> Chronicle
+- **Date:** 2026-07-18
+- **Systems connected:** `evaluate_mutiny_system` -> `MutinyEvent` -> `mutiny_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `mutiny_chronicle_bridge` in `src/cross_layer/generation_ship_mutiny.rs` to generate Chronicle records on mutiny. Registered `MutinyEvent`, `generation_ship_radicalization_system`, `evaluate_mutiny_system`, and `mutiny_chronicle_bridge` in `src/simulation.rs`.
+- **Tests:** `tests/integration/generation_ship_mutiny_bridge.rs`
