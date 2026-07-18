@@ -28238,3 +28238,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you optimize your workforce for extreme environments, knowing it permanently locks them out of participating in the broader galactic economy or military?
 
 ---
+## The Perfectionist's Paralysis
+
+**Layer:** 1
+
+**Fantasy:** The realization that a perfect society is fundamentally unstable because humans need a struggle to find meaning.
+
+**Mechanic:** When a colony maintains 100% need fulfillment for an extended period, a hidden "Ennui" stat begins to rise. If Ennui peaks, Pops develop the "Perfectionist" trait, causing them to artificially manufacture crises—intentionally breaking machines, starting meaningless brawls, or forming strange "Struggle Cults" that demand to be starved.
+
+**Emergence:** You finally achieve a perfect, self-sustaining paradise. A year later, your bored citizens dismantle the primary fusion reactor just to see if they can survive the resulting blackout, plunging the utopia into a desperate survival situation.
+
+**Tension:** Do you intentionally deprive your citizens of complete happiness to keep them focused, or strive for the impossible utopia and risk them tearing it down out of sheer boredom?
+
+---
+
+## Orbital Agoraphobia
+
+**Layer:** Cross-layer
+
+**Fantasy:** The terrifying psychological shift of a population that has forgotten what the sky looks like, and their reaction when they finally see it.
+
+**Mechanic:** Pops born in fully sealed deep-space habitats (Layer 1) develop the "Agoraphobe" trait. They gain efficiency bonuses in enclosed spaces but suffer massive panic and productivity crashes if drafted onto orbital transit ships (Layer 2) that have large windows or open designs.
+
+**Emergence:** You spend a century turning a hostile planet's core into an industrial powerhouse. When you finally build a space elevator to export your goods, none of your master engineers are willing to step foot on the surface or board a shuttle without suffering a complete nervous breakdown.
+
+**Tension:** Do you permanently isolate your deep-colony workforce to maintain their efficiency, or force them to rotate to the surface, sacrificing productivity for psychological resilience?
+
+---
+
+## The Digital Termites
+
+**Layer:** 1
+
+**Fantasy:** Fighting a pest infestation not with traps and poison, but with code and administrative bandwidth.
+
+**Mechanic:** Outdated software, deleted files, and scrapcode fragments slowly coalesce in the colony's central servers to form "Digital Termites." These pseudo-sentient glitches don't attack physical structures, but they consume processing power, slightly delay automated tasks (doors opening opening slower, turrets tracking late), and occasionally scramble low-level UI readouts.
+
+**Emergence:** You ignore a minor system slowdown for years to focus on expansion. During a critical pirate raid, your automated defense grid lags by a crucial three seconds because a swarm of digital termites is chewing through the targeting subroutines, allowing the pirates to breach the perimeter.
+
+**Tension:** Do you divert highly skilled scientists and significant energy to "exterminate" abstract digital pests, or live with the constant, irritating inefficiency of a degraded operating system?
+
+---
