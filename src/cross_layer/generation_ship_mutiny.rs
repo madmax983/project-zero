@@ -1,3 +1,4 @@
+use crate::layer1::core::chronicle::{AddChronicleEvent, EventImportance};
 use crate::layer2::fleet::InTransit;
 use crate::layer3::fleets::generation_ship::GenerationShip;
 use bevy::prelude::*;
@@ -32,6 +33,18 @@ pub fn generation_ship_radicalization_system(
             // Slowly increase Radicalization based on ship age
             radicalization.level += ship_age.age_in_years as f32 * 0.01;
         }
+    }
+}
+
+pub fn mutiny_chronicle_bridge(
+    mut events: EventReader<MutinyEvent>,
+    mut chronicle: EventWriter<AddChronicleEvent>,
+) {
+    for _event in events.read() {
+        chronicle.send(AddChronicleEvent {
+            text: "Generation Ship Mutiny: A faction has radicalized and taken control!".to_string(),
+            importance: EventImportance::Major,
+        });
     }
 }
 
