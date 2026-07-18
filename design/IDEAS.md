@@ -28238,3 +28238,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you optimize your workforce for extreme environments, knowing it permanently locks them out of participating in the broader galactic economy or military?
 
 ---
+## Slipspace Erosion
+
+**Layer:** Cross-layer
+
+**Fantasy:** The slow, horrifying realization that faster-than-light travel is tearing the fabric of reality around your most vital trade hubs.
+
+**Mechanic:** High-volume FTL traffic (Layer 2/3) jumping in and out of a star system causes "Slipspace Erosion" on the local planets (Layer 1). This invisible hazard causes localized temporal anomalies on the grid—crops rapidly age and turn to dust instantly, building maintenance plummets unpredictably, and pops experience localized amnesia or age skips.
+
+**Emergence:** You build your capital into the most prosperous trade hub in the sector. The sheer volume of incoming merchant fleets erodes reality so badly that your central administration district randomly shifts out of phase, deleting a century of records and plunging the empire into bureaucratic chaos.
+
+**Tension:** The immense wealth of being a galactic crossroads versus the literal unravelling of the physical world your citizens stand on.
+
+---
+
+## The Engineered Eclipse
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Playing god with the sun to optimize agriculture and mood, until someone steals the remote.
+
+**Mechanic:** You can construct a massive "Orbital Shade" (Layer 2) that allows you to manually control the day/night cycle on a planetary scale (Layer 1). You can force permanent daylight for massive solar power and specific crop yields, or extend the night to calm populations and hide illicit activities.
+
+**Emergence:** You plunge a rebellious, heat-scorched desert world into a permanent, soothing night to maximize their mining output and keep them docile. A rebel faction hacks the Orbital Shade and focuses the solar reflection directly onto your capital city, instantly vaporizing the governor's palace with weaponized sunlight.
+
+**Tension:** Total control over the planetary environment versus creating a single, incredibly vulnerable point of failure that can be turned against you.
+
+---
+
+## The Deafening Loom
+
+**Layer:** 1
+
+**Fantasy:** The grim optimization of a workforce forced into permanent sensory isolation by the sheer volume of their own industry.
+
+**Mechanic:** Certain high-output industrial buildings (like a Mega-Forge or Deep Core Extractor) generate extreme "Acoustic Trauma" in their radius. Pops working there for extended periods gain the "Deafened" trait. Deafened pops become immune to negative social interactions, propaganda, and ambient noise debuffs—making them incredibly stable, highly efficient workers. However, they completely fail to react to audible disaster sirens or incoming predator warnings.
+
+**Emergence:** Your industrial sector is hyper-efficient because the deafened workers never argue or complain. A subterranean predator breaches the lower levels, and the deafened workers simply continue hammering away on the assembly line as they are picked off one by one, completely oblivious to the massacre behind them.
+
+**Tension:** Exploiting the horrific physical toll of industry to create a perfectly compliant workforce, knowing it strips them of their ability to survive sudden crises.
+
+---
