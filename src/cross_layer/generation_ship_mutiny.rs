@@ -64,27 +64,39 @@ mod tests {
         app.add_systems(Update, generation_ship_radicalization_system);
 
         // Spawn a Generation Ship entity
-        let ship_entity = app.world_mut().spawn((
-            GenerationShip,
-            GenerationShipAge { age_in_years: 100 },
-            crate::layer2::fleet::InTransit {
-                origin: Entity::PLACEHOLDER,
-                destination: Entity::PLACEHOLDER,
-                progress: 0.0,
-                duration: 100.0,
-            }
-        )).id();
+        let ship_entity = app
+            .world_mut()
+            .spawn((
+                GenerationShip,
+                GenerationShipAge { age_in_years: 100 },
+                crate::layer2::fleet::InTransit {
+                    origin: Entity::PLACEHOLDER,
+                    destination: Entity::PLACEHOLDER,
+                    progress: 0.0,
+                    duration: 100.0,
+                },
+            ))
+            .id();
 
         // Spawn a faction aboard the ship
-        let faction_entity = app.world_mut().spawn((
-            Faction { name: "Original Mission".to_string(), host_ship: ship_entity },
-            Radicalization { level: 0.0 }
-        )).id();
+        let faction_entity = app
+            .world_mut()
+            .spawn((
+                Faction {
+                    name: "Original Mission".to_string(),
+                    host_ship: ship_entity,
+                },
+                Radicalization { level: 0.0 },
+            ))
+            .id();
 
         app.update();
 
         let radicalization = app.world().get::<Radicalization>(faction_entity).unwrap();
-        assert!(radicalization.level > 0.0, "Factions on generation ships should radicalize over time.");
+        assert!(
+            radicalization.level > 0.0,
+            "Factions on generation ships should radicalize over time."
+        );
     }
 
     #[test]
@@ -93,21 +105,27 @@ mod tests {
         app.add_event::<MutinyEvent>();
         app.add_systems(Update, evaluate_mutiny_system);
 
-        let ship_entity = app.world_mut().spawn((
-            GenerationShip,
-            GenerationShipAge { age_in_years: 200 },
-            crate::layer2::fleet::InTransit {
-                origin: Entity::PLACEHOLDER,
-                destination: Entity::from_raw(12345),
-                progress: 0.0,
-                duration: 100.0,
-            }
-        )).id();
+        let ship_entity = app
+            .world_mut()
+            .spawn((
+                GenerationShip,
+                GenerationShipAge { age_in_years: 200 },
+                crate::layer2::fleet::InTransit {
+                    origin: Entity::PLACEHOLDER,
+                    destination: Entity::from_raw(12345),
+                    progress: 0.0,
+                    duration: 100.0,
+                },
+            ))
+            .id();
 
         // Spawn a highly radical faction
         app.world_mut().spawn((
-            Faction { name: "Ship Worshippers".to_string(), host_ship: ship_entity },
-            Radicalization { level: 100.0 } // threshold met
+            Faction {
+                name: "Ship Worshippers".to_string(),
+                host_ship: ship_entity,
+            },
+            Radicalization { level: 100.0 }, // threshold met
         ));
 
         app.update();
@@ -116,7 +134,11 @@ mod tests {
         let mut reader = events.get_cursor();
         let mutiny_events: Vec<_> = reader.read(events).collect();
 
-        assert_eq!(mutiny_events.len(), 1, "High radicalization should trigger a MutinyEvent.");
+        assert_eq!(
+            mutiny_events.len(),
+            1,
+            "High radicalization should trigger a MutinyEvent."
+        );
         assert_eq!(mutiny_events[0].ship, ship_entity);
     }
 }
