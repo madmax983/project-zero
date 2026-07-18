@@ -28238,3 +28238,43 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you optimize your workforce for extreme environments, knowing it permanently locks them out of participating in the broader galactic economy or military?
 
 ---
+
+## The Empathic Flora Network
+
+**Layer:** 1
+
+**Fantasy:** Discovering that the local ecosystem feels pain and remembers who hurt it.
+
+**Mechanic:** Clearing native "Empathic Flora" to build structures doesn't just destroy the plant, it sends a psychic shockwave of pain to nearby Pops, causing a severe temporary mood debuff. Over time, the remaining flora "remembers" the colony's aggression and begins growing thorny, toxic defenses near the colony's borders.
+
+**Emergence:** You rapidly strip-mine a beautiful forest to meet a quota. The psychic scream causes your entire workforce to suffer a nervous breakdown, and when they recover, the remaining forest has evolved to emit a corrosive gas that slowly eats away at the new mine's foundations.
+
+**Tension:** Do you expand slowly and carefully to avoid angering the ecosystem, or ruthlessly pave over the planet and deal with the psychological and physical blowback?
+
+---
+## Sublight Intercept Smuggling
+
+**Layer:** 2
+
+**Fantasy:** The high-stakes math of intercepting a slow-moving cargo ship in the vastness of space.
+
+**Mechanic:** When a sublight cargo ship is traveling between distant planets, pirate or smuggler factions can launch "Intercept Drones." These drones must perfectly match the velocity and trajectory of the cargo ship mid-transit to siphon off goods. If the player detects the drone, they can slightly alter the cargo ship's course, but at a massive fuel cost.
+
+**Emergence:** A vital shipment of advanced medical supplies is slowly making its way to a plague-ridden colony. You spot an intercept drone but realize altering course will burn so much fuel the ship won't have enough to slow down and orbit the colony, forcing a dangerous atmospheric crash landing.
+
+**Tension:** Do you let the smugglers take a cut of your vital supplies, or risk destroying the entire shipment in a desperate evasion maneuver?
+
+---
+## The Memory Plague
+
+**Layer:** Cross-layer
+
+**Fantasy:** A cognitive virus that spreads through diplomatic channels, replacing a civilization's history with someone else's.
+
+**Mechanic:** An ancient, dormant memetic virus can be uncovered on Layer 1. If not contained, it infects your Layer 3 diplomatic communications. When you send messages to other empires, their Pops begin "remembering" events from *your* empire's history as if they happened to them, slowly shifting their cultural alignment to match yours.
+
+**Emergence:** You accidentally unleash the Memory Plague. Your rival empire suddenly stops attacking you because their citizens now "remember" that you are their beloved ancestral founders, causing a massive, peaceful revolution that hands you their empire—but your own people start suffering from severe identity crises.
+
+**Tension:** Do you weaponize a terrifying cognitive virus to conquer the galaxy without firing a shot, knowing you might lose control of it and overwrite your own civilization's identity?
+
+---
