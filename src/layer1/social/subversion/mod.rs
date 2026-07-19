@@ -56,7 +56,10 @@ pub fn run_surveillance_morale_system(
 ) {
     for (surveillance, s_pos) in surveillance_query.iter() {
         for (mut morale, p_pos) in pop_query.iter_mut() {
-            let dist = s_pos.distance_chebyshev(GridPosition { x: p_pos.x, y: p_pos.y });
+            let dist = s_pos.distance_chebyshev(GridPosition {
+                x: p_pos.x,
+                y: p_pos.y,
+            });
             if dist <= surveillance.radius as u32 {
                 morale.add_modifier(MoodModifier {
                     label: "Under Surveillance".to_string(),
@@ -81,21 +84,30 @@ mod tests {
         app.add_plugins(MinimalPlugins);
         app.add_systems(bevy::app::Update, run_subversion_spread_system);
 
-        let _sub = app.world_mut().spawn((
-            Pop,
-            GridPosition { x: 10, y: 10 },
-            Subversive { dissent: 10.0 },
-        )).id();
-        let innocent = app.world_mut().spawn((
-            Pop,
-            GridPosition { x: 10, y: 11 },
-            Subversive { dissent: 0.0 },
-        )).id();
+        let _sub = app
+            .world_mut()
+            .spawn((
+                Pop,
+                GridPosition { x: 10, y: 10 },
+                Subversive { dissent: 10.0 },
+            ))
+            .id();
+        let innocent = app
+            .world_mut()
+            .spawn((
+                Pop,
+                GridPosition { x: 10, y: 11 },
+                Subversive { dissent: 0.0 },
+            ))
+            .id();
 
         app.update();
 
         let innocent_dissent = app.world().get::<Subversive>(innocent).unwrap().dissent;
-        assert!(innocent_dissent > 0.0, "Dissent should spread to nearby pops");
+        assert!(
+            innocent_dissent > 0.0,
+            "Dissent should spread to nearby pops"
+        );
     }
 
     #[test]
@@ -104,16 +116,22 @@ mod tests {
         app.add_plugins(MinimalPlugins);
         app.add_systems(bevy::app::Update, run_subversion_spread_system);
 
-        let _sub = app.world_mut().spawn((
-            Pop,
-            GridPosition { x: 10, y: 10 },
-            Subversive { dissent: 10.0 },
-        )).id();
-        let innocent = app.world_mut().spawn((
-            Pop,
-            GridPosition { x: 10, y: 11 },
-            Subversive { dissent: 0.0 },
-        )).id();
+        let _sub = app
+            .world_mut()
+            .spawn((
+                Pop,
+                GridPosition { x: 10, y: 10 },
+                Subversive { dissent: 10.0 },
+            ))
+            .id();
+        let innocent = app
+            .world_mut()
+            .spawn((
+                Pop,
+                GridPosition { x: 10, y: 11 },
+                Subversive { dissent: 0.0 },
+            ))
+            .id();
 
         app.world_mut().spawn((
             Building {
@@ -126,7 +144,10 @@ mod tests {
         app.update();
 
         let innocent_dissent = app.world().get::<Subversive>(innocent).unwrap().dissent;
-        assert_eq!(innocent_dissent, 0.0, "Surveillance should prevent dissent spread");
+        assert_eq!(
+            innocent_dissent, 0.0,
+            "Surveillance should prevent dissent spread"
+        );
     }
 
     #[test]
@@ -135,11 +156,10 @@ mod tests {
         app.add_plugins(MinimalPlugins);
         app.add_systems(bevy::app::Update, run_surveillance_morale_system);
 
-        let pop = app.world_mut().spawn((
-            Pop,
-            GridPosition { x: 10, y: 10 },
-            Morale::default(),
-        )).id();
+        let pop = app
+            .world_mut()
+            .spawn((Pop, GridPosition { x: 10, y: 10 }, Morale::default()))
+            .id();
 
         app.world_mut().spawn((
             Building {
@@ -152,6 +172,9 @@ mod tests {
         app.update();
 
         let pop_morale = app.world().get::<Morale>(pop).unwrap();
-        assert!(pop_morale.modifiers.iter().any(|m| m.value < 0.0), "Surveillance should lower morale");
+        assert!(
+            pop_morale.modifiers.iter().any(|m| m.value < 0.0),
+            "Surveillance should lower morale"
+        );
     }
 }

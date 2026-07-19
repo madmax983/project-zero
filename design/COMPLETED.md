@@ -929,3 +929,4 @@
 - [x] `982` The Generation Ship Mutiny — `specs/982-the-generation-ship-mutiny.md` — completed 2026-06-25
 - [x] `INT-982` Integration: The Generation Ship Mutiny -> Chronicle - completed 2026-11-01
 - [x] `1326` The Architecture of Paranoia — `specs/1326-architecture-of-paranoia.md` — completed 2026-02-01
+- [x] `989` Heat Death — `specs/989-heat-death.md` — completed 2024-05-31
