@@ -928,3 +928,4 @@
 - [x] `292` The Chrono-Stutter — `specs/292-chrono-stutter.md` — completed 2026-07-17
 - [x] `982` The Generation Ship Mutiny — `specs/982-the-generation-ship-mutiny.md` — completed 2026-06-25
 - [x] `INT-982` Integration: The Generation Ship Mutiny -> Chronicle - completed 2026-11-01
+- [x] `1326` The Architecture of Paranoia — `specs/1326-architecture-of-paranoia.md` — completed 2024-07-19

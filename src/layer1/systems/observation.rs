@@ -45,6 +45,13 @@ pub fn register(schedule: &mut Schedule) {
     );
     schedule.add_systems(
         (
+            crate::layer1::social::architecture_of_paranoia::run_subversion_spread_system,
+            crate::layer1::social::architecture_of_paranoia::run_surveillance_morale_system,
+        )
+            .in_set(Layer1SystemSet::Observation),
+    );
+    schedule.add_systems(
+        (
             crate::layer1::core::integration::cryo_prison_sabotage_bridge_system,
             crate::layer1::cryo_prison::thaw_cryo_pod_system,
             crate::layer1::cryo_prison::criminal_sabotage_system,
