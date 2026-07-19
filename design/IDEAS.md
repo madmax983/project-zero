@@ -28416,3 +28416,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you jeopardize your stable economy for a massive, fleeting windfall, or play it safe and watch the opportunity fly out of the system?
 
 ---
+
+## The Chrono-Amnesiacs
+
+**Layer:** 1
+
+**Fantasy:** Dealing with colonists who randomly forget the last ten years of their lives due to localized temporal radiation.
+
+**Mechanic:** Periodic "Amnesia Waves" strip high-level pops of their advanced skills, reverting them to their base stats but removing all accumulated Stress and Grudges.
+
+**Emergence:** Your master engineer suddenly thinks they are a novice farmer and goes to tend crops during a reactor meltdown.
+
+**Tension:** Do you shield them (expensive) to keep their skills, or let the wave hit to "reset" a highly stressed, mutinous workforce?
+
+---
+
+## Stellar-Leviathan Carcasses
+
+**Layer:** 2
+
+**Fantasy:** Harvesting the massive, dangerous carcasses of space-faring megafauna.
+
+**Mechanic:** Colossal biological entities occasionally die in your system's orbit. They provide immense amounts of exotic organic resources but attract dangerous scavengers and slowly decay into toxic hazards if not harvested quickly.
+
+**Emergence:** A rival empire tries to tow the carcass into their own gravity well, sparking a border skirmish over a dead space-whale.
+
+**Tension:** Dedicate your entire fleet to defending and harvesting the carcass, leaving your colonies vulnerable to piracy?
+
+---
+
+## Subterranean Neural Vines
+
+**Layer:** Cross-layer
+
+**Fantasy:** Communicating and trading through a planet-spanning organic network instead of using technology.
+
+**Mechanic:** Players can discover and tap into a deep-crust neural vine network. It allows instant, untraceable transfer of resources between distinct colonies on the same planet, bypassing surface logistics, but the network occasionally "taxes" the shipments or mutates the resources.
+
+**Emergence:** You send a massive shipment of advanced weaponry to a besieged outpost via the network, but the vines consume the metal and deliver highly toxic, organic spine-launchers instead.
+
+**Tension:** Use the free, instant, but unpredictable organic logistics, or build safe, slow, expensive surface roads?
+
+---
