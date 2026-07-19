@@ -576,6 +576,9 @@ pub mod placebo;
 pub mod society;
 pub use society::*;
 
+pub mod subversion;
+pub use subversion::*;
+
 /// The Sentient Standard logic (Spec 295).
 pub mod sentient_standard;
 pub use sentient_standard::*;
