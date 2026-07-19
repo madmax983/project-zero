@@ -224,6 +224,8 @@ pub fn register(schedule: &mut Schedule) {
             check_generational_friction_system.after(decay_needs_system),
             crate::layer1::social::process_generational_dissonance_system.after(decay_needs_system),
             crate::layer1::social::evaluate_safety_edicts_system.after(decay_needs_system),
+            crate::layer1::social::architecture_of_paranoia::run_subversion_spread_system,
+            crate::layer1::social::architecture_of_paranoia::run_surveillance_morale_system,
             crate::layer1::hobby::assign_hobby_system.after(decay_needs_system),
             crate::layer1::law::predictive_policing::check_prediction_system
                 .after(decay_needs_system),

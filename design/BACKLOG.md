@@ -2,7 +2,7 @@
 
 ## High Priority
 
-- [ ] `1326` The Architecture of Paranoia — `specs/1326-architecture-of-paranoia.md`
+
 
 
 
