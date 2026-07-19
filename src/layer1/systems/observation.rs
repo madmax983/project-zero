@@ -15,6 +15,8 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::core::integration::subconscious_grid_lockdown_chronicle_bridge,
             crate::layer1::mycelial::detect_tripwire_step,
             crate::layer1::mycelial::aggro_network_entities,
+            crate::layer1::social::subversion::run_subversion_spread_system,
+            crate::layer1::social::subversion::run_surveillance_morale_system,
         )
             .in_set(super::Layer1SystemSet::Observation),
     );
