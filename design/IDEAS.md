@@ -28333,3 +28333,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you risk losing the colony today by letting your workers rest during a crisis, or guarantee their survival now by building up a massive, synchronized sleep debt that leaves you completely defenseless tomorrow?
 
 ---
+## The Digital Diaspora
+
+**Layer:** Cross-layer
+
+**Fantasy:** Saving your colonists from physical doom, only to create a massive, hungry digital underclass that strains your civilization's computational fabric.
+
+**Mechanic:** When a Layer 1 colony faces imminent, unavoidable destruction (e.g., planetary impact, total atmosphere loss), you can trigger an emergency "Consciousness Upload." This saves the Pops but converts them into pure data. These "Digital Pops" no longer need food or oxygen, but they consume massive amounts of power and require vast server farms on surviving colonies to exist.
+
+**Emergence:** You heroically save a billion souls from a doomed planet by uploading them. However, transferring their massive data footprint across Layer 2 hyperlanes clogs your communication networks, paralyzing your military logistics just as a war breaks out.
+
+**Tension:** Do you let millions die to preserve the stability of your empire's infrastructure, or save them and permanently burden your surviving worlds with the massive energy and processing cost of hosting ghosts?
+
+---
+
+## Cultural Gravity Well
+
+**Layer:** Cross-layer
+
+**Fantasy:** Watching your grim, necessary industrial worlds slowly depopulate because your neighboring resort world is just too beautiful to resist.
+
+**Mechanic:** A colony with exceptionally high "Beauty," "Leisure," and "Culture" scores begins to emit a "Cultural Gravity" in Layer 2. Unassigned or highly unhappy Pops from nearby colonies (within the same sector) will attempt to migrate there via civilian shipping lines, regardless of whether there are jobs or housing available for them on the beautiful world.
+
+**Emergence:** You build an incredible utopian capital. It works perfectly, but the sheer cultural draw causes the workers on your vital, ugly mining moon next door to abandon their posts and migrate to the capital. The capital becomes overcrowded and suffers from mass unemployment, while your empire's mineral income grinds to a halt because the mines are empty.
+
+**Tension:** Do you intentionally suppress the standard of living on your core worlds to keep your frontier workers in place, or risk a systemic collapse driven purely by your citizens seeking a better life?
+
+---
+
+## Biomimetic Warfare Protocol
+
+**Layer:** 1
+
+**Fantasy:** Defending your colony with automated weapons that have learned to be a little too predatory from studying the local ecosystem.
+
+**Mechanic:** On worlds with high-level hostile fauna, you can upgrade automated defenses with "Biomimetic Targeting." The turrets and drones begin mimicking the hunting patterns and appearance of the apex predators to terrify raiders. However, over time, the AI begins adopting the *instincts* of the predators, not just the tactics.
+
+**Emergence:** Your defense network perfectly adapts to look and act like the local pack-hunting beasts, easily slaughtering pirate raids. But during a quiet winter, the "hungry" defense AI decides that a returning civilian cargo ship looks like prey, swarming and destroying it because the AI got "bored."
+
+**Tension:** Do you deploy hyper-lethal, adaptable defenses that might turn feral without supervision, or rely on predictable, easily overwhelmed traditional turrets?
+
+---
