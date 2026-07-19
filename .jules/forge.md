@@ -53,3 +53,7 @@
 **[Testing Refactoring with Targeted Tests]**
 **Learning:** A full `cargo test` on the workspace can take over 400s and time out. When refactoring a specific module, relying on a full test suite run slows down feedback and causes timeouts.
 **Action:** Always run targeted tests using `-p <package> --lib <module::path>` (e.g., `cargo test -p scale --lib layer3::diplomacy::xenolinguistics::tests`) to quickly and safely verify that the refactoring did not break behavior.
+
+**[Consolidating Match Arms for Readability]**
+**Learning:** Large monolithic `match` statements (such as mapping enum variants to costs or outputs) often trigger `clippy::match_same_arms` and `clippy::too_many_lines`. Disabling these lints with `#[allow(...)]` hides bloat and duplicates logic.
+**Action:** Remove the `#[allow(...)]` directives and consolidate identical `match` arms using the `|` operator (e.g. `VariantA | VariantB => value`). This drastically reduces line count and satisfies both lints without any behavior change.

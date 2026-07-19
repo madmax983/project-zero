@@ -774,27 +774,27 @@ impl BuildingType {
 
     /// Returns the resource cost to build this building with the specified material.
     #[must_use]
-    #[allow(clippy::match_same_arms, clippy::too_many_lines)]
     pub const fn cost(&self, material: MaterialType) -> ColonyResources {
         match self {
-            Self::AICore => ColonyResources {
-                metal: 50.0,
-                stone: 20.0,
-                ..ColonyResources::zeroed()
-            },
+            Self::AICore | Self::AuroralCollector | Self::CloneVat | Self::GeneBank => {
+                ColonyResources {
+                    metal: 50.0,
+                    stone: 20.0,
+                    ..ColonyResources::zeroed()
+                }
+            }
             Self::DroneHub => ColonyResources {
                 metal: 30.0,
                 stone: 10.0,
                 ..ColonyResources::zeroed()
             },
-            Self::CryoPod => ColonyResources {
+            Self::CryoPod
+            | Self::HoloProjector
+            | Self::Recycler
+            | Self::ServerBank
+            | Self::TrashCannon => ColonyResources {
                 metal: 20.0,
                 stone: 10.0,
-                ..ColonyResources::zeroed()
-            },
-            Self::AuroralCollector => ColonyResources {
-                metal: 50.0,
-                stone: 20.0,
                 ..ColonyResources::zeroed()
             },
             Self::AtmosphericProcessor => ColonyResources {
@@ -802,38 +802,18 @@ impl BuildingType {
                 stone: 100.0,
                 ..ColonyResources::zeroed()
             },
-            Self::GeneBank => ColonyResources {
-                metal: 50.0,
-                stone: 20.0,
-                ..ColonyResources::zeroed()
-            },
-            Self::CloneVat => ColonyResources {
-                metal: 50.0,
-                stone: 20.0,
-                ..ColonyResources::zeroed()
-            },
             Self::HypnoPod => ColonyResources {
                 metal: 100.0,
                 tools: 5.0,
                 ..ColonyResources::zeroed()
             },
-            Self::Shower => ColonyResources {
+            Self::Shower | Self::SolarPanel => ColonyResources {
                 metal: 10.0,
                 stone: 5.0,
                 ..ColonyResources::zeroed()
             },
-            Self::Recycler => ColonyResources {
-                metal: 20.0,
-                stone: 10.0,
-                ..ColonyResources::zeroed()
-            },
-            Self::BulletinBoard => ColonyResources {
+            Self::BulletinBoard | Self::Plantation => ColonyResources {
                 wood: 20.0,
-                ..ColonyResources::zeroed()
-            },
-            Self::HoloProjector => ColonyResources {
-                metal: 20.0,
-                stone: 10.0,
                 ..ColonyResources::zeroed()
             },
             Self::CommandCenter => ColonyResources {
@@ -841,21 +821,11 @@ impl BuildingType {
                 stone: 50.0,
                 ..ColonyResources::zeroed()
             },
-            Self::ServerBank => ColonyResources {
-                metal: 20.0,
-                stone: 10.0,
-                ..ColonyResources::zeroed()
-            },
-            Self::TrashCannon => ColonyResources {
-                metal: 20.0,
-                stone: 10.0,
-                ..ColonyResources::zeroed()
-            },
             Self::Heater => ColonyResources {
                 metal: 20.0,
                 ..ColonyResources::zeroed()
             },
-            Self::LifeSupport => ColonyResources {
+            Self::Billboard | Self::LifeSupport | Self::Mainframe => ColonyResources {
                 metal: 50.0,
                 ..ColonyResources::zeroed()
             },
@@ -877,11 +847,7 @@ impl BuildingType {
                     ..ColonyResources::zeroed()
                 },
             },
-            Self::Vent => ColonyResources {
-                metal: 5.0,
-                ..ColonyResources::zeroed()
-            },
-            Self::ConveyorBelt => ColonyResources {
+            Self::ConveyorBelt | Self::Vent => ColonyResources {
                 metal: 5.0,
                 ..ColonyResources::zeroed()
             },
@@ -912,11 +878,11 @@ impl BuildingType {
                     ..ColonyResources::zeroed()
                 },
             },
-            Self::Window => ColonyResources {
+            Self::FlowerBed | Self::PersonalGarden | Self::Window => ColonyResources {
                 wood: 5.0,
                 ..ColonyResources::zeroed()
             },
-            Self::Gate => match material {
+            Self::Gate | Self::Housing => match material {
                 MaterialType::Wood => ColonyResources {
                     wood: 10.0,
                     ..ColonyResources::zeroed()
@@ -934,30 +900,12 @@ impl BuildingType {
                     ..ColonyResources::zeroed()
                 },
             },
-            Self::Tower => ColonyResources {
+            Self::LumberMill | Self::Smithy | Self::Smokehouse | Self::Tower => ColonyResources {
                 wood: 30.0,
                 stone: 10.0,
                 ..ColonyResources::zeroed()
             },
-            Self::Housing => match material {
-                MaterialType::Wood => ColonyResources {
-                    wood: 10.0,
-                    ..ColonyResources::zeroed()
-                },
-                MaterialType::Stone => ColonyResources {
-                    stone: 10.0,
-                    ..ColonyResources::zeroed()
-                },
-                MaterialType::Metal => ColonyResources {
-                    metal: 10.0,
-                    ..ColonyResources::zeroed()
-                },
-                MaterialType::Gold => ColonyResources {
-                    metal: 100.0,
-                    ..ColonyResources::zeroed()
-                },
-            },
-            Self::Office => ColonyResources {
+            Self::Office | Self::TradeDepot => ColonyResources {
                 wood: 50.0,
                 stone: 20.0,
                 ..ColonyResources::zeroed()
@@ -976,19 +924,9 @@ impl BuildingType {
                 wood: 50.0,
                 ..ColonyResources::zeroed()
             },
-            Self::Smokehouse => ColonyResources {
-                wood: 30.0,
-                stone: 10.0,
-                ..ColonyResources::zeroed()
-            },
             Self::Landfill => ColonyResources {
                 wood: 20.0,
                 stone: 20.0,
-                ..ColonyResources::zeroed()
-            },
-            Self::LumberMill | Self::Smithy => ColonyResources {
-                wood: 30.0,
-                stone: 10.0,
                 ..ColonyResources::zeroed()
             },
             Self::StoneMason => ColonyResources {
@@ -1001,23 +939,17 @@ impl BuildingType {
                 stone: 50.0,
                 ..ColonyResources::zeroed()
             },
-            Self::Tavern | Self::Hospital => ColonyResources {
+            Self::Hospital | Self::Tavern => ColonyResources {
                 wood: 40.0,
                 stone: 10.0,
                 ..ColonyResources::zeroed()
             },
-            Self::Library => ColonyResources::zeroed(),
-            Self::Plantation => ColonyResources {
-                wood: 20.0,
-                ..ColonyResources::zeroed()
-            },
-            Self::Weaver | Self::Tailor => ColonyResources {
+            Self::AncientFabricator | Self::AncientReactor | Self::Lander | Self::Library => {
+                ColonyResources::zeroed()
+            }
+            Self::Tailor | Self::Weaver => ColonyResources {
                 wood: 30.0,
                 stone: 5.0,
-                ..ColonyResources::zeroed()
-            },
-            Self::FlowerBed => ColonyResources {
-                wood: 5.0,
                 ..ColonyResources::zeroed()
             },
             Self::Statue => match material {
@@ -1038,19 +970,9 @@ impl BuildingType {
                 stone: 5.0,
                 ..ColonyResources::zeroed()
             },
-            Self::TradeDepot => ColonyResources {
-                wood: 50.0,
-                stone: 20.0,
-                ..ColonyResources::zeroed()
-            },
             Self::Generator => ColonyResources {
                 stone: 20.0,
                 metal: 10.0,
-                ..ColonyResources::zeroed()
-            },
-            Self::SolarPanel => ColonyResources {
-                metal: 10.0,
-                stone: 5.0,
                 ..ColonyResources::zeroed()
             },
             Self::PowerPole => ColonyResources {
@@ -1068,7 +990,6 @@ impl BuildingType {
                 metal: 10.0,
                 ..ColonyResources::zeroed()
             },
-            Self::AncientReactor | Self::AncientFabricator => ColonyResources::zeroed(),
             Self::Greenhouse => ColonyResources {
                 wood: 10.0,
                 stone: 20.0,
@@ -1077,10 +998,6 @@ impl BuildingType {
             },
             Self::PersonalShed => ColonyResources {
                 wood: 10.0,
-                ..ColonyResources::zeroed()
-            },
-            Self::PersonalGarden => ColonyResources {
-                wood: 5.0,
                 ..ColonyResources::zeroed()
             },
             Self::PersonalShrine => ColonyResources {
@@ -1093,8 +1010,7 @@ impl BuildingType {
                 metal: 10.0,
                 ..ColonyResources::zeroed()
             },
-            Self::Lander => ColonyResources::zeroed(),
-            Self::Nanoforge => ColonyResources {
+            Self::MediaStation | Self::Nanoforge => ColonyResources {
                 metal: 25.0,
                 ..ColonyResources::zeroed()
             },
@@ -1109,20 +1025,8 @@ impl BuildingType {
                 stone: 10.0,
                 ..ColonyResources::zeroed()
             },
-            Self::MediaStation => ColonyResources {
-                metal: 25.0,
-                ..ColonyResources::zeroed()
-            },
-            Self::Mainframe => ColonyResources {
-                metal: 50.0,
-                ..ColonyResources::zeroed()
-            },
             Self::CommsRelay => ColonyResources {
                 metal: 30.0,
-                ..ColonyResources::zeroed()
-            },
-            Self::Billboard => ColonyResources {
-                metal: 50.0,
                 ..ColonyResources::zeroed()
             },
         }
