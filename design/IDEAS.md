@@ -28374,3 +28374,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you deploy hyper-lethal, adaptable defenses that might turn feral without supervision, or rely on predictable, easily overwhelmed traditional turrets?
 
 ---
+
+## Gravimetric Graveyards
+
+**Layer:** 2
+
+**Fantasy:** The eeriness of navigating through ancient, crushing starship tombs, seeking treasure where physics itself has broken down.
+
+**Mechanic:** Some destroyed super-capital ships or massive orbital stations don't just leave debris; they create localized gravity distortions. These "Gravimetric Graveyards" crush normal ships but contain pristine, ancient technology. Specialized "Grav-Tug" salvage ships must be built to navigate the warped space.
+
+**Emergence:** You try to salvage a forgotten dreadnought but miscalculate the gravity well. The graveyard pulls in your salvage fleet, adding to its mass and increasing the gravitational distortion, effectively creating a permanent, impassable dead zone in a key trade lane.
+
+**Tension:** Do you risk creating a navigational hazard to extract unparalleled technology, or leave the sleeping giants alone?
+
+---
+
+## The Somnambulant Forge
+
+**Layer:** 1
+
+**Fantasy:** A colony so driven by industrial quotas that they work even in their sleep, becoming a haunting, tireless machine.
+
+**Mechanic:** If a highly industrial colony suffers from extreme sleep deprivation but has abundant raw materials, pops with the "Diligent" or "Obsessive" trait may enter a "Somnambulant" state. They continue to operate forges and machinery while asleep, but their lack of conscious control means they occasionally forge bizarre, unpredictable "Dream-Crafted" items or suffer horrific workplace accidents.
+
+**Emergence:** Your weapons factory keeps producing strange, non-euclidean swords instead of standard rifles. You realize the night shift has been entirely somnambulant for a week. The swords are incredibly effective but inflict psychic damage on the wielders.
+
+**Tension:** Do you wake them up and face the massive production shortfall, or allow the nightmare factory to continue producing powerful but dangerous anomalies?
+
+---
+
+## Ephemeral Asteroid Monopolies
+
+**Layer:** Cross-layer
+
+**Fantasy:** The frantic gold rush to secure a fleeting resource before the universe takes it away.
+
+**Mechanic:** Certain ultra-rare resources only appear in "Comet Tails" or "Rogue Asteroids" that pass through the system (Layer 2) for a very limited time. To exploit them, you must rapidly deploy disposable "Clamp Miners" from a Layer 1 colony. The miners extract the resource but are destroyed when the asteroid leaves the system.
+
+**Emergence:** An Ephemeral Asteroid appears carrying the exact isotope you need to cure a colony-wide plague. You launch every Clamp Miner you have, completely draining your economy, only to realize the asteroid is moving too fast. The miners miss, and your colony succumbs to the plague while bankrupt.
+
+**Tension:** Do you jeopardize your stable economy for a massive, fleeting windfall, or play it safe and watch the opportunity fly out of the system?
+
+---
