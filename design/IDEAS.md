@@ -28278,3 +28278,58 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you weaponize a terrifying cognitive virus to conquer the galaxy without firing a shot, knowing you might lose control of it and overwrite your own civilization's identity?
 
 ---
+## Supply Chain Superstitions
+
+**Layer:** Cross-layer
+
+**Fantasy:** Watching isolated or poorly educated colonies develop literal cargo cults around your complex logistics networks.
+
+**Mechanic:** If a colony relies heavily on automated Layer 2 imports but lacks the educational infrastructure to understand them, Pops begin treating the arrival of supply ships as religious events. They may build shrines around landing pads and alter their work schedules to "summon" more ships.
+
+**Emergence:** You reroute a regular supply line to handle a military crisis elsewhere. The dependent colony, believing they have angered the "Machine Gods," begins sacrificing their own vital infrastructure or even Pops to appease the empty landing pads, rapidly descending into chaos.
+
+**Tension:** Do you invest massive resources to educate every outer-rim mining world so they understand logistics, or exploit their superstitions for free morale at the risk of catastrophic religious collapse if the supply chain ever falters?
+
+---
+
+## The Diplomatic Hostage Exchange
+
+**Layer:** 3
+
+**Fantasy:** Securing fragile galactic peace not with treaties, but by physically handing over your most important citizens to rival empires.
+
+**Mechanic:** When negotiating peace or alliances at Layer 3, empires can exchange "VIP Pops" (high-level scientists, beloved leaders, or founders' descendants). As long as the hostage Pop is alive and well in the rival's Layer 1 simulation, the alliance holds strong.
+
+**Emergence:** You exchange your favorite, highly-skilled lead engineer to secure an alliance with a hostile neighbor. Ten years later, a localized disease outbreak on their capital world accidentally kills your engineer. Your empire automatically considers this an act of war, plunging the galaxy into a massive conflict over a flu epidemic.
+
+**Tension:** Do you trade away your most useful and beloved individuals to prevent a devastating war, knowing they are now completely at the mercy of another player's (or AI's) potentially incompetent colony management?
+
+---
+
+## Sub-Light Debris Fields
+
+**Layer:** 2
+
+**Fantasy:** Navigating the physical, dangerous aftermath of ancient space battles that still haunt the star system.
+
+**Mechanic:** Destroyed fleets and orbital structures leave behind dense "Debris Fields" in Layer 2. These fields slowly drift over time, acting as extreme navigational hazards for trade and military ships. However, they also contain highly valuable scrap and ancient tech that can be harvested by specialized, high-risk salvage crews.
+
+**Emergence:** You win a massive defensive battle over your home world, saving the planet. Decades later, the drifting debris from that battle completely blockades your own trade routes, starving the very planet you saved because no civilian ship can safely navigate the wreckage.
+
+**Tension:** Do you spend years and vast resources meticulously cleaning up your orbital space, or leave the dangerous debris fields intact as a natural defensive barrier and a lucrative, if deadly, source of salvage?
+
+---
+
+## The Sleep Debt Cascades
+
+**Layer:** 1
+
+**Fantasy:** Pushing your workforce to their absolute physical limits, and paying the terrifying price all at once.
+
+**Mechanic:** Instead of letting Pops sleep, you can administer chemical stimulants to keep them working through crises. This builds hidden "Sleep Debt." Stimulants eventually lose effectiveness, and when a Pop crashes, they fall into a deep coma for a duration proportional to their debt, completely ignoring all colony alarms or dangers.
+
+**Emergence:** You use stimulants to push your entire engineering corp through a grueling week-long repair of a failing reactor. They succeed, but the moment the job is done, they all crash simultaneously. A minor fire breaks out in the barracks the next day, and half your workforce burns to death because literally no one is awake to extinguish it.
+
+**Tension:** Do you risk losing the colony today by letting your workers rest during a crisis, or guarantee their survival now by building up a massive, synchronized sleep debt that leaves you completely defenseless tomorrow?
+
+---
