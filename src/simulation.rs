@@ -368,6 +368,8 @@ fn init_simulation_resources(world: &mut World) {
     }
 
     world.init_resource::<Events<crate::layer2::moon_hermits::PopDesertedEvent>>();
+        world.init_resource::<Events<crate::layer2::ftl::wakes::FtlJumpEvent>>();
+        world.init_resource::<Events<crate::layer2::ftl::wakes::SubspaceWakeEvent>>();
     world.init_resource::<bevy::prelude::Events<crate::layer2::weather::StormImpactEvent>>();
     world.init_resource::<bevy::prelude::Events<crate::layer2::weather::StormImpactEvent>>();
 
@@ -1152,6 +1154,11 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         .after(crate::layer3::stellar_cartography::handle_jump_risk_system),));
 
     schedule.add_systems((
+        crate::layer2::ftl::wakes::generate_subspace_wake_system,
+        crate::layer1::hazards::wakes::resolve_subspace_wakes_system,
+    ));
+
+    schedule.add_systems((
         crate::layer3::fleets::simulate_transit_drift_system,
         crate::layer3::fleets::apply_drift_on_foundation_system,
         // 1064 Digital Detritus
@@ -1386,6 +1393,8 @@ mod tests {
             );
         world.init_resource::<bevy::prelude::Events<crate::layer2::skyhooks::LaunchIntent>>();
         world.init_resource::<Events<crate::layer2::moon_hermits::PopDesertedEvent>>();
+        world.init_resource::<Events<crate::layer2::ftl::wakes::FtlJumpEvent>>();
+        world.init_resource::<Events<crate::layer2::ftl::wakes::SubspaceWakeEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::social::grievances::PostGrievanceEvent>>();
         world.init_resource::<Events<crate::layer1::social::factions::subcontractor_factions::LeaseZoneEvent>>();
         world.init_resource::<Events<
@@ -1580,6 +1589,8 @@ mod tests {
         world.init_resource::<crate::layer1::void_sirens::SirenConfig>();
 
         world.init_resource::<Events<crate::layer2::moon_hermits::PopDesertedEvent>>();
+        world.init_resource::<Events<crate::layer2::ftl::wakes::FtlJumpEvent>>();
+        world.init_resource::<Events<crate::layer2::ftl::wakes::SubspaceWakeEvent>>();
         world.init_resource::<bevy::prelude::Events<crate::layer1::social::grievances::PostGrievanceEvent>>();
         world.init_resource::<Events<crate::layer1::social::factions::subcontractor_factions::LeaseZoneEvent>>();
         world.init_resource::<Events<
