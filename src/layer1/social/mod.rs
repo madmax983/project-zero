@@ -685,3 +685,5 @@ pub mod faction_diet;
 pub use faction_diet::*;
 pub mod blacksite;
 pub mod bureau_of_regrets;
+pub mod architecture_of_paranoia;
+pub use architecture_of_paranoia::*;
