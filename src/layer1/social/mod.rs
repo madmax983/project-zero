@@ -577,6 +577,8 @@ pub mod society;
 pub use society::*;
 
 pub mod subversion;
+#[allow(unused_imports)]
+#[allow(ambiguous_glob_reexports)]
 pub use subversion::*;
 
 /// The Sentient Standard logic (Spec 295).
@@ -686,7 +688,9 @@ pub mod slippery_slope;
 pub use propaganda_graffitists::*;
 pub mod faction_diet;
 pub use faction_diet::*;
+pub mod architecture_of_paranoia;
 pub mod blacksite;
 pub mod bureau_of_regrets;
-pub mod architecture_of_paranoia;
+#[allow(unused_imports)]
+#[allow(ambiguous_glob_reexports)]
 pub use architecture_of_paranoia::*;

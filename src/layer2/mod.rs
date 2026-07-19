@@ -6,6 +6,7 @@
 //!
 //! Layer 2.
 //!
+pub mod ftl;
 pub mod memorial_fleet;
 pub mod planet;
 pub mod planetary_scarring;
@@ -104,6 +105,8 @@ impl Plugin for PlanetarySpinUpPlugin {
         app.add_event::<planetary_spin_up::PlanetaryTorqueEvent>()
             .add_event::<crate::layer2::stolen_fleet::WarDeclarationEvent>()
             .add_event::<navigation::chronological_stutter::HyperlaneTransitEvent>()
+            .add_event::<crate::layer2::ftl::wakes::FtlJumpEvent>()
+            .add_event::<crate::layer2::ftl::wakes::SubspaceWakeEvent>()
             .add_systems(
                 Update,
                 (

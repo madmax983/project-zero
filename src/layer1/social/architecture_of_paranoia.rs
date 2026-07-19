@@ -1,6 +1,6 @@
-use bevy_ecs::prelude::*;
 use crate::layer1::core::map::GridPosition;
-use crate::layer1::social::morale::{Morale, MoodModifier};
+use crate::layer1::social::morale::{MoodModifier, Morale};
+use bevy_ecs::prelude::*;
 
 #[derive(Component)]
 pub struct Subversive {
@@ -19,7 +19,7 @@ pub fn run_subversion_spread_system(
         Query<(&GridPosition, &Subversive)>,
         Query<(Entity, &GridPosition, Option<&mut Subversive>), With<crate::layer1::pop::Pop>>,
         Query<(&GridPosition, &Surveillance)>,
-    )>
+    )>,
 ) {
     let mut subversion_spread = Vec::new();
 
@@ -52,7 +52,9 @@ pub fn run_subversion_spread_system(
                         sub.dissent = dissent_amount;
                     }
                 } else {
-                    commands.entity(entity).insert(Subversive { dissent: dissent_amount });
+                    commands.entity(entity).insert(Subversive {
+                        dissent: dissent_amount,
+                    });
                 }
             }
         }
@@ -90,23 +92,32 @@ mod tests {
         app.add_systems(bevy::app::Update, run_subversion_spread_system);
 
         // Arrange: Two pops close to each other, one is subversive
-        let _sub = app.world_mut().spawn((
-            crate::layer1::pop::Pop,
-            crate::layer1::core::map::GridPosition { x: 10, y: 10 },
-            Subversive { dissent: 10.0 }
-        )).id();
-        let innocent = app.world_mut().spawn((
-            crate::layer1::pop::Pop,
-            crate::layer1::core::map::GridPosition { x: 10, y: 11 },
-            Subversive { dissent: 0.0 }
-        )).id();
+        let _sub = app
+            .world_mut()
+            .spawn((
+                crate::layer1::pop::Pop,
+                crate::layer1::core::map::GridPosition { x: 10, y: 10 },
+                Subversive { dissent: 10.0 },
+            ))
+            .id();
+        let innocent = app
+            .world_mut()
+            .spawn((
+                crate::layer1::pop::Pop,
+                crate::layer1::core::map::GridPosition { x: 10, y: 11 },
+                Subversive { dissent: 0.0 },
+            ))
+            .id();
 
         // Act
         app.update();
 
         // Assert
         let innocent_dissent = app.world().get::<Subversive>(innocent).unwrap().dissent;
-        assert!(innocent_dissent > 0.0, "Dissent should spread to nearby pops");
+        assert!(
+            innocent_dissent > 0.0,
+            "Dissent should spread to nearby pops"
+        );
     }
 
     #[test]
@@ -115,16 +126,22 @@ mod tests {
         app.add_plugins(bevy::MinimalPlugins);
         app.add_systems(bevy::app::Update, run_subversion_spread_system);
 
-        let _sub = app.world_mut().spawn((
-            crate::layer1::pop::Pop,
-            crate::layer1::core::map::GridPosition { x: 10, y: 10 },
-            Subversive { dissent: 10.0 }
-        )).id();
-        let innocent = app.world_mut().spawn((
-            crate::layer1::pop::Pop,
-            crate::layer1::core::map::GridPosition { x: 10, y: 11 },
-            Subversive { dissent: 0.0 }
-        )).id();
+        let _sub = app
+            .world_mut()
+            .spawn((
+                crate::layer1::pop::Pop,
+                crate::layer1::core::map::GridPosition { x: 10, y: 10 },
+                Subversive { dissent: 10.0 },
+            ))
+            .id();
+        let innocent = app
+            .world_mut()
+            .spawn((
+                crate::layer1::pop::Pop,
+                crate::layer1::core::map::GridPosition { x: 10, y: 11 },
+                Subversive { dissent: 0.0 },
+            ))
+            .id();
 
         use crate::layer1::architecture::building::{Building, BuildingType};
         // Add surveillance building covering both pops
@@ -133,7 +150,7 @@ mod tests {
                 building_type: BuildingType::Tower,
             },
             Surveillance { radius: 5 },
-            crate::layer1::core::map::GridPosition { x: 10, y: 10 }
+            crate::layer1::core::map::GridPosition { x: 10, y: 10 },
         ));
 
         // Act
@@ -141,7 +158,10 @@ mod tests {
 
         // Assert
         let innocent_dissent = app.world().get::<Subversive>(innocent).unwrap().dissent;
-        assert_eq!(innocent_dissent, 0.0, "Surveillance should prevent dissent spread");
+        assert_eq!(
+            innocent_dissent, 0.0,
+            "Surveillance should prevent dissent spread"
+        );
     }
 
     #[test]
@@ -150,11 +170,14 @@ mod tests {
         app.add_plugins(bevy::MinimalPlugins);
         app.add_systems(bevy::app::Update, run_surveillance_morale_system);
 
-        let pop = app.world_mut().spawn((
-            crate::layer1::pop::Pop,
-            crate::layer1::core::map::GridPosition { x: 10, y: 10 },
-            crate::layer1::social::morale::Morale::default()
-        )).id();
+        let pop = app
+            .world_mut()
+            .spawn((
+                crate::layer1::pop::Pop,
+                crate::layer1::core::map::GridPosition { x: 10, y: 10 },
+                crate::layer1::social::morale::Morale::default(),
+            ))
+            .id();
 
         use crate::layer1::architecture::building::{Building, BuildingType};
         // Add surveillance building covering the pop
@@ -163,15 +186,21 @@ mod tests {
                 building_type: BuildingType::Tower,
             },
             Surveillance { radius: 5 },
-            crate::layer1::core::map::GridPosition { x: 10, y: 10 }
+            crate::layer1::core::map::GridPosition { x: 10, y: 10 },
         ));
 
         // Act
         app.update();
 
         // Assert
-        let pop_morale = app.world().get::<crate::layer1::social::morale::Morale>(pop).unwrap();
+        let pop_morale = app
+            .world()
+            .get::<crate::layer1::social::morale::Morale>(pop)
+            .unwrap();
         // Verify morale is penalized by the surveillance building
-        assert!(pop_morale.modifiers.iter().any(|m| m.value < 0.0), "Surveillance should lower morale");
+        assert!(
+            pop_morale.modifiers.iter().any(|m| m.value < 0.0),
+            "Surveillance should lower morale"
+        );
     }
 }

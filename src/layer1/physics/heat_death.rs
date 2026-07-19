@@ -1,6 +1,5 @@
 use bevy::prelude::*;
 
-
 #[derive(Component)]
 pub struct HeatProducer {
     pub amount: f32,
@@ -69,7 +68,6 @@ pub fn overheat_scram_system(mut query: Query<(&mut Operational, &Temperature, &
 #[cfg(test)]
 mod tests {
     use super::*;
-
 
     #[test]
     fn test_heat_accumulation_in_vacuum() {
