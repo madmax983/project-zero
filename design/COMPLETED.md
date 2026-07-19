@@ -927,3 +927,4 @@
 - [x] `INT-909` Integration: Radio Broadcasts -> Pirate Threat - completed 2026-10-31
 - [x] `292` The Chrono-Stutter — `specs/292-chrono-stutter.md` — completed 2026-07-17
 - [x] `982` The Generation Ship Mutiny — `specs/982-the-generation-ship-mutiny.md` — completed 2026-06-25
+- [x] `INT-982` Integration: The Generation Ship Mutiny -> Chronicle - completed 2026-11-01
