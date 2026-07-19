@@ -1,4 +1,0 @@
-1. Write fragments for Chrono-Stutter in `lore/FRAGMENTS.md`
-2. Write templates for Chrono-Stutter in `lore/TEMPLATES.md`
-3. Write grammars for Chrono-Stutter in `lore/GRAMMARS.md`
-4. Write lexicon for Chrono-Stutter in `lore/LEXICON.md`

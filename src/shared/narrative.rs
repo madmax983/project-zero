@@ -77,84 +77,6 @@ pub enum NarrativeError {
     IoError(String, std::io::Error),
 }
 
-use comfy_table::{presets::UTF8_FULL, Cell, Color as TableColor, Table};
-
-impl NarrativeError {
-    /// Returns a beautiful formatted table for the error.
-    ///
-    /// The table includes the error type, the error message, and a suggested action to resolve the issue.
-    /// This is particularly useful for CLI applications to render user-friendly errors.
-    ///
-    /// ## Examples
-    ///
-    /// ```
-    /// use scale::shared::narrative::NarrativeError;
-    ///
-    /// // Suppose a context variable was missing when generating a narrative
-    /// let err = NarrativeError::MissingContext("YEAR".to_string());
-    ///
-    /// // We can render a helpful table for the user
-    /// let table = err.to_table();
-    ///
-    /// // The table will contain the error details and suggested action
-    /// assert!(table.contains("YEAR"));
-    /// assert!(table.contains("context.insert"));
-    /// ```
-    pub fn to_table(&self) -> String {
-        let error_msg = format!("{}", self);
-        let action_msg = match self {
-            Self::DirectoryNotFound(_) | Self::NoLoreFiles(_) | Self::IoError(_, _) => {
-                "Check Lore Directory. Verify the folder path exists and contains markdown files."
-            }
-            Self::MissingFragmentOptions(_) => {
-                "Check Fragment Options. Verify the fragment options in your FRAGMENTS.md are not empty."
-            }
-            Self::TemplateNotFound(_) | Self::NoPatternsForTemplate(_) => {
-                "Check Template ID. Verify the name exists in your TEMPLATES.md."
-            }
-            Self::MissingContext(_) => {
-                "Check Context variables. Verify that you are calling `NarrativeContext::insert` for the missing variable in your Rust code."
-            }
-        };
-
-        let mut table = Table::new();
-        table.set_width(120);
-        table
-            .load_preset(UTF8_FULL)
-            .apply_modifier(comfy_table::modifiers::UTF8_ROUND_CORNERS)
-            .set_content_arrangement(comfy_table::ContentArrangement::Dynamic);
-
-        let header_title = match self {
-            Self::DirectoryNotFound(_) | Self::NoLoreFiles(_) | Self::IoError(_, _) => {
-                " ✗ LORE LOADING ERROR "
-            }
-            _ => " ✗ NARRATIVE GENERATOR ERROR ",
-        };
-
-        table.set_header(vec![
-            comfy_table::Cell::new(header_title)
-                .add_attribute(comfy_table::Attribute::Bold)
-                .fg(TableColor::Red),
-            comfy_table::Cell::new("Details")
-                .add_attribute(comfy_table::Attribute::Bold)
-                .fg(TableColor::Red),
-        ]);
-
-        table.add_row(vec![
-            Cell::new("Message")
-                .fg(TableColor::Yellow)
-                .add_attribute(comfy_table::Attribute::Bold),
-            Cell::new(&error_msg).fg(TableColor::White),
-        ]);
-        table.add_row(vec![
-            Cell::new("Action")
-                .fg(TableColor::Yellow)
-                .add_attribute(comfy_table::Attribute::Bold),
-            Cell::new(action_msg).fg(TableColor::Cyan),
-        ]);
-        table.to_string()
-    }
-}
 
 /// A segment of a generated narrative.
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -1018,4 +940,24 @@ fn test_generate_optional_key_missing() {
     let ctx = NarrativeContext::new();
     let segments = generator.generate_structured("OPTIONAL", &ctx).unwrap();
     assert_eq!(segments.len(), 0); // Should be empty, not an error
+}
+
+impl NarrativeError {
+    /// Returns a helpful message suggesting how to resolve the error.
+    pub fn help(&self) -> &'static str {
+        match self {
+            Self::DirectoryNotFound(_) | Self::NoLoreFiles(_) | Self::IoError(_, _) => {
+                "Check Lore Directory. Verify the folder path exists and contains markdown files."
+            }
+            Self::MissingFragmentOptions(_) => {
+                "Check Fragment Options. Verify the fragment options in your FRAGMENTS.md are not empty."
+            }
+            Self::TemplateNotFound(_) | Self::NoPatternsForTemplate(_) => {
+                "Check Template ID. Verify the name exists in your TEMPLATES.md."
+            }
+            Self::MissingContext(_) => {
+                "Check Context variables. Verify that you are calling `NarrativeContext::insert` for the missing variable in your Rust code."
+            }
+        }
+    }
 }
