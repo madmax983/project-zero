@@ -13,7 +13,8 @@ fn test_generation_ship_mutiny_triggers_chronicle() {
 
     let ship_entity = app.world_mut().spawn_empty().id();
 
-    app.world_mut().send_event(MutinyEvent { ship: ship_entity });
+    app.world_mut()
+        .send_event(MutinyEvent { ship: ship_entity });
 
     app.update();
 
@@ -21,7 +22,11 @@ fn test_generation_ship_mutiny_triggers_chronicle() {
     let mut reader = chronicle_events.get_cursor();
     let events: Vec<_> = reader.read(chronicle_events).collect();
 
-    assert_eq!(events.len(), 1, "MutinyEvent should trigger AddChronicleEvent");
+    assert_eq!(
+        events.len(),
+        1,
+        "MutinyEvent should trigger AddChronicleEvent"
+    );
     assert_eq!(events[0].importance, EventImportance::Major);
     assert!(events[0].text.contains("generation ship"));
 }
