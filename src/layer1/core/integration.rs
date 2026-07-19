@@ -3318,3 +3318,16 @@ pub fn memory_smugglers_chronicle_bridge(
         }
     }
 }
+
+/// INT-982: Bridges MutinyEvent to AddChronicleEvent (Chronicle)
+pub fn generation_ship_mutiny_chronicle_bridge(
+    mut events: bevy_ecs::event::EventReader<crate::cross_layer::generation_ship_mutiny::MutinyEvent>,
+    mut chronicle_events: bevy_ecs::event::EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+) {
+    for _event in events.read() {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            text: "A mutiny has occurred on the generation ship! Descendants of the original crew have radicalized and altered the mission parameters.".to_string(),
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
+        });
+    }
+}
