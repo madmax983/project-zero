@@ -53,6 +53,37 @@ pub fn process_job_execution_system(
     }
 }
 
+
+
+/// Marker component to prevent emitting duplicate events for MemeticDisassociation
+#[derive(Component)]
+pub struct ReportedMemeticDisassociation;
+
+/// INT-1274: Bridges `MemeticDisassociation` to `AddChronicleEvent` (Chronicle).
+pub fn memory_smugglers_chronicle_bridge(
+    query: Query<
+        (
+            Entity,
+            &crate::layer1::memetics::memory_smugglers::MemeticDisassociation,
+        ),
+        Without<ReportedMemeticDisassociation>,
+    >,
+    mut chronicle_events: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+    mut commands: Commands,
+) {
+    for (entity, disassociation) in query.iter() {
+        if disassociation.level >= 100.0 {
+            chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+                text: "Memory Smugglers have exacted their toll. Cases of extreme memetic disassociation are sweeping the colony, leaving pops hollowed out and unable to perform basic functions.".to_string(),
+                importance: crate::layer1::core::chronicle::EventImportance::Major,
+            });
+            commands
+                .entity(entity)
+                .insert(ReportedMemeticDisassociation);
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
