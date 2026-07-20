@@ -1,17 +1,50 @@
+//! Extraterrestrial hazards that threaten the colony's resource stockpiles.
+//!
+//! This module defines the `HarvesterMeteor`, a specialized threat that
+//! impacts the colony and aggressively siphons valuable refined resources
+//! before attempting to launch back into orbit.
+
 use crate::layer1::economy::resources::ColonyResources;
 use crate::layer1::map::GridPosition;
 use bevy_ecs::prelude::*;
 
+/// An extraterrestrial entity that impacts the colony to steal resources.
+///
+/// Upon landing, a `HarvesterMeteor` will rapidly absorb refined metals, ores,
+/// scrap, and hyper-alloys from the colony's global stockpiles. Once it has
+/// sated its hunger, it will begin a launch sequence to escape with its payload.
+///
+/// ## Examples
+///
+/// ```
+/// use scale::layer1::hazards::meteor::HarvesterMeteor;
+///
+/// let meteor = HarvesterMeteor {
+///     stolen_amount: 0.0,
+///     launch_timer: 180.0,
+///     has_absorbed: false,
+/// };
+/// assert_eq!(meteor.has_absorbed, false);
+/// ```
 #[derive(Component)]
 pub struct HarvesterMeteor {
+    /// The total quantity of resources this meteor has successfully siphoned.
     pub stolen_amount: f32,
+    /// Time remaining (in ticks or seconds) before the meteor launches back into orbit.
     pub launch_timer: f32,
+    /// Whether the meteor has already performed its initial resource absorption phase.
     pub has_absorbed: bool,
 }
 
+/// A marker component for the location where a meteor has struck or is predicted to strike.
 #[derive(Component)]
 pub struct ImpactZone;
 
+/// Drains valuable resources from the colony and transfers them to the meteor.
+///
+/// This system iterates over all newly landed `HarvesterMeteor` entities (where `has_absorbed` is false).
+/// It zeros out the colony's high-value resource stockpiles (`metal`, `ore`, `scrap`, `hyper_alloys`, `hyper_valuable`)
+/// and accumulates their total value into the meteor's `stolen_amount`, marking the meteor as having absorbed.
 pub fn harvester_meteor_absorption_system(
     mut meteors: Query<(&mut HarvesterMeteor, &GridPosition)>,
     mut resources: ResMut<ColonyResources>,
