@@ -460,4 +460,60 @@ mod tests {
         // No pops — should return without panicking even if GpuContext existed
         gpu_evaluate_actions(&mut world);
     }
+
+    #[test]
+    fn test_apply_decisions_updates_components() {
+        let mut world = World::new();
+
+        let pop_entity1 = world.spawn(PopAction::default()).id();
+        let pop_entity2 = world.spawn(PopAction::default()).id();
+        let pop_entity3 = world.spawn(PopAction::default()).id();
+        let pop_entities = vec![pop_entity1, pop_entity2, pop_entity3];
+
+        let building_entity1 = world.spawn_empty().id();
+        let building_entity2 = world.spawn_empty().id();
+        let building_entities = vec![building_entity1, building_entity2];
+
+        let decisions = vec![
+            GpuPopDecision {
+                best_action: 0, // SatisfyHunger
+                best_utility: 0.9,
+                target_index: 0,
+                switched: 1,
+            },
+            GpuPopDecision {
+                best_action: 1, // SatisfyRest
+                best_utility: 0.5,
+                target_index: 1,
+                switched: 1,
+            },
+            GpuPopDecision {
+                best_action: 2, // Socialize
+                best_utility: 0.8,
+                target_index: 0,
+                switched: 0, // Should NOT be applied
+            },
+        ];
+
+        apply_decisions(&mut world, &pop_entities, &building_entities, &decisions);
+
+        let pop1 = world.get::<PopAction>(pop_entity1).unwrap();
+        assert_eq!(pop1.current, ActionType::SatisfyHunger);
+        assert_eq!(pop1.current_utility, 0.9);
+        let start_plan1 = world.get::<StartPlan>(pop_entity1).unwrap();
+        assert_eq!(start_plan1.action, ActionType::SatisfyHunger);
+        assert_eq!(start_plan1.target, Some(building_entity1));
+
+        let pop2 = world.get::<PopAction>(pop_entity2).unwrap();
+        assert_eq!(pop2.current, ActionType::SatisfyRest);
+        assert_eq!(pop2.current_utility, 0.5);
+        let start_plan2 = world.get::<StartPlan>(pop_entity2).unwrap();
+        assert_eq!(start_plan2.action, ActionType::SatisfyRest);
+        assert_eq!(start_plan2.target, Some(building_entity2));
+
+        let pop3 = world.get::<PopAction>(pop_entity3).unwrap();
+        assert_eq!(pop3.current, ActionType::Idle);
+        assert_eq!(pop3.current_utility, 0.0);
+        assert!(world.get::<StartPlan>(pop_entity3).is_none());
+    }
 }

@@ -368,8 +368,8 @@ fn init_simulation_resources(world: &mut World) {
     }
 
     world.init_resource::<Events<crate::layer2::moon_hermits::PopDesertedEvent>>();
-        world.init_resource::<Events<crate::layer2::ftl::wakes::FtlJumpEvent>>();
-        world.init_resource::<Events<crate::layer2::ftl::wakes::SubspaceWakeEvent>>();
+    world.init_resource::<Events<crate::layer2::ftl::wakes::FtlJumpEvent>>();
+    world.init_resource::<Events<crate::layer2::ftl::wakes::SubspaceWakeEvent>>();
     world.init_resource::<bevy::prelude::Events<crate::layer2::weather::StormImpactEvent>>();
     world.init_resource::<bevy::prelude::Events<crate::layer2::weather::StormImpactEvent>>();
 
