@@ -28458,3 +28458,42 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Use the free, instant, but unpredictable organic logistics, or build safe, slow, expensive surface roads?
 
 ---
+## Orbital Scavenger Enclaves
+
+**Layer:** 2
+
+**Fantasy:** Desperate, fiercely independent communities living in the dangerous, irradiated debris rings of shattered super-capitals, mining the past to survive the present.
+
+**Mechanic:** When massive fleet battles occur, they leave behind "Debris Rings" in orbit. Over time, Layer 1 Pops with high discontent or the "Rebellious" trait might steal shuttles and migrate to these rings, forming "Scavenger Enclaves." These enclaves act as independent micro-factions that automatically harvest rare tech from the debris, but they demand exorbitant prices to sell it back to you and will fire on your military ships if they get too close.
+
+**Emergence:** You win a pyrrhic victory defending your home world, leaving a massive debris ring. Years later, you desperately need the advanced tech buried in that ring to repel a second invasion. However, the Scavenger Enclave that formed there is composed entirely of descendants of political dissidents you exiled decades ago, and they refuse to sell you the very weapons needed to save the planet.
+
+**Tension:** Do you violently clear the enclave to reclaim your own lost technology, risking a PR nightmare and a difficult battle in hazardous terrain, or pay their extortionate prices while they squat in your orbit?
+
+---
+
+## The Harmonic Resonance Cascade
+
+**Layer:** 1
+
+**Fantasy:** A colony accidentally weaponizing its own architecture through the unintended consequences of industrial sound.
+
+**Mechanic:** Buildings generate specific acoustic frequencies based on their output. If too many buildings of the same industrial type (e.g., deep-core miners) are clustered together, they can achieve "Harmonic Resonance." This massive acoustic wave provides a huge, colony-wide buff to extraction rates but physically shatters fragile structures (like glass domes or precision labs) and causes chronic "Acoustic Trauma" in Pops, drastically lowering morale.
+
+**Emergence:** You perfectly optimize your industrial sector for maximum output, inadvertently triggering a Harmonic Resonance. The extraction rates skyrocket, saving your economy, but the resulting shockwave shatters the atmosphere domes of your luxury agricultural sector on the other side of the colony, causing mass starvation.
+
+**Tension:** Do you intentionally cluster noisy industries to harness the massive resonance buff, accepting the constant structural damage and miserable citizens, or build inefficiently spread-out zones to keep the peace?
+
+---
+
+## Phantom Taxation Protocols
+
+**Layer:** 3
+
+**Fantasy:** Being extorted by the unfeeling, immortal bureaucracy of a civilization that died centuries before yours was born.
+
+**Mechanic:** Automated, indestructible "Tax-Collector Probes" from a long-dead Precursor empire still patrol ancient hyperlanes. If they enter your system, they hack your Layer 1 infrastructure, silently siphoning a percentage of a specific resource (e.g., energy or rare metals). If the resource isn't available, they initiate orbital bombardment until the "debt" is paid. The resources they take are simply deleted, delivered to an empire that no longer exists.
+
+**Emergence:** You are on the verge of completing a massive planetary shield generator. Just as you need the final shipment of energy, a Phantom Tax Probe arrives, siphons exactly the amount you needed, and leaves. Your shield remains offline, and the enemy fleet arrives the next day.
+
+**Tension:** Do you spend massive amounts of military resources to destroy an invulnerable probe for no strategic gain other than stopping the extortion, or simply accept the permanent, unpredictable drain on your economy as a cost of living in an ancient galaxy?
