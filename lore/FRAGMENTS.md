@@ -10521,3 +10521,46 @@ Used for The Feral Administration anvalanches of paperwork.
 - harvested a season's yield in days
 - finished the construction in what felt like minutes
 - exploited the anomaly for rapid production
+
+## The Architecture of Paranoia Fragments (Spec 1326)
+
+### Fragment Type: [SUBVERSIVE_FACTION]
+- the Silent Chorus
+- the Unseen Hand
+- the Whispering Cell
+- those who speak in shadows
+- the Dissenters
+
+### Fragment Type: [SURVEILLANCE_STATE]
+- Total Observation
+- the Panopticon Protocol
+- Mandated Paranoia
+- the Watched Silence
+
+## Heat Death Fragments (Spec 989)
+
+### Fragment Type: [MACHINE_NAME]
+- Primary Fusion Core
+- Atmospheric Processing Array
+- Deep-Core Drill
+- the Lifeline Reactor
+
+### Fragment Type: [HOSTILE_FACTION]
+- Pirate Corsairs
+- Nomad Raiders
+- the Starved Fleet
+- Unknown Interlopers
+
+## Subspace Stowaways Fragments (Spec 997)
+
+### Fragment Type: [WAKE_SEVERITY]
+- minor
+- catastrophic
+- reality-bending
+- hyper-violent
+
+### Fragment Type: [FLORA_NAME]
+- Void-Brambles
+- Subspace Spores
+- Null-Weed
+- the Whispering Ivy
