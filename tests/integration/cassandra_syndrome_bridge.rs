@@ -2,7 +2,7 @@ use bevy_app::{App, Update};
 use bevy_ecs::prelude::*;
 use scale::layer1::cassandra_syndrome::{CultLeader, DoomsdayWarningEvent, Prophetic};
 use scale::layer1::core::chronicle::AddChronicleEvent;
-use scale::layer1::core::integration::{
+use scale::layer1::cassandra_syndrome::{
     cassandra_cult_chronicle_bridge, cassandra_syndrome_chronicle_bridge,
 };
 use scale::layer1::environment::disasters::DisasterType;
@@ -65,7 +65,7 @@ fn test_cassandra_syndrome_disaster_bridge() {
 
     app.add_systems(
         Update,
-        scale::layer1::core::integration::cassandra_syndrome_disaster_bridge,
+        scale::layer1::cassandra_syndrome::cassandra_syndrome_disaster_bridge,
     );
 
     app.world_mut()
