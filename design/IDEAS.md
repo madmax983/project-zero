@@ -28497,3 +28497,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** You are on the verge of completing a massive planetary shield generator. Just as you need the final shipment of energy, a Phantom Tax Probe arrives, siphons exactly the amount you needed, and leaves. Your shield remains offline, and the enemy fleet arrives the next day.
 
 **Tension:** Do you spend massive amounts of military resources to destroy an invulnerable probe for no strategic gain other than stopping the extortion, or simply accept the permanent, unpredictable drain on your economy as a cost of living in an ancient galaxy?
+## The Bureaucracy of Forgetting
+
+**Layer:** 1
+
+**Fantasy:** A society where traumatic memories are treated as a bureaucratic error to be filed and redacted.
+
+**Mechanic:** A specialized "Censor's Office" allows you to spend "Admin" resources to permanently erase specific negative "Memories" from the global Pop consciousness. However, this creates a hidden "Cognitive Dissonance" stat. If Cognitive Dissonance gets too high, Pops suffer sudden, violent psychotic breaks because their reality no longer matches their missing memories.
+
+**Emergence:** You erase the memory of a brutal famine to restore morale and get production back on track. Five years later, the colony experiences a bumper crop, but half the workforce suddenly goes insane because they subconsciously expect starvation that they can no longer remember, crippling your harvest.
+
+**Tension:** Do you artificially enforce a happy society at the risk of sudden, catastrophic mental collapse, or let them organically heal from their trauma?
+
+---
+
+## The Outsourced Lifeline
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Relying on a faceless, ultra-capitalist megacorp for your most fundamental survival needs, and realizing they view your oxygen as a subscription service.
+
+**Mechanic:** You can "Outsource" critical Layer 1 infrastructure (like atmospheric processors or water purifiers) to a Layer 3 Megacorp. This removes the energy and maintenance cost from your colony, but requires a massive, recurring Credit payment. If you miss a payment, the Megacorp doesn't send repo-men; they simply throttle your oxygen supply remotely until the debt is paid.
+
+**Emergence:** Your colony's economy is booming thanks to outsourced life support. Then a pirate raid temporarily blocks your trade routes, preventing you from making your monthly payment. The Megacorp automatically dials down the oxygen to 15%. Your workers are too hypoxic to fight the pirates or fix the trade route, causing a death spiral entirely driven by a missed invoice.
+
+**Tension:** Do you embrace extreme efficiency by surrendering control of your own life support, or accept the massive upkeep costs of maintaining sovereignty over your own air?
+
+---
+
+## Substrate Echolocation
+
+**Layer:** 1
+
+**Fantasy:** Navigating a pitch-black, subterranean world not with light, but by screaming into the dark and listening to what screams back.
+
+**Mechanic:** In extremely deep or dark environments (Layer 1 subterranean maps), traditional lights consume massive power. Pops can instead use "Acoustic Emitters." These reveal terrain and resources in a wide radius for a brief moment via sonar pulses. However, the pulses also aggravate and attract subterranean hostile fauna (e.g., "Blind Stalkers") that hunt by sound.
+
+**Emergence:** You try to quickly map a huge cavern using continuous acoustic pulses. You find a massive vein of rare minerals, but the constant noise attracts a swarm of Stalkers. Because you haven't built physical lights, your militia has to fight the swarm in total darkness, relying entirely on the frantic, intermittent sonar pings to see their targets.
+
+**Tension:** Do you explore safely but slowly with expensive permanent lighting, or rapidly map the depths using sound, knowing you are intentionally ringing the dinner bell for the monsters in the dark?
+
+---
