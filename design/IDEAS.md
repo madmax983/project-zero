@@ -28580,3 +28580,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you solve the root cause of unrest (expensive, difficult) or slap a shiny, energy-draining band-aid on it to survive the week?
 
 ---
+## Acoustic Siphons
+
+**Layer:** 1
+
+**Fantasy:** Tapping into the planet's very heartbeat, at the risk of tearing it apart.
+
+**Mechanic:** A massive structure that converts planetary tectonic vibrations into near-infinite energy. However, running it increases local seismic instability, leading to frequent and increasingly severe earthquakes.
+
+**Emergence:** You solve a long-term energy crisis, but the resulting earthquakes slowly destroy the surrounding infrastructure, forcing you into a constant cycle of rebuilding the city just to keep the lights on.
+
+**Tension:** Do you rely on clean, infinite energy that constantly destroys your buildings, or use safer but limited resources?
+
+---
+
+## Gravity Well Trapping
+
+**Layer:** 2
+
+**Fantasy:** Using celestial mechanics as a giant spiderweb to catch prey.
+
+**Mechanic:** Deploying specialized satellites near strong gravity wells (like gas giants) to artificially amplify the gravitational pull. This creates a "trap" that forces passing trade ships or enemy fleets out of hyper-travel, slowing them down and making them easy targets for ambush.
+
+**Emergence:** You set a trap for a pirate fleet, but accidentally pull a massive, heavily armed refugee armada out of warp. They panic, thinking it's an attack, and destroy your ambush fleet.
+
+**Tension:** Do you risk trapping unintended targets and causing diplomatic disasters to secure your borders, or fight fair in open space?
+
+---
+
+## Sub-Crustal Parasites
+
+**Layer:** 1
+
+**Fantasy:** The realization that the planet you are colonizing is already occupied, and it's hungry.
+
+**Mechanic:** Deep mining operations occasionally breach into nests of enormous, dormant subterranean parasites. Once awakened, they slowly tunnel through the crust, devouring ore deposits and destabilizing the ground above, causing sinkholes. They ignore colonists unless provoked but eat the resources you need.
+
+**Emergence:** You discover a massive vein of gold, only to realize a parasite is eating it from the other side. A desperate race begins to mine the gold before the creature consumes it, eventually leading to a tunnel collapse that traps your miners with the beast.
+
+**Tension:** Do you violently exterminate the parasites, risking massive casualties and structural damage, or abandon the deepest, richest mines to them?
+
+---
