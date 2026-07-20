@@ -33,7 +33,6 @@ pub fn generate_subspace_wake_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy::prelude::*;
 
     fn setup_world() -> World {
         let mut world = World::new();
