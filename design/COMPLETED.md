@@ -932,3 +932,4 @@
 - [x] `989` Heat Death — `specs/989-heat-death.md` — completed 2024-05-31
 - [x] `997` Subspace Stowaways — `specs/997-subspace-stowaways.md` — completed 2024-05-31
 - [x] `997` Subspace Stowaways — `specs/997-subspace-stowaways.md` — completed 2024-05-31
+- [x] `992` The Fungal Monoliths — `specs/992-the-fungal-monoliths.md` — completed 2024-07-20

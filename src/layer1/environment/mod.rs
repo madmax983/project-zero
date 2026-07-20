@@ -55,3 +55,5 @@ pub use mycorrhizal_network::*;
 
 pub mod chrono_stutter;
 pub use chrono_stutter::*;
+pub mod fungal_monoliths;
+pub use fungal_monoliths::*;
