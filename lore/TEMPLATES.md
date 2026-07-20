@@ -10309,3 +10309,45 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 **Patterns:**
 - "[COLONY] danced on the edge of the Stutter and [CHRONO_STUTTER_BENEFIT]."
 - "In [YEAR], the anomaly was harnessed. They [CHRONO_STUTTER_BENEFIT]."
+
+## The Architecture of Paranoia Templates (Spec 1326)
+
+### Template: SUBVERSION_DISCOVERED
+**Slots:** [COLONY], [YEAR], [SUBVERSIVE_FACTION]
+- "[YEAR]: Subversive activity detected in [COLONY]. The [SUBVERSIVE_FACTION] plot in the shadows."
+- "Whispers in the dark. [COLONY] uncovers dissent from the [SUBVERSIVE_FACTION] in [YEAR]."
+- "[YEAR]: The walls have ears in [COLONY]. A cell of the [SUBVERSIVE_FACTION] was exposed."
+
+### Template: SURVEILLANCE_ESTABLISHED
+**Slots:** [COLONY], [YEAR], [SURVEILLANCE_STATE]
+- "[YEAR]: To ensure security, [COLONY] enters a state of [SURVEILLANCE_STATE]. Trust no one."
+- "The cameras turn inward on [COLONY]. [YEAR]. The era of [SURVEILLANCE_STATE] begins."
+- "[YEAR]: Paranoia takes root. [COLONY] builds towers to enforce [SURVEILLANCE_STATE]."
+
+## Heat Death Templates (Spec 989)
+
+### Template: RADIATOR_FAILURE
+**Slots:** [COLONY], [YEAR], [MACHINE_NAME]
+- "[YEAR]: Vacuum is the ultimate insulator. The [MACHINE_NAME] in [COLONY] SCRAMs to prevent meltdown."
+- "The radiators failed in [COLONY]. The [MACHINE_NAME] choked on its own heat. [YEAR]."
+- "[YEAR]: A critical thermal spike on [COLONY]. The [MACHINE_NAME] shuts down to survive."
+
+### Template: THERMAL_DETECTION
+**Slots:** [COLONY], [YEAR], [HOSTILE_FACTION]
+- "[YEAR]: The glow of [COLONY]'s radiators attracted unwanted attention. [HOSTILE_FACTION] sensors locked on."
+- "[COLONY] burned too bright in the cold dark. Spotted by [HOSTILE_FACTION]. [YEAR]."
+- "[YEAR]: We couldn't hide the heat. [HOSTILE_FACTION] descends on [COLONY]."
+
+## Subspace Stowaways Templates (Spec 997)
+
+### Template: SUBSPACE_WAKE_ANOMALY
+**Slots:** [SYSTEM], [YEAR], [WAKE_SEVERITY]
+- "[YEAR]: A low-quality FTL jump tears the fabric of [SYSTEM]. A [WAKE_SEVERITY] subspace wake forms."
+- "The cheap drives always cost more in the end. A [WAKE_SEVERITY] anomaly detected in [SYSTEM]. [YEAR]."
+- "[YEAR]: Spatial displacement in [SYSTEM]. The wake is [WAKE_SEVERITY]. Brace for impact."
+
+### Template: SUBSPACE_FLORA_INCURSION
+**Slots:** [COLONY], [YEAR], [FLORA_NAME]
+- "[YEAR]: The void spat something out onto [COLONY]. [FLORA_NAME] takes root."
+- "Teleported directly from the wake. [FLORA_NAME] infests [COLONY]. [YEAR]."
+- "[YEAR]: [COLONY] faces an impossible invasion. [FLORA_NAME] materialized inside the perimeter."
