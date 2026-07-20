@@ -604,8 +604,8 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::core::integration::lottery_chronicle_bridge,
             crate::layer1::core::integration::early_warning_chronicle_bridge,
             crate::layer1::core::integration::planetary_scarring_chronicle_bridge,
-            crate::layer1::core::integration::cassandra_syndrome_chronicle_bridge,
-            crate::layer1::core::integration::cassandra_cult_chronicle_bridge,
+            crate::layer1::cassandra_syndrome::cassandra_syndrome_chronicle_bridge,
+            crate::layer1::cassandra_syndrome::cassandra_cult_chronicle_bridge,
             crate::layer1::core::integration::blackout_bazaar_chronicle_bridge,
             crate::layer1::core::integration::symbiont_sabotage_bridge_system,
             crate::layer1::core::integration::pet_death_bridge_system,
@@ -620,7 +620,7 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::anomalies::echoes_lost_fleet::lure_militaristic_pops_system,
             crate::layer1::core::integration::lured_pops_escape_bridge_system,
             crate::layer1::shadow_ecosystems::shadow_ecosystems_short_circuit_bridge,
-            crate::layer1::core::integration::cassandra_syndrome_disaster_bridge,
+            crate::layer1::cassandra_syndrome::cassandra_syndrome_disaster_bridge,
             crate::layer1::core::integration::dreaming_sickness_chronicle_bridge,
         )
             .in_set(Layer1SystemSet::Observation),
@@ -639,11 +639,11 @@ pub fn register(schedule: &mut Schedule) {
             .in_set(Layer1SystemSet::Observation),
     );
     schedule.add_systems(
-        crate::layer1::core::integration::memory_smugglers_chronicle_bridge
+        crate::layer1::memetics::memory_smugglers::memory_smugglers_chronicle_bridge
             .in_set(Layer1SystemSet::Observation),
     );
     schedule.add_systems(
-        crate::layer1::core::integration::generation_ship_mutiny_chronicle_bridge
+        crate::cross_layer::generation_ship_mutiny::generation_ship_mutiny_chronicle_bridge
             .in_set(Layer1SystemSet::Observation),
     );
 

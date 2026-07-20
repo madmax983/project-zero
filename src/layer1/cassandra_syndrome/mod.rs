@@ -77,5 +77,56 @@ pub fn validate_prophecy(
         }
     }
 }
+
+/// INT-1305: Bridges `DoomsdayWarningEvent` to `AddChronicleEvent`
+pub fn cassandra_syndrome_chronicle_bridge(
+    mut events: bevy_ecs::event::EventReader<
+        crate::layer1::cassandra_syndrome::DoomsdayWarningEvent,
+    >,
+    mut chronicle_events: bevy_ecs::event::EventWriter<
+        crate::layer1::core::chronicle::AddChronicleEvent,
+    >,
+) {
+    for _event in events.read() {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            text: "A Doomsday Warning was issued by a prophetic colonist. Most are ignoring it."
+                .to_string(),
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
+        });
+    }
+}
+
+/// INT-1305: Bridges `Added<CultLeader>` to `AddChronicleEvent`
+pub fn cassandra_cult_chronicle_bridge(
+    query: bevy_ecs::system::Query<
+        (),
+        bevy_ecs::query::Added<crate::layer1::cassandra_syndrome::CultLeader>,
+    >,
+    mut chronicle_events: bevy_ecs::event::EventWriter<
+        crate::layer1::core::chronicle::AddChronicleEvent,
+    >,
+) {
+    for _ in query.iter() {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            text: "A prophet's warning came true! They are now a Cult Leader.".to_string(),
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
+        });
+    }
+}
+
+/// INT-1305: Bridges `DisasterEvent` to `DisasterOccurredEvent`
+pub fn cassandra_syndrome_disaster_bridge(
+    mut events: bevy_ecs::event::EventReader<crate::layer1::environment::disasters::DisasterEvent>,
+    mut out_events: bevy_ecs::event::EventWriter<
+        crate::layer1::cassandra_syndrome::DisasterOccurredEvent,
+    >,
+) {
+    for event in events.read() {
+        out_events.send(crate::layer1::cassandra_syndrome::DisasterOccurredEvent {
+            disaster_type: event.disaster_type,
+        });
+    }
+}
+
 #[cfg(test)]
 mod tests;
