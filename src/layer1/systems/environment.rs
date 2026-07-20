@@ -245,6 +245,11 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::logistics::orbital_drop::process_orbital_drops,
             crate::layer1::nanite_storms::apply_nanite_storm_effects,
             crate::layer1::environment::orbital_junkyard::process_debris_rain,
+        )
+            .in_set(Layer1SystemSet::Environment),
+    );
+    schedule.add_systems(
+        (
             crate::layer1::environment::orbital_junkyard::process_falling_debris,
         )
             .in_set(Layer1SystemSet::Environment),

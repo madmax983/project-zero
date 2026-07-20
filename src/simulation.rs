@@ -1161,6 +1161,8 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
     schedule.add_systems((
         crate::layer3::fleets::simulate_transit_drift_system,
         crate::layer3::fleets::apply_drift_on_foundation_system,
+        crate::cross_layer::generation_ship_mutiny::generation_ship_radicalization_system,
+        crate::cross_layer::generation_ship_mutiny::evaluate_mutiny_system,
         // 1064 Digital Detritus
         crate::layer3::digital_detritus::process_data_mining_system,
         crate::layer3::digital_detritus::record_virus_event_chronicle_system,

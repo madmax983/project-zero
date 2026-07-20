@@ -1,9 +1,9 @@
 use bevy_ecs::prelude::*;
 use scale::layer1::core::chronicle::{AddChronicleEvent, EventImportance};
-use scale::layer1::core::integration::{
-    memory_smugglers_chronicle_bridge, ReportedMemeticDisassociation,
+use scale::layer1::memetics::memory_smugglers::{
+    memory_smugglers_chronicle_bridge, MemeticDisassociation,
 };
-use scale::layer1::memetics::memory_smugglers::MemeticDisassociation;
+use scale::layer1::memetics::ReportedMemeticDisassociation;
 
 #[test]
 fn test_memory_smugglers_chronicle_bridge_triggers_event() {
