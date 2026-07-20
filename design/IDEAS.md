@@ -28538,3 +28538,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you explore safely but slowly with expensive permanent lighting, or rapidly map the depths using sound, knowing you are intentionally ringing the dinner bell for the monsters in the dark?
 
 ---
+
+## The Sentient Landfill
+
+**Layer:** 1
+
+**Fantasy:** Dealing with the consequences of ignoring waste management until it develops a collective consciousness.
+
+**Mechanic:** If 'Refuse' is stockpiled in high concentrations for too long without processing, the complex chemical soup spawns 'Scrap-Oozes.' These entities consume raw materials and replicate, but they also occasionally form 'Trash-Minds' that try to negotiate trade deals with your colony leaders using garbage as currency.
+
+**Emergence:** You neglect your waste management to focus on military production. The landfill achieves sentience, forms a sovereign micro-state, and threatens to launch a 'garbage strike' (physically blocking your roads with coordinated piles of refuse) unless you grant them political representation.
+
+**Tension:** Do you spend massive resources to exterminate an innocent, albeit disgusting, new lifeform, or grant civil rights to a sentient pile of industrial runoff?
+
+---
+
+## The Biomass Repossession
+
+**Layer:** 1
+
+**Fantasy:** A terrible realization that the rapid-growth crops that saved your colony are actually the larval stage of a hostile organism.
+
+**Mechanic:** Players can find and plant 'Miracle Seeds' that grow incredibly fast and require almost no water. However, if a harvested silo of this crop is kept at a high temperature for too long, it spontaneously metamorphoses into aggressive 'Silica-Swarms' that consume organic matter to replicate.
+
+**Emergence:** You rely entirely on Miracle Seeds to feed a massive population boom. A solar flare knocks out the cooling systems in your primary grain silos. Within hours, your entire food supply hatches and begins actively hunting the very colonists it was meant to feed.
+
+**Tension:** Do you exploit a dangerously unstable food source to survive a famine, knowing you are essentially stockpiling thousands of dormant predators?
+
+---
+
+## The Architectural Placebo
+
+**Layer:** 1
+
+**Fantasy:** Placating an angry populace with empty monuments that provide no real value.
+
+**Mechanic:** When unrest is high, players can build 'Placebo Structures'—massive, cheap, flashy buildings (like 'Holographic Plazas' or 'Fake Atmospherics') that provide huge temporary morale boosts but have zero actual function and consume massive amounts of energy. The morale boost degrades over time as Pops realize it's a sham.
+
+**Emergence:** You avert a civil war by building a massive Holographic Park. Five years later, the energy drain causes your real life-support systems to fail. The Pops riot not because of the failing life support, but because the Holographic Park turned off.
+
+**Tension:** Do you solve the root cause of unrest (expensive, difficult) or slap a shiny, energy-draining band-aid on it to survive the week?
+
+---
