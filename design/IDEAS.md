@@ -28769,3 +28769,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you use efficient, heat-producing industry and fight the planet, or use slow, cold-based technology to stay hidden from the native intelligence?
 
 ---
+## Holographic Strikes
+
+**Layer:** 1
+
+**Fantasy:** A workforce so thoroughly surveilled that they can only protest virtually, projecting riots while physically remaining at their posts.
+
+**Mechanic:** In highly authoritarian colonies with maximum surveillance (e.g., using "Panopticon Nodes"), Pops cannot physically riot or strike without immediate lethal retaliation. Instead, deeply unhappy Pops hijack the colony's ubiquitous AR/Holographic infrastructure. They continue working physically to avoid punishment, but they project massive, horrifying holographic protests—burning effigies, screaming ghosts, or simulated mass suicides—across the entire settlement. This "Holographic Strike" doesn't directly stop production, but it inflicts a massive, unavoidable "Psychological Terror" debuff on all Pops and governors, drastically increasing the chance of total mental breakdowns or random acts of sabotage.
+
+**Emergence:** You try to squeeze the last bit of productivity out of your dying colony by deploying brutal security measures. The physical output remains high, but the colony is suddenly bathed in an inescapable, screaming holographic projection of the very misery you caused, eventually driving your elite administration staff insane and collapsing the government.
+
+**Tension:** Do you allow traditional, physically disruptive strikes so the Pops can vent, or crush them and risk an insidious, un-policable psychological war?
+
+---
+
+## Synthesized Grief
+
+**Layer:** 1
+
+**Fantasy:** Outsourcing emotional processing to a pharmacological economy.
+
+**Mechanic:** When a Pop experiences a severe emotional trauma (like the death of a family member or a brutal workplace accident), they generate a massive "Grief" penalty that tanks their productivity for weeks. You can build a "Somatic Harvester" clinic where Pops can literally sell their Grief. The clinic extracts the trauma, restoring the Pop's morale instantly, but producing a dangerous narcotic called "Synthetic Pathos." This drug is incredibly valuable on the Layer 2 black market, but if it leaks into the general population, it induces temporary, crippling artificial depression in completely healthy Pops.
+
+**Emergence:** You fund an entire orbital defense fleet by selling the extracted grief of your horrific mining conditions to decadent core worlds. But a smuggler ship gets shot down over your capital, blanketing the city in concentrated Synthetic Pathos, causing your entire flawless bureaucracy to suddenly collapse into weeping despair for crimes they didn't even commit.
+
+**Tension:** Do you let your colonists mourn naturally and accept the productivity loss, or do you industrialize their suffering for profit, risking a catastrophic emotional contagion?
+
+---
+
+## Inherited Crimes
+
+**Layer:** Cross-layer (3 -> 1)
+
+**Fantasy:** A civilization that never forgives, turning debt and guilt into genetic markers.
+
+**Mechanic:** When a Pop commits a severe crime (like sabotage or treason) against a major Layer 3 Empire, they aren't just punished; they are branded with an "Inherited Crime" status. This status is passed down to all their descendants in Layer 1. The Empire's automated bureaucratic systems automatically tax, harass, or deny services to these descendants, centuries after the original crime. The descendants are practically forced into a permanent criminal underclass, driving them to form hyper-loyal smuggling rings or revolutionary cells.
+
+**Emergence:** You recruit a brilliant scientist from an ancient lineage. Unbeknownst to you, their great-grandfather stole a hyper-drive schematic 200 years ago. The moment the scientist attempts to use the interplanetary comms relay, an automated Layer 3 imperial dreadnought arrives in orbit demanding their immediate execution or it will glass the city.
+
+**Tension:** Do you enforce the Empire's draconian, multi-generational laws to maintain diplomatic standing, or do you harbor the cursed lineages, benefiting from their desperation but drawing the ire of a superpower?
+
+---
