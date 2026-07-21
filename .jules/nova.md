@@ -240,3 +240,8 @@
 **Concept:** Implemented `the_final_will_system`. When a `Pop` dies, their remaining `Wallet` credits are transferred to the living `Pop` with whom they had the highest positive `Affinity`. A `ChronicleEvent` is emitted to log the inheritance.
 **Fate:** Merged
 **Lesson:** Connects the life-cycle of a Pop (death) with the economy (`Wallet`) and the social relationship network. It creates a small but meaningful narrative hook where wealth is passed down to friends, making relationships mechanically impactful beyond just mood buffs.
+
+## [Psionic Overload]
+**Concept:** Added `psionic_overload_system` to `src/experimental/psionic_overload.rs`. Connects `Trait::Sensitive` to `WeatherType::BlissStorm`. Sensitive pops naturally generate `knowledge` during a Bliss Storm, but this taxes their mental endurance and causes their `rest` need to decay rapidly.
+**Fate:** Submitted
+**Lesson:** Connects atmospheric hazard to psychological traits, giving sensitive pops a mechanical edge at the cost of fatigue.

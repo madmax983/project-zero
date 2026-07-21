@@ -558,4 +558,3 @@ impl std::fmt::Display for OralTradition {
         write!(f, "{}", table)
     }
 }
-
