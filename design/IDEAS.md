@@ -28810,3 +28810,43 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you enforce the Empire's draconian, multi-generational laws to maintain diplomatic standing, or do you harbor the cursed lineages, benefiting from their desperation but drawing the ire of a superpower?
 
 ---
+## The Phantom Bureaucracy
+
+**Layer:** 1
+
+**Fantasy:** A government so complex and automated that it continues to issue orders long after the people who wrote them are dead.
+
+**Mechanic:** An ancient, automated administrative system (the "Phantom Bureaucracy") sporadically issues archaic, nonsensical edicts to the colony (e.g., "All colonists must wear blue on Tuesdays," "Construct a monument to a forgotten governor"). Complying with these edicts wastes resources but grants a temporary "Administrative Harmony" buff. Ignoring them triggers automated penalties, like sudden tax hikes or the lockdown of random automated doors.
+
+**Emergence:** The Phantom Bureaucracy orders the construction of five massive gold statues. You ignore it to focus on food production. The system retaliates by locking the doors to the hydroponics bays, causing a starvation crisis until you hastily melt down your electronics to build the statues.
+
+**Tension:** Do you waste precious resources complying with a broken, ancient AI to maintain order, or do you rebel against it, suffering its unpredictable technological punishments?
+
+---
+## Echoes of the Macro-Predator
+
+**Layer:** Cross-layer (2 -> 1)
+
+**Fantasy:** Your colony accidentally settles inside the decaying ribcage of a creature so large its skeleton creates its own micro-climate.
+
+**Mechanic:** You discover a "Continental Skeleton" on a Layer 1 map—the remains of an ancient Macro-Predator. The bone marrow acts as a near-infinite, highly volatile energy source. Building a colony inside the ribcage shields you from orbital bombardment and weather, but the latent neural-echos in the bones cause a low-level, constant "Dread" debuff for all pops. If the colony mines the bone too aggressively, it attracts the attention of living, system-scale Macro-Predators in Layer 2.
+
+**Emergence:** You heavily industrialize the skeleton, relying on the bone marrow to power a massive war fleet. The mining operations hit a critical nerve cluster. The resulting psychic scream instantly drives half your workforce insane and acts as a beacon, summoning a living Macro-Predator that begins systematically dismantling your orbital infrastructure to get to your colony.
+
+**Tension:** Do you exploit this morbid, alien bounty for a massive tactical advantage, or respect the horrific scale of the universe and leave the bones untouched, struggling with conventional power sources?
+
+---
+
+## Orbital Agoraphobia
+
+**Layer:** Cross-layer (2 -> 1)
+
+**Fantasy:** A multi-generational colony ship finally arrives at a paradise world, only to realize the colonists have been in zero-G for so long they are terrified of wide-open skies and gravity.
+
+**Mechanic:** After a very long journey in a Layer 2 Colony Ship, the pops develop "Orbital Agoraphobia." When dropped onto a planet (Layer 1), they suffer massive morale penalties if outside or in large rooms. They refuse to farm open fields or construct sprawling cities, insisting on building cramped, claustrophobic warrens mimicking the ship's corridors, significantly reducing agricultural efficiency but drastically increasing subterranean mining speeds.
+
+**Emergence:** You land your exhausted colonists on a lush, verdant planet. Instead of settling the beautiful plains, they desperately tunnel into a nearby mountain, causing a temporary food crisis but accidently discovering a massive, highly valuable alien artifact cache hidden deep underground.
+
+**Tension:** Do you force them into the open to establish a self-sustaining agricultural colony, weathering the massive morale hit, or lean into their phobia and build an entirely subterranean, import-dependent mining utopia?
+
+---
