@@ -83,6 +83,9 @@ pub fn render_status_bar(frame: &mut Frame, area: Rect, world: &World) {
         0.0
     };
 
+    let weather_state = world.get_resource::<crate::layer1::nature::weather::WeatherState>();
+    let weather = weather_state.map(|w| &w.current_weather);
+
     let season = world
         .get_resource::<SeasonState>()
         .map(|s| s.current_season);
@@ -133,6 +136,7 @@ pub fn render_status_bar(frame: &mut Frame, area: Rect, world: &World) {
         efficiency,
         season,
         solar_cycle,
+        weather,
         risk_pct,
         active_singularity_mass,
     );
@@ -191,6 +195,7 @@ fn build_time_spans(
     tick: u64,
     season: Option<Season>,
     solar_cycle: Option<SolarCycle>,
+    weather: Option<&crate::layer1::nature::weather::WeatherType>,
 ) -> Vec<Span<'static>> {
     // ⚡ Bolt Optimization: Pre-allocate capacity to avoid intermediate allocations in hot UI loop
     let mut spans = Vec::with_capacity(3);
@@ -218,6 +223,56 @@ fn build_time_spans(
             Style::default().fg(Color::Yellow),
         ));
     }
+
+    if let Some(w) = weather {
+        if matches!(
+            w,
+            crate::layer1::nature::weather::WeatherType::BlissStorm
+                | crate::layer1::nature::weather::WeatherType::Storm
+                | crate::layer1::nature::weather::WeatherType::MagneticStorm
+                | crate::layer1::nature::weather::WeatherType::MutagenicRain
+                | crate::layer1::nature::weather::WeatherType::SporeStorm
+                | crate::layer1::nature::weather::WeatherType::ThermalInversion
+                | crate::layer1::nature::weather::WeatherType::Heatwave
+                | crate::layer1::nature::weather::WeatherType::Snow
+                | crate::layer1::nature::weather::WeatherType::Rain
+                | crate::layer1::nature::weather::WeatherType::Fog
+        ) {
+            let (color, bg) = match w {
+                crate::layer1::nature::weather::WeatherType::BlissStorm => {
+                    (Color::Magenta, Color::Reset)
+                }
+                crate::layer1::nature::weather::WeatherType::MagneticStorm => {
+                    (Color::Blue, Color::Reset)
+                }
+                crate::layer1::nature::weather::WeatherType::MutagenicRain => {
+                    (Color::Green, Color::Reset)
+                }
+                crate::layer1::nature::weather::WeatherType::SporeStorm => {
+                    (Color::LightGreen, Color::Reset)
+                }
+                crate::layer1::nature::weather::WeatherType::ThermalInversion => {
+                    (Color::DarkGray, Color::Reset)
+                }
+                crate::layer1::nature::weather::WeatherType::Storm => {
+                    (Color::White, Color::DarkGray)
+                }
+                crate::layer1::nature::weather::WeatherType::Snow => (Color::White, Color::Reset),
+                crate::layer1::nature::weather::WeatherType::Rain => (Color::Cyan, Color::Reset),
+                crate::layer1::nature::weather::WeatherType::Heatwave => (Color::Red, Color::Reset),
+                crate::layer1::nature::weather::WeatherType::Fog => (Color::Gray, Color::Reset),
+                _ => (Color::White, Color::Reset),
+            };
+            spans.push(Span::styled(
+                format!(" 🌩 {} ", w.name()),
+                Style::default()
+                    .fg(color)
+                    .bg(bg)
+                    .add_modifier(Modifier::BOLD),
+            ));
+        }
+    }
+
     spans
 }
 
@@ -362,6 +417,7 @@ pub fn get_status_line<'a>(
     efficiency: f32,
     season: Option<Season>,
     solar_cycle: Option<SolarCycle>,
+    weather: Option<&crate::layer1::nature::weather::WeatherType>,
     risk_pct: f32,
     active_singularity_mass: Option<f32>,
 ) -> Line<'a> {
@@ -370,7 +426,7 @@ pub fn get_status_line<'a>(
     let mut spans = Vec::with_capacity(24);
 
     spans.push(build_play_pause_span(paused));
-    spans.extend(build_time_spans(tick, season, solar_cycle));
+    spans.extend(build_time_spans(tick, season, solar_cycle, weather));
     spans.push(Span::styled("  ║  ", Style::default().fg(Color::DarkGray)));
     spans.extend(build_colony_stats_spans(pop_count, morale, efficiency));
     spans.push(Span::styled("  ║  ", Style::default().fg(Color::DarkGray)));
@@ -424,6 +480,7 @@ pub fn get_status_line<'a>(
 ///     1.0,                // stability
 ///     None,               // season
 ///     None,               // solar_cycle
+///     None,               // weather
 ///     0.0,                // risk pct
 ///     None,               // active_singularity_mass
 /// );
@@ -449,6 +506,7 @@ pub fn get_status_string(
     efficiency: f32,
     season: Option<Season>,
     solar_cycle: Option<SolarCycle>,
+    weather: Option<&crate::layer1::nature::weather::WeatherType>,
     risk_pct: f32,
     active_singularity_mass: Option<f32>,
 ) -> String {
@@ -467,6 +525,7 @@ pub fn get_status_string(
         efficiency,
         season,
         solar_cycle,
+        weather,
         risk_pct,
         active_singularity_mass,
     );
@@ -542,6 +601,7 @@ mod tests {
             1.0,   // Efficiency
             None,  // Season
             None,  // Solar Cycle
+            None,  // Weather
             0.0,   // risk_pct
             None,  // Singularity Mass
         );
@@ -569,6 +629,7 @@ mod tests {
             1.0,  // Efficiency
             None, // Season
             None, // Solar Cycle
+            None, // Weather
             0.0,  // risk_pct
             None, // Singularity mass
         );
@@ -678,6 +739,7 @@ mod tests {
             1.0,
             Some(Season::Summer),
             None,
+            None, // weather
             0.0,  // risk_pct
             None, // Singularity mass
         );
@@ -705,6 +767,7 @@ mod tests {
             1.0,
             None,
             None,
+            None, // weather
             0.0,  // risk_pct
             None, // Singularity mass
         );
@@ -731,6 +794,7 @@ mod tests {
             1.0,
             None,
             Some(SolarCycle::Maximum),
+            None, // weather
             0.0,  // risk_pct
             None, // Singularity mass
         );
