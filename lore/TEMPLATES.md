@@ -10351,3 +10351,61 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The void spat something out onto [COLONY]. [FLORA_NAME] takes root."
 - "Teleported directly from the wake. [FLORA_NAME] infests [COLONY]. [YEAR]."
 - "[YEAR]: [COLONY] faces an impossible invasion. [FLORA_NAME] materialized inside the perimeter."
+
+## The Kinetic Heist Templates (Spec 994)
+
+### Template: KINETIC_HEIST_IMPACT
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [HARVESTER_NAME]
+
+**Patterns:**
+- "[YEAR]: A blazing streak in the sky. [HARVESTER_NAME] struck [COLONY], shattering the crust."
+- "[HARVESTER_NAME] slammed into [COLONY] with deafening force. The heist begins. [YEAR]."
+- "[YEAR]: Kinetic impact detected at [COLONY]. They call it [HARVESTER_NAME]. Our vaults are exposed."
+
+### Template: KINETIC_HEIST_ESCAPED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [STOLEN_MATERIAL]
+
+**Patterns:**
+- "[YEAR]: The meteor launched back into the dark. It took our [STOLEN_MATERIAL] from [COLONY]."
+- "We failed to break it in time. The rock ascended from [COLONY], bleeding our [STOLEN_MATERIAL] into orbit. [YEAR]."
+- "[YEAR]: Our [STOLEN_MATERIAL] is gone, lifted into the void by the indestructible thief from [COLONY]."
+
+### Template: KINETIC_HEIST_DISMANTLED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR]
+
+**Patterns:**
+- "[YEAR]: The kinetic thief was broken apart by the brave souls of [COLONY]. The vaults hold."
+- "Sweat and plasma cutters. [COLONY] dismantled the meteor before it could launch. [YEAR]."
+- "[YEAR]: The rock will not fly again. [COLONY] cracked it open. The heist failed."
+
+## Rogue Planets Templates (Spec 899)
+
+### Template: ROGUE_PLANET_DISCOVERED
+**Generates:** Play event
+**Slots:** [SYSTEM], [YEAR], [ROGUE_PLANET_NAME]
+
+**Patterns:**
+- "[YEAR]: A dark wanderer entered [SYSTEM]. Scanners identify it as [ROGUE_PLANET_NAME]. Pitch black, freezing, and rich."
+- "Caught in the sensors of [SYSTEM]—[ROGUE_PLANET_NAME]. A sunless world, drifting with silent treasures. [YEAR]."
+- "[YEAR]: [ROGUE_PLANET_NAME] drifts into [SYSTEM] space. No star warms it, but its core promises untold wealth."
+
+### Template: ROGUE_PLANET_MINED
+**Generates:** Play event
+**Slots:** [ROGUE_PLANET_NAME], [YEAR], [RARE_RESOURCE]
+
+**Patterns:**
+- "[YEAR]: Miners descended into the frozen dark of [ROGUE_PLANET_NAME], tearing [RARE_RESOURCE] from its dead veins."
+- "Nuclear heaters fighting absolute zero. We extracted [RARE_RESOURCE] from [ROGUE_PLANET_NAME]. [YEAR]."
+- "[YEAR]: The ice of [ROGUE_PLANET_NAME] cracked open, yielding [RARE_RESOURCE] to those brave enough to freeze."
+
+### Template: ROGUE_PLANET_LOST
+**Generates:** Play event
+**Slots:** [SYSTEM], [YEAR], [ROGUE_PLANET_NAME]
+
+**Patterns:**
+- "[YEAR]: [ROGUE_PLANET_NAME] drifts beyond the edge of [SYSTEM], returning to the endless void."
+- "The dark wanderer leaves [SYSTEM]. [ROGUE_PLANET_NAME] fades from our scopes. [YEAR]."
+- "[YEAR]: We watched [ROGUE_PLANET_NAME] slip away into the dark. The window closed."

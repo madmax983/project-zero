@@ -5902,3 +5902,27 @@
 **Replaces:** Clothing, cold protection
 **Code reference:** `Clothing`
 **Usage:** "We need more Fiber-Weave before the snow falls."
+
+## The Kinetic Heist (Spec 994)
+
+### Harvester Meteor
+**Replaces:** Asteroid strike, pirate bombardment
+**Code reference:** `HarvesterMeteor`
+**Usage:** "The Harvester Meteor shattered the northern ridge and began drinking our silos."
+
+### The Vault-Cracker
+**Replaces:** Kinetic Heist event
+**Code reference:** `N/A`
+**Usage:** "When the Vault-Cracker hit, we had minutes to save our alloys."
+
+## Rogue Planets (Spec 899)
+
+### The Drifter
+**Replaces:** Rogue Planet, sunless node
+**Code reference:** `RoguePlanet`
+**Usage:** "The Drifter has entered scanning range. Prepare the nuclear heaters."
+
+### The Deep Cold
+**Replaces:** Extreme Cold modifier on Rogue Planets
+**Code reference:** `ExtremeCold`
+**Usage:** "Mining in the Deep Cold took five souls, but the yield was worth it."
