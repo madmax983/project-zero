@@ -54,41 +54,43 @@ pub fn fire_damage_structure_system(world: &mut World) {
     let mut destroyed = Vec::new();
 
     // Query for fires first to avoid borrowing conflict
-    let mut fires = Vec::new();
+    // ⚡ Bolt Optimization:
+    // Use `HashMap` instead of a `Vec` for `fires` to provide O(1) lookups.
+    // This eliminates the O(F * S) nested loop, dropping it to O(S), greatly reducing CPU overhead.
+    // We sum intensities for overlapping fires on the same tile to preserve existing stacking behavior.
+    let mut fires = bevy_utils::HashMap::default();
     let mut fire_query = world.query::<(&GridPosition, &Fire)>();
     for (pos, fire) in fire_query.iter(world) {
-        fires.push((*pos, fire.intensity));
+        *fires.entry(*pos).or_insert(0.0) += fire.intensity;
     }
 
-    // Apply damage to structures at fire locations
-    // This is O(F * S) which is fine for MVP. Optimization: Spatial Map.
-    for (fire_pos, intensity) in fires {
-        let mut structure_query = world.query::<(
-            Entity,
-            &GridPosition,
-            &mut Structure,
-            Option<&Fragile>,
-            Option<&Building>,
-            Option<&Material>,
-        )>();
-        for (entity, pos, mut structure, fragile, building, material) in
-            structure_query.iter_mut(world)
-        {
-            if *pos == fire_pos {
-                let base_damage = 5.0 * intensity; // 5.0 damage per tick per intensity unit
+    if fires.is_empty() {
+        return;
+    }
 
-                // Fragile buildings take extra damage
-                let multiplier = fragile.map_or(1.0, |f| {
-                    (f.stacks as f32).mul_add(FRAGILITY_DAMAGE_MULTIPLIER, 1.0)
-                });
+    let mut structure_query = world.query::<(
+        Entity,
+        &GridPosition,
+        &mut Structure,
+        Option<&Fragile>,
+        Option<&Building>,
+        Option<&Material>,
+    )>();
 
-                structure.current_hp -= base_damage * multiplier;
+    for (entity, pos, mut structure, fragile, building, material) in structure_query.iter_mut(world)
+    {
+        if let Some(&intensity) = fires.get(pos) {
+            let base_damage = 5.0 * intensity; // 5.0 damage per tick per intensity unit
+            let multiplier = fragile.map_or(1.0, |f| {
+                (f.stacks as f32).mul_add(FRAGILITY_DAMAGE_MULTIPLIER, 1.0)
+            });
 
-                if structure.current_hp <= 0.0 {
-                    let b_type = building.map(|b| b.building_type);
-                    let m_type = material.map(|m| m.0);
-                    destroyed.push((entity, *pos, b_type, m_type));
-                }
+            structure.current_hp -= base_damage * multiplier;
+
+            if structure.current_hp <= 0.0 {
+                let b_type = building.map(|b| b.building_type);
+                let m_type = material.map(|m| m.0);
+                destroyed.push((entity, *pos, b_type, m_type));
             }
         }
     }

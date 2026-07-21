@@ -1,7 +1,7 @@
 use bevy::prelude::*;
+use scale::cross_layer::generation_ship_mutiny::generation_ship_mutiny_chronicle_bridge;
 use scale::cross_layer::generation_ship_mutiny::MutinyEvent;
 use scale::layer1::core::chronicle::{AddChronicleEvent, EventImportance};
-use scale::cross_layer::generation_ship_mutiny::generation_ship_mutiny_chronicle_bridge;
 
 #[test]
 fn test_generation_ship_mutiny_triggers_chronicle() {

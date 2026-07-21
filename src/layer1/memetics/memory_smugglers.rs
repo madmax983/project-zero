@@ -53,8 +53,6 @@ pub fn process_job_execution_system(
     }
 }
 
-
-
 /// Marker component to prevent emitting duplicate events for MemeticDisassociation
 #[derive(Component)]
 pub struct ReportedMemeticDisassociation;

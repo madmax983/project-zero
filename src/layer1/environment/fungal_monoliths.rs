@@ -1,8 +1,8 @@
-use bevy_ecs::prelude::*;
-use bevy::prelude::Transform;
 use crate::layer1::entities::pop::Pop;
 use crate::layer1::psychology::needs::Needs;
 use crate::layer1::social::morale::Morale;
+use bevy::prelude::Transform;
+use bevy_ecs::prelude::*;
 
 #[derive(Component)]
 pub struct FungalMonolith {
@@ -24,7 +24,11 @@ pub fn fungal_monolith_eruption_system(
 ) {
     for (_, monolith_transform, cloud) in query.iter() {
         for (mut morale, mut needs, pop_transform) in pops.iter_mut() {
-            if monolith_transform.translation.distance(pop_transform.translation) <= cloud.radius {
+            if monolith_transform
+                .translation
+                .distance(pop_transform.translation)
+                <= cloud.radius
+            {
                 morale.value = 1.0;
                 needs.hunger = 0.0;
                 needs.rest = 0.0;
@@ -36,10 +40,10 @@ pub fn fungal_monolith_eruption_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy::prelude::Transform;
     use crate::layer1::entities::pop::Pop;
     use crate::layer1::psychology::needs::Needs;
     use crate::layer1::social::morale::Morale;
+    use bevy::prelude::Transform;
 
     fn spawn_test_world() -> World {
         World::new()
@@ -49,25 +53,47 @@ mod tests {
     fn test_monolith_spore_euphoria() {
         let mut world = spawn_test_world();
 
-        let pop_entity_in_range = world.spawn((
-            Pop,
-            Morale { value: 0.5, ..Default::default() },
-            Needs { hunger: 0.5, rest: 0.5, leisure: 0.5, hygiene: 0.5 },
-            Transform::from_xyz(5.0, 0.0, 0.0)
-        )).id();
+        let pop_entity_in_range = world
+            .spawn((
+                Pop,
+                Morale {
+                    value: 0.5,
+                    ..Default::default()
+                },
+                Needs {
+                    hunger: 0.5,
+                    rest: 0.5,
+                    leisure: 0.5,
+                    hygiene: 0.5,
+                },
+                Transform::from_xyz(5.0, 0.0, 0.0),
+            ))
+            .id();
 
-        let pop_entity_out_range = world.spawn((
-            Pop,
-            Morale { value: 0.5, ..Default::default() },
-            Needs { hunger: 0.5, rest: 0.5, leisure: 0.5, hygiene: 0.5 },
-            Transform::from_xyz(25.0, 0.0, 0.0)
-        )).id();
+        let pop_entity_out_range = world
+            .spawn((
+                Pop,
+                Morale {
+                    value: 0.5,
+                    ..Default::default()
+                },
+                Needs {
+                    hunger: 0.5,
+                    rest: 0.5,
+                    leisure: 0.5,
+                    hygiene: 0.5,
+                },
+                Transform::from_xyz(25.0, 0.0, 0.0),
+            ))
+            .id();
 
-        let _monolith_entity = world.spawn((
-            FungalMonolith { growth_stage: 1 },
-            EuphoricSporeCloud { radius: 10.0 },
-            Transform::from_xyz(0.0, 0.0, 0.0)
-        )).id();
+        let _monolith_entity = world
+            .spawn((
+                FungalMonolith { growth_stage: 1 },
+                EuphoricSporeCloud { radius: 10.0 },
+                Transform::from_xyz(0.0, 0.0, 0.0),
+            ))
+            .id();
 
         // Act: Run the eruption system (spores affect Pops)
         let mut schedule = Schedule::default();
@@ -76,7 +102,10 @@ mod tests {
 
         // Assert: Morale is locked at 1.0 (100%), Needs are frozen/reset for in range
         let morale = world.get::<Morale>(pop_entity_in_range).unwrap();
-        assert_eq!(morale.value, 1.0, "Euphoric spores should lock Morale at 100%");
+        assert_eq!(
+            morale.value, 1.0,
+            "Euphoric spores should lock Morale at 100%"
+        );
 
         let needs = world.get::<Needs>(pop_entity_in_range).unwrap();
         assert_eq!(needs.hunger, 0.0, "Hunger should be zeroed");
