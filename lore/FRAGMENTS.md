@@ -10564,3 +10564,31 @@ Used for The Feral Administration anvalanches of paperwork.
 - Subspace Spores
 - Null-Weed
 - the Whispering Ivy
+
+## The Kinetic Heist Fragments (Spec 994)
+
+### Fragment Type: [HARVESTER_NAME]
+- the Sky-Breaker
+- the Vault-Cracker
+- the Iron Leech
+- the Falling Greed
+
+### Fragment Type: [STOLEN_MATERIAL]
+- hard-won alloys
+- precious isotopes
+- refined components
+- the lifeblood of the colony
+
+## Rogue Planets Fragments (Spec 899)
+
+### Fragment Type: [ROGUE_PLANET_NAME]
+- the Midnight Pearl
+- the Frozen Sovereign
+- the Dark Wanderer
+- the Sunless Tomb
+
+### Fragment Type: [RARE_RESOURCE]
+- ancient crystalline deposits
+- primordial vacuum-forged metals
+- undisturbed tectonic wealth
+- deep-core silicates
