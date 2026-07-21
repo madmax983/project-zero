@@ -19,7 +19,6 @@ pub use crate::layer1::psychology::needs::Needs;
 pub use crate::layer1::social::Tavern;
 pub use crate::shared::log::MessageLog;
 
-#[cfg(feature = "nova")]
 pub use crate::layer1::oral_tradition::{OralTradition, Story, StoryGenre};
 
 #[cfg(feature = "nova")]
@@ -30,4 +29,8 @@ pub use crate::layer1;
 pub use crate::layer1::economy::resources::ColonyResources;
 pub use crate::layer1::nature::terrain::{TerrainGrid, TerrainType};
 pub use crate::layer1::tech::TechState;
+pub use bevy_ecs::component::Component;
+pub use bevy_ecs::entity::Entity;
 pub use bevy_ecs::prelude::*;
+pub use bevy_ecs::system::{Commands, Query, Res, ResMut};
+pub use bevy_ecs::world::World;
