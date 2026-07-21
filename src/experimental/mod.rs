@@ -232,3 +232,5 @@ pub mod toxic_personalities;
 
 #[cfg(feature = "nova")]
 pub mod gluttonous_aroma;
+#[cfg(feature = "nova")]
+pub mod psionic_overload;
