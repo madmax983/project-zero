@@ -28621,3 +28621,110 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you violently exterminate the parasites, risking massive casualties and structural damage, or abandon the deepest, richest mines to them?
 
 ---
+## The Archive of Regret
+
+**Layer:** 1
+
+**Fantasy:** A civilization that obsessively documents its own failures to ensure they are never repeated, but becomes paralyzed by the weight of its past.
+
+**Mechanic:** Players can construct a "Hall of Failures" monument. Whenever a negative event occurs (starvation, building collapse, combat loss), it generates a "Regret Data" resource. Pops visiting the Hall convert Regret Data into massive technology research boosts, representing lessons learned. However, high levels of stored Regret Data project a "Pessimism Field," severely degrading the Mood and Motivation of all nearby Pops, making them slower and less likely to start new tasks.
+
+**Emergence:** You suffer a devastating pirate raid that burns half your colony. The resulting Regret Data allows you to rapidly research advanced planetary shields, saving the colony long-term. But the sheer volume of trauma recorded in the Hall causes your remaining engineers to become so depressed by the detailed logs of their failure that they refuse to actually build the shields.
+
+**Tension:** Do you rapidly advance your technology by forcing your citizens to constantly relive their worst traumas, or maintain their mental health by letting them forget their mistakes, even if it means repeating them?
+
+---
+
+## Orbital Shadow Economies
+
+**Layer:** 2 -> 1
+
+**Fantasy:** The realization that the massive orbital structures blocking your sun are actually illicit black markets draining your surface wealth.
+
+**Mechanic:** Large Layer 2 orbital structures (like shipyards or habitats) physically block sunlight on Layer 1, creating permanent "Shadow Zones." In these zones, standard Law Enforcement presence drops to zero, and Pops naturally begin generating "Contraband" and setting up unregulated black markets.
+
+**Emergence:** You build a massive, glorious orbital ring to defend your capital. The permanent eclipse it casts over the city center ruins your solar power grid and plunges the capital into a crime wave. You try to send police, but they are corrupted by the sheer volume of untaxed wealth moving through the dark. Your defensive masterpiece has turned your capital into a wretched hive of scum and villainy.
+
+**Tension:** Do you prioritize massive, efficient orbital infrastructure knowing it will physically darken and corrupt the society beneath it, or build inefficiently to keep your cities in the light?
+
+---
+
+## The Phantom Limb of Logistics
+
+**Layer:** Cross-layer
+
+**Fantasy:** Logistics networks so complex they continue operating even when the destinations no longer exist.
+
+**Mechanic:** When a Layer 1 colony or a Layer 2 outpost is utterly destroyed, the high-level routing AI (which updates very slowly) doesn't immediately register it. Automated cargo ships will continue to tirelessly deliver massive shipments of food, water, and fuel to the dead world, dumping them onto the irradiated ruins.
+
+**Emergence:** Your core world is starving due to a massive famine. You desperately try to reroute food, but you realize your automated freighters have been perfectly executing their schedules, delivering thousands of tons of grain to an outpost that was glassed by an orbital bombardment three months ago. The grain is now feeding a massive, localized ecosystem of mutated vermin on the dead world.
+
+**Tension:** Do you invest in expensive, vulnerable FTL communication arrays for real-time logistical updates, or rely on slow, robust automated routes that might stubbornly feed ghosts while your living citizens starve?
+
+---
+
+## The Sub-Glacial Resonance
+
+**Layer:** 1
+
+**Fantasy:** Living on a frozen world where the ice acts as a massive, natural acoustic amplifier for something deep below.
+
+**Mechanic:** On 'Ice World' planet types, building heavy industrial machinery (like deep drills or thermal processors) generates "Seismic Noise." The ice crust amplifies this noise, creating a "Resonance Field." Low levels of Resonance slightly speed up mining operations by vibrating the rock. High levels cause the ice to act like a giant speaker cone, blasting a sanity-draining hum across the colony that tanks Mood and prevents Pops from sleeping, while also rapidly cracking structural foundations.
+
+**Emergence:** You try to rapidly build a massive thermal generator to survive a multi-year winter. The generator's vibrations hit the perfect resonant frequency of the ice shelf. Your Pops don't freeze, but they haven't slept in weeks due to the deafening hum, leading to a mass psychosis event where they attempt to intentionally sabotage the generator just to get some quiet.
+
+**Tension:** Do you endure the freezing cold and slow production to maintain the sanity of your Pops, or embrace the noise and rely on deafened, exhausted workers to run a hyper-efficient industrial complex?
+
+---
+
+## The Cargo Cult Epiphany
+
+**Layer:** Cross-layer (2 -> 1)
+
+**Fantasy:** A forgotten colony worshiping automated supply drops, only to realize the "gods" are just an accounting error.
+
+**Mechanic:** Occasionally, a colony loses all Layer 2 communication but continues to receive automated, scheduled supply pods from a long-dead logistics network. If communication is restored centuries later (either by the player rediscovering the world or a random event), the Pops suffer a massive "Epiphany Shock." The realization that their religious rituals surrounding the "Sky-Gifts" were meaningless drops Global Morale to near-zero and immediately triggers widespread rebellion and the destruction of the landing pads.
+
+**Emergence:** You finally reconnect a lost sector to your empire, expecting a joyful reunion. Instead, the moment they realize you are just a bureaucratic entity and not divine, they burn the very spaceports you need to supply them, choosing starvation over the destruction of their worldview.
+
+**Tension:** Do you reveal the truth to integrate them into your empire, risking immediate, violent societal collapse, or do you anonymously maintain the illusion, dedicating a massive, permanent chunk of your economy to pretending to be their gods?
+
+---
+
+## Biomech Empathy Contagion
+
+**Layer:** 1
+
+**Fantasy:** Cybernetic augmentations that not only share physical load but unintentionally broadcast emotional states across the workforce.
+
+**Mechanic:** Pops can be equipped with "Neural Linkers" to increase coordination and work speed in complex tasks (like engineering or surgery). However, these linkers lack emotional firewalls. If one linked Pop suffers a severe trauma (e.g., watching a friend die, suffering an injury), they broadcast a "Panic Spike" to all other linked Pops on the grid, instantly dropping their Morale and causing them to abandon their tasks.
+
+**Emergence:** Your elite, fully-linked engineering corps is rapidly repairing the planetary shield generator under heavy bombardment. One engineer gets crushed by falling rubble. The sudden spike of agony is broadcast to the rest of the team; they all simultaneously collapse in phantom pain and panic, completely halting the repairs and dooming the colony.
+
+**Tension:** Do you rely on isolated, slower workers who won't emotionally cascade, or use the hyper-efficient Neural Linkers, knowing that a single localized tragedy will instantly traumatize your entire critical workforce?
+
+## Thermodynamic Tomb Worlds
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Settling a world so choked with ancient, decaying industry that the atmosphere itself is a lethal furnace, and survival means managing the planet's slow heat death.
+
+**Mechanic:** Certain 'Tomb Worlds' have a massive, pre-existing 'Heat Sink' capacity, but an incredibly high baseline temperature. Building infrastructure on these worlds generates double the industrial output but triple the heat. The player cannot cool the planet; they can only delay its inevitable boil over. They must constantly build expendable "Thermal Venting Spires" that launch superheated gas into orbit, buying a few more years of survival before the spire melts.
+
+**Emergence:** You colonize a Tomb World to exploit its massive industrial potential to fuel a war. Your factories push the planetary temperature to critical levels. The resulting heat wave melts the polar ice caps, flooding the equatorial industrial zones and boiling your oceans, effectively terraforming the planet into a Venusian hellscape entirely by your own hand.
+
+**Tension:** Do you rapidly strip-mine the planet for its immense wealth, accelerating its destruction, or try to balance industry with massive, expensive cooling projects to keep the world habitable for a few more generations?
+
+---
+
+## The Mirrors of Regret
+
+**Layer:** 1
+
+**Fantasy:** Architecture that forces citizens to confront their own misdeeds, breeding either profound morality or intense paranoia.
+
+**Mechanic:** You can construct buildings out of a rare, semi-sentient 'Psionic Glass.' This glass is completely indestructible, but it visually reflects the viewer's 'Guilt' stat (accumulated from committing crimes, ignoring needs, or engaging in corrupt acts). A highly guilty Pop looking at the glass sees a horrifying, mutated reflection, drastically increasing their Stress. An innocent Pop sees a beautiful, idealized version of themselves, gaining a massive Morale boost.
+
+**Emergence:** You build your planetary capital entirely out of Psionic Glass to inspire your citizens. It works perfectly for the lower classes. However, your corrupt, elite administrators—who secretly embezzle funds—are so terrified by their own reflections that they refuse to enter the capital, completely paralyzing your government's bureaucracy.
+
+**Tension:** Do you use the glass to create a perfectly moral, self-policing society, knowing that anyone who makes a mistake will be psychologically tortured by their own architecture, or stick to normal glass and tolerate standard corruption?
