@@ -28728,3 +28728,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** You build your planetary capital entirely out of Psionic Glass to inspire your citizens. It works perfectly for the lower classes. However, your corrupt, elite administrators—who secretly embezzle funds—are so terrified by their own reflections that they refuse to enter the capital, completely paralyzing your government's bureaucracy.
 
 **Tension:** Do you use the glass to create a perfectly moral, self-policing society, knowing that anyone who makes a mistake will be psychologically tortured by their own architecture, or stick to normal glass and tolerate standard corruption?
+## Autopsy Rituals
+
+**Layer:** 1
+
+**Fantasy:** Understanding the dead to save the living, but offending the colony in the process.
+
+**Mechanic:** Medical pops can perform an 'Autopsy' action on dead pops to generate massive science points and cure-research for plagues, but it destroys the corpse entirely and generates a huge "Desecration" morale penalty for the deceased's family and friends.
+
+**Emergence:** During a severe plague, you order autopsies on the first victims to find a cure. The cure is found, but the family of the victim starts a violent riot, destroying the hospital and the cure with it.
+
+**Tension:** Do you sacrifice the sanctity of the dead to save the colony, risking an emotional rebellion, or respect the dead and hope the plague passes?
+
+---
+
+## Smuggler's Dead Drop
+
+**Layer:** Cross-layer
+
+**Fantasy:** A shadow economy operating right outside your airlocks.
+
+**Mechanic:** Smuggler ships on Layer 2 won't dock at official ports; instead, they eject unpowered cargo pods ("Dead Drops") into planetary orbit or remote Layer 1 wilderness tiles. Pops must venture out to find and retrieve the pods, which contain illicit, high-value goods, but retrieving them raises "Suspicion" and invites Pirate raids.
+
+**Emergence:** You desperately need medicine during a blockade. A dead drop lands in the middle of a hostile xenoflora forest. Your retrieval team gets the medicine, but the resulting pirate attention draws a massive raid to your weakened defenses.
+
+**Tension:** Do you risk exploring dangerous territory and inviting pirate attacks for black-market goods, or rely entirely on legal, easily blockaded trade?
+
+---
+
+## Sentient Tundra
+
+**Layer:** 1
+
+**Fantasy:** The very ground beneath your feet is thinking, and it hates the heat.
+
+**Mechanic:** On ice worlds, the permafrost itself is a massive, slow-moving neural network. Building heat-generating structures (like reactors or heavy industry) physically damages the network, causing it to retaliate by spawning "Frost-Golems" or triggering localized, targeted blizzards to cool the area.
+
+**Emergence:** You build your capital around a massive geothermal vent for free energy. The Sentient Tundra reacts to the intense heat by continually sending blizzards that freeze your crops and spawning golems that smash the vent pipes, forcing you into a constant war with the weather.
+
+**Tension:** Do you use efficient, heat-producing industry and fight the planet, or use slow, cold-based technology to stay hidden from the native intelligence?
+
+---
