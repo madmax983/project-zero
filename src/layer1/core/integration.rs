@@ -3240,6 +3240,3 @@ pub fn temporal_smuggling_chronicle_bridge(
         });
     }
 }
-
-
-

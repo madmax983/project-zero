@@ -4,3 +4,6 @@
 ## [Performance]
 **Learning:** In Bevy, `query.iter().len()` is an O(1) operation (via ExactSizeIterator) because Archetypes maintain their counts.
 **Action:** When collecting items from a query into a new vector, use `Vec::with_capacity(query.iter().len())` rather than an un-sized `Vec::new()` to safely avoid dynamic reallocation overhead. This is safe and circumvents borrow-checker issues if `world` ownership flows cleanly.
+**[Fix fire logic overlapping accumulation]**
+**Learning:** When moving from nested iteration to an intermediate HashMap to avoid O(N*M) lookups, using `HashMap::from_iter` or standard `.collect()` overwrites elements if multiple entities map to the same key, changing functional behavior.
+**Action:** When grouping components by position or other keys where multiples might coexist, manually accumulate values (e.g. `*map.entry(pos).or_default() += val;`) to preserve stack behaviors. Always remove temporary scratchpad scripts (like `.patch` or `.py` files) before concluding a PR.

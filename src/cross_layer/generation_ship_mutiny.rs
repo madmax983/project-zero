@@ -54,7 +54,6 @@ pub fn evaluate_mutiny_system(
     }
 }
 
-
 /// INT-982: Bridges MutinyEvent to AddChronicleEvent (Chronicle)
 pub fn generation_ship_mutiny_chronicle_bridge(
     mut events: bevy_ecs::event::EventReader<

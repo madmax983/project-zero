@@ -1,10 +1,10 @@
 use bevy_app::{App, Update};
 use bevy_ecs::prelude::*;
-use scale::layer1::cassandra_syndrome::{CultLeader, DoomsdayWarningEvent, Prophetic};
-use scale::layer1::core::chronicle::AddChronicleEvent;
 use scale::layer1::cassandra_syndrome::{
     cassandra_cult_chronicle_bridge, cassandra_syndrome_chronicle_bridge,
 };
+use scale::layer1::cassandra_syndrome::{CultLeader, DoomsdayWarningEvent, Prophetic};
+use scale::layer1::core::chronicle::AddChronicleEvent;
 use scale::layer1::environment::disasters::DisasterType;
 use scale::layer1::pop::Pop;
 
