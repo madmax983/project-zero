@@ -53,6 +53,7 @@ mod tests {
             1.0,  // Efficiency
             None, // Season
             None, // Solar Cycle
+            None, // Weather
             0.0,  // risk_pct
             None, // Singularity mass
         );
