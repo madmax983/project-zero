@@ -567,7 +567,6 @@ See `design/IDEAS.md` for unspecced concepts.
 
 
 - [ ] `992` The Fungal Monoliths — `specs/992-the-fungal-monoliths.md`
-- [ ] `993` The Fractal Bureaucracy — `specs/993-the-fractal-bureaucracy.md`
 
 
 
