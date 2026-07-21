@@ -35,3 +35,5 @@ pub mod feral_administration;
 pub use feral_administration::*;
 pub mod sentient_bureaucracy;
 pub use sentient_bureaucracy::*;
+pub mod fractal_bureaucracy;
+pub use fractal_bureaucracy::*;
