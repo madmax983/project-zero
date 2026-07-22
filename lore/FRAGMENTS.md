@@ -10592,3 +10592,56 @@ Used for The Feral Administration anvalanches of paperwork.
 - primordial vacuum-forged metals
 - undisturbed tectonic wealth
 - deep-core silicates
+
+## The Fractal Bureaucracy Fragments (Spec 993)
+## Fragment Type: [EDICT_NAME]
+- the Archival Mandate
+- the Sub-Level Decree
+- the Expansion Directive
+
+## Fragment Type: [BROKEN_NODE]
+- the Primary Hub
+- the East Wing Sub-Office
+- the Deep Archival Node
+
+## The Fungal Monoliths Fragments (Spec 992)
+## Fragment Type: [MONOLITH_NAME]
+- the Grey Spire
+- the Quiet Stone
+- the Petalith
+
+## The Generation Ship Mutiny Fragments (Spec 982)
+## Fragment Type: [FACTION_NAME]
+- the Engine Worshippers
+- the Ground-Seekers
+- the Mutineers
+
+## The Symbiotic Data-Weavers Fragments (Spec 998)
+## Fragment Type: [FOREST_NAME]
+- the Bioluminescent Array
+- the Weeping Servers
+- the Root-Core
+
+## Ephemeral Architecture Fragments (Spec 420)
+## Fragment Type: [MATERIAL]
+- packed mud
+- glacial ice
+- compressed salt
+
+## Heroic Acts Fragments (Spec 1137)
+## Fragment Type: [HERO_NAME]
+- a lone defender
+- the last guard
+- a forgotten soldier
+
+## Memory Smugglers Fragments (Spec 1274)
+## Fragment Type: [FAKE_MEMORY]
+- a perfect summer
+- a heroic victory
+- an Earth that never was
+
+## Chronological Stutter Fragments (Spec 1245)
+## Fragment Type: [FLEET_NAME]
+- the Lost Vanguard
+- the Stuttering Armada
+- the Time-Torn Fleet

@@ -10409,3 +10409,139 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: [ROGUE_PLANET_NAME] drifts beyond the edge of [SYSTEM], returning to the endless void."
 - "The dark wanderer leaves [SYSTEM]. [ROGUE_PLANET_NAME] fades from our scopes. [YEAR]."
 - "[YEAR]: We watched [ROGUE_PLANET_NAME] slip away into the dark. The window closed."
+
+## The Fractal Bureaucracy Templates (Spec 993)
+
+### Template: FRACTAL_BUREAUCRACY_EXPANSION
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [EDICT_NAME]
+**Patterns:**
+- "[YEAR]: To comply with the [EDICT_NAME], [COLONY] begins construction of the required administrative fractals."
+- "The [EDICT_NAME] demands more space. [COLONY] expands its bureaucratic footprint. [YEAR]."
+- "[COLONY], [YEAR]: We trade living space for compliance. The [EDICT_NAME] necessitates another Sub-Office."
+
+### Template: LOGIC_CASCADE
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [BROKEN_NODE]
+**Patterns:**
+- "[YEAR]: A disruption at the [BROKEN_NODE] triggered a Logic Cascade. The administration of [COLONY] is paralyzed."
+- "The fractal chain broke at the [BROKEN_NODE]. A Logic Cascade sweeps through [COLONY]. [YEAR]."
+- "[COLONY], [YEAR]: Chaos in the sectors. A Logic Cascade caused by a missing [BROKEN_NODE] halts all processing."
+
+## The Fungal Monoliths Templates (Spec 992)
+
+### Template: MONOLITH_EXCAVATED
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [MONOLITH_NAME]
+**Patterns:**
+- "[YEAR]: They cracked open the [MONOLITH_NAME] at [COLONY]. The spores are loose."
+- "The [MONOLITH_NAME] was not a ruin. It was a spore-cyst. [COLONY] breathes it in. [YEAR]."
+- "[COLONY], [YEAR]: Excavation of the [MONOLITH_NAME] completed. The air is thick with euphoric dust."
+
+### Template: EUPHORIC_SPORES
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR]
+**Patterns:**
+- "[YEAR]: The workers at [COLONY] are smiling. They don't eat. They don't sleep. They just smile."
+- "Total euphoria in [COLONY]. The granaries are empty, but no one cares. [YEAR]."
+- "[COLONY], [YEAR]: A perfect, starving happiness. The spores provide."
+
+## The Generation Ship Mutiny Templates (Spec 982)
+
+### Template: MUTINY_DECLARED
+**Generates:** Play event (chronicle during game)
+**Slots:** [SHIP_NAME], [YEAR], [FACTION_NAME]
+**Patterns:**
+- "[YEAR]: The [FACTION_NAME] seized the bridge of the [SHIP_NAME]. The original mission is void."
+- "Mutiny on the [SHIP_NAME]. The [FACTION_NAME] demands a new course. [YEAR]."
+- "[SHIP_NAME], [YEAR]: Blood in the corridors. The [FACTION_NAME] refuses to land."
+
+### Template: MISSION_FORGOTTEN
+**Generates:** Play event (chronicle during game)
+**Slots:** [SHIP_NAME], [YEAR]
+**Patterns:**
+- "[YEAR]: The descendants on the [SHIP_NAME] no longer know what Earth was."
+- "The original mandate is lost. The [SHIP_NAME] is their entire universe now. [YEAR]."
+- "[SHIP_NAME], [YEAR]: They worship the engine. The destination is a myth."
+
+## The Symbiotic Data-Weavers Templates (Spec 998)
+
+### Template: DATA_FOREST_PLANTED
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [FOREST_NAME]
+**Patterns:**
+- "[YEAR]: [COLONY] seeded the [FOREST_NAME]. A living supercomputer takes root."
+- "We traded silicon for sap. The [FOREST_NAME] begins processing in [COLONY]. [YEAR]."
+- "[COLONY], [YEAR]: The [FOREST_NAME] glows with data. The network is alive."
+
+### Template: NETWORK_WILTING
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [FOREST_NAME]
+**Patterns:**
+- "[YEAR]: Drought strikes [COLONY]. The [FOREST_NAME] wilts, and the data is lost."
+- "The leaves brown. The servers die. The [FOREST_NAME] in [COLONY] is failing. [YEAR]."
+- "[COLONY], [YEAR]: A systemic crash. The [FOREST_NAME] cannot compute without water."
+
+## Ephemeral Architecture Templates (Spec 420)
+
+### Template: EPHEMERAL_CONSTRUCTED
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [MATERIAL], [STRUCTURE_TYPE]
+**Patterns:**
+- "[YEAR]: [COLONY] raised a [STRUCTURE_TYPE] of [MATERIAL]. It will not last, but it will serve for now."
+- "Desperation demands speed. A [MATERIAL] [STRUCTURE_TYPE] built in [COLONY]. [YEAR]."
+- "[COLONY], [YEAR]: We build with [MATERIAL]. The [STRUCTURE_TYPE] stands against the elements, briefly."
+
+### Template: STRUCTURE_DISSOLVED
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [MATERIAL], [STRUCTURE_TYPE]
+**Patterns:**
+- "[YEAR]: The season turned. The [MATERIAL] [STRUCTURE_TYPE] in [COLONY] melted away."
+- "Nature reclaims its own. The [MATERIAL] [STRUCTURE_TYPE] dissolves into the earth at [COLONY]. [YEAR]."
+- "[COLONY], [YEAR]: The [STRUCTURE_TYPE] is gone. The [MATERIAL] could not endure."
+
+## Heroic Acts Templates (Spec 1137)
+
+### Template: HEROIC_SACRIFICE
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [HERO_NAME]
+**Patterns:**
+- "[YEAR]: [HERO_NAME] held the line at [COLONY]. A final, burning stand."
+- "We remember [HERO_NAME]. They bought [COLONY] time with their life. [YEAR]."
+- "[COLONY], [YEAR]: A heroic act. [HERO_NAME] burned bright and went dark."
+
+## Memory Smugglers Templates (Spec 1274)
+
+### Template: MEMORY_BOUGHT
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [FAKE_MEMORY]
+**Patterns:**
+- "[YEAR]: The black market sells [FAKE_MEMORY] in [COLONY]. A momentary escape from the dark."
+- "They buy dreams of [FAKE_MEMORY] to survive [COLONY]. [YEAR]."
+- "[COLONY], [YEAR]: Artificial joy. The engrams of [FAKE_MEMORY] are in high demand."
+
+### Template: MEMETIC_DISASSOCIATION
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [POP_NAME]
+**Patterns:**
+- "[YEAR]: [POP_NAME] forgot their own children. The fake memories consumed the real ones in [COLONY]."
+- "Memetic disassociation in [COLONY]. [POP_NAME] no longer knows who they are. [YEAR]."
+- "[COLONY], [YEAR]: The cost of the dream. [POP_NAME] is lost in the fiction."
+
+## Chronological Stutter Templates (Spec 1245)
+
+### Template: CHRONO_STUTTER_ARRIVAL
+**Generates:** Play event (chronicle during game)
+**Slots:** [FLEET_NAME], [YEAR], [DESTINATION], [DELAY_YEARS]
+**Patterns:**
+- "[YEAR]: The [FLEET_NAME] finally arrives at [DESTINATION]. Their clocks say they left yesterday. It has been [DELAY_YEARS] years."
+- "A temporal anomaly. The [FLEET_NAME] reaches [DESTINATION] after a [DELAY_YEARS] year stutter. [YEAR]."
+- "[DESTINATION], [YEAR]: The [FLEET_NAME] emerges from the hyperlane. They are [DELAY_YEARS] years out of sync."
+
+### Template: CHRONO_STUTTER_EARLY
+**Generates:** Play event (chronicle during game)
+**Slots:** [FLEET_NAME], [YEAR], [DESTINATION]
+**Patterns:**
+- "[YEAR]: The [FLEET_NAME] arrives at [DESTINATION] before the order was given to launch."
+- "The [FLEET_NAME] beat their own transmission to [DESTINATION]. A reverse stutter. [YEAR]."
+- "[DESTINATION], [YEAR]: The [FLEET_NAME] is here. History is bleeding backward."
