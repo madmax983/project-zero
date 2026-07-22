@@ -28905,3 +28905,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you intervene, curing the affliction and losing the massive free labor boost, or let the Ghost Shifts continue, accepting the inevitable wave of deaths for short-term industrial dominance?
 
 ---
+## The Substrate Whisper
+
+**Layer:** Cross-layer
+
+**Fantasy:** Pops begin to worship you (the Substrate) directly, misinterpreting your UI interactions as divine intervention.
+
+**Mechanic:** When the player manually overrides a pop's Utility AI or frequently focuses the camera on specific tiles, nearby pops develop "Substrate Cults." They build unprompted shrines on heavily-viewed tiles and occasionally pause work to await your "guidance."
+
+**Emergence:** A player micro-managing a mining operation accidentally spawns a cult that refuses to mine unless constantly ordered to, viewing autonomous work as heresy against the Substrate.
+
+**Tension:** Do you micro-manage for short-term optimal efficiency, risking the colony becoming entirely dependent on your direct input, or let them make suboptimal choices to maintain their independence?
+
+---
+
+## Feral Infrastructure
+
+**Layer:** 1
+
+**Fantasy:** Your abandoned automation systems don't just shut down—they adapt and continue their core directive without you.
+
+**Mechanic:** If a heavily automated colony loses its biological pops, the autonomous extractors and fabricators keep running. Over decades, they cannibalize ruins to optimize for their last set quota, creating a hostile "Grey Sprawl" that views new biological colonists as inefficiencies to be removed.
+
+**Emergence:** You return to a lost mining world centuries later expecting ruins, only to find the entire crust converted into a massive, self-repairing factory that actively vents oxygen to stop you from interfering with its endless production loop.
+
+**Tension:** Do you rely on high automation to survive harsh worlds, knowing a collapse will leave the planet permanently hostile to future generations?
+
+---
+
+## The Wound's Echo
+
+**Layer:** 2
+
+**Fantasy:** Systems near the broken space of The Wound experience localized distortions, receiving ghosts from their own history.
+
+**Mechanic:** Fleets traveling near The Wound occasionally duplicate, with the "Echo" fleet dropping out of warp decades later. These Echo ships contain outdated technology and confused crews who think no time has passed.
+
+**Emergence:** A desperately losing war is suddenly turned around when your grand armada, originally lost to The Wound two centuries ago, unexpectedly arrives right over your besieged homeworld to defend it.
+
+**Tension:** Do you route vital trade and military forces through dangerous, Wound-adjacent systems in hopes of "banking" temporal echoes for the future, or stick to safe routes and fight alone?
+
+---
