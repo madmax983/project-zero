@@ -1,6 +1,6 @@
+use crate::layer1::Pop;
 use bevy::prelude::*;
 use bevy::utils::HashSet;
-use crate::layer1::Pop;
 
 #[derive(Component)]
 pub struct AdminHub;
@@ -97,8 +97,8 @@ pub fn apply_logic_cascade_system(
 
 #[cfg(test)]
 mod tests {
-    use bevy::prelude::*;
     use super::*;
+    use bevy::prelude::*;
 
     fn spawn_test_world() -> World {
         World::new()
@@ -110,20 +110,33 @@ mod tests {
         world.insert_resource(Events::<LogicCascadeEvent>::default());
 
         let pop_entity = world.spawn_empty().id();
-        world.entity_mut(pop_entity).insert((Pop, PopStatus { is_confused: false }));
+        world
+            .entity_mut(pop_entity)
+            .insert((Pop, PopStatus { is_confused: false }));
 
         // Spawn a Hub without the required Sub-Offices and Nodes
         let hub_entity = world.spawn_empty().id();
-        world.entity_mut(hub_entity).insert((AdminHub, BuildingLocation(0, 0)));
+        world
+            .entity_mut(hub_entity)
+            .insert((AdminHub, BuildingLocation(0, 0)));
 
         // Act
         let mut schedule = Schedule::default();
-        schedule.add_systems((fractal_bureaucracy_validation_system, apply_logic_cascade_system).chain());
+        schedule.add_systems(
+            (
+                fractal_bureaucracy_validation_system,
+                apply_logic_cascade_system,
+            )
+                .chain(),
+        );
         schedule.run(&mut world);
 
         // Assert: Pop should be confused due to broken chain
         let status = world.get::<PopStatus>(pop_entity).unwrap();
-        assert!(status.is_confused, "Broken fractal chain must cause Logic Cascade (confusion) on Pops");
+        assert!(
+            status.is_confused,
+            "Broken fractal chain must cause Logic Cascade (confusion) on Pops"
+        );
     }
 
     #[test]
@@ -132,7 +145,9 @@ mod tests {
         world.insert_resource(Events::<LogicCascadeEvent>::default());
 
         let pop_entity = world.spawn_empty().id();
-        world.entity_mut(pop_entity).insert((Pop, PopStatus { is_confused: false }));
+        world
+            .entity_mut(pop_entity)
+            .insert((Pop, PopStatus { is_confused: false }));
 
         // Correct chain: Hub at (0,0) -> Office at (1,0) -> Node at (2,0)
         world.spawn((AdminHub, BuildingLocation(0, 0)));
@@ -140,12 +155,21 @@ mod tests {
         world.spawn((ArchivalNode, BuildingLocation(2, 0)));
 
         let mut schedule = Schedule::default();
-        schedule.add_systems((fractal_bureaucracy_validation_system, apply_logic_cascade_system).chain());
+        schedule.add_systems(
+            (
+                fractal_bureaucracy_validation_system,
+                apply_logic_cascade_system,
+            )
+                .chain(),
+        );
         schedule.run(&mut world);
 
         // Assert: Pop should NOT be confused
         let status = world.get::<PopStatus>(pop_entity).unwrap();
-        assert!(!status.is_confused, "Correct fractal chain should not cause Logic Cascade");
+        assert!(
+            !status.is_confused,
+            "Correct fractal chain should not cause Logic Cascade"
+        );
 
         // Break chain (Node moved too far away)
         world.spawn((AdminHub, BuildingLocation(10, 10)));
@@ -154,6 +178,9 @@ mod tests {
 
         schedule.run(&mut world);
         let status = world.get::<PopStatus>(pop_entity).unwrap();
-        assert!(status.is_confused, "Broken fractal chain should cause Logic Cascade");
+        assert!(
+            status.is_confused,
+            "Broken fractal chain should cause Logic Cascade"
+        );
     }
 }
