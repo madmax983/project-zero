@@ -28985,3 +28985,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you utilize this paradoxical gift to jumpstart your colony, accepting the terrifying, random cost of temporal erosion, or destroy your own future ruins to protect what you have now?
 
 ---
+## The Memory Rot
+
+**Layer:** 1
+
+**Fantasy:** The psychological burden of remembering the galaxy's history becomes a physical hazard.
+
+**Mechanic:** Pops assigned to 'Archive' jobs accumulate a 'Memory Rot' debuff over time as they process ancient, fragmented data. If the debuff maxes out, they enter a fugue state, abandoning their needs and obsessively engraving cryptic warnings on nearby structures until they are treated in a Medical Bay.
+
+**Emergence:** A critical archivist might suddenly start vandalizing the colony's central reactor, leading to a frantic scramble to contain them before morale plummets or the engraved structure is damaged.
+
+**Tension:** Do you risk your pops' sanity to uncover vital historical technologies, or leave the past buried to maintain a stable, unburdened workforce?
+
+---
+
+## Supply Chain Sentimentalism
+
+**Layer:** Cross-layer (2 -> 1)
+
+**Fantasy:** Colonies become irrationally attached to specific ships or trade routes that have reliably supplied them through hard times.
+
+**Mechanic:** When a specific trade ship successfully delivers critical resources to a starving colony multiple times, the colony forms a 'Sentimental Bond' with that ship. The arrival of that specific ship provides a colony-wide morale boost. If the ship is destroyed or decommissioned, the bonded colony suffers a massive, lingering grief penalty.
+
+**Emergence:** Players might find themselves sending a hopelessly obsolete, slow, and defenseless cargo hauler on dangerous runs simply because replacing it would trigger a crippling depression on their most productive mining world.
+
+**Tension:** Do you optimize your logistics network by scrapping old ships, or maintain inefficient, vulnerable routes to preserve the fragile morale of your dependent colonies?
+
+---
+
+## Diplomatic Misunderstanding
+
+**Layer:** 3
+
+**Fantasy:** The difficulty of communication leads to wars started by simple translation errors or cultural faux pas.
+
+**Mechanic:** When initiating diplomatic actions (like sending a gift or proposing an alliance) with an alien civilization, there is a chance based on Xenolinguistics tech that the message is grossly misinterpreted. A gesture of peace might be seen as a mortal insult, instantly degrading relations or even triggering a war.
+
+**Emergence:** A player attempts to send emergency food aid to a struggling neighbor, only for the neighbor to interpret the gesture as a declaration that they are weak and ripe for conquest, leading to a preemptive strike.
+
+**Tension:** Do you risk interacting with alien civilizations early on when the chance of catastrophic misunderstanding is high, or remain isolated until you've heavily invested in translation technologies?
+
+---
