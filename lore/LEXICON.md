@@ -5926,3 +5926,28 @@
 **Replaces:** Extreme Cold modifier on Rogue Planets
 **Code reference:** `ExtremeCold`
 **Usage:** "Mining in the Deep Cold took five souls, but the yield was worth it."
+
+## Logic Cascade (Spec 993)
+**Replaces:** Administration crash, global confusion
+**Code reference:** `LogicCascadeEvent`
+**Usage:** "The broken chain triggered a Logic Cascade."
+
+## Euphoric Spores (Spec 992)
+**Replaces:** Forced happiness, starvation distraction
+**Code reference:** `EuphoricSporeCloud`
+**Usage:** "The Euphoric Spores make the hunger bearable."
+
+## Data Forest (Spec 998)
+**Replaces:** Server farm, research lab
+**Code reference:** `DataForest`
+**Usage:** "The Data Forest needs water to compute."
+
+## Chronological Stutter (Spec 1245)
+**Replaces:** Time anomaly, fleet delay
+**Code reference:** `ChronologicalStutter`
+**Usage:** "The fleet is caught in a Chronological Stutter."
+
+## Memetic Disassociation (Spec 1274)
+**Replaces:** Skill loss, amnesia, identity crisis
+**Code reference:** `MemeticDisassociation`
+**Usage:** "Memetic Disassociation claimed another engineer."
