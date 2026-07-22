@@ -98,7 +98,6 @@ pub fn apply_logic_cascade_system(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy::prelude::*;
 
     fn spawn_test_world() -> World {
         World::new()

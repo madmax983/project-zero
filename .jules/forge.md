@@ -53,3 +53,7 @@
 **[Testing Refactoring with Targeted Tests]**
 **Learning:** A full `cargo test` on the workspace can take over 400s and time out. When refactoring a specific module, relying on a full test suite run slows down feedback and causes timeouts.
 **Action:** Always run targeted tests using `-p <package> --lib <module::path>` (e.g., `cargo test -p scale --lib layer3::diplomacy::xenolinguistics::tests`) to quickly and safely verify that the refactoring did not break behavior.
+
+**[Refactoring Bevy Query Complexity]**
+**Learning:** Monolithic Bevy systems that query dozens of components (e.g., `collect_workers_by_target`) frequently cause `clippy::type_complexity` warnings because of massive, deeply nested tuples. This also leads to unreadable closure arguments in subsequent `.filter()` and `.map()` calls where variables are extracted via structural pattern matching on those massive tuples.
+**Action:** Replace huge query tuples with a dedicated struct leveraging `#[derive(bevy_ecs::query::QueryData)]`. This eliminates the need for `#[allow(clippy::type_complexity)]`, allows for named field access inside iterators (e.g., `item.morale_comp`), and drastically improves code readability without changing behavior. Ensure that components that do not implement `Debug` (like many custom structs) are not forced to implement it by avoiding the `#[query_data(derive(Debug))]` macro on the struct unless strictly necessary.
