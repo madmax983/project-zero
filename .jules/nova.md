@@ -245,3 +245,8 @@
 **Concept:** Added `psionic_overload_system` to `src/experimental/psionic_overload.rs`. Connects `Trait::Sensitive` to `WeatherType::BlissStorm`. Sensitive pops naturally generate `knowledge` during a Bliss Storm, but this taxes their mental endurance and causes their `rest` need to decay rapidly.
 **Fate:** Submitted
 **Lesson:** Connects atmospheric hazard to psychological traits, giving sensitive pops a mechanical edge at the cost of fatigue.
+
+## [Gluttonous Trade]
+**Concept:** Added `gluttonous_trade_system` in `src/experimental/gluttonous_trade.rs`. Connects `Trait::Glutton` with `BuildingType::TradeDepot` and `Needs`. Pops with the Glutton trait passively regenerate `leisure` when they are within 3 tiles of a TradeDepot, representing them browsing the exotic food imports, but at the cost of slightly accelerated hunger.
+**Fate:** Submitted
+**Lesson:** Connects a personality trait with a specific economic building's physical location, making an otherwise industrial building an emergent leisure structure for specific populations, but at the cost of higher food consumption.
