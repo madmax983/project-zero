@@ -28946,3 +28946,42 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you route vital trade and military forces through dangerous, Wound-adjacent systems in hopes of "banking" temporal echoes for the future, or stick to safe routes and fight alone?
 
 ---
+## The Burden of Names
+
+**Layer:** 1
+
+**Fantasy:** Commemorating the dead becomes a logistical nightmare that impacts the living.
+
+**Mechanic:** When a pop dies, they leave behind a "Named Marker". This marker must be placed in a structure or the ground. Over time, the colony space fills up with these markers. Destroying or building over a marker gives a massive, long-lasting morale penalty to descendants.
+
+**Emergence:** A long-standing, successful colony eventually runs out of prime real estate because it's completely covered in the graves of its founders, forcing players to build inefficiently around them or risk a massive rebellion to bulldoze a cemetery.
+
+**Tension:** Do you respect the dead and cripple your spatial efficiency, or bulldoze history to build a much-needed reactor, angering the living?
+
+---
+## The Horizon Sickness
+
+**Layer:** Cross-layer (2 -> 1)
+
+**Fantasy:** The psychological toll of knowing you are lightyears away from help or home.
+
+**Mechanic:** Colonies on the fringes of the empire (measured by hyperlane distance to the capital) slowly accumulate a "Horizon Sickness" debuff on pops. This debuff decreases productivity and increases the chance of spontaneous, isolationist factions forming. It can only be mitigated by constant, expensive cultural broadcasts or frequent visits by high-status imperial fleets.
+
+**Emergence:** A highly profitable rim-world mining colony suddenly declares independence not because of taxes, but because they haven't seen an imperial ship in two generations and the psychological isolation became unbearable.
+
+**Tension:** Do you waste valuable fleet time and resources constantly visiting distant outposts to keep them sane, or abandon them to their madness and risk rebellion?
+
+---
+## Ruins of the Future
+
+**Layer:** 1
+
+**Fantasy:** Discovering advanced technology that was somehow built by your own civilization, in a future that hasn't happened yet, deposited by The Wound.
+
+**Mechanic:** Near systems affected by The Wound, expeditions can occasionally find "Chronological Debris" on planetary surfaces. These are advanced buildings that the player hasn't unlocked yet, bearing the player's own faction insignia. They provide massive bonuses but emit a "Temporal Dissonance" that randomly un-builds nearby structures or erases resources from stockpiles.
+
+**Emergence:** A struggling colony is saved by finding a hyper-advanced fusion reactor of their own design, only to watch in horror as the temporal dissonance slowly deletes their entire winter food supply.
+
+**Tension:** Do you utilize this paradoxical gift to jumpstart your colony, accepting the terrifying, random cost of temporal erosion, or destroy your own future ruins to protect what you have now?
+
+---
