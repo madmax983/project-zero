@@ -28850,3 +28850,58 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you force them into the open to establish a self-sustaining agricultural colony, weathering the massive morale hit, or lean into their phobia and build an entirely subterranean, import-dependent mining utopia?
 
 ---
+## The Artifact Commute
+
+**Layer:** 1
+
+**Fantasy:** Expanding your colony around a mysterious, unmovable object that provides both massive benefits and bizarre risks.
+
+**Mechanic:** Large, un-mineable alien artifacts dot the landscape. They emit auras (e.g., increased work speed, reduced hunger) but occasionally trigger localized reality-warping events (e.g., temporary blindness, spontaneous item duplication). Buildings must be constructed around them to harness the aura.
+
+**Emergence:** Pops might build a religion around the artifact if they work near it too long. An ill-timed reality warp during a harvest could destroy crops, or duplicate them and save a starving colony.
+
+**Tension:** Do you build your critical infrastructure near the artifact for the massive efficiency boost, risking catastrophic reality warps, or keep it quarantined and lose the benefits?
+
+---
+
+## Generational Grudges
+
+**Layer:** Cross-layer (1 & 2)
+
+**Fantasy:** A simple bar fight on a frontier world escalates into a system-wide trade embargo decades later.
+
+**Mechanic:** When pops are killed or severely wronged by another faction/group, their descendants inherit a "Grudge" memory. If enough pops in a colony hold a Grudge against another colony, they will refuse to load/unload trade ships from that colony, and might sabotage imported goods.
+
+**Emergence:** A minor riot over food shortages leads to the death of a prominent pop. Decades later, their descendants are now the dockworkers of your primary spaceport, and suddenly refuse to handle vital medical supplies from the colony that caused the riot.
+
+**Tension:** Do you forcefully relocate angry populations to break up the grudge-holders (tanking local morale), or appease them by cutting off lucrative trade routes?
+
+---
+
+## The Scrap Fleet
+
+**Layer:** 2
+
+**Fantasy:** Watching your majestic armada slowly turn into a duct-taped monstrosity as logistics fail.
+
+**Mechanic:** Ships require continuous maintenance from Layer 1 colonies. If maintenance resources fall short, ships don't explode; instead, they automatically replace broken modules with "Scrap" versions. Scrap modules work poorly, consume more fuel, and have a chance to vent atmosphere.
+
+**Emergence:** A cut-off fleet survives behind enemy lines for years, but returns home entirely composed of scrap, terrifying the local populace and breaking your own dockyard equipment when they try to repair them.
+
+**Tension:** Do you ground your fleet to preserve their high-tech status, or send them out to fight as an increasingly unreliable rust-bucket armada?
+
+---
+
+## Ghost Shifts
+
+**Layer:** 1
+
+**Fantasy:** Discovering that your factory is outperforming its quotas because pops are working themselves to death in their sleep.
+
+**Mechanic:** A rare psychological affliction (perhaps triggered by extreme stress or alien ruins) causes pops to sleepwalk and perform their assigned jobs. During a "Ghost Shift," they don't consume resources or require lighting, but their health slowly drains.
+
+**Emergence:** You celebrate a sudden spike in steel production, only to realize the entire night shift is composed of sleepwalking miners who are slowly dying of exhaustion, leading to a massive colony-wide funeral cascade.
+
+**Tension:** Do you intervene, curing the affliction and losing the massive free labor boost, or let the Ghost Shifts continue, accepting the inevitable wave of deaths for short-term industrial dominance?
+
+---
