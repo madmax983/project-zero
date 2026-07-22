@@ -182,4 +182,52 @@ mod tests {
             "Pop should gain mood modifier from breathing euphoric gas"
         );
     }
+
+    #[test]
+    fn test_trace_gas_grid_bounds() {
+        let mut grid = TraceGasGrid::new(10, 10);
+
+        // Out of bounds adds shouldn't panic
+        grid.add_gas(10, 5, GasType::Euphoric, 1.0);
+        grid.add_gas(5, 10, GasType::Fear, 1.0);
+
+        // Out of bounds gets should return 0.0 without panic
+        assert_eq!(grid.get_gas(10, 5, GasType::Euphoric), 0.0);
+        assert_eq!(grid.get_gas(5, 10, GasType::Fear), 0.0);
+    }
+
+    #[test]
+    fn test_add_and_get_gas_for_all_types() {
+        let mut grid = TraceGasGrid::new(10, 10);
+
+        grid.add_gas(2, 3, GasType::Euphoric, 0.5);
+        grid.add_gas(2, 3, GasType::Fear, 0.3);
+        grid.add_gas(2, 3, GasType::Rage, 0.8);
+
+        assert_eq!(grid.get_gas(2, 3, GasType::Euphoric), 0.5);
+        assert_eq!(grid.get_gas(2, 3, GasType::Fear), 0.3);
+        assert_eq!(grid.get_gas(2, 3, GasType::Rage), 0.8);
+    }
+
+    #[test]
+    fn test_decay_trace_gases() {
+        let mut world = World::new();
+        let mut gas_grid = TraceGasGrid::new(10, 10);
+
+        gas_grid.add_gas(1, 1, GasType::Euphoric, 1.0);
+        gas_grid.add_gas(1, 1, GasType::Fear, 1.0);
+        gas_grid.add_gas(1, 1, GasType::Rage, 1.0);
+
+        world.insert_resource(gas_grid);
+
+        let mut schedule = Schedule::default();
+        schedule.add_systems(decay_trace_gases_system);
+        schedule.run(&mut world);
+
+        let grid = world.resource::<TraceGasGrid>();
+
+        assert!((grid.get_gas(1, 1, GasType::Euphoric) - 0.99).abs() < f32::EPSILON);
+        assert!((grid.get_gas(1, 1, GasType::Fear) - 0.99).abs() < f32::EPSILON);
+        assert!((grid.get_gas(1, 1, GasType::Rage) - 0.99).abs() < f32::EPSILON);
+    }
 }

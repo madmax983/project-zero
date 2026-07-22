@@ -1,0 +1,6 @@
+🛡️ Sentry: [test coverage improvement] for TraceGasGrid
+
+🎯 Target: TraceGasGrid in src/layer1/nature/atmospheric_empathy.rs
+💣 Risk: Prevent panic on empty/invalid inputs and out of bounds grid access for all GasTypes (Euphoric, Fear, Rage).
+🧪 Strategy: Added table-driven tests for grid bounds, all gas types, and system decay.
+🔬 Verification: cargo test --lib -- nature::atmospheric_empathy::tests
