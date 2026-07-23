@@ -7,6 +7,7 @@ use crate::layer1::balance::{AGE_ADULT, AGE_ELDER, TICKS_PER_YEAR};
 use crate::layer1::pop::Speed;
 use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
+use bevy_ecs::query::QueryData;
 use rand::Rng;
 
 /// Life stages of a Pop.
@@ -49,25 +50,25 @@ impl Age {
     }
 }
 
+#[derive(QueryData)]
+#[query_data(mutable)]
+pub struct AgingQuery {
+    entity: Entity,
+    age: &'static mut Age,
+    speed: Option<&'static mut Speed>,
+    inside_chamber: Option<&'static mut crate::layer1::temporal_chamber::InsideChamber>,
+}
+
 /// System to increment age and handle life stage transitions.
-#[allow(clippy::type_complexity)]
 pub fn aging_system(
-    mut query: Query<
-        (
-            Entity,
-            &mut Age,
-            Option<&mut Speed>,
-            Option<&mut crate::layer1::temporal_chamber::InsideChamber>,
-        ),
-        Without<crate::layer1::cryo::CryoStasis>,
-    >,
+    mut query: Query<AgingQuery, Without<crate::layer1::cryo::CryoStasis>>,
     chambers: Query<&crate::layer1::temporal_chamber::TemporalChamber>,
     mut log: Option<ResMut<MessageLog>>,
 ) {
-    for (_entity, mut age, mut speed, inside_chamber) in &mut query {
+    for mut item in &mut query {
         let mut ticks_to_add = 1;
 
-        if let Some(mut inside) = inside_chamber {
+        if let Some(ref mut inside) = item.inside_chamber {
             let mut time_factor = 1.0;
             if let Ok(chamber) = chambers.get(inside.chamber_entity) {
                 if chamber.active {
@@ -88,27 +89,27 @@ pub fn aging_system(
             continue;
         }
 
-        age.ticks_alive += ticks_to_add;
+        item.age.ticks_alive += ticks_to_add;
 
-        let new_stage = if age.ticks_alive >= AGE_ELDER {
+        let new_stage = if item.age.ticks_alive >= AGE_ELDER {
             LifeStage::Elder
-        } else if age.ticks_alive >= AGE_ADULT {
+        } else if item.age.ticks_alive >= AGE_ADULT {
             LifeStage::Adult
         } else {
             LifeStage::Child
         };
 
-        if new_stage != age.stage {
+        if new_stage != item.age.stage {
             // Apply transition effects
             if new_stage == LifeStage::Elder {
-                if let Some(s) = speed.as_mut() {
+                if let Some(ref mut s) = item.speed {
                     s.base *= 0.8; // 20% slow down
                 }
                 if let Some(l) = log.as_mut() {
                     l.add("A colonist has become an Elder.");
                 }
             }
-            age.stage = new_stage;
+            item.age.stage = new_stage;
         }
     }
 }
