@@ -39,6 +39,7 @@
 use crate::layer1::lifecycle::Age;
 use crate::layer1::social::morale::Morale;
 use bevy_ecs::prelude::*;
+use bevy_ecs::query::QueryData;
 
 #[derive(Component, Debug)]
 pub struct Nostalgia;
@@ -49,14 +50,22 @@ pub struct RumorSpreadEvent {
     pub target: Entity,
 }
 
-#[allow(clippy::type_complexity)]
+#[derive(QueryData)]
+pub struct NostalgiaTriggerQuery {
+    entity: Entity,
+    age: &'static Age,
+    morale: &'static Morale,
+}
+
 pub fn nostalgia_trigger_system(
     mut commands: Commands,
-    query: Query<(Entity, &Age, &Morale), (With<crate::layer1::pop::Pop>, Without<Nostalgia>)>,
+    query: Query<NostalgiaTriggerQuery, (With<crate::layer1::pop::Pop>, Without<Nostalgia>)>,
 ) {
-    for (entity, age, morale) in query.iter() {
-        if age.ticks_alive >= 60 * crate::layer1::balance::TICKS_PER_YEAR && morale.value <= 20.0 {
-            commands.entity(entity).insert(Nostalgia);
+    for item in query.iter() {
+        if item.age.ticks_alive >= 60 * crate::layer1::balance::TICKS_PER_YEAR
+            && item.morale.value <= 20.0
+        {
+            commands.entity(item.entity).insert(Nostalgia);
         }
     }
 }

@@ -1,6 +1,7 @@
 use crate::layer1::economy::resources::{ColonyResources, ResourceType};
 use crate::layer1::morale::{MoodModifier, Morale};
 use bevy_ecs::prelude::*;
+use bevy_ecs::query::QueryData;
 
 #[derive(Component)]
 pub struct XenofloraPet {
@@ -25,31 +26,35 @@ impl Default for XenofloraPetSpreadConfig {
     }
 }
 
-#[allow(clippy::type_complexity)]
+#[derive(QueryData)]
+pub struct PotentialPetAdopterQuery {
+    entity: Entity,
+    pos: &'static crate::layer1::map::GridPosition,
+}
+
+#[derive(QueryData)]
+pub struct ExistingPetOwnerQuery {
+    pos: &'static crate::layer1::map::GridPosition,
+}
+
 pub fn pet_viral_spread_system(
     mut commands: Commands,
-    query: Query<
-        (Entity, &crate::layer1::map::GridPosition),
-        (With<crate::layer1::pop::Pop>, Without<XenofloraPet>),
-    >,
-    pet_query: Query<
-        &crate::layer1::map::GridPosition,
-        (With<crate::layer1::pop::Pop>, With<XenofloraPet>),
-    >,
+    query: Query<PotentialPetAdopterQuery, (With<crate::layer1::pop::Pop>, Without<XenofloraPet>)>,
+    pet_query: Query<ExistingPetOwnerQuery, (With<crate::layer1::pop::Pop>, With<XenofloraPet>)>,
 ) {
     let config = XenofloraPetSpreadConfig::default();
     let mut rng = rand::thread_rng();
 
-    for (entity, pos) in query.iter() {
+    for item in query.iter() {
         // Check if there is any pop with a pet nearby
-        for pet_pos in pet_query.iter() {
-            let dx = pos.x.abs_diff(pet_pos.x).min(i32::MAX as u32) as i32;
-            let dy = pos.y.abs_diff(pet_pos.y).min(i32::MAX as u32) as i32;
+        for pet_item in pet_query.iter() {
+            let dx = item.pos.x.abs_diff(pet_item.pos.x).min(i32::MAX as u32) as i32;
+            let dy = item.pos.y.abs_diff(pet_item.pos.y).min(i32::MAX as u32) as i32;
 
             if dx <= 2 && dy <= 2 {
                 use rand::Rng;
                 if rng.gen::<f32>() < config.spread_chance {
-                    commands.entity(entity).insert(XenofloraPet {
+                    commands.entity(item.entity).insert(XenofloraPet {
                         resource_upkeep: config.resource_upkeep,
                         mood_boost: config.mood_boost,
                     });

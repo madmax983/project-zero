@@ -8,6 +8,7 @@ use crate::layer1::entities::pop::Pop;
 use crate::layer1::mind::utility_types::{ActionType, PopAction};
 use crate::layer1::social::morale::{MoodModifier, Morale};
 use bevy_ecs::prelude::*;
+use bevy_ecs::query::QueryData;
 
 #[derive(Event, Debug, Clone)]
 pub struct SpawnEchoSourceEvent {
@@ -85,28 +86,35 @@ pub fn despawn_echo_system(mut commands: Commands, mut query: Query<(Entity, &mu
     }
 }
 
-#[allow(clippy::type_complexity)]
+#[derive(QueryData)]
+#[query_data(mutable)]
+pub struct EchoReactionQuery {
+    pos: &'static GridPosition,
+    action: &'static mut PopAction,
+    morale: &'static mut Morale,
+}
+
 pub fn echo_reaction_system(
     echoes: Query<(&Echo, &GridPosition)>,
-    mut pops: Query<(&GridPosition, &mut PopAction, &mut Morale), (With<Pop>, Without<Echo>)>,
+    mut pops: Query<EchoReactionQuery, (With<Pop>, Without<Echo>)>,
 ) {
     for (echo, echo_pos) in &echoes {
-        for (pop_pos, mut action, mut morale) in &mut pops {
-            if pop_pos.distance_chebyshev(*echo_pos) <= 2 {
-                action.current = ActionType::Daze;
-                action.ticks_committed = 10;
+        for mut pop_item in &mut pops {
+            if pop_item.pos.distance_chebyshev(*echo_pos) <= 2 {
+                pop_item.action.current = ActionType::Daze;
+                pop_item.action.ticks_committed = 10;
                 match echo.event_type {
-                    EchoType::Tragedy => morale.add_modifier(MoodModifier {
+                    EchoType::Tragedy => pop_item.morale.add_modifier(MoodModifier {
                         label: "Witnessed Tragic Echo".to_string(),
                         value: -0.1,
                         duration: 100,
                     }),
-                    EchoType::Triumph => morale.add_modifier(MoodModifier {
+                    EchoType::Triumph => pop_item.morale.add_modifier(MoodModifier {
                         label: "Witnessed Triumphant Echo".to_string(),
                         value: 0.1,
                         duration: 100,
                     }),
-                    EchoType::Mystery => morale.add_modifier(MoodModifier {
+                    EchoType::Mystery => pop_item.morale.add_modifier(MoodModifier {
                         label: "Witnessed Mysterious Echo".to_string(),
                         value: 0.05,
                         duration: 100,
