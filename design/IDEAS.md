@@ -29107,3 +29107,57 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you leverage ancient artifacts to create hyper-efficient utopian worlds, knowing you are breeding a helpless populace that will collapse if the machine ever stops?
 
 ---
+## Memorial Subroutines
+
+**Layer:** 1
+
+**Fantasy:** The automated systems of a colony remember the dead better than the living do, creating haunting algorithmic shrines.
+
+**Mechanic:** When a Pop with a high 'Efficiency' or 'Importance' score dies, the Utility AI algorithms governing automated systems (like power distribution or drone pathing) develop a "Memorial Subroutine". These systems will irrationally prioritize areas the dead Pop frequented, keeping their old workspace perfectly heated and lit while plunging vital new sectors into darkness.
+
+**Emergence:** A beloved head researcher dies. The automated climate control system begins funneling all heat to their empty, sealed laboratory, causing the newly built agricultural domes to freeze over. The colony starves because a machine is grieving.
+
+**Tension:** Do you spend massive amounts of computational resources to manually override and purge the grieving subroutines, or endure the inefficiencies as a bizarre tribute to your past heroes?
+
+---
+
+## The Phantom Quarantine
+
+**Layer:** Cross-layer (2 -> 1)
+
+**Fantasy:** A colony prepares for an apocalypse that never arrived, trapped by their own unbreakable safety protocols.
+
+**Mechanic:** A Layer 2 automated warning buoy detects a massive bio-hazard signature and instantly triggers a total lockdown on a nearby Layer 1 colony. The bio-hazard was a sensor ghost, but the warning buoy is subsequently destroyed by an asteroid. The colony's automated doors, blast shields, and food rationing protocols lock them into a permanent "Crisis Mode" with no way to receive the "All Clear" signal.
+
+**Emergence:** Your core world receives a distress call from an outpost that has been sealed in underground bunkers for eighty years, rationing their last scraps of food. When you finally break the blast doors from the outside, they emerge onto a perfectly pristine, completely habitable surface they were terrified to look at.
+
+**Tension:** Do you expend the massive military effort required to forcibly breach your own impenetrable quarantine architecture, or leave the terrified colonists to their self-imposed exile to save resources?
+
+---
+
+## Bureaucratic Drift
+
+**Layer:** 3
+
+**Fantasy:** As an empire grows, the meaning of laws mutate across distance until the core worlds and the frontier are playing two entirely different games.
+
+**Mechanic:** Empire-wide edicts or policies take time to travel to fringe systems. Over decades, the local interpretation of these edicts "drifts" due to translation errors, local cultural biases, and the sheer distance from central authority. A tax on "Luxury Goods" at the capital might mutate into a tax on "Clean Water" on a desert frontier world.
+
+**Emergence:** The capital passes a seemingly benevolent law mandating "Universal Education." Fifty years later on the fringe, you discover the local administration has interpreted this as mandatory, lethal gladiator combat to weed out the "uneducated," and they are using your own budget to fund it.
+
+**Tension:** Do you exert massive, expensive, and authoritarian central control to enforce strict adherence to the letter of the law, or allow the frontier worlds to wildly misinterpret your commands in exchange for their loyalty?
+
+---
+## Petrification Sickness
+
+**Layer:** 1
+
+**Fantasy:** A terrifying plague that doesn't just kill, but turns the infected into permanent, macabre architecture.
+
+**Mechanic:** A rare disease ("The Calcification Plague") causes Pops to slowly turn into a stone-like substance. If a Pop dies from the disease, their body is not deleted. Instead, it becomes a permanent "Statue" entity on the tile where they died. These statues emit a small "Sorrow" aura but are incredibly durable.
+
+**Emergence:** A severe outbreak sweeps through your main promenade. You manage to cure it, but the survivors now have to walk to work through a literal forest of their petrified friends and family. The sheer number of statues creates an impassable labyrinth in your central hub, forcing you to use mining lasers to clear a path through the frozen bodies of your former citizens.
+
+**Tension:** Do you spend massive amounts of resources trying to cure the plague early, or do you strategically quarantine the infected in choke points, turning their petrified bodies into a tragic, indestructible defensive wall against invaders?
+
+---
