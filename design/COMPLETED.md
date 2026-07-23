@@ -934,3 +934,4 @@
 - [x] `997` Subspace Stowaways — `specs/997-subspace-stowaways.md` — completed 2024-05-31
 - [x] `992` The Fungal Monoliths — `specs/992-the-fungal-monoliths.md` — completed 2024-07-20
 - [x] `993` The Fractal Bureaucracy — `specs/993-the-fractal-bureaucracy.md` — completed 2026-11-01
+- [x] `999` Interplanetary Pollination — `specs/999-interplanetary-pollination.md` — completed 2026-02-01
