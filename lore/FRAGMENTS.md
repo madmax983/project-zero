@@ -6834,7 +6834,7 @@ How the Urban Heat Island effect manifests physically in the colony.
 
 ## Accidental Gods Fragments
 
-### Fragment Type: [RETALIATION_ACTION]
+## Fragment Type: [RETALIATION_ACTION]
 How primitive civilizations strike back when the "Manna" stops falling.
 
 - a crude kinetic missile
@@ -6845,7 +6845,7 @@ How primitive civilizations strike back when the "Manna" stops falling.
 - an explosive payload launched via catapult
 - a swarm of retro-fitted mining charges
 
-### Fragment Type: [RESOURCE_DEMAND]
+## Fragment Type: [RESOURCE_DEMAND]
 The resources demanded by primitive civilizations or expected as "Manna".
 
 - the nutrient paste
@@ -6857,7 +6857,7 @@ The resources demanded by primitive civilizations or expected as "Manna".
 
 ## Zero-G Fermentation Fragments
 
-### Fragment Type: [LUXURY_GOOD]
+## Fragment Type: [LUXURY_GOOD]
 Items that can only be produced or perfected in zero-gravity environments.
 
 - Void-Ale
@@ -6870,7 +6870,7 @@ Items that can only be produced or perfected in zero-gravity environments.
 
 ## Proxy Wars Fragments
 
-### Fragment Type: [PRIVATEER_COMMANDER]
+## Fragment Type: [PRIVATEER_COMMANDER]
 The titles or names of commanders leading proxy fleets.
 
 - the dread-captain
@@ -6883,7 +6883,7 @@ The titles or names of commanders leading proxy fleets.
 
 ## Ephemeral Moons Fragments
 
-### Fragment Type: [MOON_NAME]
+## Fragment Type: [MOON_NAME]
 Names given to temporary celestial bodies captured in orbit.
 
 - the Bright Moon
@@ -6895,7 +6895,7 @@ Names given to temporary celestial bodies captured in orbit.
 - the Phantom Moon
 - a rogue planetoid
 
-### Fragment Type: [EFFECT]
+## Fragment Type: [EFFECT]
 The impact of an ephemeral moon on the planet.
 
 - unprecedented solar energy during the night cycle
@@ -6908,7 +6908,7 @@ The impact of an ephemeral moon on the planet.
 
 ## The Ephemeral Market Fragments
 
-### Fragment Type: [OBSCURE_COMMODITY]
+## Fragment Type: [OBSCURE_COMMODITY]
 The strange and highly specific demands made by nomadic traders.
 
 - Sub-Lithic Fungal Spores
@@ -6920,7 +6920,7 @@ The strange and highly specific demands made by nomadic traders.
 - Unrefined Neural Fluid
 - Synthetic Amber
 
-### Fragment Type: [RARE_ARTIFACT]
+## Fragment Type: [RARE_ARTIFACT]
 The mythical or ancient items offered by the transient market.
 
 - a complete Dyson Sphere blueprint
@@ -6933,7 +6933,7 @@ The mythical or ancient items offered by the transient market.
 
 ## The Gold Rush Beacon Fragments (Spec 762)
 
-### Fragment Type: [BEACON_NICKNAME]
+## Fragment Type: [BEACON_NICKNAME]
 What the colonists call the active Beacon.
 
 - the Flame
@@ -6943,7 +6943,7 @@ What the colonists call the active Beacon.
 - the Greed-Signal
 - the Magnet
 
-### Fragment Type: [GRIFTER_CRIME]
+## Fragment Type: [GRIFTER_CRIME]
 The types of crime arriving with the rush.
 
 - selling forged ration cards
@@ -6953,7 +6953,7 @@ The types of crime arriving with the rush.
 - staging false building inspections
 - operating a shadow-market out of a derelict shuttle
 
-### Fragment Type: [RUSH_EXCUSE]
+## Fragment Type: [RUSH_EXCUSE]
 What the migrants thought they were coming for.
 
 - guaranteed land
@@ -6963,7 +6963,7 @@ What the migrants thought they were coming for.
 - a safe haven from the Swarm
 - endless synthe-meat
 
-### Fragment Type: [ROUTINE_TYPE]
+## Fragment Type: [ROUTINE_TYPE]
 Used for The Archaeological Contagion events. What the infected Pops are doing instead of working.
 
 - stacking rocks in prime number sequences
@@ -6975,7 +6975,7 @@ Used for The Archaeological Contagion events. What the infected Pops are doing i
 - weaving wires into useless, beautiful tapestries
 - meditating in the shape of a hypercube
 
-### Fragment Type: [LOST_TECH_NAME]
+## Fragment Type: [LOST_TECH_NAME]
 Used for The Archaeological Contagion events. The ancient technology reverse-engineered from routines.
 
 - Sub-Etha Acoustics
@@ -8168,7 +8168,7 @@ What an artifact is called.
 
 ## The Gossip Economy Fragments
 
-### Fragment Type: [RUMOR_SUBJECT]
+## Fragment Type: [RUMOR_SUBJECT]
 - the governor's true lineage
 - missing colony funds
 - a hidden structural flaw in the reactor
@@ -8176,7 +8176,7 @@ What an artifact is called.
 - a secret pact with the pirates
 - the whispers from the deep shafts
 
-### Fragment Type: [DARK_SECRET_TYPE]
+## Fragment Type: [DARK_SECRET_TYPE]
 - a classified casualty report
 - evidence of systemic embezzlement
 - a suppressed transmission from the core worlds
@@ -8186,7 +8186,7 @@ What an artifact is called.
 
 ## Intellectual Property Wars Fragments
 
-### Fragment Type: [PATENT_TYPE]
+## Fragment Type: [PATENT_TYPE]
 - a proprietary warp-fold algorithm
 - copyrighted synthetic crop genomes
 - licensed atmospheric scrubbers
@@ -8194,7 +8194,7 @@ What an artifact is called.
 - restricted mind-machine interface protocols
 - a trademarked kinetic bombardment array
 
-### Fragment Type: [PIRATED_GOOD]
+## Fragment Type: [PIRATED_GOOD]
 - unlicensed replicator patterns
 - bootleg shielding emitters
 - reverse-engineered fusion cores
@@ -8204,7 +8204,7 @@ What an artifact is called.
 
 ## The Hedonic Treadmill Fragments
 
-### Fragment Type: [LUXURY_GOOD]
+## Fragment Type: [LUXURY_GOOD]
 - synthetic glitter-steak
 - memory-foam stasis webbing
 - real-wood paneling
@@ -8212,7 +8212,7 @@ What an artifact is called.
 - artisan-crafted neuro-stimulants
 - genuine starlight-filtered wine
 
-### Fragment Type: [BASIC_GOOD]
+## Fragment Type: [BASIC_GOOD]
 - reconstituted nutrient paste
 - standard-issue mesh hammocks
 - recycled breathing air
@@ -8220,7 +8220,7 @@ What an artifact is called.
 - unflavored hydration packs
 - baseline synthetic garments
 
-### Fragment Type: [HEDONIC_COMPLAINT]
+## Fragment Type: [HEDONIC_COMPLAINT]
 - the air tastes metallic now
 - the beds are too hard after last season's luxuries
 - the food is flavorless compared to the imported rations
@@ -8229,14 +8229,14 @@ What an artifact is called.
 
 ## Invasive Bureaucracy Fragments
 
-### Fragment Type: [BUREAUCRACY_EXPANSION_METHOD]
+## Fragment Type: [BUREAUCRACY_EXPANSION_METHOD]
 - pushed a wall of filing cabinets through the cafeteria
 - converted the hydroponics bay into a server farm
 - swallowed the residential block in endless cubicles
 - paved over the memorial site for administrative archiving
 - annexed the medical wing for form-processing
 
-### Fragment Type: [LOST_INFRASTRUCTURE]
+## Fragment Type: [LOST_INFRASTRUCTURE]
 - a perfectly good farm
 - the primary heat sink
 - the last open courtyard
@@ -8244,7 +8244,7 @@ What an artifact is called.
 - the children's learning center
 - the emergency life-support backup
 
-### Fragment Type: [BUREAUCRACY_TITLE]
+## Fragment Type: [BUREAUCRACY_TITLE]
 - Sub-Director of Form Requisition
 - Master of the Endless Ledger
 - Chief Assessor of Redundancy
@@ -10089,7 +10089,7 @@ How the awakened react to the modern colony.
 
 ## Tectonic Stress Fragments (Spec 1211)
 
-### Fragment Type: [QUAKE_OMEN]
+## Fragment Type: [QUAKE_OMEN]
 
 - the deep trembling
 - the ground remembering
@@ -10099,7 +10099,7 @@ How the awakened react to the modern colony.
 - the fault lines singing
 - the crust's protest
 
-### Fragment Type: [QUAKE_AFTERMATH]
+## Fragment Type: [QUAKE_AFTERMATH]
 
 - swallowed by the earth
 - returned to the mantle
@@ -10110,7 +10110,7 @@ How the awakened react to the modern colony.
 
 ## The Slippery Slope Fragments (Spec 1228)
 
-### Fragment Type: [NUMB_REACTION]
+## Fragment Type: [NUMB_REACTION]
 
 - stared with hollow eyes
 - showed no reaction
@@ -10122,7 +10122,7 @@ How the awakened react to the modern colony.
 
 ## Improvised Tools Fragments (Spec 1125)
 
-### Fragment Type: [MAKESHIFT_TOOL]
+## Fragment Type: [MAKESHIFT_TOOL]
 
 - a sharpened piece of scrap
 - a heavy, flat stone
@@ -10134,7 +10134,7 @@ How the awakened react to the modern colony.
 
 ## Celestial Cemeteries Fragments (Spec 1096)
 
-### Fragment Type: [ORBITAL_GRAVE_SIGHT]
+## Fragment Type: [ORBITAL_GRAVE_SIGHT]
 
 - a silver streak against the night sky
 - a new, silent constellation
@@ -10146,7 +10146,7 @@ How the awakened react to the modern colony.
 
 ## Industrial Byproducts Fragments (Spec 354)
 
-### Fragment Type: [INDUSTRIAL_WASTE_DESCRIPTION]
+## Fragment Type: [INDUSTRIAL_WASTE_DESCRIPTION]
 
 - choking, grey soot
 - a sickly-sweet chemical runoff
@@ -10158,7 +10158,7 @@ How the awakened react to the modern colony.
 
 ## Gene-Banks Fragments (Spec 1034)
 
-### Fragment Type: [GENETIC_DRIFT_OUTCOME]
+## Fragment Type: [GENETIC_DRIFT_OUTCOME]
 - horrifyingly carnivorous
 - covered in bioluminescent tumors
 - blind and screeching
@@ -10168,7 +10168,7 @@ How the awakened react to the modern colony.
 
 ## Spatial Compression Fragments (Spec 1020)
 
-### Fragment Type: [POCKET_COLLAPSE_SIGN]
+## Fragment Type: [POCKET_COLLAPSE_SIGN]
 - the walls bending inward
 - a high-pitched dimensional whine
 - sparks of non-euclidean light
@@ -10177,7 +10177,7 @@ How the awakened react to the modern colony.
 
 ## The Propaganda Graffitists Fragments (Spec 1271)
 
-### Fragment Type: [REBELLIOUS_TAG]
+## Fragment Type: [REBELLIOUS_TAG]
 - a crude drawing of the Overseer with horns
 - 'THE MACHINE IS STARVING' scrawled in bioluminescent paint
 - 'WE ARE NOT DRONES' written in engine grease
@@ -10186,7 +10186,7 @@ How the awakened react to the modern colony.
 
 ## Clothing and Temperature Fragments (Spec 040)
 
-### Fragment Type: [HYPOTHERMIA_SYMPTOM]
+## Fragment Type: [HYPOTHERMIA_SYMPTOM]
 - frostbitten fingers
 - lips turning blue
 - shivering uncontrollably
@@ -10505,33 +10505,33 @@ Used for The Feral Administration anvalanches of paperwork.
 
 ## The Chrono-Stutter Fragments (Spec 292)
 
-### Fragment Type: [CHRONO_STUTTER_VISUAL]
+## Fragment Type: [CHRONO_STUTTER_VISUAL]
 - a shimmering haze
 - a localized blur
 - a space where light seems to crawl
 - a jittering pocket of reality
 
-### Fragment Type: [CHRONO_STUTTER_EFFECT]
+## Fragment Type: [CHRONO_STUTTER_EFFECT]
 - aged decades in a single afternoon
 - watched their crops grow and rot in hours
 - saw the machines rust before their eyes
 - felt time grind to an agonizing halt
 
-### Fragment Type: [CHRONO_STUTTER_BENEFIT]
+## Fragment Type: [CHRONO_STUTTER_BENEFIT]
 - harvested a season's yield in days
 - finished the construction in what felt like minutes
 - exploited the anomaly for rapid production
 
 ## The Architecture of Paranoia Fragments (Spec 1326)
 
-### Fragment Type: [SUBVERSIVE_FACTION]
+## Fragment Type: [SUBVERSIVE_FACTION]
 - the Silent Chorus
 - the Unseen Hand
 - the Whispering Cell
 - those who speak in shadows
 - the Dissenters
 
-### Fragment Type: [SURVEILLANCE_STATE]
+## Fragment Type: [SURVEILLANCE_STATE]
 - Total Observation
 - the Panopticon Protocol
 - Mandated Paranoia
@@ -10539,13 +10539,13 @@ Used for The Feral Administration anvalanches of paperwork.
 
 ## Heat Death Fragments (Spec 989)
 
-### Fragment Type: [MACHINE_NAME]
+## Fragment Type: [MACHINE_NAME]
 - Primary Fusion Core
 - Atmospheric Processing Array
 - Deep-Core Drill
 - the Lifeline Reactor
 
-### Fragment Type: [HOSTILE_FACTION]
+## Fragment Type: [HOSTILE_FACTION]
 - Pirate Corsairs
 - Nomad Raiders
 - the Starved Fleet
@@ -10553,13 +10553,13 @@ Used for The Feral Administration anvalanches of paperwork.
 
 ## Subspace Stowaways Fragments (Spec 997)
 
-### Fragment Type: [WAKE_SEVERITY]
+## Fragment Type: [WAKE_SEVERITY]
 - minor
 - catastrophic
 - reality-bending
 - hyper-violent
 
-### Fragment Type: [FLORA_NAME]
+## Fragment Type: [FLORA_NAME]
 - Void-Brambles
 - Subspace Spores
 - Null-Weed
@@ -10567,13 +10567,13 @@ Used for The Feral Administration anvalanches of paperwork.
 
 ## The Kinetic Heist Fragments (Spec 994)
 
-### Fragment Type: [HARVESTER_NAME]
+## Fragment Type: [HARVESTER_NAME]
 - the Sky-Breaker
 - the Vault-Cracker
 - the Iron Leech
 - the Falling Greed
 
-### Fragment Type: [STOLEN_MATERIAL]
+## Fragment Type: [STOLEN_MATERIAL]
 - hard-won alloys
 - precious isotopes
 - refined components
@@ -10581,13 +10581,13 @@ Used for The Feral Administration anvalanches of paperwork.
 
 ## Rogue Planets Fragments (Spec 899)
 
-### Fragment Type: [ROGUE_PLANET_NAME]
+## Fragment Type: [ROGUE_PLANET_NAME]
 - the Midnight Pearl
 - the Frozen Sovereign
 - the Dark Wanderer
 - the Sunless Tomb
 
-### Fragment Type: [RARE_RESOURCE]
+## Fragment Type: [RARE_RESOURCE]
 - ancient crystalline deposits
 - primordial vacuum-forged metals
 - undisturbed tectonic wealth
@@ -10645,3 +10645,30 @@ Used for The Feral Administration anvalanches of paperwork.
 - the Lost Vanguard
 - the Stuttering Armada
 - the Time-Torn Fleet
+## Fungal Networking Fragments (Spec 995)
+
+## Fragment Type: [MYCORRHIZAL_NETWORK_NAME]
+- the Pale Web
+- the Deep Threads
+- the Silent Roots
+- the Under-Veins
+
+## Fragment Type: [FUNGAL_TAX_RESOURCE]
+- nutrient paste
+- vital water reserves
+- battery charges
+- hydroponic yields
+
+## Interstellar Quarantine Fields Fragments (Spec 996)
+
+## Fragment Type: [QUARANTINE_REASON]
+- a Class-5 memetic hazard
+- uncontrolled biological mutation
+- severe xenoflora infestation
+- a highly infectious temporal stutter
+
+## Fragment Type: [QUARANTINE_AUTHORITY]
+- the High Command
+- the Automated Defense Grid
+- a rogue administrative node
+- panicked local governors
