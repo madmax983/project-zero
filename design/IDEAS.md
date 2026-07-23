@@ -29066,3 +29066,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** You import cheap food from a desperate, starving fringe world to feed your wealthy core world. Along with the grain comes a nihilistic cult that believes starvation is the only pure state. Your wealthy Pops stop eating, ignore their luxury needs, and begin starving themselves to death in the middle of plenty.
 
 **Tension:** Do you completely isolate your worlds to protect their cultural purity, sacrificing the massive economic benefits of interstellar trade?
+## The Inherited Grudge
+
+**Layer:** 1
+
+**Fantasy:** Pops remember offenses across generations, turning minor personal disputes into blood feuds that tear a colony apart.
+
+**Mechanic:** When a pop is wronged, they record a negative memory. If they die, this memory transfers to their descendants as an "Inherited Grudge". Pops with a grudge have a high chance of sabotaging the work or needs of the target pop's family.
+
+**Emergence:** A fight over a single meal in the early days of a struggling colony spirals fifty years later into two massive factions of descendants who refuse to work in the same sector, grinding industry to a halt.
+
+**Tension:** Do you segregate the feuding families into separate, less efficient sectors, or banish one side entirely to restore peace at the cost of half your workforce?
+
+---
+
+## The Prophet of the Blackout
+
+**Layer:** 1
+
+**Fantasy:** Infrastructure failure isn't just an inconvenience; it births new religions and radical beliefs when the lights go out.
+
+**Mechanic:** When a colony experiences a severe power failure that lasts for a significant duration, a random Pop has a chance to gain the "Prophet" trait. They gather followers who actively resist efforts to restore power, finding comfort in the dark and sabotaging generators.
+
+**Emergence:** You finally scrape together the resources to fix the main fusion reactor, only to have a cult of darkness worshippers repeatedly smash the control panels because they believe the Substrate demands the silence of the dark.
+
+**Tension:** Do you violently suppress the cult to save the colony from freezing, or do you adapt to a low-power, primitive existence to appease the new religious majority?
+
+---
+
+## The Artifact's Addiction
+
+**Layer:** Cross-layer
+
+**Fantasy:** Xenotech isn't just a tool; it's a crutch that colonies can become hopelessly dependent on, forgetting their own capabilities.
+
+**Mechanic:** Finding an "Artifact" provides a massive efficiency boost to a colony. However, over time, the Pops "forget" how to perform the replaced jobs natively. If the Artifact is ever moved to another planet or breaks down, the colony suffers a catastrophic "Withdrawal" penalty.
+
+**Emergence:** You move your prized Xenotech Atmospheric Scrubber to a newly established, fragile colony, only to watch your thriving capital slowly suffocate because its engineers completely forgot how to maintain the legacy air filters.
+
+**Tension:** Do you leverage ancient artifacts to create hyper-efficient utopian worlds, knowing you are breeding a helpless populace that will collapse if the machine ever stops?
+
+---
