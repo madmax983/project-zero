@@ -29161,3 +29161,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you spend massive amounts of resources trying to cure the plague early, or do you strategically quarantine the infected in choke points, turning their petrified bodies into a tragic, indestructible defensive wall against invaders?
 
 ---
+
+## The Scapegoat Protocol
+
+**Layer:** 1
+
+**Fantasy:** Witnessing a desperate colony invent a mythological enemy to externalize their own failures.
+
+**Mechanic:** When a colony experiences sustained high tension and resource scarcity, the Utility AI might spontaneously designate an innocent Pop or a harmless local fauna as a "Saboteur." The colony's collective anxiety is funneled into this scapegoat. Punishing or exiling the scapegoat provides a massive, temporary morale boost.
+
+**Emergence:** A struggling mining outpost convinces itself that a malfunctioning cleaning drone is actually a spy from a rival faction causing their famine. They formally "execute" the drone, and productivity skyrockets for a month before reality sets in again.
+
+**Tension:** Do you intervene to save the innocent scapegoat and preserve the truth, or do you allow the brutal psychological release valve to operate to save the colony from imploding?
+
+---
+
+## Shipbreaking Graveyards
+
+**Layer:** 2
+
+**Fantasy:** Extracting wealth from the colossal, decaying corpses of past empires, while inheriting their toxic legacy.
+
+**Mechanic:** Ancient, massive derelict ships (from previous failed runs or procedural history) can be towed to a colony's orbit. "Shipbreaking" yields incredible amounts of raw materials but introduces massive industrial pollution, radiation hazards, and occasionally, dormant hostile subroutines.
+
+**Emergence:** Your richest, most advanced colony is built entirely on the bones of a dead dreadnought. The wealth is staggering, but the local Pops are starting to develop strange radiation sicknesses, and the colony's central AI is beginning to randomly broadcast fragments of the dreadnought's final battle orders.
+
+**Tension:** How deeply do you delve into the toxic past for resources before the ghosts of the dead ships poison your future?
+
+---
+
+## The Nostalgia Plague
+
+**Layer:** Cross-layer
+
+**Fantasy:** The devastating realization that sometimes, the most dangerous thing a civilization can possess is a perfect memory of a better time.
+
+**Mechanic:** If a colony discovers an intact "Memory Archive" from a Golden Age, Pops begin obsessively consuming the data instead of working. The simulation of the past is so much better than their current reality that they suffer extreme morale penalties when forced to participate in the present.
+
+**Emergence:** You unearth a breathtaking digital museum on a harsh frontier world. Instead of becoming a cultural beacon, the colony starves to death because the farmers refuse to leave the VR simulators showing them what the galaxy looked like before the Wound.
+
+**Tension:** Do you destroy irreplaceable historical data to force your citizens to face the harsh present, or do you allow them to fade away in a beautiful digital dream?
+
+---
