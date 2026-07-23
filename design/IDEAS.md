@@ -29026,3 +29026,43 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you risk interacting with alien civilizations early on when the chance of catastrophic misunderstanding is high, or remain isolated until you've heavily invested in translation technologies?
 
 ---
+
+## The Substrate Silence
+
+**Layer:** Cross-layer
+
+**Fantasy:** The terrifying realization that your divine control is a fragile connection, and your people must occasionally survive without you.
+
+**Mechanic:** Occasionally, a system or planet enters a period of "Substrate Silence," where player inputs (build orders, job assignments) are completely disabled for that location for a set duration. The colony must survive entirely on its localized Utility AI and existing infrastructure. During this time, they may form new local laws or religious sects based on their interpretation of your "abandonment."
+
+**Emergence:** A thriving colony hits a Silence just as a famine begins. Without your macro-management, they tear themselves apart fighting over scraps. When the connection returns, you don't find a loyal workforce, but a paranoid, heavily armed cult that views your commands with deep suspicion.
+
+**Tension:** Do you build highly redundant, foolproof automated systems that are inefficient in peace time, just in case you lose the ability to micromanage them during a crisis?
+
+---
+
+## The Architecture of Guilt
+
+**Layer:** 1
+
+**Fantasy:** Buildings are not just physical structures; they are vessels that soak up the collective trauma of those who perished within them.
+
+**Mechanic:** If a significant number of Pops die within a specific building radius (e.g., a massive industrial accident in a factory, or starvation in a housing block), that specific building gains a permanent "Guilt" or "Stain" metric. Pops working or living there suffer a constant morale drain and randomly generate "Unease" thoughts. Tearing the building down and rebuilding it resets the stain, but is incredibly expensive.
+
+**Emergence:** Your most efficient plasma forge is the site of a horrific explosion that kills thirty workers. You fix the forge, but no one wants to work there anymore. The morale drain causes secondary accidents, creating a feedback loop where the building itself seems to be actively murdering your Pops.
+
+**Tension:** Do you endure the massive resource cost of demolishing and rebuilding cursed infrastructure, or do you force your Pops to work in haunted factories, risking their sanity for the sake of production quotas?
+
+---
+
+## Memetic Contraband
+
+**Layer:** 2
+
+**Fantasy:** Trade routes don't just carry physical goods; they carry dangerous, uncontrolled ideas that can infect a vulnerable populace.
+
+**Mechanic:** When a trade ship arrives from a colony with a radically different culture or high unrest, there is a chance it deposits "Memetic Contraband" alongside its cargo. This could be a radical political ideology, a dangerous new religious cult, or a self-destructive fad. The meme spreads passively between Pops like a virus, overriding their normal needs and causing erratic behavior (e.g., mass refusal to work, spontaneous destruction of technology).
+
+**Emergence:** You import cheap food from a desperate, starving fringe world to feed your wealthy core world. Along with the grain comes a nihilistic cult that believes starvation is the only pure state. Your wealthy Pops stop eating, ignore their luxury needs, and begin starving themselves to death in the middle of plenty.
+
+**Tension:** Do you completely isolate your worlds to protect their cultural purity, sacrificing the massive economic benefits of interstellar trade?
