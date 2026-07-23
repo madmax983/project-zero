@@ -113,6 +113,9 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<bevy_ecs::event::Events<crate::layer1::core::chronicle::AddChronicleEvent>>();
     world.init_resource::<bevy_ecs::event::Events<crate::cross_layer::generation_ship_mutiny::MutinyEvent>>();
 
+    world.init_resource::<bevy_ecs::event::Events<crate::cross_layer::interplanetary_pollination::SporeReleaseEvent>>();
+
+
     world.init_resource::<bevy_ecs::event::Events<crate::layer1::social::blacksite::PrisonBreakEvent>>();
     world.init_resource::<Events<crate::layer1::cassandra_syndrome::DoomsdayWarningEvent>>();
     world.init_resource::<Events<crate::layer1::cassandra_syndrome::DisasterOccurredEvent>>();
@@ -574,6 +577,13 @@ fn register_simulation_core_systems(schedule: &mut Schedule) {
     ));
 
     // --- Register Core Layer 1 Systems ---
+
+    schedule.add_systems((
+        crate::cross_layer::interplanetary_pollination::spore_escape_system,
+        crate::cross_layer::interplanetary_pollination::spore_infection_system,
+        crate::layer2::integration::interplanetary_pollination_chronicle_bridge,
+    ));
+
     register_layer1_systems(schedule);
     // Register orphaned swarm systems standalone here since we don't use App
     schedule.add_systems((

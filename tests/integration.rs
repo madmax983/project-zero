@@ -684,3 +684,6 @@ mod radio_broadcasts_threat_bridge;
 
 #[path = "integration/generation_ship_mutiny_bridge.rs"]
 mod generation_ship_mutiny_bridge;
+
+#[path = "integration/interplanetary_pollination.rs"]
+mod interplanetary_pollination;
