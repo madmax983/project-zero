@@ -338,3 +338,146 @@ fn test_combat_removes_at_target_when_out_of_range() {
         "AtTarget should be removed when out of range"
     );
 }
+
+#[test]
+fn test_combat_execution_allowed_when_hit_stop_expired() {
+    let mut world = setup_world();
+
+    let enemy = world
+        .spawn((
+            GridPosition { x: 1, y: 0 },
+            Health {
+                current: 100.0,
+                max: 100.0,
+                has_rust_lung: false,
+            },
+        ))
+        .id();
+
+    let weapon = world
+        .spawn(Weapon {
+            properties: AttackProperties {
+                damage: 10.0,
+                range: 1.0,
+                cooldown: 0,
+                accuracy: 1.0,
+            },
+        })
+        .id();
+
+    world.spawn((
+        Pop,
+        GridPosition { x: 0, y: 0 },
+        Equipment {
+            weapon: Some(weapon),
+            ..Default::default()
+        },
+        MovementTarget {
+            target_entity: enemy,
+            target_position: GridPosition { x: 1, y: 0 },
+            for_action: ActionType::Fight,
+        },
+        HitStop { ticks_remaining: 0 },
+    ));
+
+    combat_execution_system(&mut world);
+
+    let health = world.get::<Health>(enemy).unwrap();
+    assert!(
+        health.current < 100.0,
+        "Attack should happen if HitStop is expired"
+    );
+}
+
+#[test]
+fn test_combat_invalid_weapon_entity_defaults_range() {
+    let mut world = setup_world();
+
+    let enemy = world
+        .spawn((GridPosition { x: 1, y: 0 }, Health::default()))
+        .id();
+
+    let invalid_weapon = world.spawn_empty().id();
+
+    let pop = world
+        .spawn((
+            Pop,
+            GridPosition { x: 0, y: 0 },
+            Equipment {
+                weapon: Some(invalid_weapon),
+                ..Default::default()
+            },
+            MovementTarget {
+                target_entity: enemy,
+                target_position: GridPosition { x: 1, y: 0 },
+                for_action: ActionType::Fight,
+            },
+        ))
+        .id();
+
+    combat_execution_system(&mut world);
+
+    assert!(
+        world.get::<AtTarget>(pop).is_some(),
+        "Should fall back to default melee range and reach target"
+    );
+}
+
+#[test]
+fn test_combat_execution_missing_pop_grid_position() {
+    let mut world = setup_world();
+
+    let enemy = world
+        .spawn((GridPosition { x: 1, y: 0 }, Health::default()))
+        .id();
+
+    let pop = world
+        .spawn((
+            Pop,
+            Equipment::default(),
+            MovementTarget {
+                target_entity: enemy,
+                target_position: GridPosition { x: 1, y: 0 },
+                for_action: ActionType::Fight,
+            },
+        ))
+        .id();
+
+    combat_execution_system(&mut world);
+
+    assert!(
+        world.get::<MovementTarget>(pop).is_some(),
+        "Pop should not be cleaned up, just ignored this tick"
+    );
+}
+
+#[test]
+fn test_combat_cleanup_without_pop_action() {
+    let mut world = setup_world();
+
+    let enemy = world
+        .spawn((GridPosition { x: 1, y: 0 }, Health::default()))
+        .id();
+
+    let pop = world
+        .spawn((
+            Pop,
+            GridPosition { x: 0, y: 0 },
+            MovementTarget {
+                target_entity: enemy,
+                target_position: GridPosition { x: 1, y: 0 },
+                for_action: ActionType::Fight,
+            },
+            AtTarget,
+        ))
+        .id();
+
+    // Despawn Enemy to trigger cleanup
+    world.despawn(enemy);
+
+    // This should not panic even without a PopAction component
+    combat_execution_system(&mut world);
+
+    assert!(world.get::<MovementTarget>(pop).is_none());
+    assert!(world.get::<AtTarget>(pop).is_none());
+}
