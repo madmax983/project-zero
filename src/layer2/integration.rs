@@ -231,7 +231,7 @@ pub fn gravity_debt_to_planetary_gravity_system(
 pub fn orbital_drydock_fleet_bridge_system(
     mut commands: Commands,
     mut events: EventReader<crate::layer2::station::ShipConstructionCompletedEvent>,
-    mut chronicle_events: EventWriter<crate::layer1::chronicle::AddChronicleEvent>,
+    mut chronicle_events: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
 ) {
     for ev in events.read() {
         commands.spawn((
@@ -241,9 +241,9 @@ pub fn orbital_drydock_fleet_bridge_system(
             },
         ));
 
-        chronicle_events.send(crate::layer1::chronicle::AddChronicleEvent {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
             text: format!("Construction of the {} class ship has been completed in the orbital drydock and is ready for fleet operations.", ev.ship_class),
-            importance: crate::layer1::chronicle::EventImportance::Major,
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
         });
     }
 }
@@ -254,15 +254,15 @@ use crate::layer2::trade::routes::{RouteComplexity, SentientTollDemandEvent};
 pub fn sentient_route_chronicle_bridge(
     mut events: EventReader<SentientTollDemandEvent>,
     mut query: Query<&mut RouteComplexity>,
-    mut chronicle_events: EventWriter<crate::layer1::chronicle::AddChronicleEvent>,
+    mut chronicle_events: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
 ) {
     for event in events.read() {
-        chronicle_events.send(crate::layer1::chronicle::AddChronicleEvent {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
             text: format!(
                 "A Sentient Trade Route AI has begun demanding a toll of {} to allow our shipments through.",
                 event.demanded_resource
             ),
-            importance: crate::layer1::chronicle::EventImportance::Major,
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
         });
 
         if let Ok(mut complexity) = query.get_mut(event.route_id) {
@@ -717,15 +717,15 @@ pub fn ideological_contraband_route_bridge(
 /// Bridges `BombardmentEvent` (Layer 2) to `AddChronicleEvent` (Chronicle).
 pub fn orbital_bombardment_chronicle_bridge(
     mut bomb_events: EventReader<crate::layer2::bombardment::BombardmentEvent>,
-    mut chronicle_events: EventWriter<crate::layer1::chronicle::AddChronicleEvent>,
+    mut chronicle_events: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
 ) {
     for event in bomb_events.read() {
-        chronicle_events.send(crate::layer1::chronicle::AddChronicleEvent {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
             text: format!(
                 "Orbital Bombardment struck the colony, dealing {} damage in a {}m radius!",
                 event.damage, event.blast_radius
             ),
-            importance: crate::layer1::chronicle::EventImportance::Major,
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
         });
     }
 }
@@ -736,13 +736,13 @@ pub fn orbital_mirror_chronicle_bridge(
         &crate::layer2::orbital_mirrors::OrbitalMirror,
         Added<crate::layer2::orbital_mirrors::OrbitalMirror>,
     >,
-    mut chronicle_events: EventWriter<crate::layer1::chronicle::AddChronicleEvent>,
+    mut chronicle_events: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
 ) {
     for _ in query.iter() {
-        chronicle_events.send(crate::layer1::chronicle::AddChronicleEvent {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
             text: "A massive Orbital Mirror was deployed to focus sunlight on the colony."
                 .to_string(),
-            importance: crate::layer1::chronicle::EventImportance::Major,
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
         });
     }
 }
@@ -772,7 +772,7 @@ pub fn signal_latency_fleet_bridge(
 pub fn refugee_arrival_bridge_system(
     mut commands: Commands,
     mut events: EventReader<crate::layer2::refugees::fleet_arrival::RefugeeArrivalEvent>,
-    mut chronicle_events: EventWriter<crate::layer1::chronicle::AddChronicleEvent>,
+    mut chronicle_events: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
 ) {
     let mut rng = rand::thread_rng();
 
@@ -785,9 +785,9 @@ pub fn refugee_arrival_bridge_system(
         }
 
         // Add a Chronicle event
-        chronicle_events.send(crate::layer1::chronicle::AddChronicleEvent {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
             text: "A Sub-light Refugee Fleet arrived, settling amidst our colony with antiquated technology.".to_string(),
-            importance: crate::layer1::chronicle::EventImportance::Major,
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
         });
     }
 }
@@ -837,11 +837,11 @@ pub fn celestial_cemeteries_trade_bridge_system(
 
 pub fn dead_protocol_chronicle_bridge(
     mut events: bevy_ecs::event::EventReader<crate::layer2::dead_protocols::ViolationEvent>,
-    mut chronicle_events: bevy_ecs::event::EventWriter<crate::layer1::chronicle::AddChronicleEvent>,
+    mut chronicle_events: bevy_ecs::event::EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
 ) {
     for event in events.read() {
-        chronicle_events.send(crate::layer1::chronicle::AddChronicleEvent {
-            importance: crate::layer1::chronicle::EventImportance::Major,
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
             text: format!(
                 "A dead protocol was violated at {:?}! Ancient Enforcers have awakened.",
                 event.target
@@ -1055,16 +1055,16 @@ pub fn cultural_drift_independence_bridge(
 
 /// INT-1031: Bridges `Added<SpaceFauna>` (Mycelial Network immune response) to `AddChronicleEvent` (Chronicle).
 pub fn mycelial_network_immune_response_chronicle_bridge(
-    mut chronicle_events: bevy_ecs::event::EventWriter<crate::layer1::chronicle::AddChronicleEvent>,
+    mut chronicle_events: bevy_ecs::event::EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
     q_fauna: bevy_ecs::system::Query<
         (),
         bevy_ecs::query::Added<crate::layer2::mycelial_network::SpaceFauna>,
     >,
 ) {
     for _ in q_fauna.iter() {
-        chronicle_events.send(crate::layer1::chronicle::AddChronicleEvent {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
             text: "The Mycelial Network responds to our aggressive harvesting! A hostile swarm approaches.".to_string(),
-            importance: crate::layer1::chronicle::EventImportance::Major,
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
         });
     }
 }
@@ -1091,11 +1091,11 @@ pub fn attack_colony_chronicle_bridge(
 /// Observe ForgeCrushEvent and register it as an AddChronicleEvent
 pub fn observe_forge_crush_event(
     mut events: bevy_ecs::event::EventReader<crate::layer2::station::ForgeCrushEvent>,
-    mut chronicle_events: bevy_ecs::event::EventWriter<crate::layer1::chronicle::AddChronicleEvent>,
+    mut chronicle_events: bevy_ecs::event::EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
 ) {
     for event in events.read() {
-        chronicle_events.send(crate::layer1::chronicle::AddChronicleEvent {
-            importance: crate::layer1::chronicle::EventImportance::Major,
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
             text: format!("A Deep Forge was crushed by the immense gravity of the well, resulting in {} casualties.", event.casualties),
         });
     }
@@ -1142,5 +1142,18 @@ pub fn radio_broadcasts_threat_bridge_system(
         }
         // Add a fraction of the system threat to the global pirate threat level
         pirate_threat.level += total_threat * 0.01;
+    }
+}
+
+/// Bridges `SporeReleaseEvent` to `AddChronicleEvent`
+pub fn interplanetary_pollination_chronicle_bridge(
+    mut events: bevy_ecs::event::EventReader<crate::cross_layer::interplanetary_pollination::SporeReleaseEvent>,
+    mut chronicle_events: bevy_ecs::event::EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+) {
+    for _event in events.read() {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            text: "Interplanetary Pollination detected. Spores have breached orbit.".to_string(),
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
+        });
     }
 }
