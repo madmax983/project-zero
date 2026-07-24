@@ -29244,3 +29244,43 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you violently suppress these traumatized survivors to feed the rest of your empire, or quarantine them to their scarred world and find another way to feed the system?
 
 ---
+## The Echo of Lost Shipments
+
+**Layer:** 2
+
+**Fantasy:** Feeling the ripple effect of a failed trade route generations later, as derelict cargo ships become unpredictable boons or hazards.
+
+**Mechanic:** When a cargo ship is lost or destroyed in transit, it becomes a drifting "Echo." Decades later, its orbit decays and it crashes into a colony, delivering either much-needed, ancient resources or an unstable core explosion.
+
+**Emergence:** A starving colony is saved by a massive influx of perfectly preserved, century-old rations, but this miraculous bounty crashes the local agricultural economy, causing the farmers to abandon their fields just before winter.
+
+**Tension:** Do you invest heavily in orbital defense to intercept returning Echoes, risking the destruction of valuable lost cargo, or leave the skies open and gamble with the ghosts of past failures?
+
+---
+
+## Temporal Segregation
+
+**Layer:** 1
+
+**Fantasy:** Watching a colony divide not by ideology, but by the rhythm of their waking hours, creating two separate societies that share the same physical space.
+
+**Mechanic:** Pops develop distinct circadian rhythms based on their job types and environmental conditions. Over time, distinct "Day" and "Night" shifts start forming their own micro-cultures, loyalties, and needs, refusing to interact with each other.
+
+**Emergence:** The night-shift miners refuse to share the newly discovered geothermal vent power with the day-shift farmers, leading to a passive-aggressive "cold war" where the colony's infrastructure is sabotaged every twelve hours as control changes hands.
+
+**Tension:** Do you enforce a synchronized, unnatural sleep schedule that heavily penalizes morale but maintains a unified culture, or let the colony fracture into two distinct, temporally separated societies?
+
+---
+## The Whispering Wreckage
+
+**Layer:** Cross-layer
+
+**Fantasy:** Interacting with a derelict that remembers you, challenging the boundary between artifact and intelligence.
+
+**Mechanic:** Sometimes, a massive, ancient derelict appears in a system (Layer 2). When a colony (Layer 1) sends salvagers, the derelict begins broadcasting personalized messages to the local Pops based on their specific ancestral traits or past traumas.
+
+**Emergence:** Your most stoic, hardened miners begin refusing to enter the derelict, terrified because it knows their grandfathers' final thoughts. The colony's productivity plummets as the whispered secrets sow paranoia and dissent among the populace.
+
+**Tension:** Do you destroy the incredibly valuable derelict to silence its disruptive psychological warfare, or endure the colony's slow breakdown to harvest its unique, irreplaceable technologies?
+
+---
