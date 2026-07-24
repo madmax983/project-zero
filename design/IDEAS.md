@@ -29107,7 +29107,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you leverage ancient artifacts to create hyper-efficient utopian worlds, knowing you are breeding a helpless populace that will collapse if the machine ever stops?
 
 ---
-## Memorial Subroutines
+## Memorial Subroutines [SPECCED]
 
 **Layer:** 1
 

@@ -630,3 +630,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1325` Temporal Overclocking — `specs/1325-temporal-overclocking.md`
 - [ ] `1327` Gravimetric Graveyards — `specs/1327-gravimetric-graveyards.md`
 - [ ] `1328` The Memory Rot — `specs/1328-the-memory-rot.md`
+- [ ] `1329` Memorial Subroutines — `specs/1329-memorial-subroutines.md`
