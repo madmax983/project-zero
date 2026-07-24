@@ -72,7 +72,7 @@ mod integration_tests {
         let chron_events_res = app.world().get_resource::<Events<AddChronicleEvent>>().unwrap();
         let mut binding_chron = chron_events_res.get_cursor();
         let chron_events: Vec<_> = binding_chron.read(chron_events_res).collect();
-        assert!(chron_events.len() > 0);
+        assert!(!chron_events.is_empty());
         let last_event = chron_events.last().unwrap();
         assert_eq!(last_event.importance, EventImportance::Major);
         assert!(last_event.text.contains("Interplanetary Pollination"));
