@@ -250,3 +250,8 @@
 **Concept:** Added `gluttonous_trade_system` in `src/experimental/gluttonous_trade.rs`. Connects `Trait::Glutton` with `BuildingType::TradeDepot` and `Needs`. Pops with the Glutton trait passively regenerate `leisure` when they are within 3 tiles of a TradeDepot, representing them browsing the exotic food imports, but at the cost of slightly accelerated hunger.
 **Fate:** Submitted
 **Lesson:** Connects a personality trait with a specific economic building's physical location, making an otherwise industrial building an emergent leisure structure for specific populations, but at the cost of higher food consumption.
+
+## [Martial Vigilance]
+**Concept:** Added `martial_vigilance_system` to `src/experimental/martial_vigilance.rs`. Connects `Trait::Militaristic` to defensive structures (`Tower` and `Gate`). Militaristic pops find comfort standing guard, passively regenerating their `leisure` need but taxing their `rest` when near these buildings.
+**Fate:** Submitted
+**Lesson:** Gives a psychological function to purely defensive structures. It allows players to design bases where defensive perimeters double as leisure zones for specific pops, rewarding careful placement of guards.

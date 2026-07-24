@@ -237,3 +237,6 @@ pub mod psionic_overload;
 
 #[cfg(feature = "nova")]
 pub mod gluttonous_trade;
+
+#[cfg(feature = "nova")]
+pub mod martial_vigilance;
