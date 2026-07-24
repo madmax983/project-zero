@@ -29323,3 +29323,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you foster this terrifyingly efficient, borderline-supernatural behavior to keep critical systems running flawlessly, or suppress it to prevent the inevitable psychological collapse of your most skilled workers?
 
 ---
+## Memory Debt of the Soil
+
+**Layer:** 1
+
+**Fantasy:** The physical environment remembers the industrial sins of the past, requiring constant placation to remain habitable.
+
+**Mechanic:** Areas of the grid heavily polluted by early-game industry develop "Toxic Memory." Even after the pollution is scrubbed and the area is terraformed, the tiles occasionally spontaneously revert to toxic wastelands during periods of high colony stress or when specific historical dates occur in-game. Pops working these tiles gain the "Inheritor's Guilt" trait.
+
+**Emergence:** You build a beautiful, high-tier residential sector over an ancient, cleaned-up slag heap. On the 100th anniversary of the colony's founding, the entire sector's parks spontaneously liquefy into toxic sludge, instantly poisoning your elite administrators who had no idea what used to be there.
+
+**Tension:** Do you permanently quarantine the sins of the past by abandoning the land entirely, or constantly spend resources fighting an environment that remembers exactly what you did to it?
+
+---
+
+## The Quarantine of Empathy
+
+**Layer:** Cross-layer
+
+**Fantasy:** A colony sacrifices its humanity to save the empire, and the empire rewards them with terrifying isolation.
+
+**Mechanic:** A virulent, morale-destroying memetic plague ("The Despair") begins spreading. You can enact the "Total Quarantine" edict on the infected Layer 1 colony. The colony stops all trade and communication, stabilizing the rest of the empire. However, the isolated Pops slowly develop the "Apathetic" trait—they stop feeling stress entirely, but also lose all culture, science output, and social connections, effectively becoming biological automatons.
+
+**Emergence:** Fifty years after quarantining a world to stop the Despair, you reopen the hyperlanes. You find a perfectly functional, hyper-efficient colony where millions of people work silently, never sleep, never speak, and have dismantled all art and entertainment structures to build more factories. They offer you incredible tithes, but interacting with them terrifies your core world populations.
+
+**Tension:** Do you exploit this horrifyingly efficient, emotionally dead world for massive economic gain, or spend decades of resources trying to teach them how to feel again?
+
+---
+
+## The Famine's Echo
+
+**Layer:** 1
+
+**Fantasy:** The generational trauma of starvation permanently alters a colony's psychology, turning food into a weapon and a religion.
+
+**Mechanic:** If a colony survives a severe famine where >30% of the population dies, survivors and their descendants gain the "Starvation-Forged" trait. They require half the normal caloric intake but become intensely paranoid hoarders. They will violently defend granaries from other Pops (even when food is plentiful) and suffer massive stress penalties if food reserves drop below a 5-year surplus.
+
+**Emergence:** Your colony has bounced back from near-extinction and is now an agricultural powerhouse. But when you attempt to load a cargo ship with surplus grain to feed a starving sister colony, the Starvation-Forged farmers riot, burning the spaceport to the ground because they believe exporting food is an existential threat, regardless of how much they have.
+
+**Tension:** Do you let these traumatized survivors hoard wealth while the empire starves, or violently suppress them to access the food they so desperately fear losing?
+
+---
