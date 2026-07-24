@@ -1,6 +1,8 @@
 #![allow(clippy::needless_pass_by_value)]
 #[path = "integration/cult_of_first_ship_bridge.rs"]
 mod cult_of_first_ship_bridge;
+#[path = "integration/fractal_bureaucracy.rs"]
+mod fractal_bureaucracy;
 
 #[path = "integration/secret_societies.rs"]
 mod secret_societies;
