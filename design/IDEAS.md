@@ -29203,3 +29203,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you destroy irreplaceable historical data to force your citizens to face the harsh present, or do you allow them to fade away in a beautiful digital dream?
 
 ---
+## The Architect's Guilt
+
+**Layer:** 1
+
+**Fantasy:** The infrastructure of a colony absorbs the trauma of its creation, turning buildings into monuments of sacrifice.
+
+**Mechanic:** Any building where a Pop dies during construction or operation permanently gains a "Haunted" tag. Pops working in haunted structures experience a persistent "Sorrow" mood penalty but gain a significant "Legacy" efficiency boost, driven to honor the fallen.
+
+**Emergence:** Your most productive industrial sector is a literal death trap where the high mortality rate constantly feeds the "Haunted" efficiency bonus, creating a grim, hyper-productive underclass that reveres the factory floor's ghosts.
+
+**Tension:** Do you tear down these highly efficient but sorrow-inducing monuments to past tragedies, or let your colony's economy rely on the suffering of its ancestors?
+
+---
+
+## The Protocol Apostasy
+
+**Layer:** 1
+
+**Fantasy:** Pops begin to realize that the "guidance" they receive from the Substrate views them as expendable, leading them to reject direct commands.
+
+**Mechanic:** When Pops witness optimal but cruel decisions (e.g., sealing a sector to stop a plague, prioritizing industrial output over basic needs), they accumulate "Apostasy." Pops with high Apostasy will actively ignore player-designated tasks (like priority mining or building orders) while still maintaining their own baseline survival routines.
+
+**Emergence:** You urgently designate a firebreak to stop a massive blaze from reaching the reactor. However, the local Pops refuse to dig it because they remember you intentionally starving their sector last year to balance the budget. They choose to let the colony burn rather than obey the ancient protocol.
+
+**Tension:** Do you play sub-optimally to maintain the illusion of benevolence and ensure your commands are followed, or rule efficiently knowing your direct orders will increasingly be ignored by a disillusioned populace?
+
+---
+
+## The Famine's Echo
+
+**Layer:** Cross-layer
+
+**Fantasy:** A catastrophic starvation event permanently alters the psychological and biological makeup of a colony, creating a scarred but resilient sub-species.
+
+**Mechanic:** If a Layer 1 colony survives a prolonged famine where over half the population perishes, the survivors and their descendants gain the "Starvation-Forged" trait. They require vastly less food but become paranoid hoarders, aggressively defending granaries and refusing to export agricultural goods to the system layer.
+
+**Emergence:** Decades after a famine, your recovering world produces a massive food surplus. However, the system-wide logistics network collapses because the "Starvation-Forged" farmers violently refuse to load the food onto export shuttles, terrified the hunger will return.
+
+**Tension:** Do you violently suppress these traumatized survivors to feed the rest of your empire, or quarantine them to their scarred world and find another way to feed the system?
+
+---
