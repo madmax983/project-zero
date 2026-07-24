@@ -11,3 +11,6 @@
 **[TechState Capacity in Testing]**
 **Learning:** `TechState::default()` initializes `total_capacity` to 0.0. When writing unit tests in `src/layer1/tech/mod.rs` and invoking `state.force_unlock(...)` on a default state, the subsequent call to `update_corruption()` within that helper will immediately corrupt the technology because the usage exceeds the 0.0 capacity.
 **Action:** When testing logic that expects a technology to remain `TechStatus::Active`, explicitly initialize `TechState` with a `total_capacity` greater than or equal to the tech's `storage_cost()`.
+**[Clippy Anti-Patterns in Tests]**
+**Learning:** `cargo clippy` with `-D warnings` is strict even inside test modules. Anti-patterns like `assert!(events.len() > 0)` or `assert!(true)` inside match arms trigger warnings (`clippy::len_zero` and `clippy::assertions_on_constants`). Furthermore, clippy enforces `clippy::items_after_test_module`, meaning `mod tests` must always be the absolute last item in the file.
+**Action:** When updating tests or formatting files as Sentry, prefer `!is_empty()` over `.len() > 0`, use empty blocks `{}` instead of `assert!(true)` for intentional no-ops, and ensure the `mod tests` declaration remains at the very bottom of the source file.
