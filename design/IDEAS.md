@@ -29284,3 +29284,42 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you destroy the incredibly valuable derelict to silence its disruptive psychological warfare, or endure the colony's slow breakdown to harvest its unique, irreplaceable technologies?
 
 ---
+## The Museum of the Lost
+
+**Layer:** Cross-layer
+
+**Fantasy:** Building an institution that preserves the memories and artifacts of failed colonies, creating a sanctuary of history that shapes your empire's future.
+
+**Mechanic:** Players can construct a "Galactic Museum" on a stable world (Layer 1). Scavenger fleets (Layer 2) recovering artifacts from "Dead Worlds" or ruined settlements deposit their finds here instead of recycling them. The Museum generates immense "Cultural Memory" (Layer 3), boosting diplomatic weight and reducing unrest across the empire. However, interacting with artifacts from tragic ends causes local Pops to occasionally gain the "Melancholic" trait.
+
+**Emergence:** Your museum becomes incredibly prestigious, housing the last remnants of a forgotten civilization. But the constant influx of melancholic curators leads to a localized, peaceful but persistent strike as they demand a halt to all aggressive expansion to prevent future tragedies.
+
+**Tension:** Do you prioritize extracting raw resources from ruined colonies to fuel immediate war efforts, or do you sacrifice those resources to build a monument of peace that might eventually paralyze your own ambitions with grief?
+
+---
+## Phantom Protocols
+
+**Layer:** Cross-layer
+
+**Fantasy:** Realizing that the ancient, supposedly inert infrastructure you inherited still remembers its original owners' final commands.
+
+**Mechanic:** When settling near precursor ruins (Layer 1) or operating within systems containing dormant megastructures (Layer 2), certain automated systems occasionally execute "Phantom Protocols." A solar flare might trigger a precursor defense grid to temporarily shield your colony, or an abandoned transit hub might spontaneously attempt to forcibly relocate your population to a long-dead capital.
+
+**Emergence:** Your colony is starving during a brutal winter. Without warning, a subterranean precursor vault opens, flooding your storage with ancient, perfectly preserved synthetic nutrients. But the vault also broadcasts an automated distress signal that attracts a dormant, heavily armed precursor policing fleet (Layer 2) that interprets your colonists as trespassers.
+
+**Tension:** Do you deliberately build near these unpredictable ruins for the chance of miraculous boons, or do you maintain a safe distance and struggle without their ancient support?
+
+---
+## Substrate Synchronization
+
+**Layer:** 1
+
+**Fantasy:** A fringe cult of Pops discovers how to momentarily align their consciousness with the simulation's tick rate, achieving eerie, predictive efficiency.
+
+**Mechanic:** A rare "Sync-Seeker" trait can appear. These Pops form small congregations around high-energy infrastructure (reactors, quantum relays). They occasionally enter a "Synchronized State" where they perfectly predict incoming needs or local hazards just before they occur, allowing them to pre-position resources or evacuate instantly. However, falling out of sync causes a severe, long-lasting "Desync Trauma" mood penalty.
+
+**Emergence:** A group of Sync-Seekers flawlessly maintains a volatile fusion reactor that should have melted down days ago, working with impossible coordination. But when a sudden power dip breaks their synchronization, the entire engineering team collapses into a catatonic depression, leaving the reactor completely unmanaged just as a pirate raid hits.
+
+**Tension:** Do you foster this terrifyingly efficient, borderline-supernatural behavior to keep critical systems running flawlessly, or suppress it to prevent the inevitable psychological collapse of your most skilled workers?
+
+---
