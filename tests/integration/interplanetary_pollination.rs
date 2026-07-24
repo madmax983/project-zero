@@ -47,7 +47,10 @@ mod integration_tests {
         app.update();
 
         // 1) `spore_escape_system` should release SporeReleaseEvent (target=None)
-        let spore_events_res = app.world().get_resource::<Events<SporeReleaseEvent>>().unwrap();
+        let spore_events_res = app
+            .world()
+            .get_resource::<Events<SporeReleaseEvent>>()
+            .unwrap();
         let mut binding = spore_events_res.get_cursor();
         let release_events: Vec<_> = binding.read(spore_events_res).collect();
         assert_eq!(release_events.len(), 1);
@@ -69,7 +72,10 @@ mod integration_tests {
         assert_eq!(biome.invasive_flora, strength);
 
         // 3) `interplanetary_pollination_chronicle_bridge` should log it
-        let chron_events_res = app.world().get_resource::<Events<AddChronicleEvent>>().unwrap();
+        let chron_events_res = app
+            .world()
+            .get_resource::<Events<AddChronicleEvent>>()
+            .unwrap();
         let mut binding_chron = chron_events_res.get_cursor();
         let chron_events: Vec<_> = binding_chron.read(chron_events_res).collect();
         assert!(!chron_events.is_empty());

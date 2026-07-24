@@ -10672,3 +10672,71 @@ Used for The Feral Administration anvalanches of paperwork.
 - the Automated Defense Grid
 - a rogue administrative node
 - panicked local governors
+## Interplanetary Pollination Fragments (Spec 999)
+
+## Fragment Type: [SPORE_ADJECTIVE]
+- bio-engineered
+- heavy
+- iridescent
+- choking
+- hyper-adapted
+- invasive
+- glittering
+
+## Fragment Type: [WIND_PHENOMENON]
+- the stellar winds
+- an orbital slipstream
+- a freak hyper-lane current
+- freighter wakes
+- the solar gale
+
+## The Infinite Archive Fragments (Spec 1318)
+
+## Fragment Type: [FORGOTTEN_TECH]
+- the old equations
+- baseline physics
+- early engine schematics
+- the first architectures
+- ancestor-math
+- foundational algorithms
+
+## Fragment Type: [STORAGE_MEDIUM]
+- server racks
+- crystal-drives
+- mem-cores
+- the data strata
+- archive vaults
+
+## Ancestral Graves Fragments (Spec 267)
+
+## Fragment Type: [GRAVE_MARKER]
+- stone markers
+- holographic epitaphs
+- rusted plinths
+- silent monoliths
+- shallow mounds
+- glass obelisks
+
+## Fragment Type: [SACRILEGE_ACT]
+- paved over
+- ground into dust
+- built upon
+- fed to the recyclers
+- shattered by foundations
+
+## Echoes of the Lost Fleet Fragments (Spec 1267)
+
+## Fragment Type: [GHOST_BROADCAST]
+- a phantom muster call
+- ancient battle codes
+- a silent alarm
+- a dead admiral's orders
+- a loop of static and screaming
+- the old war anthems
+
+## Fragment Type: [DESERTER_ACTION]
+- stole the shuttles
+- vanished into the dark
+- answered the call
+- marched into the airlocks
+- followed the phantom signal

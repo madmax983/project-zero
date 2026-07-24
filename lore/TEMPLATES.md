@@ -10580,3 +10580,74 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: [FLEET_NAME] attempted to jump to [SYSTEM] but hit the dead-zone fields. They were violently redirected."
 - "The fields held. [FLEET_NAME] bounced off the perimeter of [SYSTEM] in [YEAR]."
 - "[YEAR]: Navigation failure for [FLEET_NAME]. [SYSTEM] remains closed to all FTL travel."
+## Interplanetary Pollination Templates (Spec 999)
+
+## Template: SPORE_ESCAPE
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SPORE_ADJECTIVE]
+**Patterns:**
+- "[YEAR]: The gravity is too weak at [COLONY]. The [SPORE_ADJECTIVE] spores are escaping into the upper atmosphere."
+- "[SPORE_ADJECTIVE] spores breached the exosphere of [COLONY]. They are riding the void. [YEAR]."
+- "[COLONY], [YEAR]: The wind takes the harvest. Our [SPORE_ADJECTIVE] spores are drifting into orbit."
+
+## Template: NEIGHBOR_INFECTED
+**Generates:** Play event
+**Slots:** [COLONY], [SOURCE_COLONY], [YEAR], [WIND_PHENOMENON]
+**Patterns:**
+- "[YEAR]: The biome of [COLONY] is shifting. Spores from [SOURCE_COLONY] rode [WIND_PHENOMENON] to our soil."
+- "We did not plant this. The wind brought it from [SOURCE_COLONY]. [COLONY] is infected. [YEAR]."
+- "[COLONY], [YEAR]: Alien flora blooms. Carried by [WIND_PHENOMENON] from [SOURCE_COLONY]."
+
+## The Infinite Archive Templates (Spec 1318)
+
+## Template: ARCHIVE_BLOAT
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [STORAGE_MEDIUM]
+**Patterns:**
+- "[YEAR]: The [STORAGE_MEDIUM] at [COLONY] are full. To learn the new, we must delete the old."
+- "Research crawls to a halt in [COLONY]. The [STORAGE_MEDIUM] cannot hold any more data. [YEAR]."
+- "[COLONY], [YEAR]: We are choking on our own knowledge. The [STORAGE_MEDIUM] are overflowing."
+
+## Template: TECH_FORGOTTEN
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [FORGOTTEN_TECH]
+**Patterns:**
+- "[YEAR]: To make room for the future, [COLONY] purged [FORGOTTEN_TECH] from the archives. It is gone."
+- "The purge is complete. We no longer remember [FORGOTTEN_TECH] at [COLONY]. [YEAR]."
+- "[COLONY], [YEAR]: We sacrificed [FORGOTTEN_TECH] to the void. The servers are breathing again."
+
+## Ancestral Graves Templates (Spec 267)
+
+## Template: GRAVE_VISITED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SURVIVOR_NAME], [GRAVE_MARKER]
+**Patterns:**
+- "[YEAR]: [SURVIVOR_NAME] stood by the [GRAVE_MARKER] at [COLONY]. A moment of quiet."
+- "They seek comfort among the [GRAVE_MARKER] in [COLONY]. [SURVIVOR_NAME] remembers. [YEAR]."
+- "[COLONY], [YEAR]: The [GRAVE_MARKER] offer solace. [SURVIVOR_NAME] is at peace."
+
+## Template: GRAVE_DESECRATED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SACRILEGE_ACT]
+**Patterns:**
+- "[YEAR]: Efficiency demands space. The ancestral graves at [COLONY] were [SACRILEGE_ACT]."
+- "We [SACRILEGE_ACT] the memory of the dead to build the future of [COLONY]. The people weep. [YEAR]."
+- "[COLONY], [YEAR]: Sacrilege. The graves are gone, [SACRILEGE_ACT] by the new industry."
+
+## Echoes of the Lost Fleet Templates (Spec 1267)
+
+## Template: FLEET_ECHO_RECEIVED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [GHOST_BROADCAST]
+**Patterns:**
+- "[YEAR]: Scanners at [COLONY] picked up [GHOST_BROADCAST]. The lost fleet is broadcasting again."
+- "A signal cuts through the void. [GHOST_BROADCAST] reaches [COLONY]. [YEAR]."
+- "[COLONY], [YEAR]: The ghost dreadnought speaks. [GHOST_BROADCAST] echoes in the corridors."
+
+## Template: MILITARISTIC_EXODUS
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [DESERTER_ACTION]
+**Patterns:**
+- "[YEAR]: The soldiers of [COLONY] heard the call. They [DESERTER_ACTION]. We could not stop them."
+- "They [DESERTER_ACTION]. The ghost fleet called, and the warriors of [COLONY] answered. [YEAR]."
+- "[COLONY], [YEAR]: The barracks are empty. They [DESERTER_ACTION] to join a war that ended centuries ago."
