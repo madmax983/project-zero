@@ -1807,3 +1807,10 @@
 - **Glue added:** Added `generation_ship_mutiny_chronicle_bridge` in `src/cross_layer/generation_ship_mutiny.rs` to generate Chronicle records when a Generation Ship mutiny happens.
 - **Schedule:** Registered the source systems in `src/simulation.rs` and the bridge in `src/layer1/systems/observation.rs`.
 - **Tests:** Added tests in `tests/integration/generation_ship_mutiny_bridge.rs`.
+
+### INT-993: The Fractal Bureaucracy -> Chronicle
+- **Date:** 2024-05-31
+- **Systems connected:** `LogicCascadeEvent` -> `fractal_bureaucracy_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `fractal_bureaucracy_chronicle_bridge` in `src/layer1/core/integration.rs` to generate Chronicle records when a logic cascade happens.
+- **Schedule:** Registered the system in `src/layer1/systems/observation.rs`.
+- **Tests:** Added tests in `tests/integration/fractal_bureaucracy.rs`.

@@ -3162,6 +3162,19 @@ pub fn planetary_scarring_chronicle_bridge(
     }
 }
 
+/// INT-993: Bridges `LogicCascadeEvent` to `AddChronicleEvent`
+pub fn fractal_bureaucracy_chronicle_bridge(
+    mut events: EventReader<crate::layer1::administration::fractal_bureaucracy::LogicCascadeEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for _event in events.read() {
+        chronicle_events.send(AddChronicleEvent {
+            text: "Logic Cascade! The fractal bureaucracy has broken down.".to_string(),
+            importance: EventImportance::Major,
+        });
+    }
+}
+
 /// INT-1310: Bridges `Added<UnprocessedForms>` to `AddChronicleEvent`
 pub fn feral_administration_chronicle_bridge(
     query: bevy_ecs::system::Query<
