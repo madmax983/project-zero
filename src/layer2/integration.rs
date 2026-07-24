@@ -837,7 +837,9 @@ pub fn celestial_cemeteries_trade_bridge_system(
 
 pub fn dead_protocol_chronicle_bridge(
     mut events: bevy_ecs::event::EventReader<crate::layer2::dead_protocols::ViolationEvent>,
-    mut chronicle_events: bevy_ecs::event::EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+    mut chronicle_events: bevy_ecs::event::EventWriter<
+        crate::layer1::core::chronicle::AddChronicleEvent,
+    >,
 ) {
     for event in events.read() {
         chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
@@ -1055,7 +1057,9 @@ pub fn cultural_drift_independence_bridge(
 
 /// INT-1031: Bridges `Added<SpaceFauna>` (Mycelial Network immune response) to `AddChronicleEvent` (Chronicle).
 pub fn mycelial_network_immune_response_chronicle_bridge(
-    mut chronicle_events: bevy_ecs::event::EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+    mut chronicle_events: bevy_ecs::event::EventWriter<
+        crate::layer1::core::chronicle::AddChronicleEvent,
+    >,
     q_fauna: bevy_ecs::system::Query<
         (),
         bevy_ecs::query::Added<crate::layer2::mycelial_network::SpaceFauna>,
@@ -1091,7 +1095,9 @@ pub fn attack_colony_chronicle_bridge(
 /// Observe ForgeCrushEvent and register it as an AddChronicleEvent
 pub fn observe_forge_crush_event(
     mut events: bevy_ecs::event::EventReader<crate::layer2::station::ForgeCrushEvent>,
-    mut chronicle_events: bevy_ecs::event::EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+    mut chronicle_events: bevy_ecs::event::EventWriter<
+        crate::layer1::core::chronicle::AddChronicleEvent,
+    >,
 ) {
     for event in events.read() {
         chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
@@ -1147,8 +1153,12 @@ pub fn radio_broadcasts_threat_bridge_system(
 
 /// Bridges `SporeReleaseEvent` to `AddChronicleEvent`
 pub fn interplanetary_pollination_chronicle_bridge(
-    mut events: bevy_ecs::event::EventReader<crate::cross_layer::interplanetary_pollination::SporeReleaseEvent>,
-    mut chronicle_events: bevy_ecs::event::EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+    mut events: bevy_ecs::event::EventReader<
+        crate::cross_layer::interplanetary_pollination::SporeReleaseEvent,
+    >,
+    mut chronicle_events: bevy_ecs::event::EventWriter<
+        crate::layer1::core::chronicle::AddChronicleEvent,
+    >,
 ) {
     for _event in events.read() {
         chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {

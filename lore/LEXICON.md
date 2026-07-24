@@ -5951,3 +5951,40 @@
 **Replaces:** Skill loss, amnesia, identity crisis
 **Code reference:** `MemeticDisassociation`
 **Usage:** "Memetic Disassociation claimed another engineer."
+## Interplanetary Pollination (Spec 999)
+
+### Invasive Bloom
+**Replaces:** GMO spore infection, alien flora penalty
+**Code reference:** `Biome::invasive_flora`
+**Usage:** "The Invasive Bloom is choking our native crops."
+
+## The Infinite Archive (Spec 1318)
+
+### The Data Strata
+**Replaces:** Storage servers, data limit
+**Code reference:** `TotalData`, `DataStorage`
+**Usage:** "The Data Strata is full. We must purge the old equations."
+
+### Tech Purge
+**Replaces:** Forgetting technology, deleting research
+**Code reference:** `DeleteTechDataEvent`
+**Usage:** "Authorized a Tech Purge. We no longer know the old architectures."
+
+## Ancestral Graves (Spec 267)
+
+### Sacrilege
+**Replaces:** Morale penalty for destroying graves, building over dead
+**Code reference:** `SacrilegeEvent`
+**Usage:** "The Sacrilege caused a colony-wide strike."
+
+## Echoes of the Lost Fleet (Spec 1267)
+
+### The Phantom Call
+**Replaces:** Ghost fleet broadcast, dreadnought signal
+**Code reference:** `GhostDreadnought::is_broadcasting`
+**Usage:** "The Phantom Call is echoing in the barracks."
+
+### The Lured
+**Replaces:** Deserting militaristic pops
+**Code reference:** `LuredByGhostFleet`
+**Usage:** "The Lured stole the shuttles last night."
