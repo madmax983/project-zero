@@ -99,6 +99,11 @@ impl NarrativeError {
     /// assert!(table.contains("context.insert"));
     /// ```
     pub fn to_table(&self) -> String {
+        use comfy_table::{
+            modifiers::UTF8_ROUND_CORNERS, presets::UTF8_FULL, Cell, Color as TableColor,
+            ContentArrangement, Table,
+        };
+
         let error_msg = format!("{}", self);
         let action_msg = match self {
             Self::DirectoryNotFound(_) | Self::NoLoreFiles(_) | Self::IoError(_, _) => {
@@ -122,13 +127,31 @@ impl NarrativeError {
             _ => "✗ NARRATIVE GENERATOR ERROR",
         };
 
-        format!(
-            "╭── {} ───────────────────────────────╮\n\
-             │ Message: {}\n\
-             │ Action:  {}\n\
-             ╰─────────────────────────────────────────────────────────────────╯",
-            header_title, error_msg, action_msg
-        )
+        let mut table = Table::new();
+        table
+            .load_preset(UTF8_FULL)
+            .apply_modifier(UTF8_ROUND_CORNERS)
+            .set_content_arrangement(ContentArrangement::Dynamic);
+
+        table.set_header(vec![
+            Cell::new("Field")
+                .fg(TableColor::Yellow)
+                .add_attribute(comfy_table::Attribute::Bold),
+            Cell::new(header_title)
+                .fg(TableColor::Red)
+                .add_attribute(comfy_table::Attribute::Bold),
+        ]);
+
+        table.add_row(vec![
+            Cell::new("Message").fg(TableColor::Yellow),
+            Cell::new(error_msg),
+        ]);
+        table.add_row(vec![
+            Cell::new("Action").fg(TableColor::Cyan),
+            Cell::new(action_msg),
+        ]);
+
+        table.to_string()
     }
 }
 
