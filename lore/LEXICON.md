@@ -5988,3 +5988,9 @@
 **Replaces:** Deserting militaristic pops
 **Code reference:** `LuredByGhostFleet`
 **Usage:** "The Lured stole the shuttles last night."
+
+## the Subconscious Grid
+
+**Replaces:** smart infrastructure, automated power grid
+**Code reference:** `SmartGrid` component
+**Usage:** "The Subconscious Grid grew anxious." / "The grid sealed the blast doors."

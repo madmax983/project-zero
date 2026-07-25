@@ -10651,3 +10651,25 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The soldiers of [COLONY] heard the call. They [DESERTER_ACTION]. We could not stop them."
 - "They [DESERTER_ACTION]. The ghost fleet called, and the warriors of [COLONY] answered. [YEAR]."
 - "[COLONY], [YEAR]: The barracks are empty. They [DESERTER_ACTION] to join a war that ended centuries ago."
+
+## Template: GRID_LOCKDOWN
+
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [STRESS_CAUSE]?
+
+**Patterns:**
+- "Year [YEAR]: The Subconscious Grid of [COLONY] initiated an unprompted lockdown."
+- "Responding to rising panic, [COLONY]'s infrastructure sealed all doors in [YEAR]."
+- "[COLONY], [YEAR]: The grid detected our fear. It locked us in to keep us safe."
+
+**If [STRESS_CAUSE]:**
+- "Driven to anxiety by [STRESS_CAUSE], the smart-grid of [COLONY] sealed the colony in [YEAR]."
+
+## Template: GRID_EAGER
+
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR]
+
+**Patterns:**
+- "[COLONY], [YEAR]: The grid hummed with our joy. Machines ran hot."
+- "Sensing the optimism of [YEAR], the infrastructure of [COLONY] began overclocking itself."

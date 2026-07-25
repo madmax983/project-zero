@@ -10740,3 +10740,14 @@ Used for The Feral Administration anvalanches of paperwork.
 - answered the call
 - marched into the airlocks
 - followed the phantom signal
+
+## Fragment Type: [GRID_PERSONALITY]
+
+How the Subconscious Grid's demeanor is described.
+
+- anxious and flickering
+- eager to please
+- aggressively protective
+- paranoid
+- over-clocked and humming
+- depressed and sluggish
