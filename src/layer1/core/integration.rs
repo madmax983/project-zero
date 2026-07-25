@@ -78,20 +78,26 @@ pub fn temporal_fugue_chronicle_bridge(
 pub struct ChronicleCorruptedLogged;
 
 /// INT-493: Bridges `Changed<Blueprint>` to `AddChronicleEvent` when corrupted
-#[allow(clippy::type_complexity)]
+#[derive(bevy_ecs::query::QueryData)]
+pub struct LivingArchiveQuery {
+    entity: Entity,
+    blueprint: &'static crate::layer1::tech::living_archive::Blueprint,
+}
+
+#[derive(bevy_ecs::query::QueryFilter)]
+pub struct LivingArchiveFilter {
+    _changed: Changed<crate::layer1::tech::living_archive::Blueprint>,
+    _without: Without<ChronicleCorruptedLogged>,
+}
+
 pub fn living_archive_chronicle_bridge(
     mut commands: Commands,
-    query: Query<
-        (Entity, &crate::layer1::tech::living_archive::Blueprint),
-        (
-            Changed<crate::layer1::tech::living_archive::Blueprint>,
-            Without<ChronicleCorruptedLogged>,
-        ),
-    >,
+    query: Query<LivingArchiveQuery, LivingArchiveFilter>,
     mut chronicle_events: EventWriter<AddChronicleEvent>,
 ) {
-    for (entity, blueprint) in query.iter() {
-        if blueprint.is_corrupted {
+    for item in query.iter() {
+        if item.blueprint.is_corrupted {
+            let entity = item.entity;
             commands.entity(entity).insert(ChronicleCorruptedLogged);
             chronicle_events.send(AddChronicleEvent {
                 text: "A living Flesh-Server has suffered acute stress, permanently corrupting the stored technological blueprints and introducing horrifying secondary effects.".to_string(),
@@ -1439,21 +1445,27 @@ pub fn silent_flora_chronicle_bridge(
 }
 
 // Pheromone Gardening integration (984)
-#[allow(clippy::type_complexity)]
+#[derive(bevy_ecs::query::QueryData)]
+pub struct FloraScentQuery {
+    entity: bevy_ecs::prelude::Entity,
+    flora: &'static crate::layer1::flora::PheromoneFlora,
+}
+
+#[derive(bevy_ecs::query::QueryFilter)]
+pub struct FloraScentFilter {
+    _or: bevy_ecs::prelude::Or<(
+        bevy_ecs::prelude::Added<crate::layer1::flora::PheromoneFlora>,
+        bevy_ecs::prelude::Changed<crate::layer1::flora::PheromoneFlora>,
+    )>,
+}
+
 pub fn flora_scent_bridge_system(
     mut commands: bevy_ecs::prelude::Commands,
-    query: bevy_ecs::prelude::Query<
-        (
-            bevy_ecs::prelude::Entity,
-            &crate::layer1::flora::PheromoneFlora,
-        ),
-        bevy_ecs::prelude::Or<(
-            bevy_ecs::prelude::Added<crate::layer1::flora::PheromoneFlora>,
-            bevy_ecs::prelude::Changed<crate::layer1::flora::PheromoneFlora>,
-        )>,
-    >,
+    query: bevy_ecs::prelude::Query<FloraScentQuery, FloraScentFilter>,
 ) {
-    for (entity, flora) in query.iter() {
+    for item in query.iter() {
+        let entity = item.entity;
+        let flora = item.flora;
         match flora.emission_type {
             crate::layer1::flora::PheromoneEmission::Calming => {
                 commands
@@ -2371,15 +2383,41 @@ use crate::layer3::guilt::PsychicResonance;
 /// Bridges the gap between Ruins with PsychicResonance and newly constructed Buildings.
 /// When a Building is placed on a tile that has a Ruin with PsychicResonance,
 /// the building absorbs the resonance.
-#[allow(clippy::type_complexity)]
+#[derive(bevy_ecs::query::QueryData)]
+pub struct BuildingRegretQuery {
+    entity: Entity,
+    pos: &'static GridPosition,
+}
+
+#[derive(bevy_ecs::query::QueryFilter)]
+pub struct BuildingRegretFilter {
+    _with: With<Building>,
+    _without: Without<PsychicResonance>,
+}
+
+#[derive(bevy_ecs::query::QueryData)]
+pub struct RuinRegretQuery {
+    entity: Entity,
+    pos: &'static GridPosition,
+    resonance: &'static PsychicResonance,
+}
+
+#[derive(bevy_ecs::query::QueryFilter)]
+pub struct RuinRegretFilter {
+    _with: With<Ruin>,
+}
+
 pub fn architecture_of_regret_bridge_system(
     mut commands: Commands,
-    buildings: Query<(Entity, &GridPosition), (With<Building>, Without<PsychicResonance>)>,
-    ruins: Query<(Entity, &GridPosition, &PsychicResonance), With<Ruin>>,
+    buildings: Query<BuildingRegretQuery, BuildingRegretFilter>,
+    ruins: Query<RuinRegretQuery, RuinRegretFilter>,
 ) {
-    for (b_entity, b_pos) in buildings.iter() {
-        for (r_entity, r_pos, resonance) in ruins.iter() {
-            if b_pos == r_pos {
+    for b_item in buildings.iter() {
+        for r_item in ruins.iter() {
+            if b_item.pos == r_item.pos {
+                let b_entity = b_item.entity;
+                let r_entity = r_item.entity;
+                let resonance = r_item.resonance;
                 commands.entity(b_entity).insert(PsychicResonance {
                     intensity: resonance.intensity,
                 });
@@ -2742,7 +2780,18 @@ pub fn edible_architecture_chronicle_bridge(
 ///
 /// Listens to `PopDied`, `BuildingRemovedEvent`, and `PopDiedInAccidentEvent`.
 /// When these occur, it looks for nearby buildings and adds a `NegativeEvent` to their `NegativeEventHistory`.
-#[allow(clippy::type_complexity)]
+#[derive(bevy_ecs::query::QueryData)]
+#[query_data(mutable)]
+pub struct BuildingNegativeHistoryQuery {
+    pos: &'static crate::layer1::core::map::GridPosition,
+    history: &'static mut crate::layer1::architecture_superstition::NegativeEventHistory,
+}
+
+#[derive(bevy_ecs::query::QueryFilter)]
+pub struct BuildingNegativeHistoryFilter {
+    _with: bevy_ecs::query::With<crate::layer1::architecture::Building>,
+}
+
 pub fn track_negative_events_bridge_system(
     mut pop_died_events: bevy_ecs::event::EventReader<crate::layer1::pop::PopDied>,
     mut building_removed_events: bevy_ecs::event::EventReader<
@@ -2754,11 +2803,8 @@ pub fn track_negative_events_bridge_system(
     pops_query: bevy_ecs::system::Query<&crate::layer1::core::map::GridPosition>,
     pos_query: bevy_ecs::system::Query<&crate::layer1::core::map::GridPosition>,
     mut building_query: bevy_ecs::system::Query<
-        (
-            &crate::layer1::core::map::GridPosition,
-            &mut crate::layer1::architecture_superstition::NegativeEventHistory,
-        ),
-        bevy_ecs::query::With<crate::layer1::architecture::Building>,
+        BuildingNegativeHistoryQuery,
+        BuildingNegativeHistoryFilter,
     >,
     time: bevy_ecs::system::Res<crate::shared::time::SimulationTime>,
 ) {
@@ -2789,13 +2835,13 @@ pub fn track_negative_events_bridge_system(
         return;
     }
 
-    for (b_pos, mut history) in building_query.iter_mut() {
+    for mut item in building_query.iter_mut() {
         for (event_pos, severity) in &negative_locations {
-            let dx = b_pos.x.abs_diff(event_pos.x);
-            let dy = b_pos.y.abs_diff(event_pos.y);
+            let dx = item.pos.x.abs_diff(event_pos.x);
+            let dy = item.pos.y.abs_diff(event_pos.y);
             // If within 5 tiles
             if dx <= 5 && dy <= 5 {
-                history.events.push(NegativeEvent {
+                item.history.events.push(NegativeEvent {
                     severity: *severity,
                     #[allow(clippy::cast_precision_loss)]
                     time: time.tick as f32,
@@ -3084,24 +3130,27 @@ pub fn reformat_chronicle_bridge(
     }
 }
 
-#[allow(clippy::type_complexity)]
+#[derive(bevy_ecs::query::QueryData)]
+pub struct GravityPlatingQuery {
+    entity: bevy_ecs::prelude::Entity,
+    consumer: &'static crate::layer1::energy::PowerConsumer,
+}
+
+#[derive(bevy_ecs::query::QueryFilter)]
+pub struct GravityPlatingFilter {
+    _with: bevy_ecs::prelude::With<crate::layer1::physics::gravity_plating::GravityGenerator>,
+    _changed: bevy_ecs::prelude::Changed<crate::layer1::energy::PowerConsumer>,
+}
+
 pub fn gravity_plating_power_bridge_system(
-    query: bevy_ecs::prelude::Query<
-        (
-            bevy_ecs::prelude::Entity,
-            &crate::layer1::energy::PowerConsumer,
-        ),
-        (
-            bevy_ecs::prelude::With<crate::layer1::physics::gravity_plating::GravityGenerator>,
-            bevy_ecs::prelude::Changed<crate::layer1::energy::PowerConsumer>,
-        ),
-    >,
+    query: bevy_ecs::prelude::Query<GravityPlatingQuery, GravityPlatingFilter>,
     mut events: bevy_ecs::prelude::EventWriter<
         crate::layer1::physics::gravity_plating::PowerGridEvent,
     >,
 ) {
-    for (entity, consumer) in query.iter() {
-        if !consumer.active {
+    for item in query.iter() {
+        if !item.consumer.active {
+            let entity = item.entity;
             events.send(crate::layer1::physics::gravity_plating::PowerGridEvent { node: entity });
         }
     }
