@@ -239,4 +239,7 @@ pub mod psionic_overload;
 pub mod gluttonous_trade;
 
 #[cfg(feature = "nova")]
+pub mod homesick_craving;
+
+#[cfg(feature = "nova")]
 pub mod martial_vigilance;
