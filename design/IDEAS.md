@@ -29405,3 +29405,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you risk the dangerous, unregulated sub-light routes for a chance at ancient salvage, or stick to the safe but easily blockaded hyperlanes?
 
 ---
+## Echoes of the Wound
+
+**Layer:** Cross-layer
+
+**Fantasy:** Pops occasionally experience vivid, intrusive memories from perished colonies or alternate timelines, caused by proximity to The Wound.
+
+**Mechanic:** When a colony is established near The Wound (Layer 2), some Pops develop the "Time-Scarred" trait. They instantly gain high-level skills they never learned, but suffer sudden, catastrophic stress spikes as they remember dying in disasters that never happened.
+
+**Emergence:** A lowly miner suddenly possesses the knowledge to repair a critical quantum relay, saving the colony. Days later, they try to destroy the same relay because they "remember" it causing a localized supernova.
+
+**Tension:** Do you deliberately colonize near The Wound to harvest spontaneous skill boosts, risking unpredictable acts of sabotage from traumatized visionaries?
+
+---
+
+## Monumental Melancholy
+
+**Layer:** 1
+
+**Fantasy:** Pops tasked with building grand monuments become obsessed with their legacy, leading to a perfectionism that stalls everything else.
+
+**Mechanic:** Pops constructing high-tier infrastructure may gain the "Obsessed Builder" trait. The resulting structure gains a permanent efficiency bonus, but the builders refuse to do any other work. If the project is cancelled or destroyed, they suffer a terminal morale collapse and may attempt to dismantle other structures in protest.
+
+**Emergence:** A team of Obsessed Builders creates a breathtaking, hyper-efficient central reactor. Years later, when the reactor must be decommissioned for an upgrade, the original builders form a cult around it, barricading the doors and defending their "masterpiece."
+
+**Tension:** Do you allow Pops to become dangerously attached to their work for the massive quality bonuses, or do you constantly rotate construction crews to ensure no one feels ownership over the colony's infrastructure?
+
+---
+
+## The Long Silence
+
+**Layer:** 2
+
+**Fantasy:** The sheer distance and delay in interstellar communication breeds paranoia and divergent cultures on isolated frontier worlds.
+
+**Mechanic:** Colonies that go long periods without physical visits from core world fleets begin to experience "Signal Drift." Their local culture mutates, and transmitted reports become unreliable. If isolated for too long, they may spontaneously develop bizarre, localized religions based on the last fragmented transmission they received.
+
+**Emergence:** A thriving agricultural world goes unvisited for a decade due to a pirate blockade. When your fleet finally breaks through, they find the colony has formed a militant theocracy, refusing to export food because they believe the core worlds have already perished in the silence.
+
+**Tension:** Do you dedicate significant fleet resources merely to "check in" on safe, productive frontier worlds, or risk them quietly drifting into hostile, alien societies while you focus on the front lines?
+
+---
