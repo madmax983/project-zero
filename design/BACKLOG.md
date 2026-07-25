@@ -631,3 +631,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1327` Gravimetric Graveyards — `specs/1327-gravimetric-graveyards.md`
 - [ ] `1328` The Memory Rot — `specs/1328-the-memory-rot.md`
 - [ ] `1329` Memorial Subroutines — `specs/1329-memorial-subroutines.md`
+- [ ] `1330` Temporal Segregation — `specs/1330-temporal-segregation.md`
