@@ -29487,3 +29487,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** How much of your current civilization's prosperity will you sacrifice to ensure the memories of the fallen are never forgotten?
 
 ---
+## The Artifacts of the First Fall
+
+**Layer:** Cross-layer
+
+**Fantasy:** Discovering relics from a previous failed cycle that give incredible localized benefits but slowly corrupt the pops who study them.
+
+**Mechanic:** Deep mining occasionally unearths "Substrate Artifacts". They provide massive, free energy to a Layer 1 colony. But Pops who work near them develop a "Whisper-touched" trait, periodically abandoning work to inscribe unknown coordinates or build useless, bizarre structures out of local materials.
+
+**Emergence:** A colony relying heavily on artifact power might wake up one day to find half their industrial sector dismantled and reassembled into a massive, non-functional antenna aimed at The Wound.
+
+**Tension:** Do you accept the free, massive power boost for a struggling colony, knowing the workforce will slowly lose their minds and efficiency?
+
+---
+
+## The Martyr's Engine
+
+**Layer:** 2
+
+**Fantasy:** In desperate times, a ship's crew can manually override safety protocols to achieve impossible feats, knowing they will not survive.
+
+**Mechanic:** When a fleet is outgunned or stranded without fuel, the player can trigger "The Martyr's Engine." The fleet gets a massive, temporary boost to speed or combat effectiveness. After the battle or jump, all Pops on the ships die, and the ships become derelicts.
+
+**Emergence:** You sacrifice a vital civilian transport's crew to ram a pirate dreadnought, saving a core world. The derelict transport later drifts back to the world it saved, becoming a grim monument that permanently lowers morale in the system but boosts planetary defense zeal.
+
+**Tension:** Do you sacrifice a skilled crew and their ship to win a critical, unwinnable encounter, or accept defeat to preserve their lives?
+
+---
+
+## The Archivist's Schism
+
+**Layer:** 3
+
+**Fantasy:** The civilization fractures not over resources, but over what history should be remembered and what should be forgotten.
+
+**Mechanic:** As your empire expands and accumulates more "Chronicles" of past failures, a faction emerges demanding certain embarrassing or horrific chronicles be purged to boost empire-wide morale. If you refuse, they rebel as "The True Historians," trying to secure the Archive worlds.
+
+**Emergence:** A faction rebels to protect the history of a terrible famine you caused 200 years ago. To defeat them, you might have to destroy the very archive worlds they are defending, effectively committing the historical erasure they rebelled against.
+
+**Tension:** Do you rewrite history for a massive stability boost, or preserve the truth and fight a civil war over memories?
+
+---
