@@ -29364,3 +29364,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you let these traumatized survivors hoard wealth while the empire starves, or violently suppress them to access the food they so desperately fear losing?
 
 ---
+## The Bureaucratic Ghost
+
+**Layer:** Cross-layer
+
+**Fantasy:** A long-dead leader's auto-delegation scripts continue to run the empire, and nobody realizes they are dead.
+
+**Mechanic:** When a leader dies, if their automation skill is high enough, their automated edicts and trade routes remain active. They are considered a "Ghost."
+
+**Emergence:** A Ghost might keep a steady supply of resources flowing to a decaying world for decades, until a minor script error causes them to declare war on an ally.
+
+**Tension:** Do you purge the incredibly efficient, but inflexible legacy scripts of a dead leader, or risk them breaking at the worst possible time?
+
+---
+
+## The Sentient Landfill
+
+**Layer:** 1
+
+**Fantasy:** The colony's waste becomes so complex and dense that it spawns a rudimentary ecology, becoming a living, unpredictable organism.
+
+**Mechanic:** Large, unmanaged waste dumps slowly convert into a "Junk Biome." It spawns unique, scrappy fauna and sometimes produces rare, recycled resources, but also releases toxic gas.
+
+**Emergence:** Desperate pops might sneak into the dangerous landfill to hunt trash-rats or find scrap metal, sometimes returning with alien diseases.
+
+**Tension:** Do you incinerate the landfill to stop the toxic gas and diseases, or harvest the valuable scrap and unique flora it produces?
+
+---
+
+## Sub-light Intercepts
+
+**Layer:** 2
+
+**Fantasy:** Ships traveling without hyperlanes are intercepted by pirates or forgotten generational ships mid-journey, turning deep space into a hostile frontier.
+
+**Mechanic:** Fleets moving between systems via sub-light travel can encounter hidden events or hostile forces in the void, completely outside sensor range.
+
+**Emergence:** A massive, heavily armed trade convoy disappears in deep space. Fifty years later, it arrives at its destination, but the crew has been replaced by hostile, feral descendants.
+
+**Tension:** Do you risk the dangerous, unregulated sub-light routes for a chance at ancient salvage, or stick to the safe but easily blockaded hyperlanes?
+
+---
