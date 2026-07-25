@@ -29446,3 +29446,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you dedicate significant fleet resources merely to "check in" on safe, productive frontier worlds, or risk them quietly drifting into hostile, alien societies while you focus on the front lines?
 
 ---
+## The Orphaned Fleet
+
+**Layer:** 3
+
+**Fantasy:** A forgotten war fleet from a collapsed civilization wanders the galaxy, desperate for a home but terrified of betrayal.
+
+**Mechanic:** A massive, heavily armed nomadic fleet occasionally enters your space. They demand large tributes of basic resources. If you grant them asylum, they settle on one of your worlds, offering immense defensive power but introducing a paranoid, isolationist faction.
+
+**Emergence:** You let them settle on a fragile frontier world. Decades later, feeling threatened by a minor pirate raid, they independently fortify the entire planet and secede, forming an impenetrable isolationist state that blocks your critical trade routes.
+
+**Tension:** Do you turn away these desperate, powerful refugees, or invite them in knowing their generational trauma might fracture your empire from within?
+
+---
+
+## Ghost Ships of the Wound
+
+**Layer:** 2
+
+**Fantasy:** Ships lost near the edge of the galaxy occasionally drift back, manned by silent echoes repeating their final tasks.
+
+**Mechanic:** When a fleet is destroyed or lost near "The Wound," there is a chance its vessels reappear decades later as phase-shifted "Ghost Ships." They passively repeat their original trade or patrol routes. They cannot be communicated with, but occasionally broadcast corrupted, highly advanced data fragments.
+
+**Emergence:** A Ghost Ship from a long-dead rival empire begins patrolling your core system. Your automated defenses constantly fire upon its phase-shifted hull to no effect, draining your ammunition reserves until you manually reprogram your defense grid to ignore the phantoms.
+
+**Tension:** Do you spend resources trying to decipher their corrupted broadcasts for technological leaps, or reroute your logistics network to avoid their disruptive, undying patrols?
+
+---
+
+## The Archive of Regret
+
+**Layer:** Cross-layer
+
+**Fantasy:** A massive, centralized data vault that requires sacrificing present happiness to preserve the memories of the past.
+
+**Mechanic:** You can build a "Grand Archive" to permanently store the traits and histories of dying Pops. This grants a permanent, compounding bonus to your empire's cultural resilience (Layer 3). However, Pops working there suffer from "Empathic Overload," experiencing the trauma of the dead and producing zero standard resources.
+
+**Emergence:** During an empire-wide energy crisis, you must choose between keeping life support online for a struggling colony, or powering the Archive. You cut the Archive's power. The stored memories degrade, and your entire empire suffers a sudden, inexplicable wave of grief as the Substrate deletes the past.
+
+**Tension:** How much of your current civilization's prosperity will you sacrifice to ensure the memories of the fallen are never forgotten?
+
+---
