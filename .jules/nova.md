@@ -255,3 +255,8 @@
 **Concept:** Added `martial_vigilance_system` to `src/experimental/martial_vigilance.rs`. Connects `Trait::Militaristic` to defensive structures (`Tower` and `Gate`). Militaristic pops find comfort standing guard, passively regenerating their `leisure` need but taxing their `rest` when near these buildings.
 **Fate:** Submitted
 **Lesson:** Gives a psychological function to purely defensive structures. It allows players to design bases where defensive perimeters double as leisure zones for specific pops, rewarding careful placement of guards.
+
+## [Homesick Craving]
+**Concept:** Added `homesick_craving_system` in `src/experimental/homesick_craving.rs`. Connects `Trait::Homesick` and `Trait::Xenophobic` with `BuildingType::TradeDepot`. Pops with the Homesick or Xenophobic traits passively regenerate `leisure` when standing near a TradeDepot, feeling a connection to their home planet or their own kind.
+**Fate:** Merged
+**Lesson:** Connects a personality trait with a specific economic building's physical location, making an otherwise industrial building an emergent leisure structure for specific populations, but at the cost of being near merchants.

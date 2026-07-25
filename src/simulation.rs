@@ -1145,6 +1145,8 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
     crate::experimental::manic_cleaning::register(schedule);
     #[cfg(feature = "nova")]
     crate::experimental::fungal_death::register(schedule);
+    #[cfg(feature = "nova")]
+    crate::experimental::homesick_craving::register(schedule);
 
     schedule.add_systems((
         crate::layer3::map::map_data_rot_system,
