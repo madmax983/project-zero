@@ -29258,7 +29258,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Temporal Segregation
+## Temporal Segregation [SPECCED]
 
 **Layer:** 1
 
