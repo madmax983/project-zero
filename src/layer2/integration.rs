@@ -1167,3 +1167,18 @@ pub fn interplanetary_pollination_chronicle_bridge(
         });
     }
 }
+
+/// INT-318: Bridges `WarDeclarationEvent` from Stolen Fleet into the `Chronicle` system.
+pub fn stolen_fleet_chronicle_bridge_system(
+    mut events: bevy_ecs::event::EventReader<crate::layer2::stolen_fleet::WarDeclarationEvent>,
+    mut chronicle_events: bevy_ecs::event::EventWriter<
+        crate::layer1::core::chronicle::AddChronicleEvent,
+    >,
+) {
+    for _event in events.read() {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            text: "A massive fleet has defected to us! A Punitive War has been declared by their former empire.".to_string(),
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
+        });
+    }
+}
