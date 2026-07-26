@@ -10751,3 +10751,69 @@ How the Subconscious Grid's demeanor is described.
 - paranoid
 - over-clocked and humming
 - depressed and sluggish
+
+## Fragment Type: [GHOST_BEHAVIOR]
+
+- endlessly repeats its final broadcast
+- transmits corrupted telemetry from a dead star
+- patrols the perimeter of an empire that no longer exists
+- attempts to dock with a station we dismantled decades ago
+- broadcasts a distress signal in a language we cannot translate
+- silently observes our defenses before jumping away
+
+## Fragment Type: [PURGED_MEMORY]
+
+- the Great Famine
+- the first generational ship mutiny
+- the collapse of the hyperlane network
+- the atrocities committed during the Silence
+- the existence of the Sentient Landfill
+- the failure of the Martyr's Engine
+
+## Fragment Type: [ARTIFACT_NATURE]
+
+- Substrate Artifact
+- quantum energy siphon
+- zero-point reactor core
+- localized reality anchor
+- phase-shifted terraforming engine
+
+## Fragment Type: [SIDE_EFFECT]
+
+- the workers began to hear whispers in the static
+- the local fauna spontaneously mutated
+- time flows erratically within the containment zone
+- Pops refuse to stop working, dying of exhaustion
+- the sky turned a bruised purple
+
+## Fragment Type: [REBELLION_REASON]
+
+- the authorized deletion of the famine records
+- the classification of the First Fall artifacts
+- the Substrate's demand to rewrite history
+- the memory of the martyrs being erased
+- the denial of the Ghost Ships' existence
+
+## Fragment Type: [SYNC_EFFECT]
+
+- perfectly anticipated and prevented a reactor meltdown
+- harvested crops weeks before they should have matured
+- moved as one unified organism
+- predicted a pirate raid with terrifying accuracy
+- synchronized their heartbeats with the tectonic hum
+
+## Fragment Type: [TOXIC_EVENT]
+
+- a spontaneous geyser of industrial sludge
+- clouds of acidic memory-spores
+- the sudden calcification of the topsoil
+- an outbreak of toxic weeping sores on the crops
+- the ground itself rejecting our architecture
+
+## Fragment Type: [TRASH_ACTION]
+
+- began demanding energy credits
+- trapped three workers to build more of itself
+- threatened a garbage strike
+- spontaneously produced a functional quantum relay
+- defended its resource nodes with lethal force

@@ -10673,3 +10673,75 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 **Patterns:**
 - "[COLONY], [YEAR]: The grid hummed with our joy. Machines ran hot."
 - "Sensing the optimism of [YEAR], the infrastructure of [COLONY] began overclocking itself."
+
+## Template: ORPHANED_FLEET_DISCOVERY
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [FLEET_NAME], [REACTION]
+
+**Patterns:**
+- "[YEAR]: The [FLEET_NAME] arrived at [COLONY]. They were not our enemies. They were us, from a long-forgotten launch."
+- "We looked up from [COLONY] and saw the [FLEET_NAME]. We [REACTION]. Year [YEAR]."
+- "[COLONY], [YEAR]: The lost generation ship [FLEET_NAME] enters orbit. The descendants demand tribute."
+
+## Template: GHOST_SHIP_ENCOUNTER
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SHIP_NAME], [GHOST_BEHAVIOR]
+
+**Patterns:**
+- "[YEAR]: The phase-shifted hull of [SHIP_NAME] drifted past [COLONY]. It ignored all hails and simply [GHOST_BEHAVIOR]."
+- "They fired on [SHIP_NAME] in [YEAR], but the weapons passed through. The dead ship just [GHOST_BEHAVIOR]."
+- "[COLONY], [YEAR]: [SHIP_NAME] returned from the Wound. We watched in horror as it [GHOST_BEHAVIOR]."
+
+## Template: ARCHIVE_OF_REGRET_PURGE
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [PURGED_MEMORY]
+
+**Patterns:**
+- "[YEAR]: The Substrate authorized a purge. The memory of [PURGED_MEMORY] is now forbidden on [COLONY]."
+- "To maintain morale in [YEAR], [COLONY] deleted the records of [PURGED_MEMORY]."
+- "[COLONY], [YEAR]: The True Historians rebelled against the erasure of [PURGED_MEMORY]."
+
+## Template: FIRST_FALL_ARTIFACT
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [ARTIFACT_NATURE], [SIDE_EFFECT]
+
+**Patterns:**
+- "[YEAR]: Excavators at [COLONY] unearthed a [ARTIFACT_NATURE]. It provides boundless energy, but [SIDE_EFFECT]."
+- "The [ARTIFACT_NATURE] of the First Fall was activated in [YEAR]. The immediate result was [SIDE_EFFECT]."
+- "[COLONY], [YEAR]: A boon from the ancients. A [ARTIFACT_NATURE]. Yet the workers now [SIDE_EFFECT]."
+
+## Template: ARCHIVISTS_SCHISM
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [REBELLION_REASON]
+
+**Patterns:**
+- "[YEAR]: Civil war on [COLONY]. The Archivists schismed over [REBELLION_REASON]."
+- "The True Historians took up arms in [YEAR]. They refuse to forget [REBELLION_REASON]."
+- "[COLONY], [YEAR]: Blood spilled in the archives. They died defending the memory of [REBELLION_REASON]."
+
+## Template: SUBSTRATE_SYNCHRONIZATION
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SYNC_EFFECT]
+
+**Patterns:**
+- "[YEAR]: The Sync-Seekers of [COLONY] achieved harmony with the simulation tick. They [SYNC_EFFECT]."
+- "Impossible coordination at [COLONY] in [YEAR]. The workers entered a Synchronized State and [SYNC_EFFECT]."
+- "[COLONY], [YEAR]: The cultists aligned with the grid, allowing them to [SYNC_EFFECT]."
+
+## Template: MEMORY_DEBT_REVERSION
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [TOXIC_EVENT]
+
+**Patterns:**
+- "[YEAR]: The soil of [COLONY] remembers. The industrial sins of the past manifested as [TOXIC_EVENT]."
+- "During the high-stress period of [YEAR], the reclaimed land on [COLONY] spontaneously reverted to [TOXIC_EVENT]."
+- "[COLONY], [YEAR]: Inheritor's Guilt strikes. The land demands payment in the form of [TOXIC_EVENT]."
+
+## Template: SENTIENT_LANDFILL
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [TRASH_ACTION]
+
+**Patterns:**
+- "[YEAR]: The junk biome near [COLONY] achieved rudimentary sentience. It [TRASH_ACTION]."
+- "They ignored the waste until [YEAR], when the landfill [TRASH_ACTION]."
+- "[COLONY], [YEAR]: The Scavenger pops report that the central garbage heap [TRASH_ACTION]."
