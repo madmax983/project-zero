@@ -1,7 +1,7 @@
 use bevy::prelude::*;
-use scale::layer2::stolen_fleet::WarDeclarationEvent;
 use scale::layer1::core::chronicle::{AddChronicleEvent, EventImportance};
 use scale::layer2::integration::stolen_fleet_chronicle_bridge_system;
+use scale::layer2::stolen_fleet::WarDeclarationEvent;
 
 #[test]
 fn test_stolen_fleet_chronicle_bridge() {
@@ -10,7 +10,8 @@ fn test_stolen_fleet_chronicle_bridge() {
     app.add_event::<AddChronicleEvent>();
     app.add_systems(Update, stolen_fleet_chronicle_bridge_system);
 
-    app.world_mut().send_event(WarDeclarationEvent { enemy_id: 1 });
+    app.world_mut()
+        .send_event(WarDeclarationEvent { enemy_id: 1 });
     app.update();
 
     let events = app.world().resource::<Events<AddChronicleEvent>>();

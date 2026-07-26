@@ -260,3 +260,8 @@
 **Concept:** Added `homesick_craving_system` in `src/experimental/homesick_craving.rs`. Connects `Trait::Homesick` and `Trait::Xenophobic` with `BuildingType::TradeDepot`. Pops with the Homesick or Xenophobic traits passively regenerate `leisure` when standing near a TradeDepot, feeling a connection to their home planet or their own kind.
 **Fate:** Merged
 **Lesson:** Connects a personality trait with a specific economic building's physical location, making an otherwise industrial building an emergent leisure structure for specific populations, but at the cost of being near merchants.
+
+## [Adblock Siphoning]
+**Concept:** Added `adblock_siphoning_system` to `src/experimental/adblock_siphoning.rs`. Connects `Trait::Hacker` with `BuildingType::Billboard`. Pops with the Hacker trait who stand near a Billboard passively siphon `credits` for the colony at the expense of draining their `rest` need.
+**Fate:** Submitted
+**Lesson:** Connects a vanity/corporate building type with a personality trait, turning a cosmetic building into an economic generator for specialized Pops and rewarding emergent spatial clustering.
