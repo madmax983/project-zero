@@ -16,7 +16,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `305` The Empathy Broadcast — `specs/305-empathy-broadcast.md`
 - [ ] `307` Xenological Pets — `specs/307-xenological-pets.md`
 - [ ] `308` Black Market Genemods — `specs/308-black-market-genemods.md`
-- [ ] `309` The Bureaucratic Strike — `specs/309-bureaucratic-strike.md`
+
 - [ ] `315` The Propaganda Engine — `specs/315-propaganda-engine.md`
 - [ ] `319` The Gravity Well Forge — `specs/319-gravity-well-forge.md`
 - [ ] `320` The Subterranean Ocean — `specs/320-subterranean-ocean.md`

@@ -938,3 +938,4 @@
 - [x] `999` Interplanetary Pollination — `specs/999-interplanetary-pollination.md` — completed 2026-02-01
 
 - [x] `INT-999` Integration: Interplanetary Pollination -> Chronicle - completed 2026-02-01
+- [x] `309` The Bureaucratic Strike — `specs/309-bureaucratic-strike.md` — completed 2026-07-26
