@@ -29651,3 +29651,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you reclaim your ancestral home and its corrupted inhabitants, or quarantine the system forever to prevent the rot from spreading?
 
 ---
+## The Caloric Schism
+
+**Layer:** 1
+
+**Fantasy:** Watching your colony fracture into social castes based entirely on what they are allowed to eat.
+
+**Mechanic:** When high-quality food (e.g., synthetics or rare organics) is scarce, the colony AI automatically prioritizes it for high-tier jobs. Pops assigned lower-tier food develop resentment. Over time, these dietary divisions calcify into permanent social traits (e.g., "The Synthetics" vs "The Paste-Eaters").
+
+**Emergence:** A riot might break out not because there isn't enough food, but because one faction was served nutrient paste while the researchers got real hydroponic vegetables. These castes might persist even after food becomes abundant.
+
+**Tension:** Do you manually enforce equal, low-quality rations for everyone (lowering peak efficiency but maintaining harmony), or let the automatic tiering create a highly efficient but socially volatile class divide?
+
+---
+
+## The Archeological Autopsy
+
+**Layer:** 2
+
+**Fantasy:** Dissecting the ruins of a dead world not for loot, but to understand exactly how they failed so you don't make the same mistake.
+
+**Mechanic:** Finding a ruined colony allows dispatching an "Autopsy Ship". Instead of yielding resources, it generates a "Failure Report" (e.g., "They over-extracted the water table"). This provides a permanent buff to your empire's efficiency in that specific area, but the process takes years and requires dedicating top-tier scientists.
+
+**Emergence:** You might discover that the dead world was destroyed by a subterranean threat you are currently digging towards on your own homeworld. The Autopsy Ship might accidentally trigger the dormant mechanism that destroyed the colony.
+
+**Tension:** Do you tie up your best minds analyzing the dead, or use them to solve the immediate problems of the living?
+
+---
+
+## Posthumous Diplomacy
+
+**Layer:** 3
+
+**Fantasy:** Receiving regular tribute ships from a sector of space that is otherwise completely silent, sent by automated launch facilities of a dead civilization honoring a 300-year-old treaty.
+
+**Mechanic:** Because communication is bound to ship speed, diplomatic states are tied to couriers. You can receive a treaty from an empire, accept it, and send the courier back. But the empire might have fallen to a crisis in the decades it took the courier to travel. You are now officially allied with a ghost faction.
+
+**Emergence:** An alliance with a "powerful" neighbor might give you a false sense of security, until you realize their response fleet isn't coming because they were swallowed by the Wound forty years ago.
+
+**Tension:** Do you uphold your end of an expensive treaty (sending resources or military aid) to a region of space you haven't heard from in a century, or do you break it and risk the wrath of an empire that might just be very quiet?
+
+---
