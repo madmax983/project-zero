@@ -242,4 +242,6 @@ pub mod gluttonous_trade;
 pub mod homesick_craving;
 
 #[cfg(feature = "nova")]
+pub mod adblock_siphoning;
+#[cfg(feature = "nova")]
 pub mod martial_vigilance;
