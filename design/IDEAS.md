@@ -29610,3 +29610,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you quarantine the rotting sector to save the rest of your empire's history, abandoning billions to a life without a past, or pour massive resources into stabilizing the substrate at the cost of your present economy?
 
 ---
+## The Tomb World Harvest
+
+**Layer:** 1
+
+**Fantasy:** A desperate colony cannibalizes ancient ruins to survive, slowly replacing their culture with the ghosts of the past.
+
+**Mechanic:** Pops can mine ancient ruins for advanced materials and synthetic rations. Doing so generates a "Desecration" memory. Over time, pops who rely on these rations begin adopting the traits, names, and needs of the ruined civilization.
+
+**Emergence:** Your colony survives the long winter, but a generation later, they are speaking an extinct language and demanding to rebuild temples they never knew.
+
+**Tension:** Do you starve today, or slowly erase your own cultural identity to survive?
+
+---
+
+## The Obsolete Emissary
+
+**Layer:** 2
+
+**Fantasy:** An ambassador arrives to negotiate a treaty on behalf of a civilization that fell centuries ago.
+
+**Mechanic:** Diplomatic envoys traveling across long distances without fast FTL are subjected to the ruthlessness of time. If their home empire collapses or radically shifts ethics while they are in transit, the envoy arrives representing a "Ghost Faction."
+
+**Emergence:** You receive a desperate plea for an alliance and a tribute fleet from an empire that you already destroyed fifty years ago.
+
+**Tension:** Do you spend resources honoring a treaty with a dead empire, or turn the confused, obsolete emissaries away as refugees?
+
+---
+
+## The Wound's Tide
+
+**Layer:** Cross-layer
+
+**Fantasy:** The borders of the Wound fluctuate, swallowing worlds and eventually spitting out things that should have stayed lost.
+
+**Mechanic:** The Wound expands and contracts slowly over centuries. Planets swallowed by the Wound pause their normal simulation. When the Wound recedes, the planet is revealed again, but its history is corrupted with anomalous structures and twisted, ageless variants of its original pops.
+
+**Emergence:** Your long-lost capital world emerges from the Wound after 400 years, inhabited by pops who believe they have been there for millions of years.
+
+**Tension:** Do you reclaim your ancestral home and its corrupted inhabitants, or quarantine the system forever to prevent the rot from spreading?
+
+---
