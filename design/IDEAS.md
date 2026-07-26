@@ -29569,3 +29569,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you aggressively re-educate the populace and force them to modernize, risking a violent uprising, or do you indulge their destructive nostalgia while desperately trying to subsidize their failing economy from other worlds?
 
 ---
+## Survivor's Guilt
+
+**Layer:** 1
+
+**Fantasy:** A single pop survives a disaster that kills their peers, carrying the heavy burden of their survival.
+
+**Mechanic:** When a disaster (famine, attack, etc.) kills at least 80% of a colony or work detail, the surviving pops gain the "Survivor's Guilt" trait. This gives them a massive work speed penalty, but they occasionally generate "Memorial Artifacts" or "Chronicle Fragments" about the disaster.
+
+**Emergence:** A lone survivor of a pirate raid spends years working at half capacity, slowly turning the ruins of their former workplace into a sprawling memorial site.
+
+**Tension:** Do you force the traumatized survivor to keep working for the colony's survival, or let them build their monuments to secure cultural resilience?
+
+---
+
+## Linguistic Drift
+
+**Layer:** 2
+
+**Fantasy:** Isolated colonies slowly develop their own dialects and languages, eventually becoming incomprehensible to the core worlds.
+
+**Mechanic:** Colonies disconnected from the core empire's trade routes or communication relays accumulate "Linguistic Drift" over time. As drift increases, diplomatic interactions with the core worlds suffer penalties. If drift reaches 100%, the colony is considered a separate culture entirely and communication requires translation technologies.
+
+**Emergence:** You finally reconnect with a colony cut off during a centuries-long warp storm, only to find they cannot understand your diplomats and treat your relief fleets as an alien invasion.
+
+**Tension:** Do you spend valuable resources maintaining communication relays to distant, unprofitable frontier worlds, or let them culturally drift away from the empire?
+
+---
+
+## Substrate Rot
+
+**Layer:** Cross-layer
+
+**Fantasy:** The very foundation of the universe's persistence layer begins to decay, deleting history and traits.
+
+**Mechanic:** A rare event or high-level anomaly triggers "Substrate Rot" in a sector. Older data in the area begins to corrupt. Pops lose memories, chronicles become unreadable, and ancient traits are replaced with "Corrupted Data". The rot spreads slowly along hyperlanes.
+
+**Emergence:** A sector that was once the cradle of your civilization, full of rich history and elite pops, slowly becomes a blank slate of amnesiacs as the very fabric of their history dissolves.
+
+**Tension:** Do you quarantine the rotting sector to save the rest of your empire's history, abandoning billions to a life without a past, or pour massive resources into stabilizing the substrate at the cost of your present economy?
+
+---
