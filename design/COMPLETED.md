@@ -938,3 +938,4 @@
 - [x] `999` Interplanetary Pollination — `specs/999-interplanetary-pollination.md` — completed 2026-02-01
 
 - [x] `INT-999` Integration: Interplanetary Pollination -> Chronicle - completed 2026-02-01
+- [x] `INT-318` Integration: The Stolen Fleet -> Chronicle — completed 2024-05-31

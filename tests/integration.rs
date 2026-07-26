@@ -689,3 +689,6 @@ mod generation_ship_mutiny_bridge;
 
 #[path = "integration/interplanetary_pollination.rs"]
 mod interplanetary_pollination;
+
+#[path = "integration/stolen_fleet_chronicle.rs"]
+mod stolen_fleet_chronicle;
