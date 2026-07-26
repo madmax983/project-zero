@@ -29528,3 +29528,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you rewrite history for a massive stability boost, or preserve the truth and fight a civil war over memories?
 
 ---
+## The Substrate Parasite
+
+**Layer:** Cross-layer
+
+**Fantasy:** An ancient code infection that treats your empire’s infrastructure as a massive biological host, forcing you to fight an enemy that is part of your own systems.
+
+**Mechanic:** A dormant anomaly discovered by a mining colony infects the local Substrate connection. It slowly spreads along trade routes and communication relays (Layer 2). Infected colonies experience bizarre, inefficient building behaviors—Pops construct "Parasite Nodes" disguised as necessary infrastructure, draining power and resources.
+
+**Emergence:** A vital agricultural world, slowly infected over decades, suddenly reroutes all food shipments to a seemingly dead asteroid belt where the parasite is assembling a massive, unknown structure.
+
+**Tension:** Do you sever the infected colonies from the network, plunging them into chaos and isolation, or do you dedicate massive resources to manually "purge" the infection while trying to keep the empire running?
+
+---
+
+## Debris Cults
+
+**Layer:** 2
+
+**Fantasy:** The detritus of war and expansion becomes sacred to those who live on the margins, creating a dangerous, fanatical faction born from your waste.
+
+**Mechanic:** Battles and abandoned orbital projects leave behind "Void Wreckage." If left uncleared, isolated or impoverished Pops might migrate to these fields, forming Debris Cults. They harvest the wreckage to build terrifying, unstable junk-fleets that fiercely defend their "holy sites" but occasionally launch raids for more "relics" (functional tech).
+
+**Emergence:** You ignore a massive graveyard of enemy ships after a border war. Fifty years later, a Debris Cult emerges from the wreckage with a monstrous flagship cobbled together from three different dreadnoughts, demanding tribute.
+
+**Tension:** Do you spend valuable time and resources cleaning up every battlefield and ruined station, or risk letting dangerous, unpredictable zealots fester in the shadows?
+
+---
+
+## Nostalgia Sickness
+
+**Layer:** 1
+
+**Fantasy:** A colony becomes so obsessed with its idealized past that it refuses to adapt to the present, slowly starving while surrounded by monuments to its former glory.
+
+**Mechanic:** Highly developed colonies that experience a sudden drop in living standards (due to war, famine, or resource depletion) may develop "Nostalgia Sickness." Pops begin demanding the recreation of obsolete, resource-intensive structures and refuse to work in new, efficient facilities, preferring to maintain failing legacy systems.
+
+**Emergence:** Your oldest, most prestigious core world, suffering from a temporary power shortage, responds by tearing down a modern fusion reactor to rebuild a massive, symbolic coal plant that hasn't been used in a century.
+
+**Tension:** Do you aggressively re-educate the populace and force them to modernize, risking a violent uprising, or do you indulge their destructive nostalgia while desperately trying to subsidize their failing economy from other worlds?
+
+---
