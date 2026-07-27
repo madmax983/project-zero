@@ -10817,3 +10817,53 @@ How the Subconscious Grid's demeanor is described.
 - threatened a garbage strike
 - spontaneously produced a functional quantum relay
 - defended its resource nodes with lethal force
+
+## Fragment Type: [HYPER_RESOURCE]
+
+Substances valuable enough to kill for.
+
+- Void-Spice
+- Quantum Pearls
+- Substrate Geodes
+- Liquid Time
+- Ancestor Dust
+- Star-Marrow
+- The God-Metal
+- Pure Core-Matter
+- Sentient Crystal
+
+## Fragment Type: [UNWATCHED_STATE]
+
+How a colony changes when no one is looking.
+
+- feral
+- obsessed with efficiency
+- deeply religious
+- entirely silent
+- fiercely independent
+- unrecognizable
+- stagnant
+- strange and beautiful
+- steeped in ritual
+
+## Fragment Type: [HIGH_DIET_CASTE]
+
+Names for the upper crust who eat well.
+
+- the Synthetics
+- the Fresh-Fed
+- the Gardeners
+- the Prime-Cuts
+- the Sated
+- those who taste the sun
+
+## Fragment Type: [LOW_DIET_CASTE]
+
+Names for the lower class subsisting on scraps.
+
+- the Paste-Eaters
+- the Grey-Bellies
+- the Scrap-Maws
+- the Hungry
+- the Algae-Stained
+- the Rations
