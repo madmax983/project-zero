@@ -1,11 +1,27 @@
 //! Layer 2: System/Planetary Simulation.
 //!
 //! This layer abstractly models the wider planetary and star system context surrounding the colony.
+//! This bridges the gap between the detailed colony simulation ([`crate::layer1`]) and the
+//! vast galactic theater ([`crate::layer3`]).
 //!
-//! Layer 2.
+//! # Core Concepts
 //!
-//! Layer 2.
+//! ## Celestial Bodies
+//! The simulation abstracts individual celestial entities within a system:
+//! - **Planets & Moons:** Simulated through modules like `planet` and `binary_star`.
+//! - **Orbital Infrastructure:** Handled by `derelict_stations`.
 //!
+//! ## FTL & Mining
+//! - FTL traverse the system (`ftl`).
+//! - Resources are extracted (`mining`).
+//!
+//! ## Environment
+//! System-wide environmental factors impact all entities within:
+//! - `environment` and `planetary_scarring`.
+//!
+//! # Module Structure
+//! This layer serves as a hub, exporting systems related to `governance`, `environment`, and `fleet`,
+//! managing the interaction of multiple colonies within a single star system.
 pub mod ftl;
 pub mod memorial_fleet;
 pub mod planet;

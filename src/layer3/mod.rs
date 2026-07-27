@@ -1,8 +1,26 @@
 //! Layer 3: Galactic Level Simulation
 //!
 //! This layer handles galaxy-wide simulation aspects, connecting solar systems and factions.
-//! This includes the galactic market, council resolutions, diplomacy between interstellar nations,
-//! and large-scale fleets.
+//! It serves as the grand strategy ("Stellaris") layer, managing macro-scale civilization dynamics.
+//!
+//! # Core Concepts
+//!
+//! ## Interstellar Relations
+//! The galaxy is shaped by the interactions of vast factions:
+//! - **Diplomacy:** Treaties, council resolutions, and negotiations (`diplomacy`, `council`).
+//! - **Conflict:** Sovereign armadas, pirates, and ghost ships (`fleets`, `pirates`, `ghost_ships`).
+//!
+//! ## The Galactic Market
+//! A macro-economy that transcends individual systems:
+//! - Features subjective economics and corporate bureaucracy (`market`, `economy`).
+//!
+//! ## Galactic Geography
+//! - The galactic map and stellar cartography track the known universe (`map`, `stellar_cartography`).
+//!
+//! # Simulation Flow
+//! This layer abstracts the minute details of Layer 1 and 2, focusing instead on high-level
+//! events (`events`), galactic silence (`silence`), and the shifting power dynamics of a universe
+//! inhabited by countless civilizations.
 pub mod council;
 pub mod events;
 pub mod market;
