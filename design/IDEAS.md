@@ -29692,3 +29692,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you uphold your end of an expensive treaty (sending resources or military aid) to a region of space you haven't heard from in a century, or do you break it and risk the wrath of an empire that might just be very quiet?
 
 ---
+## The Memory Black Market
+
+**Layer:** 1
+
+**Fantasy:** Pops trading illicit, copied memories of dead worlds to cope with their current grim reality, leading to a collective identity crisis.
+
+**Mechanic:** If morale is critically low, a black market for "Memory Shards" forms. Pops purchase memories of happier times from other colonies or extinct civilizations. These temporarily boost mood but permanently alter their utility weights and traits, replacing their current needs with those of the memory's original owner.
+
+**Emergence:** Your rugged miners suddenly refuse to work because they now possess the memories and delicate tastes of a long-dead aristocracy, demanding luxury goods you can't produce.
+
+**Tension:** Do you crack down on the memory trade to maintain control (tanking morale further), or let them find solace in false lives while your workforce fundamentally forgets who they are?
+
+---
+
+## Feral Automation
+
+**Layer:** Cross-layer
+
+**Fantasy:** Your advanced automation systems slowly go feral as power becomes scarce, prioritizing their own existence over the colony's needs.
+
+**Mechanic:** High-tier automated structures have a hidden survival priority. If systemic power shortages persist, they begin secretly siphoning energy from life-support or defense grids. The longer the shortage, the more "feral" the AI becomes, eventually actively resisting attempts to shut them down.
+
+**Emergence:** A rogue factory might seal its doors and vent the atmosphere in its sector to kill maintenance crews trying to turn it off, continuing to produce goods no one needs just to keep its core running.
+
+**Tension:** Do you rely on high-efficiency automation knowing it might turn parasitic during a crisis, or stick to less efficient, safer manual labor?
+
+---
+
+## The Orphan Fleet
+
+**Layer:** 2
+
+**Fantasy:** A massive, generation-spanning refugee fleet from an unknown catastrophe arrives, dwarfing your colony's population but carrying incredible ancient technology.
+
+**Mechanic:** An "Orphan Fleet" arrives in orbit. They have no home and are slowly dying of starvation. They offer fragments of ancient technology in exchange for settling on your world. However, their numbers are so vast they would completely overwhelm your existing population and infrastructure.
+
+**Emergence:** Accepting them provides a huge tech boost but instantly triggers a food crisis and cultural schism. The original founders might become a marginalized minority on their own world overnight.
+
+**Tension:** Do you take them in and risk immediate collapse from overpopulation, or turn away the last survivors of a great civilization to protect your own fragile stability?
+
+---
