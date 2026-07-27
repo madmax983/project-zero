@@ -665,6 +665,8 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
     schedule.add_systems(
         crate::experimental::photosynthetic_nourishment::photosynthetic_nourishment_system,
     );
+    #[cfg(feature = "nova")]
+    schedule.add_systems(crate::experimental::landfill_rummaging::landfill_rummaging_system);
     schedule.add_systems((
         crate::layer1::blackout_bazaars::spawn_blackout_bazaars_system,
         crate::layer1::blackout_bazaars::despawn_blackout_bazaars_system,
