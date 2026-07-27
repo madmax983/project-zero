@@ -29829,3 +29829,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you forcefully isolate and quarantine depressed individuals (treating them like a biohazard and destroying their social ties), or dedicate massive, inefficient resources to fulfill their complex needs and cure the source?
 
 ---
+## Subterranean Agoraphobia
+
+**Layer:** 1
+
+**Fantasy:** Generations born in the dark depths develop a paralyzing terror of the open sky, changing the colony's geography.
+
+**Mechanic:** Pops born and raised exclusively in subterranean or heavily enclosed tiles for their entire lives have a high chance to develop the "Agoraphobic" trait. They suffer massive mood penalties and refuse to pathfind across surface tiles unless absolutely desperate.
+
+**Emergence:** You build a highly efficient deep-core mining colony. Decades later, a disaster destroys their underground food supply. They starve to death just steps away from a bountiful surface farm because the thought of looking up at the stars is too terrifying.
+
+**Tension:** Do you force your underground workforce to rotate to the surface to prevent the trait from settling in, losing efficiency, or lean into it and build completely enclosed, expensive self-sustaining ecologies?
+
+---
+
+## Interstellar Rumor Mill
+
+**Layer:** Cross-layer
+
+**Fantasy:** Panic and misinformation travel on civilian trade ships faster than official government reports, causing phantom crises.
+
+**Mechanic:** At Layer 1, pops generate "Rumors" based on local events (e.g., a power flicker, a minor brawl). When trade ships depart for other colonies (Layer 2), they carry these rumors. The rumors can mutate and amplify upon arrival, causing pops on completely safe worlds to react to exaggerated threats (e.g., hoarding food, demanding defense structures).
+
+**Emergence:** A minor riot over a broken entertainment console on a frontier world is carried by merchants to the capital. By the time it arrives, the rumor has morphed into a full-scale rebellion, causing the capital's population to strike in sympathy or panic, crashing your core economy over nothing.
+
+**Tension:** Do you impose strict information quarantine on your trade routes (stifling economic growth and angering pops) or let trade flow freely and constantly battle the psychological fires of mass hysteria?
+
+---
+
+## The Curator's Burden
+
+**Layer:** 3
+
+**Fantasy:** Your late-game civilization becomes obsessed with preserving the ruins and cultures of the empires you've outlasted, prioritizing history over survival.
+
+**Mechanic:** When another empire falls, you can designate their former core worlds as "Preservation Zones." These zones generate immense cultural power and diplomatic prestige globally, but strictly forbid resource extraction, military deployment, or altering the ruins.
+
+**Emergence:** You turn a fallen enemy's capital into a massive galactic museum. Centuries later, an existential threat approaches. You need the rare minerals buried under the museum to build a defense fleet, but your own population riots at the thought of desecrating the ruins, paralyzing your military response.
+
+**Tension:** Do you pragmatically strip-mine the galaxy for power, or embrace the role of the galactic curator, intentionally crippling your late-game economy for unparalleled cultural dominance?
+
+---
