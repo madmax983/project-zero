@@ -3321,3 +3321,20 @@ pub fn subterranean_biosphere_chronicle_bridge(
         });
     }
 }
+
+pub fn architecture_of_paranoia_chronicle_bridge(
+    surveillance_query: bevy_ecs::prelude::Query<
+        (),
+        bevy_ecs::query::Added<crate::layer1::social::subversion::Surveillance>,
+    >,
+    mut chronicle_events: bevy_ecs::prelude::EventWriter<
+        crate::layer1::core::chronicle::AddChronicleEvent,
+    >,
+) {
+    for _ in surveillance_query.iter() {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            text: "A new Surveillance installation has been constructed. The colony is watching its own.".to_string(),
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
+        });
+    }
+}
