@@ -10745,3 +10745,53 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The junk biome near [COLONY] achieved rudimentary sentience. It [TRASH_ACTION]."
 - "They ignored the waste until [YEAR], when the landfill [TRASH_ACTION]."
 - "[COLONY], [YEAR]: The Scavenger pops report that the central garbage heap [TRASH_ACTION]."
+
+## Template: RESOURCE_CURSE_DISCOVERY
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [HYPER_RESOURCE]
+
+**Patterns:**
+- "[YEAR]: They struck [HYPER_RESOURCE] deep beneath [COLONY]. The wealth was unimaginable. So was the danger."
+- "The discovery of [HYPER_RESOURCE] at [COLONY] in [YEAR]. The galaxy turned its eyes toward them."
+- "[COLONY] became the richest world in the sector in [YEAR] when they found [HYPER_RESOURCE]. It was the beginning of the end."
+
+## Template: RESOURCE_CURSE_RAID
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [HYPER_RESOURCE], [PIRATE_FACTION]?
+
+**Patterns:**
+- "[YEAR]: They came for the [HYPER_RESOURCE]. [COLONY] burned to protect its wealth."
+- "The greed of the void reached [COLONY] in [YEAR]. The [PIRATE_FACTION] wanted the [HYPER_RESOURCE]."
+- "[COLONY], [YEAR]: Another raid. We spend all we mine on guns to protect the [HYPER_RESOURCE]."
+
+## Template: FOCUS_LOST
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR]
+
+**Patterns:**
+- "[YEAR]: The Substrate's gaze shifted away from [COLONY]. They were left to the dark."
+- "We stopped watching [COLONY] in [YEAR]. Their true numbers became a blur of averages."
+- "[COLONY] slipped from focus in [YEAR]. What happens in the shadows is their own business."
+
+## Template: UNWATCHED_DRIFT
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [UNWATCHED_STATE]
+
+**Patterns:**
+- "[YEAR]: We looked back at [COLONY] and found them [UNWATCHED_STATE]. How long had it been?"
+- "While our eyes were elsewhere, [COLONY] became [UNWATCHED_STATE]. Recorded in [YEAR]."
+- "[COLONY], [YEAR]: The cost of inattention. They are [UNWATCHED_STATE] now."
+
+## Template: CALORIC_SCHISM_FORMATION
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [HIGH_DIET_CASTE], [LOW_DIET_CASTE]
+
+**Patterns:**
+- "[YEAR]: The great divide on [COLONY]. Those who eat well became the [HIGH_DIET_CASTE]. The rest are the [LOW_DIET_CASTE]."
+- "Tension in the mess halls of [COLONY] shattered the society in [YEAR]. The [HIGH_DIET_CASTE] will not sit with the [LOW_DIET_CASTE]."
+- "[COLONY], [YEAR]: Food is caste. The [LOW_DIET_CASTE] watch the [HIGH_DIET_CASTE] eat, and they remember."
