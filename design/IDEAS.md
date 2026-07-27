@@ -29774,3 +29774,58 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you bulldoze your own history for the sake of optimal efficiency, sparking riots and destroying morale, or constrain your grand empire's design around the sentimental relics of your ancestors?
 
 ---
+## The Monument of Failure
+
+**Layer:** 1
+
+**Fantasy:** Abandoned, half-built megaprojects casting a long shadow over a colony's psyche and resources.
+
+**Mechanic:** When a high-tier building construction is canceled or halted due to resource starvation for a long period, the scaffolding remains and gains the "Monument of Failure" tag. It slowly drains local morale but provides a small amount of passive scavenged resources as pops secretly pick it apart.
+
+**Emergence:** A colony survives a famine but is littered with these monuments, permanently crippling their mood. Over generations, pops might form a grim cult around the ruins of a partially built atmospheric processor.
+
+**Tension:** Do you keep the grim ruins around for the trickle of scrap they provide, or spend precious labor hours clearing your own mistakes to heal the colony's psyche?
+
+---
+
+## Linguistic Drift
+
+**Layer:** 2
+
+**Fantasy:** Watching your empire fracture culturally not through rebellion, but through linguistic drift across the void.
+
+**Mechanic:** Colonies that haven't received physical couriers or trade ships from the capital for decades begin to experience "Linguistic Drift". Their pops develop a dialect trait. If the drift becomes too severe, standard diplomatic actions from the capital have a high chance of being misunderstood, turning gifts into insults or requests into threats.
+
+**Emergence:** You finally reconnect with a thriving frontier sector after a century of silence, only to accidentally start a war because your standard "peace offering" now translates as a severe taboo in their evolved dialect.
+
+**Tension:** Do you waste fuel running constant, unprofitable mail ships just to keep the frontier speaking your language, or let them drift and hope you can re-translate them before a crisis?
+
+---
+
+## The Grey Market Embalmers
+
+**Layer:** 1
+
+**Fantasy:** Pops refusing to accept death, causing a bizarre and macabre black market for preservation.
+
+**Mechanic:** When high-status or highly-skilled pops die, grieving pops might secretly steal the bodies and use illegal industrial chemicals to "preserve" them in their hab-blocks. These preserved ancestors provide a localized mood buff to their family but slowly generate toxic atmospheric waste (The Grey) and disease risk in the immediate area.
+
+**Emergence:** An entire hab-block might become a toxic hazard zone because a family refused to let go of their beloved Chief Engineer, slowly poisoning their neighbors for emotional comfort.
+
+**Tension:** Do you send enforcers to raid homes and confiscate the dead, sparking violent outrage and grief, or let the toxic rot spread to keep a few key workers emotionally stable?
+
+---
+
+## Contagious Despair
+
+**Layer:** 1
+
+**Fantasy:** A single pop's deep depression spreading through a colony like a virus, paralyzing infrastructure.
+
+**Mechanic:** Pops with critically low mood who work in high-traffic or highly social jobs (like coordinators, entertainers, or medics) begin transferring a "Despair" debuff to everyone they interact with. Despair lowers utility weights for all actions except wandering or resting.
+
+**Emergence:** You notice your planetary defense grid is offline. You trace it down and realize the chief security officer has been talking to a deeply depressed hydroponics worker at the local bar every night, and now the entire defense staff is too apathetic to calibrate the sensors.
+
+**Tension:** Do you forcefully isolate and quarantine depressed individuals (treating them like a biohazard and destroying their social ties), or dedicate massive, inefficient resources to fulfill their complex needs and cure the source?
+
+---
