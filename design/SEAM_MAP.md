@@ -1821,3 +1821,10 @@
 - **Glue added:** Added `subterranean_biosphere_chronicle_bridge` in `src/layer1/core/integration.rs` to generate Chronicle records when a HazardFlora is spawned.
 - **Schedule:** Registered the system in `src/layer1/systems/observation.rs`.
 - **Tests:** Added tests in `tests/integration/subterranean_biosphere_chronicle.rs`.
+
+### INT-1326: Architecture of Paranoia -> Chronicle
+- **Date:** 2026-11-01
+- **Systems connected:** `Added<Surveillance>` -> `architecture_of_paranoia_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `architecture_of_paranoia_chronicle_bridge` in `src/layer1/core/integration.rs` to generate Chronicle records when a Surveillance building is spawned.
+- **Schedule:** Registered the system in `src/layer1/systems/observation.rs`.
+- **Tests:** Added tests in `tests/integration/architecture_of_paranoia_chronicle.rs`.

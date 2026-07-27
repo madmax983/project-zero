@@ -695,3 +695,6 @@ mod stolen_fleet_chronicle;
 
 #[path = "integration/subterranean_biosphere_chronicle.rs"]
 mod subterranean_biosphere_chronicle;
+
+#[path = "integration/architecture_of_paranoia_chronicle.rs"]
+mod architecture_of_paranoia_chronicle;
