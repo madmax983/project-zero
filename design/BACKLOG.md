@@ -632,3 +632,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1328` The Memory Rot — `specs/1328-the-memory-rot.md`
 - [ ] `1329` Memorial Subroutines — `specs/1329-memorial-subroutines.md`
 - [ ] `1330` Temporal Segregation — `specs/1330-temporal-segregation.md`
+- [ ] `1331` The Tomb World Harvest — `specs/1331-the-tomb-world-harvest.md`

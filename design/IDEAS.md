@@ -29610,7 +29610,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you quarantine the rotting sector to save the rest of your empire's history, abandoning billions to a life without a past, or pour massive resources into stabilizing the substrate at the cost of your present economy?
 
 ---
-## The Tomb World Harvest
+## [SPECCED] The Tomb World Harvest
 
 **Layer:** 1
 
