@@ -692,3 +692,6 @@ mod interplanetary_pollination;
 
 #[path = "integration/stolen_fleet_chronicle.rs"]
 mod stolen_fleet_chronicle;
+
+#[path = "integration/subterranean_biosphere_chronicle.rs"]
+mod subterranean_biosphere_chronicle;

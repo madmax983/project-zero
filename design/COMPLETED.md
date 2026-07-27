@@ -939,3 +939,4 @@
 
 - [x] `INT-999` Integration: Interplanetary Pollination -> Chronicle - completed 2026-02-01
 - [x] `INT-318` Integration: The Stolen Fleet -> Chronicle — completed 2024-05-31
+- [x] `INT-1005` Integration: Subterranean Biosphere Inversion -> Chronicle — completed 2026-11-01

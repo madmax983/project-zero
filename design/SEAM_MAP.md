@@ -1814,3 +1814,10 @@
 - **Glue added:** Added `fractal_bureaucracy_chronicle_bridge` in `src/layer1/core/integration.rs` to generate Chronicle records when a logic cascade happens.
 - **Schedule:** Registered the system in `src/layer1/systems/observation.rs`.
 - **Tests:** Added tests in `tests/integration/fractal_bureaucracy.rs`.
+
+### INT-1005: Subterranean Biosphere Inversion -> Chronicle
+- **Date:** 2026-11-01
+- **Systems connected:** `Added<HazardFlora>` -> `subterranean_biosphere_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `subterranean_biosphere_chronicle_bridge` in `src/layer1/core/integration.rs` to generate Chronicle records when a HazardFlora is spawned.
+- **Schedule:** Registered the system in `src/layer1/systems/observation.rs`.
+- **Tests:** Added tests in `tests/integration/subterranean_biosphere_chronicle.rs`.
