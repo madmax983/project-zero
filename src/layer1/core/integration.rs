@@ -3302,3 +3302,22 @@ pub fn temporal_smuggling_chronicle_bridge(
         });
     }
 }
+
+/// INT-1005: Bridges `Added<HazardFlora>` to `AddChronicleEvent`
+pub fn subterranean_biosphere_chronicle_bridge(
+    query: bevy_ecs::prelude::Query<
+        (),
+        bevy_ecs::query::Added<crate::layer1::nature::biosphere_inversion::HazardFlora>,
+    >,
+    mut chronicle_events: bevy_ecs::prelude::EventWriter<
+        crate::layer1::core::chronicle::AddChronicleEvent,
+    >,
+) {
+    for _ in query.iter() {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            text: "Deep crust mining has unleashed aggressive subterranean flora into the shafts!"
+                .to_string(),
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
+        });
+    }
+}
