@@ -29733,3 +29733,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you take them in and risk immediate collapse from overpopulation, or turn away the last survivors of a great civilization to protect your own fragile stability?
 
 ---
+## Ancestral Debt
+
+**Layer:** 1
+
+**Fantasy:** Witnessing pops inherit the unfulfilled ambitions and grudges of their dead ancestors, carrying generational baggage that shapes the colony.
+
+**Mechanic:** When a pop dies with unfulfilled high-tier needs or strong negative relationships, they leave an "Ancestral Echo." Their descendants inherit this echo, gaining hidden biases, such as refusing to work alongside the descendants of their ancestor's rival, or obsessing over constructing a specific building.
+
+**Emergence:** A feud between two mining families might persist for generations long after the original incident is forgotten, occasionally flaring into spontaneous brawls that disrupt resource output.
+
+**Tension:** Do you expend resources to fulfill these inherited, irrational desires to appease the ghosts of the past, or forcibly re-educate the populace, erasing their cultural lineage?
+
+---
+
+## The Void Silence Protocol
+
+**Layer:** 2
+
+**Fantasy:** Entire systems intentionally going dark and severing themselves from the empire to hide from a terrifying, unknown threat.
+
+**Mechanic:** If a system detects a massive, overwhelming threat and its defenses are inadequate, the local AI can trigger a "Void Silence Protocol." This shuts down all outgoing communications, trade routes, and FTL signatures, causing the system to disappear from your active empire map.
+
+**Emergence:** You might assume a silent system was destroyed and write it off, only for it to reconnect 50 years later, having survived but developing an isolationist, hyper-paranoid culture that now views your empire as a potential threat.
+
+**Tension:** Do you dispatch a fleet into the dark to investigate the silence (risking drawing the threat to yourself) or abandon them to their self-imposed quarantine?
+
+---
+
+## The Architect's Regret
+
+**Layer:** Cross-layer
+
+**Fantasy:** Witnessing your civilization's early, desperate architecture become a sacred, unchangeable dogma that hinders future growth.
+
+**Mechanic:** Very old structures (built in the first decades of a colony) slowly accumulate "Historical Sanctity." Pops gain morale bonuses by working or living near them, but dismantling, moving, or upgrading these structures causes massive unrest and cultural trauma.
+
+**Emergence:** Your hyper-advanced ecumenopolis might become structurally crippled because the populace refuses to let you demolish the original, inefficient atmospheric processor, forcing you to build convoluted logistical detours around the sacred rubble.
+
+**Tension:** Do you bulldoze your own history for the sake of optimal efficiency, sparking riots and destroying morale, or constrain your grand empire's design around the sentimental relics of your ancestors?
+
+---
