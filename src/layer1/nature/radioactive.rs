@@ -76,7 +76,7 @@ impl RadiationGrid {
         let r_int = radius.ceil() as i32;
         for dy in -r_int..=r_int {
             for dx in -r_int..=r_int {
-                let dist = ((dx * dx + dy * dy) as f32).sqrt();
+                let dist = (dx as f32 * dx as f32 + dy as f32 * dy as f32).sqrt();
                 if dist > radius {
                     continue;
                 }

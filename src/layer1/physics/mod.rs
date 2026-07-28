@@ -59,3 +59,5 @@ mod structural_integrity_overflow_tests;
 pub use gravity_plating::*;
 pub mod heat_death;
 pub use heat_death::*;
+#[cfg(test)]
+mod curvature_exploit_test;

@@ -56,8 +56,8 @@ pub fn bureaucratic_resource_loss_system(
 ) {
     for (bh, bh_pos) in black_holes.iter() {
         for (entity, res_pos, chance) in resources.iter() {
-            let dx = (bh_pos.x - res_pos.x) as f32;
-            let dy = (bh_pos.y - res_pos.y) as f32;
+            let dx = bh_pos.x as f32 - res_pos.x as f32;
+            let dy = bh_pos.y as f32 - res_pos.y as f32;
             let distance = (dx * dx + dy * dy).sqrt();
 
             if distance <= bh.radius {
@@ -78,8 +78,8 @@ pub fn bureaucratic_pop_reassignment_system(
 ) {
     for (bh, bh_pos) in black_holes.iter() {
         for (entity, pop_pos, chance) in pops.iter() {
-            let dx = (bh_pos.x - pop_pos.x) as f32;
-            let dy = (bh_pos.y - pop_pos.y) as f32;
+            let dx = bh_pos.x as f32 - pop_pos.x as f32;
+            let dy = bh_pos.y as f32 - pop_pos.y as f32;
             let distance = (dx * dx + dy * dy).sqrt();
 
             if distance <= bh.radius {

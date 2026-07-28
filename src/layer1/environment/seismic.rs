@@ -105,7 +105,7 @@ pub fn update_seismic_system(
 
         for dy in -r..=r {
             for dx in -r..=r {
-                let dist_sq = (dx * dx + dy * dy) as f32;
+                let dist_sq = dx as f32 * dx as f32 + dy as f32 * dy as f32;
                 if dist_sq > source.radius * source.radius {
                     continue;
                 }
