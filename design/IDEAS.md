@@ -29952,3 +29952,42 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you maintain the expensive, inefficient automated supply route just to keep their religion intact, or cut it off and face a holy war from your own forgotten citizens?
 
 ---
+## The Martyr's Halo
+
+**Layer:** 1
+
+**Fantasy:** A single pop's tragic death sparks a religious movement.
+
+**Mechanic:** When a highly-respected pop dies during a crisis (e.g. starving while working a food production job, or fighting a fire), there is a chance their memory forms a new "Martyrdom" belief system. Pops with this belief work harder under dangerous conditions but demand higher quality-of-life outside work, feeling "owed" for their dedication.
+
+**Emergence:** A heroic engineer who died saving a reactor suddenly turns your industrial sector into a zealot-filled powerhouse, but they keep rioting because the food isn't good enough.
+
+**Tension:** Do you let respected pops take dangerous jobs and risk creating unpredictable zealots, or force less-liked pops to do the dangerous work?
+
+---
+## Parasitic Interceptors
+
+**Layer:** 2
+
+**Fantasy:** Space pirates don't destroy your ships; they drain them.
+
+**Mechanic:** Certain hostile fleets deploy "Parasitic Interceptors" that latch onto your logistical ships. Instead of destroying the ship, they siphon a percentage of its cargo and reduce its speed. The parasites detach when full and return to their base.
+
+**Emergence:** You notice your frontier worlds are slowly starving, not because supply ships aren't arriving, but because they are arriving 30% lighter and twice as late.
+
+**Tension:** Do you divert expensive military escorts to protect low-value supply ships, or just over-produce resources and accept the "pirate tax"?
+
+---
+## Refugee Cultural Contagion
+
+**Layer:** Cross-layer
+
+**Fantasy:** Accepting refugees saves lives but fractures your society.
+
+**Mechanic:** When an AI empire or another one of your colonies suffers a disaster, refugee ships arrive at your worlds. Refugees retain their original culture and memories. If concentrated on one planet, they can spread their traits (e.g., pacifism, xenophobia, specific religious beliefs) to the local pops.
+
+**Emergence:** You graciously accept refugees from a conquered militaristic empire. Fifty years later, that planet rebels and tries to form a new military junta based on their ancestors' ideals.
+
+**Tension:** Do you turn away desperate refugees (causing a diplomatic penalty and losing potential labor), or accept them and risk them culturally overriding your core worlds?
+
+---
