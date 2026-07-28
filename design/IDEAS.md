@@ -29991,3 +29991,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you turn away desperate refugees (causing a diplomatic penalty and losing potential labor), or accept them and risk them culturally overriding your core worlds?
 
 ---
+## The Hedonic Treadmill
+
+**Layer:** 1
+
+**Fantasy:** Your utopian colony becomes miserable because they ran out of luxury synth-caviar, forgetting they used to eat nutrient paste.
+
+**Mechanic:** Pops track their highest achieved Quality of Life (QoL) state. Their baseline expectations slowly shift upwards over time to match this peak. If their current QoL falls below this new baseline, they suffer severe "Entitlement" morale penalties, even if their objective living conditions are still quite good.
+
+**Emergence:** You upgrade a mining colony's food supply to luxury rations for a temporary morale boost during a crisis. Ten years later, you switch them back to normal rations, and they strike, crippling your economy, because they refuse to go back to "peasant food."
+
+**Tension:** Do you spoil your pops for short-term gains, knowing you are permanently raising the cost of keeping them happy, or do you ruthlessly enforce a spartan lifestyle to keep them resilient?
+
+---
+
+## Kessler Trade Lanes
+
+**Layer:** 2
+
+**Fantasy:** Your early-game mistakes physically choke out your mid-game economy.
+
+**Mechanic:** Destroyed ships (from combat or accidents) leave "Orbital Debris" nodes in the system map. These nodes slowly expand over time. Trade ships and fleets passing through them suffer micro-abrasions, slowing them down and increasing maintenance costs.
+
+**Emergence:** You fought a massive, victorious war over your capital system in the early game. Now, your capital is an economic black hole because trade ships refuse to navigate the massive cloud of debris left by your legendary victory.
+
+**Tension:** Do you divert expensive military engineering fleets to slowly clean up the debris fields, or force trade routes to take massive, inefficient detours around your own historical battlegrounds?
+
+---
+
+## Sub-Cultural Drift
+
+**Layer:** Cross-layer
+
+**Fantasy:** A distant colony slowly becomes culturally alien to your empire.
+
+**Mechanic:** Colonies physically distant from the capital or with low trade volume gradually accumulate "Cultural Drift." This drift slightly modifies their pop traits and needs over generations, shifting away from your empire's founding ethos.
+
+**Emergence:** You found a colony based on strict militarism. Over centuries of isolation on a peaceful, beautiful world, the drift turns them into pacifist artisans. When you finally reconnect with them to draft soldiers for a galactic war, they refuse and declare independence.
+
+**Tension:** Do you invest heavily in inefficient, long-range communication and bureaucracy to enforce cultural homogeneity, or let your distant colonies drift and hope they don't become too alien to control?
+
+---
