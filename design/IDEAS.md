@@ -29911,3 +29911,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you hunt down and destroy this peaceful haven to stop the brain drain (alienating your remaining populace and sparking rebellions), or radically change your empire's aggressive policies to make your own worlds worth staying on?
 
 ---
+## Traumatic Hoarding
+
+**Layer:** 1
+
+**Fantasy:** A single pop's anxiety causes a localized logistical collapse.
+
+**Mechanic:** Pops that have experienced severe deprivation (starvation, blackouts) develop a "Scarcity Trauma" trait. When their stress rises, they begin secretly hoarding essential resources from central storage in their personal hab-blocks, removing them from the colony's usable inventory.
+
+**Emergence:** You can't figure out why your atmospheric scrubbers shut down from lack of filters, only to discover a single traumatized janitor has hoarded 500 filters in their quarters because they survived a toxic leak decades ago.
+
+**Tension:** Do you authorize enforcers to raid their hab-block to reclaim the vital resources (causing a mental breakdown and potential riot), or just manufacture more to overcompensate for the hoarder?
+
+---
+
+## Ghost Ships of the First Fleet
+
+**Layer:** 2
+
+**Fantasy:** Stumbling upon the tragic fate of your own forgotten expeditions centuries later.
+
+**Mechanic:** Early-game colony ships or exploratory vessels that run out of supplies or fuel don't just despawn. They become "Derelicts." Centuries later, as your borders expand, your modern fleets might encounter these drifting tombs.
+
+**Emergence:** Your grand armada is slowed down because a strategic hyperlane is clogged by the frozen, drifting hull of a desperate colony ship you sent out on turn 50 and completely forgot about.
+
+**Tension:** Do you pragmatically salvage your ancestors' graves for a minor resource and tech boost, or spend immense resources to tow them back to the capital as a solemn monument to your early struggles?
+
+---
+
+## The Cargo Cult Protocol
+
+**Layer:** Cross-layer
+
+**Fantasy:** A disconnected colony misinterprets automated logistics as divine intervention.
+
+**Mechanic:** If a colony loses two-way communication with the capital (Layer 3) but continues to receive automated, scheduled supply drops via orbital logistics (Layer 2), the pops (Layer 1) begin to revere the drops. They form a "Cargo Cult" belief system. If the drops ever stop, they suffer extreme religious/social collapse rather than just standard starvation.
+
+**Emergence:** You finally repair the comms array after 200 years of silence, only to find the colony refuses to accept your administrative orders because you aren't the "Sacred Drone" that brings the steel.
+
+**Tension:** Do you maintain the expensive, inefficient automated supply route just to keep their religion intact, or cut it off and face a holy war from your own forgotten citizens?
+
+---
