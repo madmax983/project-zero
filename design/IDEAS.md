@@ -6465,7 +6465,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Industrial Rhythm
+## The Industrial Rhythm [SPECCED]
 
 **Layer:** 1
 
