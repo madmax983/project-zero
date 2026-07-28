@@ -7,3 +7,6 @@
 **[Fix fire logic overlapping accumulation]**
 **Learning:** When moving from nested iteration to an intermediate HashMap to avoid O(N*M) lookups, using `HashMap::from_iter` or standard `.collect()` overwrites elements if multiple entities map to the same key, changing functional behavior.
 **Action:** When grouping components by position or other keys where multiples might coexist, manually accumulate values (e.g. `*map.entry(pos).or_default() += val;`) to preserve stack behaviors. Always remove temporary scratchpad scripts (like `.patch` or `.py` files) before concluding a PR.
+**Pre-allocated Rumor Exchange Pairs Vector**
+**Learning:** In highly trafficked ECS system loops (e.g. `exchange_rumors_system`), initializing an un-sized `Vec` using `Vec::new()` inside the system call causes repeated heap allocations per frame, particularly when collecting pairwise combinations of entities. Pre-calculating the required capacity by summing over the combinatorial size hints (e.g., `n * (n - 1)`) and initializing with `Vec::with_capacity()` completely eliminates intermediate memory fragmentation without breaking borrow checker rules.
+**Action:** Use `Vec::with_capacity` for system-local buffers whenever the expected collection size can be mathematically derived from `query.iter()` lengths, especially for polynomial or combinatorial combinations.

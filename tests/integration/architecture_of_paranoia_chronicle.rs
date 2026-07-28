@@ -23,7 +23,10 @@ mod integration_tests {
         let mut reader = events.get_cursor();
         let mut found = false;
         for ev in reader.read(events) {
-            if ev.text.contains("A new Surveillance installation has been constructed") {
+            if ev
+                .text
+                .contains("A new Surveillance installation has been constructed")
+            {
                 assert_eq!(ev.importance, EventImportance::Major);
                 found = true;
             }
