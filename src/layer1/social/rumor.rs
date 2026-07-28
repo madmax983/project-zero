@@ -137,10 +137,10 @@ pub fn process_rumor_reaction(world: &mut World, listener: Entity, rumor: &Rumor
 ///
 /// Iterates over pops in Taverns and exchanges rumors between them.
 pub fn exchange_rumors_system(world: &mut World) {
-    /// ⚡ Bolt Optimization:
-    /// Pre-allocated the exact required capacity for the `pairs` vector to prevent continuous heap re-allocations during hot frame updates.
-    /// Collect pairs directly to avoid cloning `Vec<Entity>` for every tavern.
-    /// This reduces allocations per frame from N+1 to 1 flat vector of pairs.
+    // ⚡ Bolt Optimization:
+    // Pre-allocated the exact required capacity for the `pairs` vector to prevent continuous heap re-allocations during hot frame updates.
+    // Collect pairs directly to avoid cloning `Vec<Entity>` for every tavern.
+    // This reduces allocations per frame from N+1 to 1 flat vector of pairs.
     let mut query = world.query::<&Tavern>();
 
     let capacity: usize = query
