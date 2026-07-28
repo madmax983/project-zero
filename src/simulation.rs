@@ -710,6 +710,8 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         crate::layer1::nature::solar_flare_lottery::spawn_flare_isotopes_system,
         crate::layer1::nature::solar_flare_lottery::decay_flare_isotopes_system,
         crate::layer1::core::integration::solar_flare_chronicle_bridge,
+        crate::layer1::core::integration::bio_rhythmic_commute_eclipse_bridge,
+        crate::layer1::core::integration::bio_rhythmic_commute_flare_bridge,
     ));
 
     schedule.add_systems((

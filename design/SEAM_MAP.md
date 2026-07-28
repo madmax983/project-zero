@@ -1828,3 +1828,10 @@
 - **Glue added:** Added `architecture_of_paranoia_chronicle_bridge` in `src/layer1/core/integration.rs` to generate Chronicle records when a Surveillance building is spawned.
 - **Schedule:** Registered the system in `src/layer1/systems/observation.rs`.
 - **Tests:** Added tests in `tests/integration/architecture_of_paranoia_chronicle.rs`.
+
+### INT-1002: The Bio-Rhythmic Commute Integration
+- **Date:** 2024-05-31
+- **Systems connected:** `LeviathanEclipse`, `SolarFlareEvent` -> `LumifloraCycle`
+- **Glue added:** `bio_rhythmic_commute_eclipse_bridge`, `bio_rhythmic_commute_flare_bridge` in `src/layer1/core/integration.rs`
+- **Schedule:** Registered in `src/simulation.rs`
+- **Tests:** `tests/integration/bio_rhythmic_commute_bridge.rs` (2 tests)

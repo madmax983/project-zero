@@ -3338,3 +3338,41 @@ pub fn architecture_of_paranoia_chronicle_bridge(
         });
     }
 }
+
+/// INT-1002: Bridges LeviathanEclipse to LumifloraCycle hibernation
+pub fn bio_rhythmic_commute_eclipse_bridge(
+    eclipse: Option<bevy_ecs::prelude::Res<crate::layer2::void_leviathan::LeviathanEclipse>>,
+    mut query: bevy_ecs::prelude::Query<
+        &mut crate::layer1::flora::LumifloraCycle,
+        bevy_ecs::query::With<crate::layer1::flora::Flora>,
+    >,
+) {
+    if eclipse.is_some_and(|e| e.active) {
+        for mut cycle in query.iter_mut() {
+            if cycle.phase != crate::layer1::flora::BloomPhase::Hibernation {
+                cycle.phase = crate::layer1::flora::BloomPhase::Hibernation;
+                cycle.time_in_phase = 0.0;
+            }
+        }
+    }
+}
+
+/// INT-1002: Bridges SolarFlareEvent to LumifloraCycle hibernation
+pub fn bio_rhythmic_commute_flare_bridge(
+    mut events: bevy_ecs::prelude::EventReader<
+        crate::layer1::nature::solar_flare_lottery::SolarFlareEvent,
+    >,
+    mut query: bevy_ecs::prelude::Query<
+        &mut crate::layer1::flora::LumifloraCycle,
+        bevy_ecs::query::With<crate::layer1::flora::Flora>,
+    >,
+) {
+    if events.read().next().is_some() {
+        for mut cycle in query.iter_mut() {
+            if cycle.phase != crate::layer1::flora::BloomPhase::Hibernation {
+                cycle.phase = crate::layer1::flora::BloomPhase::Hibernation;
+                cycle.time_in_phase = 0.0;
+            }
+        }
+    }
+}
