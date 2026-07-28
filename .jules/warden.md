@@ -12,3 +12,6 @@
 **2025-07-16 - [Enforce Unsafe Code Ban]**
 **Threat:** [The codebase lacked a proactive compiler-level ban on `unsafe` logic, which could allow Undefined Behavior (UB) or memory safety vulnerabilities to be introduced in future commits without explicit overrides.]
 **Defense:** [Verified there are currently no `unsafe` blocks in the core library and added `#![deny(unsafe_code)]` to `src/lib.rs`, `src/main.rs`, `src/bin/headless.rs`, and `src/bin/wasm_app.rs` to enforce safety proactively at the compiler level.]
+**2025-07-20 - [Integer Overflow DoS via Euclidean Distance]**
+**Threat:** [Unhandled integer overflow during distance calculation (e.g. `dx * dx` or `a.x - b.x` causing `attempt to subtract with overflow` and `attempt to multiply with overflow`) allowed panics and DoS if extreme coordinates were passed in `curvature.rs`, `bureaucratic_black_hole.rs`, `radioactive.rs`, `orbital_mirrors.rs`, `hum.rs`, `lighting.rs`, and `seismic.rs`.]
+**Defense:** [Cast coordinate values to `f32` *before* subtraction or multiplication to ensure floating-point math handles large inputs without panicking.]

@@ -50,9 +50,9 @@ pub fn has_line_of_sight(world: &World, observer: Entity, target: Entity) -> boo
     };
     let target_elev = world.get::<Elevation>(target).map(|e| e.0).unwrap_or(0.0);
 
-    let dx = observer_pos.x - target_pos.x;
-    let dy = observer_pos.y - target_pos.y;
-    let dist = ((dx * dx + dy * dy) as f32).sqrt();
+    let dx = observer_pos.x as f32 - target_pos.x as f32;
+    let dy = observer_pos.y as f32 - target_pos.y as f32;
+    let dist = (dx * dx + dy * dy).sqrt();
 
     // Simple horizon extension formula: base + elevation factor
     let effective_horizon =

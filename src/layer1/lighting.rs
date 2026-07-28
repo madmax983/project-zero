@@ -154,7 +154,7 @@ pub fn update_lighting_system(
         for dy in -radius_ceil..=radius_ceil {
             for dx in -radius_ceil..=radius_ceil {
                 #[allow(clippy::cast_precision_loss)]
-                let dist_sq = (dx * dx + dy * dy) as f32;
+                let dist_sq = dx as f32 * dx as f32 + dy as f32 * dy as f32;
                 if dist_sq > source.radius * source.radius {
                     continue;
                 }

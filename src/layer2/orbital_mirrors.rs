@@ -47,7 +47,7 @@ pub fn orbital_mirror_focus_system(
             let r = mirror.radius as i32;
             for dx in -r..=r {
                 for dy in -r..=r {
-                    let dist = ((dx * dx + dy * dy) as f32).sqrt();
+                    let dist = (dx as f32 * dx as f32 + dy as f32 * dy as f32).sqrt();
                     if dist <= mirror.radius {
                         let falloff = 1.0 - (dist / mirror.radius);
                         let ax = (tx as i32 + dx) as usize;

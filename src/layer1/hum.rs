@@ -100,7 +100,7 @@ pub fn update_hum_system(mut hum_map: ResMut<HumMap>, sources: Query<(&HumSource
 
         for dy in -radius_i..=radius_i {
             for dx in -radius_i..=radius_i {
-                let dist_sq = (dx * dx + dy * dy) as f32;
+                let dist_sq = dx as f32 * dx as f32 + dy as f32 * dy as f32;
                 if dist_sq <= radius_sq {
                     let dist = dist_sq.sqrt();
                     // Linear falloff: 1.0 at center, 0.0 at radius
