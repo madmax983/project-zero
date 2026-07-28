@@ -633,3 +633,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1329` Memorial Subroutines — `specs/1329-memorial-subroutines.md`
 - [ ] `1330` Temporal Segregation — `specs/1330-temporal-segregation.md`
 - [ ] `1331` The Tomb World Harvest — `specs/1331-the-tomb-world-harvest.md`
+- [ ] `1332` The Industrial Rhythm — `specs/1332-the-industrial-rhythm.md`
