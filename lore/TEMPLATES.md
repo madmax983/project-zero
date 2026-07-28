@@ -10795,3 +10795,97 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The great divide on [COLONY]. Those who eat well became the [HIGH_DIET_CASTE]. The rest are the [LOW_DIET_CASTE]."
 - "Tension in the mess halls of [COLONY] shattered the society in [YEAR]. The [HIGH_DIET_CASTE] will not sit with the [LOW_DIET_CASTE]."
 - "[COLONY], [YEAR]: Food is caste. The [LOW_DIET_CASTE] watch the [HIGH_DIET_CASTE] eat, and they remember."
+
+## The Monument of Failure Templates (Idea: Monument of Failure)
+
+## Template: MONUMENT_ABANDONED
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [BUILDING_TYPE], [MONUMENT_NICKNAME]
+
+**Patterns:**
+- "[YEAR]: Construction on the [BUILDING_TYPE] in [COLONY] halted. They call the scaffolding [MONUMENT_NICKNAME] now."
+- "The [BUILDING_TYPE] was meant to save [COLONY]. Instead, it sits empty, a shadow they call [MONUMENT_NICKNAME]. Recorded in [YEAR]."
+- "[COLONY], [YEAR]: Resources ran dry. The [BUILDING_TYPE] was abandoned. [MONUMENT_NICKNAME] casts a long, bitter shadow."
+
+## Template: MONUMENT_SCAVENGED
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SCAVENGED_RESOURCE], [MONUMENT_NICKNAME]
+
+**Patterns:**
+- "[YEAR]: Workers in [COLONY] quietly stripped [SCAVENGED_RESOURCE] from [MONUMENT_NICKNAME]."
+- "We pretend not to notice when they take [SCAVENGED_RESOURCE] from [MONUMENT_NICKNAME] in [COLONY]. [YEAR]."
+- "[COLONY] survives on the corpse of its ambition. [SCAVENGED_RESOURCE] pulled from [MONUMENT_NICKNAME] in [YEAR]."
+
+## Linguistic Drift Templates (Idea: Linguistic Drift)
+
+## Template: LINGUISTIC_SCHISM
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [DRIFTED_TERM], [MISUNDERSTOOD_CONCEPT]
+
+**Patterns:**
+- "[YEAR]: Contact re-established with [COLONY]. Their [DRIFTED_TERM] is barely intelligible. They mistook [MISUNDERSTOOD_CONCEPT] for an insult."
+- "Decades of silence changed [COLONY]. We spoke of [MISUNDERSTOOD_CONCEPT], but in their [DRIFTED_TERM], it meant war. [YEAR]."
+- "[COLONY], [YEAR]: The translators failed. Their [DRIFTED_TERM] has mutated beyond our archives. A simple [MISUNDERSTOOD_CONCEPT] nearly started a riot."
+
+## The Grey Market Embalmers Templates (Idea)
+
+## Template: ILLICIT_PRESERVATION
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [DECEASED_ROLE], [EMBALMING_CHEMICAL]
+
+**Patterns:**
+- "[YEAR]: The family of the [DECEASED_ROLE] refused the incinerator. They used [EMBALMING_CHEMICAL] to keep the body in [COLONY]."
+- "We found the [DECEASED_ROLE] in [COLONY], preserved in [EMBALMING_CHEMICAL]. The rot is spreading, but the family smiles. [YEAR]."
+- "[COLONY], [YEAR]: Grief creates its own laws. A [DECEASED_ROLE] sits at the dinner table, steeped in [EMBALMING_CHEMICAL]."
+
+## Contagious Despair Templates (Idea)
+
+## Template: DESPAIR_OUTBREAK
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [PATIENT_ZERO_ROLE], [DESPAIR_SYMPTOM]
+
+**Patterns:**
+- "[YEAR]: It started with the [PATIENT_ZERO_ROLE]. Now half of [COLONY] suffers from [DESPAIR_SYMPTOM]."
+- "The [PATIENT_ZERO_ROLE] stopped working. Then the engineers stopped. [DESPAIR_SYMPTOM] is spreading through [COLONY]. [YEAR]."
+- "[COLONY], [YEAR]: A contagion of the mind. The [PATIENT_ZERO_ROLE] shared their burden, and now we all carry it."
+
+## Subterranean Agoraphobia Templates (Idea)
+
+## Template: SKY_TERROR
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SURFACE_FEAR]
+
+**Patterns:**
+- "[YEAR]: The deep-miners of [COLONY] refuse to breach the surface. They speak of [SURFACE_FEAR]."
+- "We opened the vault in [COLONY], but the children wept at the sight of the sky. The terror of [SURFACE_FEAR] has taken root. [YEAR]."
+- "[COLONY], [YEAR]: They would rather starve in the dark than face [SURFACE_FEAR]."
+
+## Interstellar Rumor Mill Templates (Idea)
+
+## Template: PHANTOM_CRISIS
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [ORIGIN_COLONY], [MUTATED_RUMOR]
+
+**Patterns:**
+- "[YEAR]: Merchants from [ORIGIN_COLONY] brought whispers of [MUTATED_RUMOR]. Panic has gripped [COLONY]."
+- "The truth moves slow, but lies take the hyperlanes. [COLONY] is rioting over [MUTATED_RUMOR] that never happened on [ORIGIN_COLONY]. [YEAR]."
+- "[COLONY], [YEAR]: A shadow cast by a distant candle. They prepare for [MUTATED_RUMOR] while [ORIGIN_COLONY] sleeps in peace."
+
+## The Curator's Burden Templates (Idea)
+
+## Template: PRESERVATION_MANDATE
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [PRESERVATION_ZONE_NAME]
+
+**Patterns:**
+- "[YEAR]: The ruins of [COLONY] have been designated [PRESERVATION_ZONE_NAME]. We will starve before we break its stones."
+- "The past outweighs the present. [COLONY] is now [PRESERVATION_ZONE_NAME]. Let the fleet rust; the history remains. [YEAR]."
+- "[COLONY], [YEAR]: A tomb for a dead empire, maintained by a dying one. Welcome to [PRESERVATION_ZONE_NAME]."

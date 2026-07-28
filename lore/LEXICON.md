@@ -5994,3 +5994,55 @@
 **Replaces:** smart infrastructure, automated power grid
 **Code reference:** `SmartGrid` component
 **Usage:** "The Subconscious Grid grew anxious." / "The grid sealed the blast doors."
+
+## The Monument of Failure (Idea)
+
+### Monument of Failure
+**Replaces:** Abandoned construction, halted building
+**Code reference:** `MonumentOfFailure` component (planned)
+**Usage:** "The Monument of Failure blocks the sun." / "They whisper beneath the Monument."
+
+### Scavengers
+**Replaces:** Pops gathering from monuments
+**Code reference:** `ScavengerBehavior` (planned)
+**Usage:** "The Scavengers picked the scaffolding clean."
+
+## Linguistic Drift (Idea)
+
+### Drifted Dialect
+**Replaces:** Language barrier, communication penalty
+**Code reference:** `LinguisticDrift` component (planned)
+**Usage:** "Their Drifted Dialect made negotiations impossible."
+
+### Translation Breakdown
+**Replaces:** Diplomatic failure due to isolation
+**Code reference:** `TranslationFailureEvent` (planned)
+**Usage:** "A Translation Breakdown turned a gift into a threat."
+
+## Contagious Despair (Idea)
+
+### The Hollow
+**Replaces:** Depressed pop, paralyzed worker
+**Code reference:** `DespairDebuff` (planned)
+**Usage:** "The Hollow refuse to leave the mess hall."
+
+## Subterranean Agoraphobia (Idea)
+
+### The Sky-Terror
+**Replaces:** Agoraphobia trait, surface refusal
+**Code reference:** `AgoraphobicTrait` (planned)
+**Usage:** "The Sky-Terror keeps them in the mines."
+
+## Interstellar Rumor Mill (Idea)
+
+### The Phantom Crisis
+**Replaces:** False rumor, misinformation panic
+**Code reference:** `FalseRumorEvent` (planned)
+**Usage:** "A Phantom Crisis shut down the trade routes."
+
+## The Curator's Burden (Idea)
+
+### The Curators
+**Replaces:** Preservation faction, late-game historians
+**Code reference:** `CuratorFaction` (planned)
+**Usage:** "The Curators demand we leave the ruins untouched."
