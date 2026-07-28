@@ -4847,3 +4847,38 @@ VACUUM_SHADOW_INCIDENT:
 - RESOURCE_CURSE_RAID → enables → COLLAPSE, WAR
 - FOCUS_LOST → enables → UNWATCHED_DRIFT, REBELLION
 - CALORIC_SCHISM_FORMATION → increases_chance → REBELLION, FAMINE
+
+## The Monument of Failure Chaining
+- RESOURCE_STARVATION → increases_chance_of → MONUMENT_ABANDONED
+- MONUMENT_ABANDONED → enables → MONUMENT_SCAVENGED, CULT_FORMATION
+- MONUMENT_SCAVENGED → decreases_chance_of → MONUMENT_COMPLETION
+
+## Linguistic Drift Chaining
+- ISOLATION_PERIOD → increases_chance_of → LINGUISTIC_SCHISM
+- LINGUISTIC_SCHISM → increases_chance_of → DIPLOMATIC_FAILURE, TRADE_EMBARGO
+- DIPLOMATIC_FAILURE → enables → SECTOR_WAR
+
+## The Grey Market Embalmers Chaining
+- HIGH_STATUS_DEATH → increases_chance_of → ILLICIT_PRESERVATION
+- ILLICIT_PRESERVATION → enables → TOXIC_HAZARD, MORALE_BOOST, CULT_FORMATION
+- TOXIC_HAZARD → increases_chance_of → DISEASE_OUTBREAK, HAB_BLOCK_QUARANTINE
+
+## Contagious Despair Chaining
+- CRITICAL_MOOD_FAILURE → increases_chance_of → DESPAIR_OUTBREAK
+- DESPAIR_OUTBREAK → enables → MASS_STRIKE, SUICIDE_PACT, COLONY_PARALYSIS
+- MASS_STRIKE → decreases_chance_of → RESOURCE_PRODUCTION
+
+## Subterranean Agoraphobia Chaining
+- GENERATIONAL_UNDERGROUND_LIVING → increases_chance_of → SKY_TERROR
+- SKY_TERROR → decreases_chance_of → SURFACE_EXPANSION, AGRICULTURE
+- SKY_TERROR → increases_chance_of → CAVE_IN_DISASTER, DEEP_CORE_CULT
+
+## Interstellar Rumor Mill Chaining
+- MINOR_INCIDENT → enables → PHANTOM_CRISIS (via trade ships)
+- PHANTOM_CRISIS → increases_chance_of → PREEMPTIVE_DEFENSE, PANIC_HOARDING
+- PANIC_HOARDING → enables → ACTUAL_SHORTAGE
+
+## The Curator's Burden Chaining
+- EMPIRE_COLLAPSE → enables → PRESERVATION_MANDATE
+- PRESERVATION_MANDATE → increases_chance_of → RESOURCE_SHORTAGE, MILITARY_PARALYSIS
+- RESOURCE_SHORTAGE → increases_chance_of → ANTI_CURATOR_REBELLION

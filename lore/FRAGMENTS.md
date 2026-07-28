@@ -10867,3 +10867,82 @@ Names for the lower class subsisting on scraps.
 - the Hungry
 - the Algae-Stained
 - the Rations
+
+## The Monument of Failure Fragments (Idea: Monument of Failure)
+
+## Fragment Type: [SCAVENGED_RESOURCE]
+- twisted rebars
+- salvaged copper wire
+- warped paneling
+- forgotten ceramic tiles
+- rusted structural beams
+- fractured glass-steel
+
+## Fragment Type: [MONUMENT_NICKNAME]
+- the Skeleton
+- the Great Mistake
+- the Hollow Tower
+- the Rusting Dream
+- the Dead Spire
+- the Folly
+
+## Linguistic Drift Fragments (Idea: Linguistic Drift)
+
+## Fragment Type: [DRIFTED_TERM]
+- void-speak
+- the outer-drawl
+- frontier slang
+- fractured core-tongue
+- isolation dialect
+
+## Fragment Type: [MISUNDERSTOOD_CONCEPT]
+- a peace offering
+- a trade request
+- an evacuation warning
+- a declaration of loyalty
+
+## The Grey Market Embalmers Fragments (Idea)
+
+## Fragment Type: [EMBALMING_CHEMICAL]
+- heavy coolants
+- industrial resin
+- synthetic sap
+- toxic preservatives
+- stabilizing fluid
+- quick-seal foam
+
+## Contagious Despair Fragments (Idea)
+
+## Fragment Type: [DESPAIR_SYMPTOM]
+- a hollow stare
+- absolute silence
+- slow, dragging steps
+- an inability to look at the stars
+- heavy apathy
+
+## Subterranean Agoraphobia Fragments (Idea)
+
+## Fragment Type: [SURFACE_FEAR]
+- the open void
+- the falling sky
+- the endless unroofed dark
+- the blinding expanse
+- the crushing emptiness
+
+## Interstellar Rumor Mill Fragments (Idea)
+
+## Fragment Type: [MUTATED_RUMOR]
+- a full-scale rebellion
+- a massive plague outbreak
+- the sun going dark
+- a hostile invasion
+- a total atmospheric collapse
+
+## The Curator's Burden Fragments (Idea)
+
+## Fragment Type: [PRESERVATION_ZONE_NAME]
+- the Silent Museum
+- the Ancestor's Tomb
+- the Glass Archive
+- the Untouched Core
+- the Galactic Mausoleum
