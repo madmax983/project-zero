@@ -29870,3 +29870,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you pragmatically strip-mine the galaxy for power, or embrace the role of the galactic curator, intentionally crippling your late-game economy for unparalleled cultural dominance?
 
 ---
+## Orphaned Infrastructure
+
+**Layer:** 2
+
+**Fantasy:** Inheriting massive orbital structures from a fallen civilization, but having no idea how to turn them off.
+
+**Mechanic:** Players can settle near "Orphaned Megastructures" that passively generate resources or defense. However, these structures have hidden, decaying automated maintenance cycles. If a cycle fails, they might suddenly vent plasma, change orbit, or broadcast hostile signals, requiring the player to reverse-engineer them before they destroy the colony.
+
+**Emergence:** A player builds their core economic hub around an ancient orbital forge, only for it to randomly shift into a "wartime production" mode, sucking up all local resources and spewing out unusable, highly radioactive ancient munitions.
+
+**Tension:** Do you risk building around these powerful but unpredictable artifacts, or dismantle them for scrap to build safer, less efficient modern infrastructure?
+
+---
+
+## The Weight of Memory
+
+**Layer:** Cross-layer
+
+**Fantasy:** Pops becoming obsessed with a pristine, pre-collapse homeworld they never actually saw.
+
+**Mechanic:** As a colony's quality of life decreases, pops generate a "Nostalgia" metric, idolizing a mythical past. If Nostalgia maxes out, they demand the construction of incredibly resource-intensive "Memorials" to a lost Earth or homeworld. Failing to build them results in a "Lethargy" debuff, where pops refuse to do anything but maintain the bare minimum for survival.
+
+**Emergence:** Your mining world is starving, but the workers strike not for food, but for the construction of a massive, structurally unsound holographic projector to simulate a blue sky they've only read about in corrupted databanks.
+
+**Tension:** Do you waste precious survival resources fulfilling a collective delusion of the past, or brutally suppress their history to keep them focused on the harsh reality of the present?
+
+---
+
+## The Deserter's Haven
+
+**Layer:** 3
+
+**Fantasy:** A hidden utopian society built by those who fled your endless wars.
+
+**Mechanic:** Whenever your empire fights prolonged wars, a hidden "Desertion" counter ticks up. Eventually, these deserters coalesce into a hidden, highly advanced, pacifist faction on the edge of the galaxy. They don't attack you, but their high quality of life broadcasts passively siphon your pops, causing a brain drain in your core worlds.
+
+**Emergence:** You spend centuries conquering the galaxy, only to find your capital world emptying out because your best scientists and engineers are quietly packing up and moving to a hidden pacifist utopia founded by the very soldiers who refused to fight your first war.
+
+**Tension:** Do you hunt down and destroy this peaceful haven to stop the brain drain (alienating your remaining populace and sparking rebellions), or radically change your empire's aggressive policies to make your own worlds worth staying on?
+
+---
