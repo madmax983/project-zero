@@ -1835,3 +1835,9 @@
 - **Glue added:** `bio_rhythmic_commute_eclipse_bridge`, `bio_rhythmic_commute_flare_bridge` in `src/layer1/core/integration.rs`
 - **Schedule:** Registered in `src/simulation.rs`
 - **Tests:** `tests/integration/bio_rhythmic_commute_bridge.rs` (2 tests)
+
+### INT-1245: Chronological Stutter -> Chronicle
+- **Date:** 2026-11-01
+- **Systems connected:** `HyperlaneTransitEvent` -> `apply_chronological_stutter_system` -> `AddChronicleEvent`
+- **Glue added:** Confirmed `apply_chronological_stutter_system` in `src/layer2/navigation/chronological_stutter.rs` successfully emits `AddChronicleEvent` on negative stutters. No logic changes were needed. Added an integration test to verify the seam.
+- **Tests:** Added tests in `tests/integration/chronological_stutter_chronicle.rs`.
