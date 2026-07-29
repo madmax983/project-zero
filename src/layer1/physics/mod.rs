@@ -61,3 +61,5 @@ pub mod heat_death;
 pub use heat_death::*;
 #[cfg(test)]
 mod curvature_exploit_test;
+pub mod magnetic_reversal;
+pub use magnetic_reversal::*;

@@ -508,7 +508,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [x] `1129` Planetary Rings as Highways — `specs/1129-planetary-rings-as-highways.md` — completed 2026-06-25
 - [ ] `1134` Operational Detritus — `specs/1134-operational-detritus.md`
 - [ ] `1138` Organic Recycling — `specs/1138-organic-recycling.md`
-- [ ] `1139` Magnetic Reversal — `specs/1139-magnetic-reversal.md`
 - [ ] `1142` The Scapegoat — `specs/1142-the-scapegoat.md`
 - [ ] `1143` Pulsar Timing — `specs/1143-pulsar-timing.md`
 - [ ] `1147` Accidental Terraforming — `specs/1147-accidental-terraforming.md`
