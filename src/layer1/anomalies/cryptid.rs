@@ -176,4 +176,53 @@ mod tests {
             "Pop should feel awe or dread after seeing a cryptid"
         );
     }
+
+    #[test]
+    fn test_cryptid_chronicle_bridge_system_emits_event() {
+        let mut app = App::new();
+        app.add_event::<AddChronicleEvent>();
+        app.add_systems(Update, cryptid_chronicle_bridge_system);
+        app.init_resource::<Time>();
+
+        let _cryptid = app
+            .world_mut()
+            .spawn((
+                Cryptid {
+                    trace_timer: Timer::default(),
+                },
+                GridPosition { x: 0, y: 0 },
+            ))
+            .id();
+
+        let _pop = app
+            .world_mut()
+            .spawn((
+                Pop,
+                GridPosition { x: 2, y: 0 },
+                PopMood {
+                    awe: 0.0,
+                    dread: 0.0,
+                },
+                VisionRadius(5.0),
+            ))
+            .id();
+
+        app.update();
+
+        let mut time = app.world_mut().resource_mut::<Time>();
+        time.advance_by(std::time::Duration::from_secs(1));
+
+        app.update();
+
+        let events = app.world().resource::<Events<AddChronicleEvent>>();
+        #[allow(deprecated)]
+        let mut reader = events.get_reader();
+        let emitted: Vec<_> = reader.read(events).collect();
+        assert_eq!(emitted.len(), 1, "Should emit one chronicle event");
+        assert_eq!(
+            emitted[0].text,
+            "A colonist reported seeing a strange, elusive creature in the wilds."
+        );
+        assert_eq!(emitted[0].importance, EventImportance::Major);
+    }
 }
