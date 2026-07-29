@@ -22,3 +22,12 @@
 **Bloat:** The `#[cfg(not(feature = "nova"))]` fallback structs and empty systems in `src/layer1/oral_tradition.rs` designed purely to throw a custom deprecation warning, which ironically let code compile without warnings when users omitted the debug derive.
 **Cut:** Deleted the 50 lines of zombie fallback code and gated the `OralTradition` exports in `prelude.rs` strictly behind `#[cfg(feature = "nova")]`, restoring standard Rust compiler errors (E0422).
 **Saved:** ~55 Lines of code / Reduced cognitive load trying to figure out why disabled features compile.
+## [Reduction]
+**Bloat:** The  fallback structs and empty systems in  designed purely to throw a custom deprecation warning, which ironically let code compile without warnings when users omitted the debug derive.
+**Cut:** Deleted the 50 lines of zombie fallback code and gated the `OralTradition` exports in `prelude.rs` strictly behind `#[cfg(feature = "nova")]`, restoring standard Rust compiler errors (E0422).
+**Saved:** ~55 Lines of code / Reduced cognitive load trying to figure out why disabled features compile.
+
+## [Reduction]
+**Bloat:** The fallback structs and empty systems in src/layer1/oral_tradition.rs.
+**Cut:** Deleted the zombie fallback code and gated the exports in prelude.rs strictly behind nova.
+**Saved:** ~55 Lines of code / Reduced cognitive load trying to figure out why disabled features compile.
