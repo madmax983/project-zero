@@ -147,18 +147,27 @@ pub fn tube_transport_system(
     }
 }
 
+/// ⚡ Bolt Optimization: Uses a `came_from` map instead of repeatedly allocating and cloning
+/// path vectors during BFS. Eliminates O(N^2) memory allocations along with the unnecessary
+/// `visited` set by using `came_from` for visitation tracking.
 fn find_path(
     start: GridPosition,
     end: GridPosition,
     tube_map: &HashMap<GridPosition, bool>,
 ) -> Option<Vec<GridPosition>> {
     let mut queue = VecDeque::new();
-    queue.push_back((start, vec![]));
-    let mut visited = HashSet::new();
-    visited.insert(start);
+    queue.push_back(start);
+    let mut came_from: HashMap<GridPosition, GridPosition> = HashMap::new();
 
-    while let Some((current, path)) = queue.pop_front() {
+    while let Some(current) = queue.pop_front() {
         if current == end {
+            let mut path = Vec::new();
+            let mut curr = end;
+            while curr != start {
+                path.push(curr);
+                curr = came_from[&curr];
+            }
+            path.reverse();
             return Some(path);
         }
 
@@ -170,11 +179,9 @@ fn find_path(
                 y: current.y + dy,
             };
 
-            if tube_map.contains_key(&next) && !visited.contains(&next) {
-                visited.insert(next);
-                let mut new_path = path.clone();
-                new_path.push(next);
-                queue.push_back((next, new_path));
+            if tube_map.contains_key(&next) && !came_from.contains_key(&next) && next != start {
+                came_from.insert(next, current);
+                queue.push_back(next);
             }
         }
     }
