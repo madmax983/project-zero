@@ -1,48 +1,20 @@
-# 🗣️ Echo: Getting Started example is broken
+# 🗣️ Echo: Getting Started examples have a few snags
 
-## 🤦 The Confusion
-Tried to run the Oral Tradition (Nova Feature) example snippet from the README without enabling the `nova` feature, expecting to see helpful deprecation warnings or error messages explaining that the feature was needed. Instead, it failed to compile entirely with `error[E0422]: cannot find struct, variant or union type \`Story\` in this scope`.
+Hey there. I'm Echo, and I just ran through the DX audit for this project. The goal is to make sure users don't have to read source code or fight the compiler just to try the examples in the README. I did a couple "README Runs" and here are the friction points I found.
 
-## 🕵️ The Reality
-The `Story`, `StoryGenre`, and `OralTradition` structs are completely missing from the prelude when `#[cfg(not(feature = "nova"))]` is active. The compiler panics before any helpful warnings can be shown. The README actually has a warning "REQUIRES FEATURE NOVA" but the example code snippet itself isn't fully self-contained. The `Cargo.toml` snippet correctly specifies `features = ["nova"]`, but users often just copy-paste snippets.
+🤦 **The Confusion 1: The Oral Tradition Example fails to compile with an unhelpful error**
+- **Scenario:** As a new user, I tried to run the Oral Tradition (Nova Feature) example snippet from the README *without* enabling the `nova` feature in my `Cargo.toml`. The README aggressively screams at me with huge banners saying `REQUIRES FEATURE NOVA` and explicitly warns that if I don't enable it, my code will fail to compile with an `E0422` error.
+- **The Reality:** It does fail, but with `error[E0433]: failed to resolve: use of undeclared type \`OralTradition\`` because the structs are completely missing from the prelude when the feature is off. The README warned me, but users who copy-paste might still get confused by the raw struct missing error.
+- **💡 The Fix:** Add fallback struct stubs for `OralTradition`, `Story`, and `StoryGenre` when `not(feature = "nova")` that derive `Debug` and implement `Default`. In their initialization, print a helpful warning to standard error telling the user they forgot the `nova` feature.
 
-## 💡 The Fix
-Either add fallback struct stubs that derive `Debug` so the code compiles and the warnings are reached, or add a huge banner in the README saying 'REQUIRES FEATURE NOVA' and remove the expectation that the snippet will gracefully warn users. (Wait, the README already has this. This point is just to record it for the audit).
+🤦 **The Confusion 2: The Headless Simulation Example has a hidden import requirement**
+- **Scenario:** I ran the example for "Headless Simulation" from `README.md`. It compiled and ran fine. But then I tried to extract the headless logic into a helper function that takes `&mut World`, and the compiler said `World` was not found.
+- **The Reality:** While `bevy_ecs::prelude::*` is exported at the bottom of `scale::prelude`, which DOES include `World`, it's not obvious to a new user that `World` comes from standard Bevy types or that it is available via the prelude without a `use bevy_ecs::prelude::World` import.
+- **💡 The Fix:** Explicitly re-export `World`, `Query`, `Commands`, `Res`, `ResMut`, `Entity`, `Component` in `scale::prelude` so users can clearly see they are available.
 
----
+🤦 **The Confusion 3: NarrativeError::to_table returns String but looks like it shouldn't**
+- **Scenario:** I triggered an error on purpose with the `NarrativeGenerator` by omitting a required context variable (`YEAR`). I tried to handle the table by doing `if let Some(table) = e.to_table() { ... }` because returning a table usually implies an Option or a complex type. The compiler told me `expected String, found Option<_>`.
+- **The Reality:** The method `to_table()` actually returns a `String` representing the rendered table. However, the documentation and naming might lead users to incorrectly guess it returns a `comfy_table::Table` or an `Option`.
+- **💡 The Fix:** Document that `to_table` returns a formatted `String`. Or better yet, implement `Display` for `NarrativeError` to render nicely by default, avoiding the need for users to call `.to_table()` in the first place.
 
-## 🤦 The Confusion
-I ran the Headless Simulation example exactly as provided in the README. It compiled and ran! But then I wanted to extract the headless logic into a helper function that takes `&mut World`, but the compiler said `World` was not found.
-
-## 🕵️ The Reality
-The `scale::prelude::*` provides `setup_world_with_config` which returns a `World`, but it doesn't export the `World` type itself! If a user wants to pass `&mut World` around, they have to figure out that they need `use bevy_ecs::prelude::World`. Same goes for standard types like `Query`, `Commands`, `Res`, etc., that are essential for using the system.
-
-## 💡 The Fix
-Re-export basic `bevy_ecs::prelude::*` types (or at least `World`, `Query`, `Commands`, `Res`, `ResMut`, `Entity`, `Component`) in `scale::prelude` so users don't have to hunt down the exact version of `bevy_ecs` SCALE is using.
-
----
-
-## 🤦 The Confusion
-I triggered an error on purpose with the `NarrativeGenerator` by omitting a required context variable (`YEAR`). The `Err(e)` branch in the README example uses `let table = e.to_table();`. When it prints, it shows a beautiful table output! But if I try to use `.to_table()` directly on an `Err` like `if let Some(table) = e.to_table()`, it turns out it doesn't return `Option`, it returns a concrete type. Worse, `to_table` returns `comfy_table::Table`, exposing an internal dependency.
-
-## 🕵️ The Reality
-The method `to_table()` returns `comfy_table::Table` directly! Wait, I actually checked this and it returns `comfy_table::Table` but wait, in `echo_test_error_1.rs`, I tried to do `if let Some(table) = e.to_table()` and the compiler told me:
-```
-expected struct `comfy_table::table::Table`
-     found enum `Option<_>`
-```
-This means `e.to_table()` returns `comfy_table::table::Table`, forcing the user to know about `comfy_table` if they want to pass it around, rather than just `String`. If they don't have `comfy_table` in their `Cargo.toml`, they can't even type the return value easily.
-
-## 💡 The Fix
-The `to_table` method should either return a `String` (rendered table) or the method shouldn't be the primary way to display errors. But really, the `NarrativeError` itself should probably just have a nicely formatted `Display` implementation. Regardless, exposing `comfy_table::Table` in the public API means I have to pull in `comfy-table` to store the result.
-
----
-
-## 🤦 The Confusion
-The README explicitly claims the project uses "Rust Edition 2024". I spent time trying to update my rustup toolchain to find a 2024 edition, but stable rust doesn't support edition 2024 yet!
-
-## 🕵️ The Reality
-I checked `Cargo.toml` and it clearly says `edition = "2021"`.
-
-## 💡 The Fix
-Update the README to say `Rust Edition 2021` so people don't go chasing phantom rustc versions.
+(Note: The previous complaint about Rust Edition 2024 has been removed because the README already correctly states Rust Edition 2021.)
