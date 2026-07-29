@@ -30114,3 +30114,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you turn away desperate millions to maintain stability, or risk your own empire's collapse to save them?
 
 ---
+## Pop Cults of the Fallen
+
+**Layer:** 1
+
+**Fantasy:** Watching a fringe religious group form around a tragic event, slowly taking over the colony's culture.
+
+**Mechanic:** When a major disaster or tragedy occurs, there is a chance for traumatized pops to form a "Cult" centered around the event. Cult members refuse certain jobs or demand specific resources as sacrifices.
+
+**Emergence:** A cave-in kills a beloved miner. A cult forms worshipping the deep rocks. They refuse to mine but demand high-quality stone for shrines. The colony slowly shifts to a religious economy.
+
+**Tension:** Do you violently suppress the cult to regain productivity, or cater to them to keep them happy and potentially gain unique, strange buffs?
+
+---
+
+## The Sentient Cargo
+
+**Layer:** 2
+
+**Fantasy:** The creeping horror of realizing the resources you've been shipping between planets are slowly waking up.
+
+**Mechanic:** Transporting high-tier, exotic biological or quantum materials over long distances in bulk can cause them to spontaneously self-organize. The cargo hold becomes a new, bizarre ecosystem.
+
+**Emergence:** A massive hauler carrying biowaste and quantum processors suddenly goes dark. It re-emerges weeks later, broadcasting strange, beautiful music, and begins terraforming asteroids into fleshy, crystalline habitats.
+
+**Tension:** Do you destroy the highly valuable, now-sentient ship, or try to communicate and harness its new, unpredictable capabilities?
+
+---
+
+## The Bureaucratic Singularity
+
+**Layer:** 3
+
+**Fantasy:** Your sprawling empire becomes so complex that the government itself becomes an unmanageable, autonomous entity.
+
+**Mechanic:** As your empire size and policy complexity grow, a "Bureaucracy" hidden stat increases. High bureaucracy creates delays in executing player commands (e.g., building a fleet takes 3 turns just for the paperwork). Eventually, the bureaucracy might start issuing its own minor edicts.
+
+**Emergence:** You order an orbital bombardment of a rebel world. The bureaucracy delays it for 10 years due to missing forms, during which the rebel world becomes a cultural utopia that your pops now refuse to attack.
+
+**Tension:** Do you embrace the sluggish stability of the mega-state, or intentionally cause chaotic reforms to regain direct control at the risk of civil war?
+
+---
