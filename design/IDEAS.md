@@ -30073,3 +30073,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you risk using this powerful artifact to save a starving sector, knowing it might spawn a localized crisis that destroys your empire from within?
 
 ---
+## Orbital Kessler Syndrome
+
+**Layer:** 2
+
+**Fantasy:** The slow, terrifying realization that you have polluted your own planet's orbit to the point of a soft lock.
+
+**Mechanic:** Destroyed orbital structures and ships generate "Debris Fields." These fields increase the chance of structural failure for anything passing through or stationed in them. Debris from failures generates more debris.
+
+**Emergence:** A minor skirmish over a heavily industrialized planet leads to a cascade of station explosions, completely sealing off the planet from space travel for decades until the debris decays or is expensively cleared.
+
+**Tension:** Do you build densely for efficiency, risking a chain reaction, or spread out your orbital infrastructure?
+
+---
+
+## Black Market Tech Proliferation
+
+**Layer:** Cross-layer
+
+**Fantasy:** Watching your tightly controlled, cutting-edge technology leak out to pirates and rival factions from the ground up.
+
+**Mechanic:** Colonies with low loyalty and high industrial capacity secretly produce "knock-off" versions of your advanced tech. These are sold on the black market, eventually equipping rogue fleets or rival empires.
+
+**Emergence:** You design a terrifying new dreadnought, but a disgruntled rim-world factory leaks the schematics. Ten years later, you face a pirate armada using junk-built, unstable versions of your own superweapons.
+
+**Tension:** Do you restrict advanced manufacturing to safe core worlds (creating logistical bottlenecks), or trust your restless frontier worlds with sensitive tech?
+
+---
+
+## Interstellar Refugee Caravans
+
+**Layer:** Cross-layer
+
+**Fantasy:** Dealing with the massive logistical and social strain of a humanitarian crisis.
+
+**Mechanic:** Disasters (war, famine, terraforming failures) at Layer 1 or 2 generate massive "Refugee Fleets." These fleets travel to the nearest stable systems and request asylum. Accepting them provides a massive population boost but strains local resources and introduces cultural friction.
+
+**Emergence:** Your rival's civil war sends a billion refugees to your border system. The sudden influx crashes the local food economy, leading to a famine on your world, and the refugees eventually rebel due to the poor conditions.
+
+**Tension:** Do you turn away desperate millions to maintain stability, or risk your own empire's collapse to save them?
+
+---
