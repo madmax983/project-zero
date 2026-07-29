@@ -700,3 +700,6 @@ mod subterranean_biosphere_chronicle;
 mod architecture_of_paranoia_chronicle;
 #[path = "integration/bio_rhythmic_commute_bridge.rs"]
 mod bio_rhythmic_commute_bridge;
+
+#[path = "integration/chronological_stutter_chronicle.rs"]
+mod chronological_stutter_chronicle;
