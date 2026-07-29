@@ -30155,3 +30155,87 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you embrace the sluggish stability of the mega-state, or intentionally cause chaotic reforms to regain direct control at the risk of civil war?
 
 ---
+
+## The Ghost Fleet
+
+**Layer:** 2
+
+**Fantasy:** Ships that were thought lost years ago slowly return, but they're empty.
+
+**Mechanic:** Sometimes fleets lost in deep space or combat don't fully perish. Decades later, they might drift back into sensor range. They appear as functioning ships but contain no living crew—only automated systems keeping them running.
+
+**Emergence:** You desperately need reinforcements, and your old, legendary dreadnought from a war 50 years ago drifts back into the system. But it's unresponsive. Do you try to salvage it and risk a dormant AI defense system, or blow it up?
+
+**Tension:** Do you expend resources trying to capture these ghost ships for their ancient, potentially powerful tech, or avoid them as cursed navigational hazards?
+
+---
+
+## Echoes of the Founder
+
+**Layer:** 1
+
+**Fantasy:** The first generation of colonists leave behind cryptic advice that later generations misinterpret as divine instruction.
+
+**Mechanic:** Early logs created by the first colonists (the "Founders") are stored. Over generations, pops start reading these logs and acting on them. If a Founder logged "Avoid the red berries," later pops might develop a phobia of anything red.
+
+**Emergence:** A Founder writes a sarcastic log about how much they hate working in the mines. 200 years later, the entire colony refuses to mine, believing it's a sacred prohibition, crippling your resource economy.
+
+**Tension:** Do you let these Founder logs persist to build a unique culture, or censor them to maintain pragmatic control over your workforce?
+
+---
+
+## Orbital Shadow Markets
+
+**Layer:** 2
+
+**Fantasy:** A black market that operates entirely in the unregulated space between planets.
+
+**Mechanic:** When a system has high trade volume but strict regulations or high taxes, unregistered "Shadow Stations" begin to appear in orbit. They act as hubs for illegal goods, untaxed trade, and piracy.
+
+**Emergence:** You ban a specific luxury good to enforce rationing, but your pops' mood remains high because they're secretly buying it from a shadow market orbiting your capital.
+
+**Tension:** Do you expend military fleets to destroy these stations, angering your pops and potentially losing out on rare goods, or let them operate and accept the loss of tax revenue and control?
+
+---
+
+## Bureaucratic Malicious Compliance
+
+**Layer:** 3
+
+**Fantasy:** Your government uses your own rules against you to stall changes they dislike.
+
+**Mechanic:** Factions within your empire have "Policy Preferences." If you enact a law they strongly oppose but lack the power to openly rebel against, they engage in "Malicious Compliance." They follow the law to the exact, literal letter, intentionally causing massive inefficiencies and resource drains that the spirit of the law would have avoided.
+
+**Emergence:** You pass a strict "Zero Emissions" law. A dissenting industrial faction complies by instantly shutting down every fusion reactor on their planet, causing billions to freeze, and then politely submitting the required paperwork stating they have achieved zero emissions.
+
+**Tension:** Do you write overly complex, exhaustive laws to close loopholes (increasing bureaucracy overhead), or repeal the law and negotiate with the stubborn faction?
+
+---
+
+## The Pet Singularity
+
+**Layer:** 1
+
+**Fantasy:** A colony's beloved indigenous pets unexpectedly evolve and unionize.
+
+**Mechanic:** Pops can adopt indigenous fauna as "Pets" for a mood bonus. If exposed to specific industrial byproducts (like leaked mutagenic coolants), these pets slowly gain sentience over generations. They eventually demand rights, rations, and representation.
+
+**Emergence:** Your most productive mining colony goes on strike. It's not the human miners; it's the four-armed rock-badgers they kept as pets, who are now refusing to haul ore until they get proper safety gear and dental plans.
+
+**Tension:** Do you recognize them as citizens (disrupting your demographics and increasing needs), or exterminate a species your pops have spent centuries loving?
+
+---
+
+## The Gravity-Well Lottery
+
+**Layer:** 2
+
+**Fantasy:** Dangerous, high-stakes navigation to shave years off travel time.
+
+**Mechanic:** Passing too close to a massive stellar object (black hole, neutron star) allows fleets to use a "Slingshot Maneuver," drastically reducing travel time. However, there is a risk of catastrophic structural failure or temporal displacement based on the pilot's skill and the ship's mass.
+
+**Emergence:** You send a massive invasion fleet on a desperate slingshot maneuver to save your capital. Half the fleet is crushed by gravity, and the other half arrives 50 years in the future, long after the war has already been lost.
+
+**Tension:** Do you take the safe, decades-long route, or risk your entire armada on a dice roll with physics?
+
+---
