@@ -10,3 +10,7 @@
 **Pre-allocated Rumor Exchange Pairs Vector**
 **Learning:** In highly trafficked ECS system loops (e.g. `exchange_rumors_system`), initializing an un-sized `Vec` using `Vec::new()` inside the system call causes repeated heap allocations per frame, particularly when collecting pairwise combinations of entities. Pre-calculating the required capacity by summing over the combinatorial size hints (e.g., `n * (n - 1)`) and initializing with `Vec::with_capacity()` completely eliminates intermediate memory fragmentation without breaking borrow checker rules.
 **Action:** Use `Vec::with_capacity` for system-local buffers whenever the expected collection size can be mathematically derived from `query.iter()` lengths, especially for polynomial or combinatorial combinations.
+
+**[BFS Pathfinding O(N^2) Vector Cloning]**
+**Learning:** In standard BFS algorithms, storing and cloning the entire `Vec` path in the queue at every step creates massive O(N^2) memory allocations. By using a `came_from` HashMap to store back-pointers, we only allocate a single `Vec` at the end and reconstruct the path backwards.
+**Action:** When implementing pathfinding or BFS, never clone paths inside the loop. Use a `came_from` structure to track visited states and reconstruct the path once the destination is reached.
