@@ -885,6 +885,7 @@
 
 - [x] `909` Radio Broadcasts — `specs/909-radio-broadcasts.md` — completed 2026-06-30
 - [x] `1318` The Infinite Archive — `specs/1318-the-infinite-archive.md` — completed 2026-07-04
+- [x] `1139` Magnetic Reversal — `specs/1139-magnetic-reversal.md` — completed 2026-02-01
 
 - [x] `285` Echoes of the Past — `specs/285-echoes-of-the-past.md` — completed 2026-10-31
 
