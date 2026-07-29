@@ -1835,3 +1835,15 @@
 - **Glue added:** `bio_rhythmic_commute_eclipse_bridge`, `bio_rhythmic_commute_flare_bridge` in `src/layer1/core/integration.rs`
 - **Schedule:** Registered in `src/simulation.rs`
 - **Tests:** `tests/integration/bio_rhythmic_commute_bridge.rs` (2 tests)
+
+### INT-1142: The Scapegoat -> Guilt Integration
+- **Date:** 2026-11-01
+- **Systems connected:** `DenounceEvent` -> `handle_denounce_event_system` -> `Trait::Guilt`
+- **Glue added:** Added `Trait::Guilt` to `src/layer1/psychology/traits.rs` and updated `handle_denounce_event_system` in `src/layer1/social/unrest.rs` to apply `Guilt` to all bystander pops when a scapegoat is denounced.
+- **Tests:** `tests/integration/scapegoat_chronicle.rs`
+
+### INT-1142: The Scapegoat -> Guilt Integration
+- **Date:** 2026-11-01
+- **Systems connected:** `DenounceEvent` -> `handle_denounce_event_system` -> `Trait::Guilt`
+- **Glue added:** Added `Trait::Guilt` to `src/layer1/psychology/traits.rs` and updated `handle_denounce_event_system` in `src/layer1/social/unrest.rs` to apply `Guilt` to all bystander pops when a scapegoat is denounced.
+- **Tests:** `tests/integration/scapegoat_guilt_bridge.rs`

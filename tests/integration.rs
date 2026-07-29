@@ -700,3 +700,5 @@ mod subterranean_biosphere_chronicle;
 mod architecture_of_paranoia_chronicle;
 #[path = "integration/bio_rhythmic_commute_bridge.rs"]
 mod bio_rhythmic_commute_bridge;
+#[path = "integration/scapegoat_guilt_bridge.rs"]
+mod scapegoat_guilt_bridge;

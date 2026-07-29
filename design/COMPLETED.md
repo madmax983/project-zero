@@ -942,3 +942,5 @@
 - [x] `INT-1005` Integration: Subterranean Biosphere Inversion -> Chronicle — completed 2026-11-01
 - [x] `INT-1326` Integration: Architecture of Paranoia -> Chronicle — completed 2026-11-01
 - [x] `INT-1002` Integration: Bio-Rhythmic Commute -> Lumiflora — completed 2024-05-31
+- [x] `1142` The Scapegoat — `specs/1142-the-scapegoat.md` — completed 2026-11-01
+- [x] `INT-1142` Integration: The Scapegoat -> Guilt Integration — completed 2026-11-01

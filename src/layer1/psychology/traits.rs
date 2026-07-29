@@ -142,6 +142,8 @@ pub enum Trait {
     Refugee,
     /// Suffered extreme trauma.
     Traumatized,
+    /// Feels guilty for surviving or scapegoating.
+    Guilt,
 }
 
 impl Trait {
@@ -213,6 +215,7 @@ impl Trait {
             Trait::Homesick => "Homesick",
             Self::Refugee => "Refugee",
             Self::Traumatized => "Traumatized",
+            Self::Guilt => "Guilt",
             Self::InsomniaDrive => "Insomnia Drive",
             Self::Veteran => "Veteran",
             Self::Phantom => "Phantom",
@@ -295,6 +298,7 @@ impl Traits {
             Trait::EmpathicLink,
             Trait::Bureaucrat,
             Trait::InsomniaDrive,
+            Trait::Guilt,
         ];
 
         let mut added = 0;

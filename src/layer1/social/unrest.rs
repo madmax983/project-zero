@@ -156,6 +156,7 @@ pub fn handle_denounce_event_system(
     mut events: EventReader<DenounceEvent>,
     mut unrest: ResMut<Unrest>,
     mut query: Query<&mut MentalState>,
+    mut bystanders: Query<&mut Traits, (With<Pop>, Without<ScapegoatTarget>)>,
 ) {
     for event in events.read() {
         // Apply Unrest reduction modifier
@@ -183,6 +184,10 @@ pub fn handle_denounce_event_system(
                 }
                 commands.entity(event.target).remove::<ScapegoatTarget>();
             }
+        }
+
+        for mut traits in bystanders.iter_mut() {
+            traits.add(Trait::Guilt);
         }
     }
 }
@@ -556,6 +561,8 @@ mod tests {
             .spawn((Pop, Traits::default(), ScapegoatTarget, MentalState::Normal))
             .id();
 
+        let bystander = world.spawn((Pop, Traits::default())).id();
+
         // Send Denounce event (Exile)
         world.send_event(DenounceEvent {
             target,
@@ -578,6 +585,11 @@ mod tests {
             world.get_entity(target).is_err(),
             "Target should be despawned"
         );
+
+        assert!(
+            world.get::<Traits>(bystander).unwrap().has(Trait::Guilt),
+            "Bystander pop should receive the Guilt trait"
+        );
     }
 
     #[test]
@@ -592,6 +604,8 @@ mod tests {
         let target = world
             .spawn((Pop, Traits::default(), ScapegoatTarget, MentalState::Normal))
             .id();
+
+        let bystander = world.spawn((Pop, Traits::default())).id();
 
         // Send Denounce event (Shame)
         world.send_event(DenounceEvent {
@@ -616,6 +630,11 @@ mod tests {
         assert!(
             matches!(state, MentalState::Broken(MentalBreakType::Daze)),
             "Target should be broken"
+        );
+
+        assert!(
+            world.get::<Traits>(bystander).unwrap().has(Trait::Guilt),
+            "Bystander pop should receive the Guilt trait"
         );
     }
 }
