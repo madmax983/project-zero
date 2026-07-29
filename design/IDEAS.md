@@ -30032,3 +30032,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you invest heavily in inefficient, long-range communication and bureaucracy to enforce cultural homogeneity, or let your distant colonies drift and hope they don't become too alien to control?
 
 ---
+## The Bio-Luminescent Protest
+
+**Layer:** 1
+
+**Fantasy:** Pops using genetic engineering to turn themselves into living billboards for their grievances.
+
+**Mechanic:** When pops with access to bio-modification tech experience prolonged low mood due to a specific issue (e.g., poor air quality, lack of food variety), they engineer their skin to glow with patterns representing their complaint. This glow increases their visibility, multiplying the negative mood impact on other pops who see them.
+
+**Emergence:** A minor food shortage in the science district results in a faction of glowing blue protestors who wander the colony. When they visit the industrial sector, their visible discontent triggers a sympathy strike among the miners, halting production entirely.
+
+**Tension:** Do you invest in expensive "cure" facilities to forcibly revert their genetics (causing massive unrest and potential rebellion), or capitulate to their demands to stop the glowing contagion from spreading?
+
+---
+
+## The Mythological Shift
+
+**Layer:** Cross-layer
+
+**Fantasy:** Your founding ideology morphs into a restrictive religion over generations.
+
+**Mechanic:** A colony founded on a specific ethos (e.g., "Scientific Progress") slowly canonizes its founding leaders. Over centuries, early technological directives ("Maintain the atmospheric scrubbers") become religious dogma ("Appease the breath-givers"). They refuse to upgrade or replace old tech, viewing new tech as heresy.
+
+**Emergence:** You try to deploy a massive, highly efficient new planetary shield, but the core world rejects it because it contradicts the holy schematics laid down by the First Engineers 400 years ago.
+
+**Tension:** Do you let your most populated worlds stagnate technologically to maintain their stability, or force upgrades that spark a holy war against your own administration?
+
+---
+
+## The Rogue Genesis Engine
+
+**Layer:** 3
+
+**Fantasy:** A terraforming weapon that creates bizarre, hostile life instead of a habitable world.
+
+**Mechanic:** A highly advanced, ancient "Genesis Engine" artifact can be used to instantly terraform a barren world. However, there's a hidden failure chance. If it fails, instead of an Earth-like world, it creates a chaotic, rapidly mutating biosphere that produces extremely aggressive, warp-capable "Feral Fauna" that spread to neighboring systems.
+
+**Emergence:** You use the Engine to create a paradise world on your chokepoint border. It fails, and now instead of a fortress world, you have a constantly erupting source of biological space-monsters that are eating your defensive fleets.
+
+**Tension:** Do you risk using this powerful artifact to save a starving sector, knowing it might spawn a localized crisis that destroys your empire from within?
+
+---
