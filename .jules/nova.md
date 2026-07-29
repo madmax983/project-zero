@@ -270,3 +270,8 @@
 **Concept:** Added `landfill_rummaging_system` to `src/experimental/landfill_rummaging.rs`. Connects `Trait::Hoarder` with `BuildingType::Landfill` and `ColonyResources`. Pops with the Hoarder trait who stand near a Landfill passively regenerate `leisure` (but lose `hygiene`), and have a small chance each tick to discover raw materials (`scrap` or `metal`) from the garbage.
 **Fate:** Submitted
 **Lesson:** Connects a personality trait with a negative utility building (Landfill). This turns an otherwise undesirable area into a potential source of leisure and slight economic gain for specific Pops, creating a niche strategy for managing Hoarders.
+
+## [Void Fever Contagion]
+**Concept:** Added `void_fever_infection_system`, `void_fever_progression_system`, and `void_fever_spread_system` to `src/experimental/void_fever_contagion.rs`. Pops with `Trait::VoidTouched` have a chance to contract `VoidFever` during a `SporeStorm`. `VoidFever` grants them endless energy (`needs.rest` is kept at 1.0) but rapidly drains their `Health`. The disease can spread to adjacent pops, creating a mini-pandemic that burns out its hosts in exchange for frantic productivity.
+**Fate:** Submitted
+**Lesson:** Provides a dynamic event where a specific trait combined with a specific weather condition sparks an infectious wave through the colony. Forces players to consider quarantine strategies to balance the productivity boost against the risk of mass casualties.

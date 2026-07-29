@@ -247,3 +247,5 @@ pub mod homesick_craving;
 pub mod adblock_siphoning;
 #[cfg(feature = "nova")]
 pub mod martial_vigilance;
+#[cfg(feature = "nova")]
+pub mod void_fever_contagion;
