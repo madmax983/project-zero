@@ -1,5 +1,6 @@
 use crate::layer1::core::chronicle::{AddChronicleEvent, EventImportance};
 use bevy::prelude::*;
+use crate::layer1::economy::resources::ColonyResources;
 
 #[derive(Component)]
 pub struct DataForest {
@@ -18,14 +19,9 @@ pub struct WaterSupply {
     pub required: f32,
 }
 
-#[derive(Resource)]
-pub struct TechResearch {
-    pub progress: f32,
-}
-
 pub fn process_data_forest_system(
     query: Query<(&DataForest, &FloraState, &WaterSupply)>,
-    research: Option<ResMut<TechResearch>>,
+    research: Option<ResMut<ColonyResources>>,
     mut chronicle_events: EventWriter<AddChronicleEvent>,
     mut local_crashed: Local<bool>,
 ) {
@@ -43,7 +39,7 @@ pub fn process_data_forest_system(
         }
 
         if is_wilting {
-            research.progress = 0.0;
+            research.knowledge = 0.0;
             if !*local_crashed {
                 chronicle_events.send(AddChronicleEvent {
                     text: "A Data Forest is wilting! All tech research progress has been lost."
@@ -53,7 +49,7 @@ pub fn process_data_forest_system(
                 *local_crashed = true;
             }
         } else {
-            research.progress += sum_progress;
+            research.knowledge = (research.knowledge + sum_progress).clamp(0.0, research.max_knowledge);
             *local_crashed = false;
         }
     }
@@ -81,12 +77,16 @@ mod tests {
         ));
 
         app.world_mut()
-            .insert_resource(TechResearch { progress: 0.0 });
+            .insert_resource(ColonyResources {
+                knowledge: 0.0,
+                max_knowledge: 1000.0,
+                ..Default::default()
+            });
 
         app.update();
 
-        let research = app.world().get_resource::<TechResearch>().unwrap();
-        assert_eq!(research.progress, 10.0);
+        let research = app.world().get_resource::<ColonyResources>().unwrap();
+        assert_eq!(research.knowledge, 10.0);
 
         let events = app.world().resource::<Events<AddChronicleEvent>>();
         assert_eq!(events.len(), 0);
@@ -110,13 +110,17 @@ mod tests {
         ));
 
         app.world_mut()
-            .insert_resource(TechResearch { progress: 50.0 });
+            .insert_resource(ColonyResources {
+                knowledge: 50.0,
+                max_knowledge: 1000.0,
+                ..Default::default()
+            });
 
         app.update();
 
-        let research = app.world().get_resource::<TechResearch>().unwrap();
+        let research = app.world().get_resource::<ColonyResources>().unwrap();
         // Progress erased due to wilting
-        assert_eq!(research.progress, 0.0);
+        assert_eq!(research.knowledge, 0.0);
 
         let events = app.world().resource::<Events<AddChronicleEvent>>();
         assert_eq!(events.len(), 1);
