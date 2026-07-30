@@ -703,3 +703,6 @@ mod bio_rhythmic_commute_bridge;
 
 #[path = "integration/chronological_stutter_chronicle.rs"]
 mod chronological_stutter_chronicle;
+
+#[path = "integration/temporal_smuggling_bridge.rs"]
+mod temporal_smuggling_bridge;

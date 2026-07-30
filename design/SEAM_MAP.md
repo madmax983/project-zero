@@ -1847,3 +1847,8 @@
 - **Systems connected:** `DataForest`, `WaterSupply`, `FloraState` -> `ColonyResources::knowledge`
 - **Glue added:** Updated `process_data_forest_system` in `src/layer1/tech/symbiotic_data_weavers.rs` to add `DataForest`'s processing power directly to `ColonyResources::knowledge` and clamp it.
 - **Tests:** `tests/integration/data_forests_bridge.rs`
+### INT-299: Temporal Smuggling -> Chronicle
+- **Date:** 2026-11-01
+- **Systems connected:** `ParadoxEvent` -> `temporal_smuggling_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added integration test `test_temporal_smuggling_chronicle_bridge` to verify `temporal_smuggling_chronicle_bridge` works as expected. The code was already present in `src/layer1/core/integration.rs` and registered in `src/layer1/systems/execution.rs`.
+- **Tests:** `tests/integration/temporal_smuggling_bridge.rs`
