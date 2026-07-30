@@ -372,6 +372,9 @@ pub fn register(schedule: &mut Schedule) {
     #[cfg(feature = "nova")]
     crate::experimental::gluttonous_aroma::register(schedule);
 
+    #[cfg(feature = "nova")]
+    crate::experimental::hedonic_halo::register(schedule);
+
     schedule.add_systems(
         (
             crate::layer1::shipbreaking_symbiotic::simulate_shipbreaker_salvage,
