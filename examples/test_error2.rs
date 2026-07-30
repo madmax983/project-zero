@@ -7,8 +7,7 @@ fn main() -> anyhow::Result<()> {
     match result {
         Ok(_) => println!("Loaded successfully."),
         Err(e) => {
-            let table = e.to_table();
-            println!("{table}");
+            eprintln!("{}", e);
             std::process::exit(1);
         }
     }

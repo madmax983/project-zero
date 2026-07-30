@@ -1,6 +1,6 @@
 use crate::layer1::core::chronicle::{AddChronicleEvent, EventImportance};
-use bevy::prelude::*;
 use crate::layer1::economy::resources::ColonyResources;
+use bevy::prelude::*;
 
 #[derive(Component)]
 pub struct DataForest {
@@ -49,7 +49,8 @@ pub fn process_data_forest_system(
                 *local_crashed = true;
             }
         } else {
-            research.knowledge = (research.knowledge + sum_progress).clamp(0.0, research.max_knowledge);
+            research.knowledge =
+                (research.knowledge + sum_progress).clamp(0.0, research.max_knowledge);
             *local_crashed = false;
         }
     }
@@ -76,12 +77,11 @@ mod tests {
             },
         ));
 
-        app.world_mut()
-            .insert_resource(ColonyResources {
-                knowledge: 0.0,
-                max_knowledge: 1000.0,
-                ..Default::default()
-            });
+        app.world_mut().insert_resource(ColonyResources {
+            knowledge: 0.0,
+            max_knowledge: 1000.0,
+            ..Default::default()
+        });
 
         app.update();
 
@@ -109,12 +109,11 @@ mod tests {
             },
         ));
 
-        app.world_mut()
-            .insert_resource(ColonyResources {
-                knowledge: 50.0,
-                max_knowledge: 1000.0,
-                ..Default::default()
-            });
+        app.world_mut().insert_resource(ColonyResources {
+            knowledge: 50.0,
+            max_knowledge: 1000.0,
+            ..Default::default()
+        });
 
         app.update();
 
