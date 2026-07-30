@@ -30280,3 +30280,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you violently suppress foreign cultures (risking immediate rebellion) or allow them to integrate (risking the slow dilution of your own empire's identity)?
 
 ---
+## The Monument of Hubris
+
+**Layer:** 1
+
+**Fantasy:** Watching a colony sacrifice practical survival to build a colossal vanity project.
+
+**Mechanic:** A charismatic leader or faction may demand the construction of a massive, useless monument. Refusing causes a massive mood penalty. Building it drains a huge amount of resources and time.
+
+**Emergence:** A struggling mining colony stops producing ore to build a solid-gold statue of their founder, triggering a system-wide resource shortage and causing the colony to starve.
+
+**Tension:** Do you force them to work and risk a rebellion, or let them build their monument and risk starvation and economic collapse?
+
+---
+
+## The Nostalgia Plague
+
+**Layer:** Cross-layer
+
+**Fantasy:** An advanced civilization becomes paralyzed by an obsession with its simpler past.
+
+**Mechanic:** As tech levels rise, pops may develop "Nostalgia." They begin demanding obsolete goods, retro architecture, and even attempt to manually farm despite automated agricultural centers.
+
+**Emergence:** Your core world, the pinnacle of technological achievement, suddenly experiences a massive drop in efficiency because the population refuses to use automated transport and insists on walking everywhere.
+
+**Tension:** Do you mandate the use of advanced technology and risk a Luddite uprising, or re-introduce inefficient historical practices to keep the population happy?
+
+---
+
+## The Jury-Rigged Armada
+
+**Layer:** 2
+
+**Fantasy:** A desperate defense using civilian ships duct-taped together with weapons.
+
+**Mechanic:** In times of severe crisis (e.g., imminent invasion), if military fleet power is low, players can issue a "Militia Call." Civilian freighters, mining barges, and passenger liners are hastily converted into armed vessels. They have terrible stats but are cheap and instantly available.
+
+**Emergence:** A massive pirate fleet attacks your frontier. Your grand navy is parsecs away. You survive only because a swarm of retrofitted garbage scows managed to ram the pirate flagship.
+
+**Tension:** Do you sacrifice your economic backbone (civilian ships) to survive a battle, crippling your economy long-term, or hold out for the real military and risk losing the system?
+
+---
