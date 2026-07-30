@@ -694,3 +694,6 @@ pub mod bureau_of_regrets;
 #[allow(unused_imports)]
 #[allow(ambiguous_glob_reexports)]
 pub use architecture_of_paranoia::*;
+
+pub mod pets;
+pub use pets::*;
