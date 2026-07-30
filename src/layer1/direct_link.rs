@@ -93,6 +93,26 @@ type DirectMovementQuery<'a> = (
     Option<&'a Role>,
 );
 type DirectMovementFilter = (With<Possessed>, Without<Building>);
+fn gather_input(input: &Input, state: &DirectControlState) -> (i32, i32) {
+    let mut intended_dx = state.buffered_dx;
+    let mut intended_dy = state.buffered_dy;
+
+    if input.just_pressed(KeyCode::W) || input.just_pressed(KeyCode::Up) {
+        intended_dy -= 1;
+    }
+    if input.just_pressed(KeyCode::S) || input.just_pressed(KeyCode::Down) {
+        intended_dy += 1;
+    }
+    if input.just_pressed(KeyCode::A) || input.just_pressed(KeyCode::Left) {
+        intended_dx -= 1;
+    }
+    if input.just_pressed(KeyCode::D) || input.just_pressed(KeyCode::Right) {
+        intended_dx += 1;
+    }
+
+    (intended_dx.clamp(-1, 1), intended_dy.clamp(-1, 1))
+}
+
 type BuildingsQuery<'a> = (
     &'a GridPosition,
     &'a Building,
@@ -124,28 +144,7 @@ pub fn handle_direct_movement(
             .as_ref()
             .map_or(f32::MAX, |t| t.0 - state.last_move_time);
 
-        // 1. Gather Input
-        // Separate X and Y to check for diagonal intent or buffering
-        let mut intended_dx = state.buffered_dx;
-        let mut intended_dy = state.buffered_dy;
-
-        // Combine for responsiveness (if I buffer W, then press D, I want to go diagonal)
-        if input.just_pressed(KeyCode::W) || input.just_pressed(KeyCode::Up) {
-            intended_dy -= 1;
-        }
-        if input.just_pressed(KeyCode::S) || input.just_pressed(KeyCode::Down) {
-            intended_dy += 1;
-        }
-        if input.just_pressed(KeyCode::A) || input.just_pressed(KeyCode::Left) {
-            intended_dx -= 1;
-        }
-        if input.just_pressed(KeyCode::D) || input.just_pressed(KeyCode::Right) {
-            intended_dx += 1;
-        }
-
-        // CLAMP to avoid stacking inputs (e.g. buffer W + press W = -2)
-        intended_dx = intended_dx.clamp(-1, 1);
-        intended_dy = intended_dy.clamp(-1, 1);
+        let (intended_dx, intended_dy) = gather_input(&input, &state);
 
         // If no input, skip
         if intended_dx == 0 && intended_dy == 0 {

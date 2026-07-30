@@ -8,6 +8,7 @@ use scale::layer1::resources::ColonyResources;
 use scale::prelude::*;
 use std::io::{self, Write};
 
+#[allow(clippy::too_many_lines)]
 fn main() {
     println!(
         "{} {}",

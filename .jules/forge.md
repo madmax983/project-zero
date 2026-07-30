@@ -57,3 +57,10 @@
 **[Refactoring Bevy Query Complexity]**
 **Learning:** Monolithic Bevy systems that query dozens of components (e.g., `collect_workers_by_target`) frequently cause `clippy::type_complexity` warnings because of massive, deeply nested tuples. This also leads to unreadable closure arguments in subsequent `.filter()` and `.map()` calls where variables are extracted via structural pattern matching on those massive tuples.
 **Action:** Replace huge query tuples with a dedicated struct leveraging `#[derive(bevy_ecs::query::QueryData)]`. This eliminates the need for `#[allow(clippy::type_complexity)]`, allows for named field access inside iterators (e.g., `item.morale_comp`), and drastically improves code readability without changing behavior. Ensure that components that do not implement `Debug` (like many custom structs) are not forced to implement it by avoiding the `#[query_data(derive(Debug))]` macro on the struct unless strictly necessary.
+**[Refactoring Input Gathering Pyramids]**
+**Learning:** Monolithic input checking functions like `handle_direct_movement` often consist of long lists of sequential `input.just_pressed` calls that manually modify local state variables. This creates a wall of code that obscures the main logic of the function.
+**Action:** Extract sequential input gathering logic into a dedicated helper function (like `gather_input`) that takes the required context (like `&Res<Input>` and `&State`) and returns a tuple of the intended action values (e.g. `(dx, dy)`). Ensure bounds checking (like `.clamp()`) is moved into the helper function.
+
+**[Refactoring Layer2 Planet Generation]**
+**Learning:** Monolithic world generation systems (like `generate_system` in Layer 2) often contain long `match` statements mixed with `if/else` logic just to populate a list of traits for a given entity type. This causes the main system function to grow beyond readability limits.
+**Action:** Extract inline trait generation logic (the match block and subsequent conditionally added traits) into a dedicated helper function like `generate_planet_traits(planet_type, rng) -> Vec<PlanetaryTrait>`.

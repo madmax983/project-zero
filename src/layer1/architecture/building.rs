@@ -2506,6 +2506,7 @@ mod tests {
     }
 
     #[test]
+    #[allow(clippy::cognitive_complexity)]
     fn test_building_type_next() {
         assert_eq!(BuildingType::Housing.next(), BuildingType::Office);
         assert_eq!(BuildingType::Office.next(), BuildingType::Farm);
@@ -2647,6 +2648,7 @@ mod tests {
 
     #[test]
     #[allow(clippy::too_many_lines)]
+    #[allow(clippy::cognitive_complexity)]
     fn test_build_mode_type_cycling() {
         let mut mode = BuildMode::default();
         assert_eq!(mode.selected, BuildingType::Housing);

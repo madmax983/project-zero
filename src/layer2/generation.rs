@@ -65,6 +65,36 @@ impl PlanetType {
 /// - Assigns one Rocky/Ice planet as the Colony Location
 /// - Propagates traits from the colony planet to the global `PlanetaryTraits` resource.
 #[allow(clippy::cast_precision_loss)]
+fn generate_planet_traits(planet_type: PlanetType, rng: &mut StdRng) -> Vec<PlanetaryTrait> {
+    let mut planet_traits = Vec::new();
+    match planet_type {
+        PlanetType::Rocky => {
+            if rng.gen_bool(0.3) {
+                planet_traits.push(PlanetaryTrait::HighGravity);
+            }
+            if rng.gen_bool(0.3) {
+                planet_traits.push(PlanetaryTrait::ThinAtmosphere);
+            }
+        }
+        PlanetType::GasGiant => {
+            planet_traits.push(PlanetaryTrait::HighGravity);
+            planet_traits.push(PlanetaryTrait::DenseAtmosphere);
+        }
+        PlanetType::IceWorld => {
+            if rng.gen_bool(0.3) {
+                planet_traits.push(PlanetaryTrait::LowGravity);
+            }
+            planet_traits.push(PlanetaryTrait::SlowOrbit);
+        }
+    }
+
+    if rng.gen_bool(0.1) {
+        planet_traits.push(PlanetaryTrait::SilentWorld);
+    }
+
+    planet_traits
+}
+
 pub fn generate_system(
     mut commands: Commands,
     mut global_traits: ResMut<PlanetaryTraits>,
@@ -109,32 +139,7 @@ pub fn generate_system(
             _ => PlanetType::IceWorld,
         };
 
-        // Generate random traits for this planet based on type
-        let mut planet_traits = Vec::new();
-        match planet_type {
-            PlanetType::Rocky => {
-                if rng.gen_bool(0.3) {
-                    planet_traits.push(PlanetaryTrait::HighGravity);
-                }
-                if rng.gen_bool(0.3) {
-                    planet_traits.push(PlanetaryTrait::ThinAtmosphere);
-                }
-            }
-            PlanetType::GasGiant => {
-                planet_traits.push(PlanetaryTrait::HighGravity);
-                planet_traits.push(PlanetaryTrait::DenseAtmosphere);
-            }
-            PlanetType::IceWorld => {
-                if rng.gen_bool(0.3) {
-                    planet_traits.push(PlanetaryTrait::LowGravity);
-                }
-                planet_traits.push(PlanetaryTrait::SlowOrbit);
-            }
-        }
-
-        if rng.gen_bool(0.1) {
-            planet_traits.push(PlanetaryTrait::SilentWorld);
-        }
+        let planet_traits = generate_planet_traits(planet_type, &mut rng);
 
         let planet = commands
             .spawn((
