@@ -30212,7 +30212,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Pet Singularity
+## The Pet Singularity [SPECCED]
 
 **Layer:** 1
 
