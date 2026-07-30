@@ -30348,3 +30348,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you restrict movement to keep the fragile pops safe and productive in space, risking religious uprisings, or do you allow the pilgrimages and deal with the massive medical and logistical nightmare on the heavy world?
 
 ---
+
+## The Symbiotic Smog
+
+**Layer:** 1
+
+**Fantasy:** Embracing the pollution that was slowly killing the colony.
+
+**Mechanic:** Prolonged exposure to thick atmospheric smog leads to a chance for Pops to adapt instead of just getting sick. Adapted Pops gain the "Smog-Breather" trait, making them immune to pollution penalties but requiring a minimum smog level to maintain health.
+
+**Emergence:** You try to clean up your industrial center to save the health of the colony, only to realize half your workforce has adapted to the smog and begins suffocating in the clean air.
+
+**Tension:** Do you maintain a toxic environment to support your adapted workforce, or clean the air and risk a massive health crisis for the mutants?
+
+---
+
+## The Phantom Signal
+
+**Layer:** Cross-layer
+
+**Fantasy:** Chasing a distress signal that might just be an echo of your own past.
+
+**Mechanic:** A distress signal is detected in a nearby system (Layer 2). Sending a rescue fleet reveals no physical ship, but the signal persists. Exploring the signal on Layer 1 reveals an anomalous zone where Pops experience vivid hallucinations of the colony's founding.
+
+**Emergence:** You send a fleet to rescue survivors, but the fleet returns with no survivors and the crew insists they were the ones who sent the signal in the first place, causing a localized temporal paradox panic.
+
+**Tension:** Do you ignore the signal and risk leaving real survivors, or investigate and risk the sanity of your rescue crew?
+
+---
+
+## Generational Tool Rot
+
+**Layer:** 1
+
+**Fantasy:** The slow decay of advanced technology into primitive superstition.
+
+**Mechanic:** High-tech tools passed down through generations slowly lose their efficiency and gain "Quirks." A high-tech laser drill might only work if the user sings a specific song (a forgotten diagnostic routine).
+
+**Emergence:** Your most productive miner uses an ancient, quirky laser drill. When they die, no one else knows the specific song required to operate it, rendering the tool useless.
+
+**Tension:** Do you rely on highly efficient but quirky heirloom tools, or mass-produce reliable but less efficient new tools?
+
+---
