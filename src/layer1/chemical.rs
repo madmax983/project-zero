@@ -661,6 +661,7 @@ mod tests {
     }
 
     #[test]
+    #[allow(clippy::too_many_lines)]
     fn test_apply_chemical_speed_modifiers_system() {
         use bevy::prelude::*;
 

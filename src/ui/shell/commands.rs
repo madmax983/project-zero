@@ -56,6 +56,7 @@ impl CommandRegistry {
 }
 
 #[must_use]
+#[allow(clippy::too_many_lines)]
 pub fn build_default_command_registry() -> CommandRegistry {
     CommandRegistry::new(vec![
         ShellCommand {

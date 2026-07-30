@@ -126,6 +126,7 @@ fn ensure_buffer(
 
 /// Upload data, dispatch the compute shader, and read back results.
 #[allow(clippy::cast_possible_truncation)]
+#[allow(clippy::too_many_lines)]
 fn dispatch_and_readback(
     gpu: &GpuContext,
     cache: &mut GpuPersistentBuffers,
@@ -290,26 +291,14 @@ fn dispatch_and_readback(
     };
 
     // 7. Dispatch
-    let workgroup_count = (pop_inputs.len() as u32).div_ceil(64);
-    let mut encoder = gpu
-        .device
-        .create_command_encoder(&wgpu::CommandEncoderDescriptor {
-            label: Some("utility-ai-encoder"),
-        });
-
-    {
-        let mut pass = encoder.begin_compute_pass(&wgpu::ComputePassDescriptor {
-            label: Some("utility-ai-pass"),
-            timestamp_writes: None,
-        });
-        pass.set_pipeline(&gpu.pipeline);
-        pass.set_bind_group(0, bind_group, &[]);
-        pass.dispatch_workgroups(workgroup_count, 1, 1);
-    }
-
-    // Copy to staging
-    encoder.copy_buffer_to_buffer(decision_buffer, 0, staging_buffer, 0, decision_size);
-    gpu.queue.submit(std::iter::once(encoder.finish()));
+    dispatch_compute_shader(
+        gpu,
+        pop_inputs.len(),
+        bind_group,
+        decision_buffer,
+        staging_buffer,
+        decision_size,
+    );
 
     // 8. Blocking Readback
     let buffer_slice = staging_buffer.slice(..decision_size); // Slice only what we need
@@ -333,6 +322,36 @@ fn dispatch_and_readback(
     staging_buffer.unmap();
 
     Some(decisions)
+}
+
+fn dispatch_compute_shader(
+    gpu: &GpuContext,
+    pop_count: usize,
+    bind_group: &wgpu::BindGroup,
+    decision_buffer: &wgpu::Buffer,
+    staging_buffer: &wgpu::Buffer,
+    decision_size: wgpu::BufferAddress,
+) {
+    let workgroup_count = (pop_count as u32).div_ceil(64);
+    let mut encoder = gpu
+        .device
+        .create_command_encoder(&wgpu::CommandEncoderDescriptor {
+            label: Some("utility-ai-encoder"),
+        });
+
+    {
+        let mut pass = encoder.begin_compute_pass(&wgpu::ComputePassDescriptor {
+            label: Some("utility-ai-pass"),
+            timestamp_writes: None,
+        });
+        pass.set_pipeline(&gpu.pipeline);
+        pass.set_bind_group(0, bind_group, &[]);
+        pass.dispatch_workgroups(workgroup_count, 1, 1);
+    }
+
+    // Copy to staging
+    encoder.copy_buffer_to_buffer(decision_buffer, 0, staging_buffer, 0, decision_size);
+    gpu.queue.submit(std::iter::once(encoder.finish()));
 }
 
 /// Apply GPU decisions back to the ECS world.
