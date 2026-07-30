@@ -91,3 +91,4 @@ pub mod scrap_code_cult_bridge;
 pub mod blackout_bazaars_bridge;
 pub mod shadow_ecosystems_bridge;
 pub mod memory_smugglers_bridge;
+pub mod data_forests_bridge;

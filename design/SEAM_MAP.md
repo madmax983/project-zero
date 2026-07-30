@@ -1841,3 +1841,9 @@
 - **Systems connected:** `HyperlaneTransitEvent` -> `apply_chronological_stutter_system` -> `AddChronicleEvent`
 - **Glue added:** Confirmed `apply_chronological_stutter_system` in `src/layer2/navigation/chronological_stutter.rs` successfully emits `AddChronicleEvent` on negative stutters. No logic changes were needed. Added an integration test to verify the seam.
 - **Tests:** Added tests in `tests/integration/chronological_stutter_chronicle.rs`.
+
+### INT-998: Data Forests -> Knowledge
+- **Date:** 2026-11-01
+- **Systems connected:** `DataForest`, `WaterSupply`, `FloraState` -> `ColonyResources::knowledge`
+- **Glue added:** Updated `process_data_forest_system` in `src/layer1/tech/symbiotic_data_weavers.rs` to add `DataForest`'s processing power directly to `ColonyResources::knowledge` and clamp it.
+- **Tests:** `tests/integration/data_forests_bridge.rs`
