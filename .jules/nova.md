@@ -275,3 +275,8 @@
 **Concept:** Added `void_fever_infection_system`, `void_fever_progression_system`, and `void_fever_spread_system` to `src/experimental/void_fever_contagion.rs`. Pops with `Trait::VoidTouched` have a chance to contract `VoidFever` during a `SporeStorm`. `VoidFever` grants them endless energy (`needs.rest` is kept at 1.0) but rapidly drains their `Health`. The disease can spread to adjacent pops, creating a mini-pandemic that burns out its hosts in exchange for frantic productivity.
 **Fate:** Submitted
 **Lesson:** Provides a dynamic event where a specific trait combined with a specific weather condition sparks an infectious wave through the colony. Forces players to consider quarantine strategies to balance the productivity boost against the risk of mass casualties.
+
+## [Hedonic Halo]
+**Concept:** Added `hedonic_halo_system` to `src/experimental/hedonic_halo.rs`. Connects full `Needs` (`hunger`, `rest`, `leisure`, `hygiene`) to the `Relationships` system. Pops with extremely high needs (>0.9) radiate a "halo" that passively increases the `Affinity` of nearby pops towards them.
+**Fate:** Merged
+**Lesson:** Connects raw physiological satisfaction to social bonding, mechanically incentivizing the creation of localized high-density luxury zones rather than spreading resources equally, and makes very happy pops into walking relationship boosters.
