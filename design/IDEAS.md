@@ -30239,3 +30239,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you take the safe, decades-long route, or risk your entire armada on a dice roll with physics?
 
 ---
+## The Nutrient Paste Rebellion
+
+**Layer:** 1
+
+**Fantasy:** A colony goes on strike not for better pay, but for real food.
+
+**Mechanic:** Relying on basic "Nutrient Paste" for too long causes pops to develop a "Culinary Despair" debuff. They begin demanding high-tier luxury foods and will eventually refuse to work if their culinary needs aren't met, even if perfectly fed calorically.
+
+**Emergence:** A highly efficient but soulless industrial world suddenly halts production because the pops have decided they won't mine another rock until they get real fruit.
+
+**Tension:** Do you dedicate precious arable land to inefficient luxury crops, or risk a colony-wide strike by enforcing the paste diet?
+
+---
+
+## Interstellar Smuggler Routes
+
+**Layer:** 2
+
+**Fantasy:** A booming hidden economy operating right under your nose, using your own infrastructure.
+
+**Mechanic:** If tax rates or trade tariffs are too high, rogue fleets establish "Smuggler Routes" between colonies. They use player-built sensor blind spots or slipstreams to transport untaxed goods, boosting colony mood but draining state revenue.
+
+**Emergence:** You build a massive defensive sensor net, only to realize the smugglers are using the interference from the sensors themselves to hide their ships.
+
+**Tension:** Do you spend military resources to hunt down smugglers and enforce taxes, or quietly ignore them to keep your frontier colonies happy?
+
+---
+
+## Cultural Contamination
+
+**Layer:** Cross-layer
+
+**Fantasy:** Conquering a rival empire, only to have their culture slowly overwrite yours from the inside.
+
+**Mechanic:** When absorbing a large population with a distinct culture, their cultural traits and preferences begin spreading to your native pops through social interaction. Over time, your core worlds might start adopting the architecture and habits of the conquered species.
+
+**Emergence:** You successfully conquer a peaceful, art-loving civilization. A generation later, your militaristic empire's productivity plummets because everyone wants to be a poet.
+
+**Tension:** Do you violently suppress foreign cultures (risking immediate rebellion) or allow them to integrate (risking the slow dilution of your own empire's identity)?
+
+---
