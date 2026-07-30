@@ -1,7 +1,7 @@
 use bevy::prelude::*;
 
-use crate::layer1::stress::StressTracker;
 use crate::layer1::fauna::Fauna;
+use crate::layer1::stress::StressTracker;
 
 #[derive(Component, Clone, Debug)]
 pub struct Pet {
@@ -38,7 +38,9 @@ pub fn process_pet_death_system(
     for ev in events.read() {
         if let Ok(mut stress) = owner_query.get_mut(ev.owner_entity) {
             stress.accumulated_stress += 50.0;
-            commands.entity(ev.owner_entity).insert(GrievingPet { remaining_ticks: 1000 });
+            commands.entity(ev.owner_entity).insert(GrievingPet {
+                remaining_ticks: 1000,
+            });
         }
     }
 }
@@ -59,17 +61,21 @@ pub fn update_grieving_pet_system(
 mod tests {
     use super::*;
 
-    use crate::layer1::stress::StressTracker;
     use crate::layer1::fauna::Fauna;
+    use crate::layer1::stress::StressTracker;
 
     fn setup_app() -> App {
         let mut app = App::new();
         app.add_event::<PetDeathEvent>();
-        app.add_systems(Update, (
-            update_pet_morale_buff_system,
-            process_pet_death_system,
-            update_grieving_pet_system,
-        ).chain());
+        app.add_systems(
+            Update,
+            (
+                update_pet_morale_buff_system,
+                process_pet_death_system,
+                update_grieving_pet_system,
+            )
+                .chain(),
+        );
         app
     }
 
@@ -77,11 +83,21 @@ mod tests {
     fn test_pet_provides_morale_buff_to_owner() {
         let mut app = setup_app();
 
-        let owner = app.world_mut().spawn(StressTracker { accumulated_stress: 50.0, }).id();
-        let _pet = app.world_mut().spawn((
-            Fauna::default(),
-            Pet { owner_entity: owner },
-        )).id();
+        let owner = app
+            .world_mut()
+            .spawn(StressTracker {
+                accumulated_stress: 50.0,
+            })
+            .id();
+        let _pet = app
+            .world_mut()
+            .spawn((
+                Fauna::default(),
+                Pet {
+                    owner_entity: owner,
+                },
+            ))
+            .id();
 
         app.update();
 
@@ -93,18 +109,31 @@ mod tests {
     fn test_pet_death_causes_severe_grief() {
         let mut app = setup_app();
 
-        let owner = app.world_mut().spawn(StressTracker { accumulated_stress: 10.0, }).id();
-        let pet = app.world_mut().spawn((
-            Fauna::default(),
-            Pet { owner_entity: owner },
-        )).id();
+        let owner = app
+            .world_mut()
+            .spawn(StressTracker {
+                accumulated_stress: 10.0,
+            })
+            .id();
+        let pet = app
+            .world_mut()
+            .spawn((
+                Fauna::default(),
+                Pet {
+                    owner_entity: owner,
+                },
+            ))
+            .id();
 
         // Remove pet component so we don't apply the morale buff during the same tick we test grief
         app.world_mut().entity_mut(pet).remove::<Pet>();
 
-        app.world_mut().resource_mut::<Events<PetDeathEvent>>().send(
-            PetDeathEvent { pet_entity: pet, owner_entity: owner }
-        );
+        app.world_mut()
+            .resource_mut::<Events<PetDeathEvent>>()
+            .send(PetDeathEvent {
+                pet_entity: pet,
+                owner_entity: owner,
+            });
 
         app.update();
 
@@ -117,10 +146,17 @@ mod tests {
     fn test_grief_decays_over_time() {
         let mut app = setup_app();
 
-        let owner = app.world_mut().spawn((
-            StressTracker { accumulated_stress: 60.0 },
-            GrievingPet { remaining_ticks: 100 },
-        )).id();
+        let owner = app
+            .world_mut()
+            .spawn((
+                StressTracker {
+                    accumulated_stress: 60.0,
+                },
+                GrievingPet {
+                    remaining_ticks: 100,
+                },
+            ))
+            .id();
 
         app.update();
 

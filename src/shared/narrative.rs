@@ -78,7 +78,7 @@ pub enum NarrativeError {
 }
 
 impl NarrativeError {
-    /// Returns a beautifully formatted text table for the error.
+    /// Returns a beautifully formatted text table as a `String`.
     ///
     /// The table includes the error type, the error message, and a suggested action to resolve the issue.
     /// This is particularly useful for CLI applications to render user-friendly errors.

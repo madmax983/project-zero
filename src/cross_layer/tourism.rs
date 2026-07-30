@@ -23,9 +23,7 @@ pub struct CasusBelli {
     pub reason: String,
 }
 
-pub fn weaponized_tourism_sabotage_system(
-    mut tourists: Query<&mut WeaponizedTourist>,
-) {
+pub fn weaponized_tourism_sabotage_system(mut tourists: Query<&mut WeaponizedTourist>) {
     for mut tourist in tourists.iter_mut() {
         tourist.annoyance_level += 0.1;
         // In a real game, this would randomly sabotage things based on sabotage_chance.
@@ -53,16 +51,25 @@ mod tests {
     fn test_weaponized_tourism_basic_behavior() {
         let mut app = App::new();
         app.add_event::<TouristHarmedEvent>();
-        app.add_systems(Update, (weaponized_tourism_sabotage_system, weaponized_tourism_harm_system));
+        app.add_systems(
+            Update,
+            (
+                weaponized_tourism_sabotage_system,
+                weaponized_tourism_harm_system,
+            ),
+        );
 
         let origin_faction = app.world_mut().spawn(FactionMarker).id();
         let offending_faction = app.world_mut().spawn(FactionMarker).id();
 
-        let tourist = app.world_mut().spawn(WeaponizedTourist {
-            origin_faction,
-            annoyance_level: 0.0,
-            sabotage_chance: 0.1,
-        }).id();
+        let tourist = app
+            .world_mut()
+            .spawn(WeaponizedTourist {
+                origin_faction,
+                annoyance_level: 0.0,
+                sabotage_chance: 0.1,
+            })
+            .id();
 
         app.update();
 

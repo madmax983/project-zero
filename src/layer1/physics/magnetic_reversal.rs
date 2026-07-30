@@ -1,5 +1,5 @@
-use bevy_ecs::prelude::*;
 use bevy::math::Vec2;
+use bevy_ecs::prelude::*;
 
 #[derive(Resource)]
 pub struct MagneticField {
@@ -46,8 +46,14 @@ mod tests {
     fn setup_app() -> App {
         let mut app = App::new();
         app.add_event::<PoleFlipEvent>();
-        app.insert_resource(MagneticField { active: true, radiation_level: 0.0 });
-        app.add_systems(Update, (handle_pole_flip_system, navigation_scramble_system).chain());
+        app.insert_resource(MagneticField {
+            active: true,
+            radiation_level: 0.0,
+        });
+        app.add_systems(
+            Update,
+            (handle_pole_flip_system, navigation_scramble_system).chain(),
+        );
         app
     }
 
@@ -69,8 +75,17 @@ mod tests {
         let mut app = setup_app();
 
         // Setup entity with navigation component
-        let entity = app.world_mut().spawn(NavigationComponent { heading: 90.0, target: Vec2::new(10.0, 10.0) }).id();
-        app.world_mut().insert_resource(MagneticField { active: false, radiation_level: 5.0 });
+        let entity = app
+            .world_mut()
+            .spawn(NavigationComponent {
+                heading: 90.0,
+                target: Vec2::new(10.0, 10.0),
+            })
+            .id();
+        app.world_mut().insert_resource(MagneticField {
+            active: false,
+            radiation_level: 5.0,
+        });
 
         app.update();
 

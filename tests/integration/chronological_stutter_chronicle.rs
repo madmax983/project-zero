@@ -1,9 +1,9 @@
 use bevy::prelude::*;
 use scale::layer1::chronicle::{AddChronicleEvent, EventImportance};
+use scale::layer2::fleet::{Fleet, InTransit};
 use scale::layer2::navigation::chronological_stutter::{
     apply_chronological_stutter_system, HyperlaneTransitEvent,
 };
-use scale::layer2::fleet::{Fleet, InTransit};
 
 #[test]
 fn test_chronological_stutter_chronicle_bridge() {

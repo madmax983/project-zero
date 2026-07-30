@@ -47,9 +47,7 @@ pub fn void_fever_infection_system(
 }
 
 /// System that progresses the disease: damages health and pegs rest at 1.0.
-pub fn void_fever_progression_system(
-    mut pops: Query<(&mut Health, &mut Needs), With<VoidFever>>,
-) {
+pub fn void_fever_progression_system(mut pops: Query<(&mut Health, &mut Needs), With<VoidFever>>) {
     for (mut health, mut needs) in pops.iter_mut() {
         health.current -= HEALTH_DAMAGE_PER_TICK;
         needs.rest = 1.0;
@@ -137,21 +135,25 @@ mod tests {
     fn test_void_fever_progression() {
         let mut world = World::new();
 
-        let pop = world.spawn((
-            Pop,
-            VoidFever,
-            Health {
-                current: 100.0,
-                max: 100.0,
-                has_rust_lung: false,
-            },
-            Needs {
-                rest: 0.0,
-                ..Default::default()
-            },
-        )).id();
+        let pop = world
+            .spawn((
+                Pop,
+                VoidFever,
+                Health {
+                    current: 100.0,
+                    max: 100.0,
+                    has_rust_lung: false,
+                },
+                Needs {
+                    rest: 0.0,
+                    ..Default::default()
+                },
+            ))
+            .id();
 
-        world.run_system_once(void_fever_progression_system).unwrap();
+        world
+            .run_system_once(void_fever_progression_system)
+            .unwrap();
 
         let health = world.get::<Health>(pop).unwrap();
         assert!(health.current < 100.0);

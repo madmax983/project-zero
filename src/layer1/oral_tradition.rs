@@ -559,3 +559,22 @@ impl std::fmt::Display for OralTradition {
     }
 }
 
+#[cfg(not(feature = "nova"))]
+#[derive(Debug, Default)]
+pub struct OralTradition;
+
+#[cfg(not(feature = "nova"))]
+#[derive(Debug, Default)]
+pub struct Story;
+
+#[cfg(not(feature = "nova"))]
+#[derive(Debug, Default)]
+pub struct StoryGenre;
+
+#[cfg(not(feature = "nova"))]
+impl OralTradition {
+    pub fn new() -> Self {
+        eprintln!("WARNING: You are using the stub of OralTradition. Enable the `nova` feature to use the full Oral Tradition mechanics.");
+        Self
+    }
+}
