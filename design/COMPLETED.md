@@ -946,3 +946,4 @@
 - [x] `INT-1002` Integration: Bio-Rhythmic Commute -> Lumiflora — completed 2024-05-31
 - [x] `1279` Weaponized Tourism — `specs/1279-weaponized-tourism.md` — completed 2026-06-25
 - [x] `307` Xenological Pets — `specs/307-xenological-pets.md` — completed 2026-02-01
+- [x] `270` The Organ Market — `specs/270-organ-market.md` — completed 2024-06-03

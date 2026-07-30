@@ -3,7 +3,6 @@
 ## Future / Ideas
 See `design/IDEAS.md` for unspecced concepts.
 - [x] `255` Hypno-Learning — `specs/255-hypno-learning.md` — completed 2026-03-01
-- [ ] `270` The Organ Market — `specs/270-organ-market.md`
 - [ ] `271` Subcontractor Factions — `specs/271-subcontractor-factions.md`
 - [ ] `272` The Martyrdom Effect — `specs/272-martyrdom-effect.md`
 - [ ] `273` The Feral Outpost — `specs/273-feral-outpost.md`

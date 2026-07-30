@@ -244,5 +244,8 @@ pub use bone_economy::*;
 pub mod information_black_market;
 pub use information_black_market::*;
 
+pub mod biomass_extractor;
+pub use biomass_extractor::*;
+
 pub mod bio_loom;
 pub use bio_loom::*;

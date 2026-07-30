@@ -1,0 +1,10 @@
+<<<<<<< SEARCH
+            crate::layer1::social::factions::subcontractor_factions::handle_leased_zones_system,
+            crate::layer1::economy::biomass_extractor::handle_biomass_extraction_system,
+            crate::layer1::core::integration::faction_strike_mob_bridge_system
+=======
+            crate::layer1::social::factions::subcontractor_factions::handle_leased_zones_system,
+            crate::layer1::social::factions::subcontractor_factions::megacorp_security_sweep_system,
+            crate::layer1::economy::biomass_extractor::handle_biomass_extraction_system,
+            crate::layer1::core::integration::faction_strike_mob_bridge_system
+>>>>>>> REPLACE
