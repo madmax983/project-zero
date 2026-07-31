@@ -30473,3 +30473,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you divert precious galactic resources to humor every frontier world's apocalyptic prediction, or ignore them and risk secession when they turn out to be right?
 
 ---
+
+## Sleep Synchrony
+
+**Layer:** 1
+
+**Fantasy:** The subtle horror of a colony where everyone dreams exactly the same thing.
+
+**Mechanic:** Pops sleeping in close proximity (e.g., in high-density barracks) begin to synchronize their sleep cycles and eventually their dreams. A synchronized block gains a massive "Restful Synergy" efficiency buff upon waking, but if one Pop experiences a nightmare (due to high stress or an event), the nightmare instantly cascades to the entire sleeping block, causing a mass panic waking event.
+
+**Emergence:** You build an ultra-efficient mega-dormitory to maximize the "Restful Synergy" buff. One night, a single Pop witnesses a horrific accident right before bed. The resulting synchronized nightmare causes 500 Pops to wake up simultaneously in a state of terror, immediately rioting and attempting to dismantle the dormitory.
+
+**Tension:** Do you optimize housing for the massive synchronized waking buffs, knowing that a single stressed Pop can trigger a colony-wide panic, or build inefficient, isolated housing to compartmentalize psychological hazards?
+
+---
+
+## The Sentient Commute
+
+**Layer:** 1
+
+**Fantasy:** The paths you walk every day start to anticipate your movements, and then dictate them.
+
+**Mechanic:** Heavily used pathing tiles (like main roads between housing and industry) accumulate "Desire Dust" over time. This dust slightly increases movement speed. However, if a road becomes too popular, the dust coagulates into a rudimentary, immobile intelligence that "wants" Pops to travel on it. It begins emitting a low-level localized pheromone that subtly forces Pops to take that route, even if a faster, newly built path exists.
+
+**Emergence:** You try to redesign your colony's layout by building a highly efficient transit loop and deleting the old, winding dirt road. However, the old road has become sentient. The Pops refuse to use the new transit loop, compulsively walking over the rough terrain where the old road used to be, drastically reducing your colony's logistical efficiency until you physically excavate the "Desire Dust."
+
+**Tension:** Do you allow organic, highly efficient routes to form naturally, knowing they might become stubbornly permanent, or constantly rotate pathing to prevent the ground from developing a mind of its own?
+
+---
+
+## The Bureaucracy of Hunger
+
+**Layer:** 1
+
+**Fantasy:** In a highly formalized society, even starvation must be properly documented before action can be taken.
+
+**Mechanic:** In colonies with high "Administrative Complexity," Pops cannot simply eat food from a stockpile when hungry. They must first submit a "Requisition Request" which takes time to process by an Administrative Pop. Only after approval can they retrieve their food.
+
+**Emergence:** Your colony has plenty of food in the granaries. However, a minor flu outbreak incapacitates your administrative staff. The Requisition Requests pile up unprocessed. Your miners and farmers starve to death right next to overflowing food silos because they refuse to break protocol and eat without a stamped permit.
+
+**Tension:** Do you maintain a highly ordered society (which prevents hoarding and waste but introduces lethal bureaucratic bottlenecks) or a chaotic, free-for-all system where survival is immediate but long-term planning is impossible?
+
+---
