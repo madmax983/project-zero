@@ -10946,3 +10946,43 @@ Names for the lower class subsisting on scraps.
 - the Glass Archive
 - the Untouched Core
 - the Galactic Mausoleum
+
+## Fragment Type: [RUIN_ECHO]
+What sensory experience is replayed by the ruins.
+- a thousand-year-old planetary bombardment
+- the screams of the last workers
+- a sudden, freezing silence
+- the smell of burning ozone
+- the sound of massive gears grinding to a halt
+
+## Fragment Type: [CURSED_MATERIAL]
+The ancient materials used for cursed architecture.
+- cheap alien brick
+- geometrically impossible glass
+- whispering ferrocrete
+- rusted precursor plating
+- porous black stone
+
+## Fragment Type: [FERAL_PHRASE]
+A snippet of the Feral Syntax.
+- a recursive threat
+- a chaotic subroutine
+- a memetic virus
+- a paradoxical equation
+- an untranslatable glyph
+
+## Fragment Type: [GREY_SPRAWL_ACTION]
+What the automated ruins are doing.
+- actively venting oxygen
+- dismantling intruders for spare parts
+- churning out toxic sludge
+- endlessly optimizing for a lost quota
+- self-repairing the factory walls
+
+## Fragment Type: [FUTURE_DEBRIS]
+What kind of chronological debris is found.
+- a hyper-advanced fusion reactor
+- a paradoxical defensive battery
+- a temporal storage silo
+- an inverted gravity well
+- a self-assembling habitat

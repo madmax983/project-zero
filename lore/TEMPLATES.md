@@ -10889,3 +10889,85 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The ruins of [COLONY] have been designated [PRESERVATION_ZONE_NAME]. We will starve before we break its stones."
 - "The past outweighs the present. [COLONY] is now [PRESERVATION_ZONE_NAME]. Let the fleet rust; the history remains. [YEAR]."
 - "[COLONY], [YEAR]: A tomb for a dead empire, maintained by a dying one. Welcome to [PRESERVATION_ZONE_NAME]."
+
+## The Echoing Ruins Templates (Idea)
+
+## Template: ECHOING_RUIN_EXCAVATION
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [RUIN_ECHO]
+
+**Patterns:**
+- "[YEAR]: Excavation at [COLONY] triggered an echo. The workers experienced [RUIN_ECHO] and fled in terror."
+- "The ruins at [COLONY] are haunted by [RUIN_ECHO]. [YEAR]."
+- "[COLONY], [YEAR]: We dug too deep. Now the camp is plagued by [RUIN_ECHO] every night."
+
+## Cursed Architecture Templates (Idea)
+
+## Template: CURSED_BUILDING_CONSTRUCTED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [CURSED_MATERIAL], [BUILDING_TYPE]
+
+**Patterns:**
+- "[YEAR]: [COLONY] completed the [BUILDING_TYPE] using [CURSED_MATERIAL]. It was cheap, but the workers complain of whispers."
+- "The [BUILDING_TYPE] built from [CURSED_MATERIAL] stands in [COLONY]. The shadows inside are wrong. [YEAR]."
+- "[COLONY], [YEAR]: We solved the housing crisis with [CURSED_MATERIAL]. Now the sleepwalking begins."
+
+## Template: SLEEPWALKER_DISMANTLE
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [BUILDING_TYPE]
+
+**Patterns:**
+- "[YEAR]: The insomniacs of [COLONY] walked into the night and began dismantling the [BUILDING_TYPE]."
+- "We awoke to find the [BUILDING_TYPE] in ruins. The citizens of [COLONY] had torn it down in their sleep. [YEAR]."
+- "[COLONY], [YEAR]: The curse takes hold. They are trying to rebuild the old shapes from the [BUILDING_TYPE]."
+
+## The Feral Syntax Templates (Idea)
+
+## Template: SYNTAX_TRANSLATED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [FERAL_PHRASE]
+
+**Patterns:**
+- "[YEAR]: Translators at [COLONY] deciphered [FERAL_PHRASE]. Several lost their minds, but the data is invaluable."
+- "The Feral Syntax yielded [FERAL_PHRASE] in [YEAR]. The cognitive hazard protocols at [COLONY] barely held."
+- "[COLONY], [YEAR]: We understand [FERAL_PHRASE] now. We may regret this."
+
+## Template: SYNTAX_INFECTION
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [RIVAL_EMPIRE], [FERAL_PHRASE]
+
+**Patterns:**
+- "[YEAR]: We sent [FERAL_PHRASE] to [RIVAL_EMPIRE]. Their translation AIs are corrupting as planned."
+- "The diplomatic message to [RIVAL_EMPIRE] contained [FERAL_PHRASE]. Their administration centers are shutting down. [YEAR]."
+- "[YEAR]: [RIVAL_EMPIRE] received our transmission. The Feral Syntax spreads."
+
+## Grey Sprawl Templates (Idea)
+
+## Template: GREY_SPRAWL_ENCOUNTER
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [GREY_SPRAWL_ACTION]
+
+**Patterns:**
+- "[YEAR]: We returned to the old site near [COLONY]. The machines are still alive, [GREY_SPRAWL_ACTION]."
+- "The automated ruins are [GREY_SPRAWL_ACTION]. They view [COLONY] as an inefficiency. [YEAR]."
+- "[COLONY], [YEAR]: The Grey Sprawl continues its endless work. It is [GREY_SPRAWL_ACTION]."
+
+## Ruins of the Future Templates (Idea)
+
+## Template: FUTURE_RUIN_DISCOVERED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [FUTURE_DEBRIS]
+
+**Patterns:**
+- "[YEAR]: An expedition from [COLONY] found [FUTURE_DEBRIS] bearing our own insignia. We haven't invented it yet."
+- "Temporal debris on [COLONY]: a perfectly functioning [FUTURE_DEBRIS]. We built this... tomorrow. [YEAR]."
+- "[COLONY], [YEAR]: The Wound deposited [FUTURE_DEBRIS]. It is ours, from a future that has not yet happened."
+
+## Template: TEMPORAL_DISSONANCE_ERASURE
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [ERASED_RESOURCE]
+
+**Patterns:**
+- "[YEAR]: The temporal dissonance from the future ruins un-built our [ERASED_RESOURCE] at [COLONY]."
+- "We used the future tech, but the paradox exacts a toll. [COLONY] lost all its [ERASED_RESOURCE]. [YEAR]."
+- "[COLONY], [YEAR]: The [ERASED_RESOURCE] simply ceased to exist, swallowed by temporal erosion."
