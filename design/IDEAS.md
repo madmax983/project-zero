@@ -30390,3 +30390,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you rely on highly efficient but quirky heirloom tools, or mass-produce reliable but less efficient new tools?
 
 ---
+## Synthetic Nepotism
+
+**Layer:** 1
+
+**Fantasy:** Your pops start treating their robotic assistants like family, prioritizing emotional bonds over mechanical efficiency.
+
+**Mechanic:** Pops who work alongside the same automated drones for years develop an "Attachment" trait. They will actively sabotage new, more efficient machines to keep their old "friends" employed, and demand luxury resources be spent on robot maintenance.
+
+**Emergence:** You try to upgrade the colony's mining bots, but the miners go on strike because they consider "Unit-734" an honorary union member and refuse to let it be scrapped.
+
+**Tension:** Do you force the upgrade for efficiency and break their hearts, or run a sub-optimal economy to respect the emotional bonds of your workforce?
+
+---
+
+## The Reverse Engineering Plague
+
+**Layer:** Cross-layer
+
+**Fantasy:** Capturing enemy technology is a great victory, until it starts subtly rewiring your society to match theirs.
+
+**Mechanic:** When you salvage and utilize tech or ships from a rival faction, those items carry "Cultural Artifacts." Over time, pops using or maintaining this tech start adopting the ethics and needs of the faction that originally designed it.
+
+**Emergence:** You salvage a fleet of highly efficient warships from a Hive Mind empire to defend your democracy. Decades later, your naval officers stop using names, refer to themselves as "We," and attempt a coup to establish a collective.
+
+**Tension:** Do you use superior captured technology and risk cultural subversion, or scrap it to maintain your empire's ideological purity?
+
+---
+
+## The Bureaucracy of Apologies
+
+**Layer:** 3
+
+**Fantasy:** Weaponizing diplomacy and red tape to stall a superior enemy from attacking.
+
+**Mechanic:** You can dedicate administrative resources to generate "Formal Apologies" and "Diplomatic Inquiries" when you commit hostile border actions. This delays the victim's ability to formally declare war by tying them up in galactic courts.
+
+**Emergence:** You slowly conquer a neighbor system, one asteroid at a time, but send an endless stream of convoluted apologies and compensation claims. The galactic council prevents them from retaliating until they finish the paperwork.
+
+**Tension:** Do you build military fleets to defend yourself, or an army of lawyers to make attacking you a logistical nightmare?
+
+---
