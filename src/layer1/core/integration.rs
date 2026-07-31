@@ -3384,7 +3384,10 @@ pub fn subspace_stowaways_chronicle_bridge(
     for wake in wake_events.read() {
         chronicle_events.send(AddChronicleEvent {
             importance: EventImportance::Major,
-            text: format!("A subspace wake disrupted the colony, tearing at reality with severity {:.2}.", wake.severity),
+            text: format!(
+                "A subspace wake disrupted the colony, tearing at reality with severity {:.2}.",
+                wake.severity
+            ),
         });
     }
 }

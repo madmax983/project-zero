@@ -251,3 +251,5 @@ pub mod adblock_siphoning;
 pub mod martial_vigilance;
 #[cfg(feature = "nova")]
 pub mod void_fever_contagion;
+#[cfg(feature = "nova")]
+pub mod water_cooler_gossip;
