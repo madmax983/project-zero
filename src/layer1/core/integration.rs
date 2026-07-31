@@ -3391,3 +3391,20 @@ pub fn subspace_stowaways_chronicle_bridge(
         });
     }
 }
+pub fn xenoflora_pet_death_bridge_system(
+    mut events: EventReader<crate::layer1::social::pets::PetDeathEvent>,
+    mut chronicle_events: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+    query: Query<&crate::layer1::pop::PopName>,
+) {
+    for event in events.read() {
+        if let Ok(name) = query.get(event.owner_entity) {
+            chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+                text: format!(
+                    "{} lost their beloved xenological pet today. The colony mourns with them.",
+                    name.0
+                ),
+                importance: crate::layer1::core::chronicle::EventImportance::Minor,
+            });
+        }
+    }
+}

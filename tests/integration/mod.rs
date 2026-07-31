@@ -93,3 +93,4 @@ pub mod shadow_ecosystems_bridge;
 pub mod memory_smugglers_bridge;
 pub mod data_forests_bridge;
 mod subspace_stowaways_bridge;
+pub mod xenoflora_pet_bridge;
