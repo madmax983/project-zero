@@ -101,6 +101,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<bevy_ecs::event::Events<crate::layer1::heroic_acts::TriggerHeroicAct>>();
     world.init_resource::<Events<crate::layer1::social::hoarder::ConfiscateHoardEvent>>();
     world.init_resource::<Events<crate::layer1::culture::memorial_revolt::PetDeathEvent>>();
+    world.init_resource::<Events<crate::layer1::social::pets::PetDeathEvent>>();
     world.init_resource::<bevy_ecs::prelude::Events<crate::layer2::celestial_library::LibraryDonationEvent>>();
     world.init_resource::<crate::layer1::logistics::mycelial::MycelialNetwork>();
     world.init_resource::<crate::layer1::social::politics::ElectionCycle>();
@@ -1245,6 +1246,7 @@ mod tests {
             .init_resource::<bevy_ecs::event::Events<crate::layer1::heroic_acts::TriggerHeroicAct>>(
             );
         world.init_resource::<Events<crate::layer1::culture::memorial_revolt::PetDeathEvent>>();
+        world.init_resource::<Events<crate::layer1::social::pets::PetDeathEvent>>();
         world
             .init_resource::<crate::layer1::environment::bio_acoustic_miasma::MiasmaRecordedSecret>(
             );

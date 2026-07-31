@@ -1859,3 +1859,10 @@
 - **Glue added:** Added `subspace_stowaways_chronicle_bridge` in `src/layer1/core/integration.rs` to generate Chronicle records when a subspace wake occurs.
 - **Schedule:** Registered the system in `src/simulation.rs`.
 - **Tests:** Added tests in `tests/integration/subspace_stowaways_bridge.rs`.
+
+### INT-307: Xenological Pets -> Chronicle
+- **Date:** 2026-11-01
+- **Systems connected:** `PetDeathEvent` -> `xenoflora_pet_death_bridge_system` -> `AddChronicleEvent`
+- **Glue added:** Added `xenoflora_pet_death_bridge_system` in `src/layer1/core/integration.rs` to generate Chronicle records when a xenological pet dies.
+- **Schedule:** Registered the system in `src/layer1/systems/observation.rs`.
+- **Tests:** Added tests in `tests/integration/xenoflora_pet_bridge.rs`.

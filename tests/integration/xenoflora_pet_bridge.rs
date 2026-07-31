@@ -71,3 +71,39 @@ fn test_pet_system_integration() {
     let morale2 = app.world().get::<Morale>(pop2).unwrap();
     assert!(!morale2.modifiers.is_empty());
 }
+
+#[test]
+fn test_pet_death_chronicle_bridge() {
+    let mut app = bevy_app::App::new();
+    app.add_event::<scale::layer1::social::pets::PetDeathEvent>();
+    app.add_event::<scale::layer1::core::chronicle::AddChronicleEvent>();
+    app.add_systems(
+        bevy_app::Update,
+        scale::layer1::core::integration::xenoflora_pet_death_bridge_system,
+    );
+
+    let owner = app
+        .world_mut()
+        .spawn((Pop, scale::layer1::pop::PopName("Alice".to_string())))
+        .id();
+    let pet = app.world_mut().spawn_empty().id();
+
+    app.world_mut()
+        .resource_mut::<Events<scale::layer1::social::pets::PetDeathEvent>>()
+        .send(scale::layer1::social::pets::PetDeathEvent {
+            pet_entity: pet,
+            owner_entity: owner,
+        });
+
+    app.update();
+
+    let events = app
+        .world()
+        .resource::<Events<scale::layer1::core::chronicle::AddChronicleEvent>>();
+    let mut cursor = events.get_cursor();
+    let emitted: Vec<_> = cursor.read(events).collect();
+
+    assert_eq!(emitted.len(), 1);
+    assert!(emitted[0].text.contains("Alice"));
+    assert!(emitted[0].text.contains("pet"));
+}

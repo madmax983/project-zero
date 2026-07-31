@@ -1515,6 +1515,7 @@ mod tests {
         world.init_resource::<Events<crate::layer2::tourism::disaster_tourism::GriefTouristArrivalEvent>>();
         world.init_resource::<Events<crate::layer1::culture::celestial_cemeteries::ClearCemeteryEvent>>();
         world.init_resource::<Events<crate::layer1::culture::memorial_revolt::PetDeathEvent>>();
+        world.init_resource::<Events<crate::layer1::social::pets::PetDeathEvent>>();
         world.init_resource::<Events<crate::layer2::celestial_library::LibraryDonationEvent>>();
         world.init_resource::<Events<crate::layer2::station::ShipConstructionCompletedEvent>>();
         world.init_resource::<Events<crate::layer1::agony_extract::HarvestAgonyExtractEvent>>();

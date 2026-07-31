@@ -48,6 +48,7 @@ pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
             crate::layer1::core::integration::cryo_prison_sabotage_bridge_system,
+            crate::layer1::core::integration::xenoflora_pet_death_bridge_system,
             crate::layer1::cryo_prison::thaw_cryo_pod_system,
             crate::layer1::cryo_prison::criminal_sabotage_system,
             crate::layer1::psychology::psychic_stains::decay_stains_system,
