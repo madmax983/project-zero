@@ -948,3 +948,4 @@
 - [x] `1279` Weaponized Tourism — `specs/1279-weaponized-tourism.md` — completed 2026-06-25
 - [x] `307` Xenological Pets — `specs/307-xenological-pets.md` — completed 2026-02-01
 - [x] `INT-998` Integration: Data Forests -> Knowledge — completed 2026-07-30
+- [x] `INT-997` Integration: Subspace Stowaways -> Chronicle — completed 2026-11-01
