@@ -30515,3 +30515,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you maintain a highly ordered society (which prevents hoarding and waste but introduces lethal bureaucratic bottlenecks) or a chaotic, free-for-all system where survival is immediate but long-term planning is impossible?
 
 ---
+## The Cargo Cult Fleet
+
+**Layer:** 2
+
+**Fantasy:** Primitive or isolated worlds misinterpreting orbital debris and discarded tech, worshipping it and eventually building dangerous imitations.
+
+**Mechanic:** Debris or discarded ships in orbit around lower-tech colonies slowly generate "Scrap Faith". If left unchecked, the colony will launch a heavily armed, barely functional "Holy Scrap Ship" made of welded garbage that acts unpredictably in the system.
+
+**Emergence:** A discarded mining laser from an advanced empire becomes the focal point of a cult, which then attempts to "return it to the gods" by crashing it into a vital trade station.
+
+**Tension:** Do you spend resources cleaning up your orbital garbage, or risk empowering primitive worlds with dangerous, unguided zealotry?
+
+---
+
+## Generational Guilt
+
+**Layer:** 1
+
+**Fantasy:** Pops inheriting the burdens of their ancestors' actions, leading to long-term social divides.
+
+**Mechanic:** Pops that commit severe crimes or cause disasters mark their descendants with a "Tainted Lineage" trait. Other Pops subtly avoid or discriminate against them, lowering their social needs and productivity.
+
+**Emergence:** A highly efficient family of engineers is constantly miserable and underperforming because their great-grandfather was a notorious hoarder during a famine.
+
+**Tension:** Do you punish criminals severely knowing it will ripple through generations, or show leniency to maintain long-term social cohesion?
+
+---
+
+## The Whisper Network
+
+**Layer:** Cross-layer
+
+**Fantasy:** Information travels faster through backchannels than official reports, but it mutates along the way.
+
+**Mechanic:** Events on one colony (Layer 1) propagate to other colonies via merchant ships and smugglers before official empire channels update. The information degrades and exaggerates (e.g., a "minor food shortage" becomes a "famine").
+
+**Emergence:** A neighboring system panics and starts hoarding resources because they heard a rumor of war from a passing trader, crashing the local economy before you can send official reassurances.
+
+**Tension:** Do you enforce strict information blackouts to prevent panic (which lowers trust), or allow free speech that can trigger empire-wide hysteria based on rumors?
+
+---
