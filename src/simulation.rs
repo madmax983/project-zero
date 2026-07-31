@@ -1173,6 +1173,7 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
     schedule.add_systems((
         crate::layer2::ftl::wakes::generate_subspace_wake_system,
         crate::layer1::hazards::wakes::resolve_subspace_wakes_system,
+        crate::layer1::core::integration::subspace_stowaways_chronicle_bridge,
     ));
 
     schedule.add_systems((

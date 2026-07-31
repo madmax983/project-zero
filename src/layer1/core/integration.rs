@@ -3376,3 +3376,15 @@ pub fn bio_rhythmic_commute_flare_bridge(
         }
     }
 }
+
+pub fn subspace_stowaways_chronicle_bridge(
+    mut wake_events: EventReader<crate::layer2::ftl::wakes::SubspaceWakeEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for wake in wake_events.read() {
+        chronicle_events.send(AddChronicleEvent {
+            importance: EventImportance::Major,
+            text: format!("A subspace wake disrupted the colony, tearing at reality with severity {:.2}.", wake.severity),
+        });
+    }
+}

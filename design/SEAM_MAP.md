@@ -1852,3 +1852,10 @@
 - **Systems connected:** `ParadoxEvent` -> `temporal_smuggling_chronicle_bridge` -> `AddChronicleEvent`
 - **Glue added:** Added integration test `test_temporal_smuggling_chronicle_bridge` to verify `temporal_smuggling_chronicle_bridge` works as expected. The code was already present in `src/layer1/core/integration.rs` and registered in `src/layer1/systems/execution.rs`.
 - **Tests:** `tests/integration/temporal_smuggling_bridge.rs`
+
+### INT-997: Subspace Stowaways -> Chronicle
+- **Date:** 2026-11-01
+- **Systems connected:** `SubspaceWakeEvent` -> `subspace_stowaways_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `subspace_stowaways_chronicle_bridge` in `src/layer1/core/integration.rs` to generate Chronicle records when a subspace wake occurs.
+- **Schedule:** Registered the system in `src/simulation.rs`.
+- **Tests:** Added tests in `tests/integration/subspace_stowaways_bridge.rs`.
