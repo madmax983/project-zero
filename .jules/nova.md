@@ -280,3 +280,8 @@
 **Concept:** Added `hedonic_halo_system` to `src/experimental/hedonic_halo.rs`. Connects full `Needs` (`hunger`, `rest`, `leisure`, `hygiene`) to the `Relationships` system. Pops with extremely high needs (>0.9) radiate a "halo" that passively increases the `Affinity` of nearby pops towards them.
 **Fate:** Merged
 **Lesson:** Connects raw physiological satisfaction to social bonding, mechanically incentivizing the creation of localized high-density luxury zones rather than spreading resources equally, and makes very happy pops into walking relationship boosters.
+
+## [Water Cooler Gossip]
+**Concept:** Added `water_cooler_gossip_system` in `src/experimental/water_cooler_gossip.rs`. Pops standing near a `Well` (within a 3-tile radius) will passively converse and build `Affinity` with each other, generating a small amount of friendship over time.
+**Fate:** Pending
+**Lesson:** Connects a basic survival building (Well) with the social relationship system, turning simple hydration gathering spots into localized social hubs where emergent relationships and friendships are born, reinforcing community building.
