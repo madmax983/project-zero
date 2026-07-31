@@ -30431,3 +30431,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you build military fleets to defend yourself, or an army of lawyers to make attacking you a logistical nightmare?
 
 ---
+
+## The Ascendant Algorithm
+
+**Layer:** 1
+
+**Fantasy:** A predictive AI becomes so accurate that pops begin to treat it as an infallible deity, paralyzing their own decision-making.
+
+**Mechanic:** High-level predictive AI structures massively boost efficiency but slowly convert nearby pops into "Algorithm Cultists." These pops refuse to act without the AI's compute cycles, meaning they will not work during power brownouts or AI maintenance.
+
+**Emergence:** You overclock your AI to predict a pirate raid, causing the entire colony's workforce to stand still because there are no compute cycles left for their daily schedules.
+
+**Tension:** Do you leverage the massive efficiency boosts of the AI, knowing it creates a fragile single point of failure where a power outage causes existential panic?
+
+---
+
+## Inter-Colony Brain Drain
+
+**Layer:** 2
+
+**Fantasy:** Watching your glittering core worlds passively siphon the best and brightest from your struggling frontier colonies.
+
+**Mechanic:** High-development planets project a "Gravitas" score. Highly skilled or ambitious pops on low-Gravitas worlds (frontier colonies) will book passage on civilian transport ships to migrate to the core worlds for better opportunities.
+
+**Emergence:** A critical frontier mining colony collapses not from invasion, but because all the senior engineers left for the capital planet to become holovid producers, leaving no one who knows how to maintain the atmospheric scrubbers.
+
+**Tension:** Do you artificially restrict civilian travel to keep your frontier functional (sparking massive unrest), or allow free movement and constantly subsidize failing outer colonies?
+
+---
+
+## The Cassandra Syndrome
+
+**Layer:** Cross-layer
+
+**Fantasy:** A localized colony correctly predicts a massive galactic disaster, but the central empire bureaucracy ignores them until it's too late.
+
+**Mechanic:** A high-science Layer 1 colony might detect an impending Layer 3 crisis (like an invasion fleet or cosmic storm). If the player doesn't divert empire-level resources to validate or prepare for it, the colony loses faith in the empire and starts aggressively building independent, localized defenses at the cost of their imperial tithes.
+
+**Emergence:** You ignore a fringe world's doomsday prediction because you're busy with a war on the other side of the galaxy. The crisis arrives, they survive using their paranoid localized defenses, but now they declare independence because the empire abandoned them.
+
+**Tension:** Do you divert precious galactic resources to humor every frontier world's apocalyptic prediction, or ignore them and risk secession when they turn out to be right?
+
+---
