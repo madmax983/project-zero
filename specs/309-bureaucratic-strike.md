@@ -1,13 +1,13 @@
 # Specification 309: The Bureaucratic Strike
 
 ## 1. Overview
-This feature simulates the malicious compliance of administrative staff ("Clerks", "Managers"). When the morale of Admin Pops drops too low, instead of rioting destructively, they trigger a "Red Tape" event. This strike massively inflates the time required to process building designations, job reassignments, and trade deals, paralyzing the colony's logistics.
+This feature simulates the malicious compliance of administrative staff. When the morale of Admin Pops drops too low, instead of rioting destructively, they trigger a "Red Tape" event. This strike massively inflates the time required to process building designations, job reassignments, and trade deals, paralyzing the colony's logistics.
 
 ## 2. Dependencies
-- `Designation` system (`src/layer1/designation.rs`)
-- `Job` system / Assignments (`src/layer1/jobs.rs`)
-- `Morale` system (`src/layer1/morale.rs`)
-- `Grievance` / Unrest system (`src/layer1/grievance.rs`)
+- `Designation` system (`src/layer1/administration/designation.rs`)
+- `Job` system / Assignments (`src/layer1/entities/pop.rs`, `src/layer1/jobs.rs`)
+- `Morale` system (`src/layer1/social/morale.rs`)
+- `Grievance` / Unrest system (`src/layer1/social/unrest.rs`)
 
 ## 3. RED Phase: Tests First
 
@@ -18,7 +18,9 @@ This feature simulates the malicious compliance of administrative staff ("Clerks
 mod tests {
     use super::*;
     use bevy::prelude::*;
-    use crate::layer1::designation::DesignationType;
+    use crate::layer1::administration::designation::DesignationType;
+    use crate::layer1::pop::{Job, JobType, Pop};
+    use crate::layer1::social::morale::Morale;
 
     fn setup_app() -> App {
         let mut app = App::new();
@@ -34,7 +36,7 @@ mod tests {
     fn test_red_tape_increases_designation_cost() {
         let mut app = setup_app();
 
-        let designation = app.world_mut().spawn(RedTapeCost { current_cost: 0.0, max_cost: 100.0, designation_type: DesignationType::Build }).id();
+        let designation = app.world_mut().spawn(RedTapeCost { current_cost: 0.0, max_cost: 100.0, designation_type: DesignationType::Mine, penalized: false }).id();
 
         app.world_mut().resource_mut::<RedTapeEvent>().active = true;
         app.world_mut().resource_mut::<RedTapeEvent>().severity = 10;
@@ -54,6 +56,7 @@ mod tests {
         let job = app.world_mut().spawn(PaperworkDelay { ticks_remaining: 0 }).id();
 
         app.world_mut().resource_mut::<RedTapeEvent>().active = true;
+        app.world_mut().resource_mut::<RedTapeEvent>().severity = 10;
 
         app.update();
 
@@ -67,8 +70,9 @@ mod tests {
 
         // Add a happy Admin Pop
         app.world_mut().spawn((
-            AdminPop,
-            Morale { value: 90.0 }, // High morale
+            Pop,
+            Job { workplace: Entity::PLACEHOLDER, job_type: JobType::Administrator },
+            Morale { value: 0.9, modifiers: vec![] }, // High morale
         ));
 
         app.world_mut().resource_mut::<RedTapeEvent>().active = true;
@@ -88,20 +92,14 @@ mod tests {
 // src/layer1/social/bureaucratic_strike.rs
 
 use bevy::prelude::*;
-use crate::layer1::designation::DesignationType;
+use crate::layer1::administration::designation::DesignationType;
+use crate::layer1::pop::{Job, JobType, Pop};
+use crate::layer1::social::morale::Morale;
 
 #[derive(Resource, Clone, Debug)]
 pub struct RedTapeEvent {
     pub active: bool,
     pub severity: u32,
-}
-
-#[derive(Component, Clone, Debug)]
-pub struct AdminPop;
-
-#[derive(Component, Clone, Debug)]
-pub struct Morale {
-    pub value: f32,
 }
 
 #[derive(Component, Clone, Debug)]
@@ -119,22 +117,24 @@ pub struct PaperworkDelay {
 
 pub fn update_bureaucratic_strike_status_system(
     mut red_tape: ResMut<RedTapeEvent>,
-    query: Query<&Morale, With<AdminPop>>,
+    query: Query<(&Morale, &Job), With<Pop>>,
 ) {
     let mut total_morale = 0.0;
     let mut admin_count = 0;
 
-    for morale in query.iter() {
-        total_morale += morale.value;
-        admin_count += 1;
+    for (morale, job) in query.iter() {
+        if job.job_type == JobType::Administrator || job.job_type == JobType::RationingBureaucrat {
+            total_morale += morale.value;
+            admin_count += 1;
+        }
     }
 
     if admin_count > 0 {
         let avg_morale = total_morale / admin_count as f32;
-        if avg_morale < 30.0 { // Low morale threshold
+        if avg_morale < 0.3 { // Low morale threshold (Morale is 0.0 to 1.0)
             red_tape.active = true;
             red_tape.severity = 10;
-        } else if avg_morale > 60.0 {
+        } else if avg_morale > 0.6 {
             red_tape.active = false;
         }
     }
@@ -155,7 +155,7 @@ pub fn process_red_tape_designations_system(
 
         for mut delay in job_query.iter_mut() {
             if delay.ticks_remaining == 0 {
-                delay.ticks_remaining = 500 * red_tape.severity; // Add massive delay to jobs
+                delay.ticks_remaining = 50 * red_tape.severity; // Add massive delay to jobs
             }
         }
     }
@@ -164,7 +164,7 @@ pub fn process_red_tape_designations_system(
 
 ## 5. REFACTOR Phase: Quality & Design
 - **Integration**: The `RedTapeCost` should integrate cleanly with the existing `ConstructionCost` and `Designation` logic. We need to intercept standard assignments.
-- **Morale mapping**: Ensure `AdminPop` maps directly to actual `JobType::Clerk` or `JobType::Manager` components used in `src/layer1/jobs.rs`.
+- **Morale mapping**: Ensure `AdminPop` maps directly to actual `JobType::Administrator` or `JobType::RationingBureaucrat` components.
 - **Chronicle**: Trigger `StrikeStarted` and `StrikeEnded` events to let the player know why their colony has stalled.
 
 ## 6. Acceptance Criteria (Testable!)
@@ -178,7 +178,7 @@ pub fn process_red_tape_designations_system(
 
 ## 7. Technical Guidance
 - The delay to job assignments (`PaperworkDelay`) means Pops trying to switch roles will stand around in a "Waiting on Forms" state. This requires inserting a new Action into their Utility AI that ranks highest when they have an assigned but delayed job.
-- **Optimization**: Bevy ECS makes finding `AdminPop` easy, but caching the `active` status in a Resource prevents running expensive queries every tick for designations.
+- **Optimization**: Caching the `active` status in a Resource prevents running expensive queries every tick for designations.
 
 ## 8. Questions
 *Builder: add questions here if spec is unclear.*
