@@ -30556,3 +30556,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you enforce strict information blackouts to prevent panic (which lowers trust), or allow free speech that can trigger empire-wide hysteria based on rumors?
 
 ---
+
+## The Empathy Cascade
+
+**Layer:** 1
+
+**Fantasy:** Watching a single act of kindness spark a colony-wide movement, or a tragedy plunge it into collective despair.
+
+**Mechanic:** Pops have a "Sympathy" stat. When a Pop witnesses another Pop experiencing a strong emotion (joy or grief), they have a chance to mirror it based on their Sympathy.
+
+**Emergence:** A miner finding a rare gem becomes elated, which spreads to the entire mining crew, boosting their productivity massively for a day. Conversely, a death in the colony can cause a wave of depression that halts all work if too many highly sympathetic Pops are present.
+
+**Tension:** Do you isolate highly sympathetic Pops to prevent emotional contagion, or group them together to amplify positive morale boosts?
+
+---
+
+## Architectural Nostalgia
+
+**Layer:** 1
+
+**Fantasy:** Older, less efficient buildings become culturally significant, making them harder to replace without backlash.
+
+**Mechanic:** Buildings accumulate "Historical Value" over decades of use. Destroying or upgrading a building with high Historical Value causes significant unrest among Pops who lived or worked there.
+
+**Emergence:** You desperately need to replace an inefficient 1st-generation water purifier with a modern one to prevent a drought, but the local Pops have formed a nostalgic attachment to the old, clunky machine and threaten to riot if it's dismantled.
+
+**Tension:** Do you rip up the colony's history for modern efficiency and face the riots, or preserve historical buildings at the cost of crippling your resource chains?
+
+---
+
+## The Ghost Fleet's Market
+
+**Layer:** 2
+
+**Fantasy:** Trading with automated ships that lost their masters centuries ago, following long-dead protocols.
+
+**Mechanic:** Rogue automated trading fleets from fallen civilizations occasionally enter your system. They offer incredibly rare goods, but only accept obscure or obsolete resources (like physical paper or low-tech kinetic ammunition) as payment.
+
+**Emergence:** Your highly advanced energy-based economy suddenly scrambles to build primitive kinetic factories just to trade with a ghost fleet before it leaves the system.
+
+**Tension:** Do you pivot your high-tech industry to produce obsolete garbage for a chance at ancient relics, or ignore the ghost fleet and miss out on irreplaceable tech?
+
+---
