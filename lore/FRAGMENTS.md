@@ -10986,3 +10986,19 @@ What kind of chronological debris is found.
 - a temporal storage silo
 - an inverted gravity well
 - a self-assembling habitat
+## Fragment Type: [FLEET_EFFIGY]
+
+- towers of welded plating
+- a great antenna pointed at the silent dreadnought
+- stockpiles arranged in holy geometries
+- the Tribute Spire
+- a replica of the tether, built of scrap
+- altars of processed [RESOURCE_TYPE]
+
+## Fragment Type: [DREADNOUGHT_BEHAVIOR]
+
+- hanging motionless in the void
+- slowly rotating, bleeding old radiation
+- occasionally venting unknown gases
+- humming with a frequency that vibrated in the colonists' teeth
+- entirely unresponsive to all hails
