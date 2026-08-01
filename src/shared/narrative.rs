@@ -12,9 +12,7 @@ use rand::seq::SliceRandom;
 use std::collections::HashMap;
 use std::path::Path;
 
-use thiserror::Error;
-
-#[derive(Error, Debug)]
+#[derive(Debug)]
 /// The types of errors that can occur during procedural narrative generation.
 ///
 /// Returned primarily by [`NarrativeGenerator::generate`] when resolving a template fails,
@@ -37,44 +35,111 @@ pub enum NarrativeError {
     /// A required context variable was not provided when generating a narrative.
     ///
     /// You must call [`NarrativeContext::insert`] with the missing key before generating.
-    #[error("📖 Missing required context variable '{0}'. Fix: context.insert(\"{0}\", <value>)")]
     MissingContext(String),
 
     /// A fragment type was referenced but no options were provided in the lore files.
     ///
     /// Ensure your `FRAGMENTS.md` file contains a bulleted list of options under this fragment's header.
-    #[error("📖 Fragment '{0}' has no options defined")]
     MissingFragmentOptions(String),
 
     /// The specified directory was found, but it contained no valid lore files.
     ///
     /// Ensure the directory contains `TEMPLATES.md` and/or `FRAGMENTS.md`.
-    #[error("📖 No lore files found in `{0}`. Expected TEMPLATES.md or FRAGMENTS.md")]
     NoLoreFiles(String),
 
     /// The requested template ID does not exist in the loaded templates.
     ///
     /// Check for typos in the template name or ensure it is defined in `TEMPLATES.md`.
-    #[error("📖 Template not found (`{0}`)")]
     TemplateNotFound(String),
 
     /// The requested template exists, but it has no patterns defined.
     ///
     /// Ensure the template in `TEMPLATES.md` contains at least one pattern string.
-    #[error("📖 Template `{0}` has no patterns")]
     NoPatternsForTemplate(String),
 
     /// The provided lore directory could not be found or is not a directory.
     ///
     /// Verify the path passed to [`NarrativeGenerator::load_from_files`] is correct.
-    #[error("📖 Directory not found or not a directory (`{0}`)")]
     DirectoryNotFound(String),
 
     /// An I/O error occurred while reading a lore file.
     ///
     /// The string contains the path that failed, and the inner error is the underlying I/O error.
-    #[error("📖 Failed to read `{0}`: {1}")]
     IoError(String, std::io::Error),
+}
+
+impl std::fmt::Display for NarrativeError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        use comfy_table::{presets::UTF8_FULL, Cell, Color as TableColor, Table};
+
+        let (err_type, message, action) = match self {
+            Self::MissingContext(k) => (
+                "Missing Context",
+                format!("Variable '{}' is required but missing.", k),
+                format!("context.insert(\"{}\", <value>)", k),
+            ),
+            Self::MissingFragmentOptions(f_str) => (
+                "Empty Fragment",
+                format!("Fragment '{}' has no options defined.", f_str),
+                "Add options to the fragment in lore files.".to_string(),
+            ),
+            Self::NoLoreFiles(d) => (
+                "Files Missing",
+                format!("No lore files found in `{}`. Expected TEMPLATES.md or FRAGMENTS.md.", d),
+                "Check the directory for TEMPLATES.md.".to_string(),
+            ),
+            Self::TemplateNotFound(t) => (
+                "Missing Template",
+                format!("Template not found (`{}`).", t),
+                "Verify template ID exists in TEMPLATES.md.".to_string(),
+            ),
+            Self::NoPatternsForTemplate(t) => (
+                "Empty Template",
+                format!("Template `{}` has no patterns.", t),
+                "Ensure the template in TEMPLATES.md contains at least one pattern string.".to_string(),
+            ),
+            Self::DirectoryNotFound(d) => (
+                "Directory Not Found",
+                format!("Directory not found or not a directory (`{}`).", d),
+                "Verify the path passed to `NarrativeGenerator::load_from_files` is correct.".to_string(),
+            ),
+            Self::IoError(path, e) => (
+                "I/O Error",
+                format!("Failed to read `{}`: {}", path, e),
+                "Check file permissions and path.".to_string(),
+            ),
+        };
+
+        let mut table = Table::new();
+        table
+            .load_preset(UTF8_FULL)
+            .apply_modifier(comfy_table::modifiers::UTF8_ROUND_CORNERS)
+            .set_content_arrangement(comfy_table::ContentArrangement::Dynamic)
+            .set_header(vec![
+                Cell::new("Narrative System Error").fg(TableColor::Red).add_attribute(comfy_table::Attribute::Bold),
+                Cell::new(err_type).fg(TableColor::Yellow),
+            ]);
+
+        table.add_row(vec![
+            Cell::new("Message").fg(TableColor::Cyan).add_attribute(comfy_table::Attribute::Bold),
+            Cell::new(message).fg(TableColor::White),
+        ]);
+        table.add_row(vec![
+            Cell::new("Fix").fg(TableColor::Green).add_attribute(comfy_table::Attribute::Bold),
+            Cell::new(action).fg(TableColor::White),
+        ]);
+
+        write!(f, "\n{}\n", table)
+    }
+}
+
+impl std::error::Error for NarrativeError {
+    fn source(&self) -> Option<&(dyn std::error::Error + 'static)> {
+        match self {
+            Self::IoError(_, ref e) => Some(e),
+            _ => None,
+        }
+    }
 }
 
 /// A segment of a generated narrative.
