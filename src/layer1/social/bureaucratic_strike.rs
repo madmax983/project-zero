@@ -1,8 +1,8 @@
-use bevy::prelude::*;
 use crate::layer1::administration::designation::DesignationType;
 use crate::layer1::pop::{Job, Pop};
-use crate::layer1::utility_types::AssignmentType as JobType;
 use crate::layer1::social::morale::Morale;
+use crate::layer1::utility_types::AssignmentType as JobType;
+use bevy::prelude::*;
 
 #[derive(Resource, Clone, Debug)]
 pub struct RedTapeEvent {
@@ -39,7 +39,8 @@ pub fn update_bureaucratic_strike_status_system(
 
     if admin_count > 0 {
         let avg_morale = total_morale / admin_count as f32;
-        if avg_morale < 0.3 { // Low morale threshold (Morale is 0.0 to 1.0)
+        if avg_morale < 0.3 {
+            // Low morale threshold (Morale is 0.0 to 1.0)
             red_tape.active = true;
             red_tape.severity = 10;
         } else if avg_morale > 0.6 {
@@ -74,16 +75,22 @@ mod tests {
     use super::*;
     use crate::layer1::administration::designation::DesignationType;
     use crate::layer1::pop::{Job, Pop};
-    use crate::layer1::utility_types::AssignmentType as JobType;
     use crate::layer1::social::morale::Morale;
+    use crate::layer1::utility_types::AssignmentType as JobType;
 
     fn setup_app() -> App {
         let mut app = App::new();
-        app.add_systems(Update, (
-            update_bureaucratic_strike_status_system,
-            process_red_tape_designations_system,
-        ));
-        app.insert_resource(RedTapeEvent { active: false, severity: 1 });
+        app.add_systems(
+            Update,
+            (
+                update_bureaucratic_strike_status_system,
+                process_red_tape_designations_system,
+            ),
+        );
+        app.insert_resource(RedTapeEvent {
+            active: false,
+            severity: 1,
+        });
         app
     }
 
@@ -91,7 +98,15 @@ mod tests {
     fn test_red_tape_increases_designation_cost() {
         let mut app = setup_app();
 
-        let designation = app.world_mut().spawn(RedTapeCost { current_cost: 0.0, max_cost: 100.0, designation_type: DesignationType::Mine, penalized: false }).id();
+        let designation = app
+            .world_mut()
+            .spawn(RedTapeCost {
+                current_cost: 0.0,
+                max_cost: 100.0,
+                designation_type: DesignationType::Mine,
+                penalized: false,
+            })
+            .id();
 
         app.world_mut().resource_mut::<RedTapeEvent>().active = true;
         app.world_mut().resource_mut::<RedTapeEvent>().severity = 10;
@@ -108,7 +123,10 @@ mod tests {
         let mut app = setup_app();
 
         // This simulates a pop trying to take a job but being delayed by paperwork
-        let job = app.world_mut().spawn(PaperworkDelay { ticks_remaining: 0 }).id();
+        let job = app
+            .world_mut()
+            .spawn(PaperworkDelay { ticks_remaining: 0 })
+            .id();
 
         app.world_mut().resource_mut::<RedTapeEvent>().active = true;
         app.world_mut().resource_mut::<RedTapeEvent>().severity = 10;
@@ -126,8 +144,14 @@ mod tests {
         // Add a happy Admin Pop
         app.world_mut().spawn((
             Pop,
-            Job { workplace: Entity::PLACEHOLDER, job_type: JobType::Administrator },
-            Morale { value: 0.9, modifiers: vec![] }, // High morale
+            Job {
+                workplace: Entity::PLACEHOLDER,
+                job_type: JobType::Administrator,
+            },
+            Morale {
+                value: 0.9,
+                modifiers: vec![],
+            }, // High morale
         ));
 
         app.world_mut().resource_mut::<RedTapeEvent>().active = true;
