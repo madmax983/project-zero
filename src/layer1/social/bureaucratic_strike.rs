@@ -1,0 +1,141 @@
+use bevy::prelude::*;
+use crate::layer1::administration::designation::DesignationType;
+use crate::layer1::pop::{Job, Pop};
+use crate::layer1::utility_types::AssignmentType as JobType;
+use crate::layer1::social::morale::Morale;
+
+#[derive(Resource, Clone, Debug)]
+pub struct RedTapeEvent {
+    pub active: bool,
+    pub severity: u32,
+}
+
+#[derive(Component, Clone, Debug)]
+pub struct RedTapeCost {
+    pub current_cost: f32,
+    pub max_cost: f32,
+    pub designation_type: DesignationType,
+    pub penalized: bool,
+}
+
+#[derive(Component, Clone, Debug)]
+pub struct PaperworkDelay {
+    pub ticks_remaining: u32,
+}
+
+pub fn update_bureaucratic_strike_status_system(
+    mut red_tape: ResMut<RedTapeEvent>,
+    query: Query<(&Morale, &Job), With<Pop>>,
+) {
+    let mut total_morale = 0.0;
+    let mut admin_count = 0;
+
+    for (morale, job) in query.iter() {
+        if job.job_type == JobType::Administrator || job.job_type == JobType::RationingBureaucrat {
+            total_morale += morale.value;
+            admin_count += 1;
+        }
+    }
+
+    if admin_count > 0 {
+        let avg_morale = total_morale / admin_count as f32;
+        if avg_morale < 0.3 { // Low morale threshold (Morale is 0.0 to 1.0)
+            red_tape.active = true;
+            red_tape.severity = 10;
+        } else if avg_morale > 0.6 {
+            red_tape.active = false;
+        }
+    }
+}
+
+pub fn process_red_tape_designations_system(
+    red_tape: Res<RedTapeEvent>,
+    mut designation_query: Query<&mut RedTapeCost>,
+    mut job_query: Query<&mut PaperworkDelay>,
+) {
+    if red_tape.active {
+        for mut cost in designation_query.iter_mut() {
+            if !cost.penalized {
+                cost.max_cost *= red_tape.severity as f32;
+                cost.penalized = true;
+            }
+        }
+
+        for mut delay in job_query.iter_mut() {
+            if delay.ticks_remaining == 0 {
+                delay.ticks_remaining = 50 * red_tape.severity; // Add massive delay to jobs
+            }
+        }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::layer1::administration::designation::DesignationType;
+    use crate::layer1::pop::{Job, Pop};
+    use crate::layer1::utility_types::AssignmentType as JobType;
+    use crate::layer1::social::morale::Morale;
+
+    fn setup_app() -> App {
+        let mut app = App::new();
+        app.add_systems(Update, (
+            update_bureaucratic_strike_status_system,
+            process_red_tape_designations_system,
+        ));
+        app.insert_resource(RedTapeEvent { active: false, severity: 1 });
+        app
+    }
+
+    #[test]
+    fn test_red_tape_increases_designation_cost() {
+        let mut app = setup_app();
+
+        let designation = app.world_mut().spawn(RedTapeCost { current_cost: 0.0, max_cost: 100.0, designation_type: DesignationType::Mine, penalized: false }).id();
+
+        app.world_mut().resource_mut::<RedTapeEvent>().active = true;
+        app.world_mut().resource_mut::<RedTapeEvent>().severity = 10;
+
+        app.update();
+
+        // Cost should be multiplied by severity
+        let cost = app.world().get::<RedTapeCost>(designation).unwrap();
+        assert_eq!(cost.max_cost, 1000.0);
+    }
+
+    #[test]
+    fn test_red_tape_prevents_instant_job_reassignment() {
+        let mut app = setup_app();
+
+        // This simulates a pop trying to take a job but being delayed by paperwork
+        let job = app.world_mut().spawn(PaperworkDelay { ticks_remaining: 0 }).id();
+
+        app.world_mut().resource_mut::<RedTapeEvent>().active = true;
+        app.world_mut().resource_mut::<RedTapeEvent>().severity = 10;
+
+        app.update();
+
+        let delay = app.world().get::<PaperworkDelay>(job).unwrap();
+        assert!(delay.ticks_remaining > 0);
+    }
+
+    #[test]
+    fn test_strike_ends_when_admin_morale_recovers() {
+        let mut app = setup_app();
+
+        // Add a happy Admin Pop
+        app.world_mut().spawn((
+            Pop,
+            Job { workplace: Entity::PLACEHOLDER, job_type: JobType::Administrator },
+            Morale { value: 0.9, modifiers: vec![] }, // High morale
+        ));
+
+        app.world_mut().resource_mut::<RedTapeEvent>().active = true;
+
+        app.update();
+
+        // The active state should flip back to false
+        let event = app.world().resource::<RedTapeEvent>();
+        assert_eq!(event.active, false);
+    }
+}

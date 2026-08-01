@@ -16,7 +16,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `305` The Empathy Broadcast — `specs/305-empathy-broadcast.md`
 
 
-- [ ] `309` The Bureaucratic Strike — `specs/309-bureaucratic-strike.md`
 - [ ] `315` The Propaganda Engine — `specs/315-propaganda-engine.md`
 - [ ] `319` The Gravity Well Forge — `specs/319-gravity-well-forge.md`
 - [ ] `322` The Pirate's Pension — `specs/322-pirates-pension.md`
