@@ -136,6 +136,6 @@ mod tests {
 
         // The active state should flip back to false
         let event = app.world().resource::<RedTapeEvent>();
-        assert_eq!(event.active, false);
+        assert!(!event.active);
     }
 }
