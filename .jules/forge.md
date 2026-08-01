@@ -64,3 +64,7 @@
 **[Refactoring Layer2 Planet Generation]**
 **Learning:** Monolithic world generation systems (like `generate_system` in Layer 2) often contain long `match` statements mixed with `if/else` logic just to populate a list of traits for a given entity type. This causes the main system function to grow beyond readability limits.
 **Action:** Extract inline trait generation logic (the match block and subsequent conditionally added traits) into a dedicated helper function like `generate_planet_traits(planet_type, rng) -> Vec<PlanetaryTrait>`.
+
+**[Extracting Deeply Nested Option/Result matching inside Guard Checks]**
+**Learning:** Found deeply nested logic inside `is_walkable` checking building properties where the same entity is queried from a `World` mapping inside multiple nested if-let checks.
+**Action:** Extract the chunk of code where an Option matches into a helper function (e.g. `check_building_access`) using guard clauses (`let Some(building) = world.get::<Building>(entity) else { return true; };`), which keeps the main logical flow clean and avoids the "Pyramid of Doom".

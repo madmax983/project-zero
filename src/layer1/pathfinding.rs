@@ -425,60 +425,71 @@ fn is_walkable(
 
     // 3. Check Building Type
     if let Some(&entity) = building_map.0.get(&(x, y)) {
-        if let Some(building) = world.get::<Building>(entity) {
-            if let Some(creds) = credentials {
-                if crate::layer1::security::check_security_clearance(world, creds.entity, entity)
-                    == crate::layer1::security::AccessResult::DeniedDrift
-                {
-                    return false;
-                }
-            }
+        return check_building_access(world, entity, can_use_vents, credentials);
+    }
 
-            let access_opt = world.get::<AccessControl>(entity);
-            let door_opt = world.get::<DoorControl>(entity);
+    true
+}
 
-            // Check Door Control first (physical state overrides)
-            if let Some(door) = door_opt {
-                match door.state {
-                    DoorState::Locked => return false,
-                    DoorState::Open => return true,
-                    DoorState::Auto => { /* Continue to check AccessControl */ }
-                }
-            }
+fn check_building_access(
+    world: &World,
+    entity: Entity,
+    can_use_vents: bool,
+    credentials: Option<&AccessCredentials>,
+) -> bool {
+    let Some(building) = world.get::<Building>(entity) else {
+        return true;
+    };
 
-            if let Some(access) = access_opt {
-                return match access.mode {
-                    AccessMode::Public => true,
-                    AccessMode::Lockdown => false,
-                    AccessMode::Restricted => credentials.is_some_and(|creds| {
-                        access.allowed_pops.contains(&creds.entity)
-                            || creds
-                                .role
-                                .is_some_and(|r| access.allowed_roles.contains(&r))
-                    }),
-                };
-            }
-
-            if building.building_type == BuildingType::Vent && can_use_vents {
-                return true;
-            }
-
-            if building.building_type == BuildingType::ConveyorBelt {
-                if let Some(conveyor) =
-                    world.get::<crate::layer1::logistics::conveyor::ConveyorBelt>(entity)
-                {
-                    if conveyor.blocks_pathfinding() {
-                        return false;
-                    }
-                } else {
-                    // Fallback if the component is missing but it's a conveyor building.
-                    // A standard conveyor blocks pathfinding by default.
-                    return false;
-                }
-            } else if building.building_type.is_obstacle() {
-                return false;
-            }
+    if let Some(creds) = credentials {
+        if crate::layer1::security::check_security_clearance(world, creds.entity, entity)
+            == crate::layer1::security::AccessResult::DeniedDrift
+        {
+            return false;
         }
+    }
+
+    let access_opt = world.get::<AccessControl>(entity);
+    let door_opt = world.get::<DoorControl>(entity);
+
+    // Check Door Control first (physical state overrides)
+    if let Some(door) = door_opt {
+        match door.state {
+            DoorState::Locked => return false,
+            DoorState::Open => return true,
+            DoorState::Auto => { /* Continue to check AccessControl */ }
+        }
+    }
+
+    if let Some(access) = access_opt {
+        return match access.mode {
+            AccessMode::Public => true,
+            AccessMode::Lockdown => false,
+            AccessMode::Restricted => credentials.is_some_and(|creds| {
+                access.allowed_pops.contains(&creds.entity)
+                    || creds
+                        .role
+                        .is_some_and(|r| access.allowed_roles.contains(&r))
+            }),
+        };
+    }
+
+    if building.building_type == BuildingType::Vent && can_use_vents {
+        return true;
+    }
+
+    if building.building_type == BuildingType::ConveyorBelt {
+        let Some(conveyor) = world.get::<crate::layer1::logistics::conveyor::ConveyorBelt>(entity)
+        else {
+            // Fallback if the component is missing but it's a conveyor building.
+            // A standard conveyor blocks pathfinding by default.
+            return false;
+        };
+        if conveyor.blocks_pathfinding() {
+            return false;
+        }
+    } else if building.building_type.is_obstacle() {
+        return false;
     }
 
     true
