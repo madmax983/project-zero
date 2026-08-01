@@ -15,3 +15,6 @@
 **2025-07-20 - [Integer Overflow DoS via Euclidean Distance]**
 **Threat:** [Unhandled integer overflow during distance calculation (e.g. `dx * dx` or `a.x - b.x` causing `attempt to subtract with overflow` and `attempt to multiply with overflow`) allowed panics and DoS if extreme coordinates were passed in `curvature.rs`, `bureaucratic_black_hole.rs`, `radioactive.rs`, `orbital_mirrors.rs`, `hum.rs`, `lighting.rs`, and `seismic.rs`.]
 **Defense:** [Cast coordinate values to `f32` *before* subtraction or multiplication to ensure floating-point math handles large inputs without panicking.]
+**2024-05-18 - [Fix unsound event-listener]**
+**Threat:** `event-listener` v5.4.1 allows `!Send` tags to cross thread boundaries via `StackSlot` (RUSTSEC-2026-0221)
+**Defense:** Bumped `event-listener` dependency to version 5.4.2
