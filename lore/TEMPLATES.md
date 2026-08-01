@@ -10971,3 +10971,27 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The temporal dissonance from the future ruins un-built our [ERASED_RESOURCE] at [COLONY]."
 - "We used the future tech, but the paradox exacts a toll. [COLONY] lost all its [ERASED_RESOURCE]. [YEAR]."
 - "[COLONY], [YEAR]: The [ERASED_RESOURCE] simply ceased to exist, swallowed by temporal erosion."
+## Template: CARGO_CULT_FLEET_ARRIVAL
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [RESOURCE_TYPE], [ARTIFACT]?
+
+**Patterns:**
+- "[YEAR]: The Silent Dreadnought entered orbit above [COLONY]. It asked only for [RESOURCE_TYPE]."
+- "An ancient supply ship tethered to [COLONY]. The tribute of [RESOURCE_TYPE] began."
+- "[COLONY], [YEAR]: The gods of scrap arrived. We gave them [RESOURCE_TYPE], they gave us [ARTIFACT]."
+- "The orbital tether fell on [COLONY]. It hungers for [RESOURCE_TYPE]."
+
+## Template: CARGO_CULT_FLEET_REWARD
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [ARTIFACT], [CASUALTIES]?
+
+**Patterns:**
+- "[YEAR]: The Dreadnought accepted our tribute and dropped [ARTIFACT]."
+- "For our [RESOURCE_TYPE], the silent ship gifted [COLONY] with [ARTIFACT]."
+- "[COLONY] opened the dreadnought's crate. Inside was [ARTIFACT]."
+
+**If [CASUALTIES]:**
+- "[YEAR]: The Dreadnought dropped [ARTIFACT] on [COLONY]. [CASUALTIES] were crushed in the delivery."
+- "The gift of [ARTIFACT] arrived violently. [CASUALTIES] souls lost in the impact."
