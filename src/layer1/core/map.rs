@@ -299,6 +299,85 @@ mod tests {
     }
 
     #[test]
+    fn test_grid_position_distances_and_directions() {
+        struct TestCase {
+            a: GridPosition,
+            b: GridPosition,
+            chebyshev: u32,
+            manhattan: u64,
+            direction: (i32, i32),
+        }
+
+        let cases = vec![
+            TestCase {
+                a: GridPosition { x: 0, y: 0 },
+                b: GridPosition { x: 0, y: 0 },
+                chebyshev: 0,
+                manhattan: 0,
+                direction: (0, 0),
+            },
+            TestCase {
+                a: GridPosition { x: 0, y: 0 },
+                b: GridPosition { x: 3, y: 4 },
+                chebyshev: 4,
+                manhattan: 7,
+                direction: (1, 1),
+            },
+            TestCase {
+                a: GridPosition { x: -5, y: -5 },
+                b: GridPosition { x: -2, y: -9 },
+                chebyshev: 4,
+                manhattan: 7,
+                direction: (1, -1),
+            },
+            TestCase {
+                a: GridPosition { x: -3, y: 4 },
+                b: GridPosition { x: 2, y: -1 },
+                chebyshev: 5,
+                manhattan: 10,
+                direction: (1, -1),
+            },
+            TestCase {
+                a: GridPosition {
+                    x: i32::MAX,
+                    y: i32::MAX,
+                },
+                b: GridPosition {
+                    x: i32::MIN,
+                    y: i32::MIN,
+                },
+                chebyshev: i32::MAX.abs_diff(i32::MIN),
+                manhattan: (i32::MAX.abs_diff(i32::MIN) as u64) * 2,
+                direction: (-1, -1),
+            },
+        ];
+
+        for case in cases {
+            assert_eq!(
+                case.a.distance_chebyshev(case.b),
+                case.chebyshev,
+                "Chebyshev failed for {:?} to {:?}",
+                case.a,
+                case.b
+            );
+            assert_eq!(
+                case.a.distance_manhattan(case.b),
+                case.manhattan,
+                "Manhattan failed for {:?} to {:?}",
+                case.a,
+                case.b
+            );
+            assert_eq!(
+                case.a.direction_to(case.b),
+                case.direction,
+                "Direction failed for {:?} to {:?}",
+                case.a,
+                case.b
+            );
+        }
+    }
+
+    #[test]
     fn test_grid_position_fields() {
         let pos = GridPosition { x: 42, y: -7 };
         assert_eq!(pos.x, 42);

@@ -115,7 +115,7 @@ mod tests {
             })
             .id();
         let modifier =
-            get_genemod_efficiency_modifier(&app.world().get::<UnstableGenemod>(pop).unwrap());
+            get_genemod_efficiency_modifier(app.world().get::<UnstableGenemod>(pop).unwrap());
         assert!(modifier > 1.0);
     }
 }
