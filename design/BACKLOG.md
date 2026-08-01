@@ -15,7 +15,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `298` The Nostalgia Engine — `specs/298-nostalgia-engine.md`
 - [ ] `305` The Empathy Broadcast — `specs/305-empathy-broadcast.md`
 
-- [ ] `308` Black Market Genemods — `specs/308-black-market-genemods.md`
+
 - [ ] `309` The Bureaucratic Strike — `specs/309-bureaucratic-strike.md`
 - [ ] `315` The Propaganda Engine — `specs/315-propaganda-engine.md`
 - [ ] `319` The Gravity Well Forge — `specs/319-gravity-well-forge.md`
