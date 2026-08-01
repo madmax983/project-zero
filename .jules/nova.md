@@ -285,3 +285,8 @@
 **Concept:** Added `water_cooler_gossip_system` in `src/experimental/water_cooler_gossip.rs`. Pops standing near a `Well` (within a 3-tile radius) will passively converse and build `Affinity` with each other, generating a small amount of friendship over time.
 **Fate:** Pending
 **Lesson:** Connects a basic survival building (Well) with the social relationship system, turning simple hydration gathering spots into localized social hubs where emergent relationships and friendships are born, reinforcing community building.
+
+## [Sleep Synchrony]
+**Concept:** Added `sleep_synchrony_system` in `src/experimental/sleep_synchrony.rs`. Connects `ActionType::SatisfyRest`, `DreamJournal`, and grid proximity. Pops sleeping near each other synchronize their rest, regenerating faster (Restful Synergy). However, if one Pop in the synchronized block has a nightmare, the terror cascades to the entire block, causing a mass panic (Dazing breakdown).
+**Fate:** Pending
+**Lesson:** Provides a meaningful risk-reward tradeoff for housing design. Players can build ultra-efficient mega-dormitories for the massive synchronized waking buffs, but must accept the risk that a single stressed Pop can trigger a colony-wide panic.
