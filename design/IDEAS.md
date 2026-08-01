@@ -30640,3 +30640,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you prioritize the safe, slow transit of goods (risking local shortages), or slam massive shipments into orbit at breakneck speeds, treating your orbital infrastructure as disposable brake pads?
 
 ---
+## Phantom Resource Syndromes
+
+**Layer:** 1
+
+**Fantasy:** Pops experience psychological withdrawals or placebo effects based on resources that no longer exist or were artificially substituted.
+
+**Mechanic:** When a highly consumed luxury resource is depleted and replaced with a generic synthetic alternative, Pops still track a "Phantom Need." If the synthetic is too perfect, they might develop paranoia; if flawed, psychosomatic illnesses.
+
+**Emergence:** A colony runs out of real coffee, switching entirely to "Caff-Paste." The Pops initially accept it, but weeks later, a wave of "Phantom Jitters" sweeps the colony, causing work stoppages as they insist the paste is poisoned.
+
+**Tension:** Do you maintain the expensive import of genuine goods, or force a cheaper synthetic transition and deal with the psychological fallout?
+
+---
+
+## Orbital Shadow Eclipses
+
+**Layer:** Cross-layer
+
+**Fantasy:** Massive infrastructure projects in space have literal, physical consequences on the ground below.
+
+**Mechanic:** Large orbital structures (like shipyards or solar arrays) cast semi-permanent shadows on the Layer 1 colony map. Tiles caught in the shadow suffer severe penalties to agriculture and solar power, and Pops living there suffer from localized depression.
+
+**Emergence:** You fast-track the construction of a colossal orbital defense platform to fend off pirates. Its completion saves the system from attack but casts a permanent eclipse over your capital city's primary breadbasket, causing a famine.
+
+**Tension:** Do you optimize your orbital infrastructure for strategic value, or carefully position it to avoid ruining the ecosphere of your most productive colony?
+
+---
+
+## The Translation Lag Grudge
+
+**Layer:** 3
+
+**Fantasy:** Communication across the galaxy takes time, and translating alien concepts takes even longer.
+
+**Mechanic:** When engaging in diplomacy with a new civilization, early interactions rely on "Best Guess" algorithms. The longer you communicate, the better the translation becomes, but early misinterpretations become locked in as historical fact.
+
+**Emergence:** You send a standard "Greeting of Peace." The early translator interprets it as a "Declaration of Dominance." Years later, you have a perfectly accurate translator, but the alien civilization still remembers your initial "threat" and holds a permanent grudge.
+
+**Tension:** Do you risk early communication with flawed translators to secure borders, or wait in silence until the linguistics are perfect, risking an unprovoked attack?
+
+---
