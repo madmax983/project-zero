@@ -30598,3 +30598,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you pivot your high-tech industry to produce obsolete garbage for a chance at ancient relics, or ignore the ghost fleet and miss out on irreplaceable tech?
 
 ---
+
+## Holographic Ancestor Cults
+
+**Layer:** 1
+
+**Fantasy:** Pops clinging to pre-recorded ghosts of the colony's founders, slowly losing touch with the present reality.
+
+**Mechanic:** High-tech entertainment structures occasionally malfunction and loop historical recordings instead of new media. Pops who consume this media form a sub-faction that idolizes the holographic "Ancestors," demanding the colony revert to outdated policies or obsolete building layouts.
+
+**Emergence:** You upgrade to a hyper-efficient modern industrial grid, but a Holographic Ancestor Cult sabotages the new factories because they don't match the 200-year-old architectural style preached by a glitchy holovid of your first mayor.
+
+**Tension:** Do you spend resources aggressively purging glitchy tech to keep your Pops focused on the future, or humor the cults to avoid immediate riots at the cost of long-term efficiency?
+
+---
+
+## Ephemeral Maps
+
+**Layer:** Cross-layer
+
+**Fantasy:** Information degrades over vast distances. A map of the galaxy is only as accurate as the speed of light allows, meaning you might be sending ships to stars that have already gone supernova.
+
+**Mechanic:** Layer 3 map data about distant systems is not absolute truth; it's a "snapshot" taken when the light or last courier arrived. The older the data, the higher the chance it has drastically changed (e.g., a wealthy trading hub might now be a feral dead world).
+
+**Emergence:** You launch a massive, expensive colonization fleet to a perfectly habitable world based on 50-year-old sensor data. When they arrive, they discover the star flared a decade ago, and they are now stranded in a radioactive graveyard with no return fuel.
+
+**Tension:** Do you act immediately on old, potentially lethal information, or spend years waiting for fresh scout reports while rival factions expand?
+
+---
+
+## The Inertia Tax
+
+**Layer:** 2
+
+**Fantasy:** Moving massive amounts of cargo is physically dangerous, and the faster you want to go, the more you have to risk the infrastructure itself.
+
+**Mechanic:** Heavy cargo fleets moving between systems accumulate "Inertial Stress." To slow down safely upon arrival, they must use orbital braking infrastructure. If a fleet is rushed or too massive, it overloads the braking station, physically damaging the destination colony's orbital ring or raining debris down on Layer 1.
+
+**Emergence:** A critical food shortage on your capital world forces you to fast-track a massive grain fleet. They arrive in time to stop the starvation, but their emergency braking maneuver shatters your capital's orbital shipyard, crippling your military production for a decade.
+
+**Tension:** Do you prioritize the safe, slow transit of goods (risking local shortages), or slam massive shipments into orbit at breakneck speeds, treating your orbital infrastructure as disposable brake pads?
+
+---
