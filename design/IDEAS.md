@@ -30681,3 +30681,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you risk early communication with flawed translators to secure borders, or wait in silence until the linguistics are perfect, risking an unprovoked attack?
 
 ---
+
+## Crustal Megastructure Collapse
+
+**Layer:** 2
+
+**Fantasy:** Watching a thriving colony accidentally dig too deep and trigger planet-wide instability due to ancient, forgotten megastructures beneath the crust.
+
+**Mechanic:** When planetary mining operations exceed a certain depth, there is a chance to strike hollow "sinkholes" that drop surface structures into the abyss, revealing ancient alien megastructures that provide immense research but permanently ruin the local terrain.
+
+**Emergence:** Players might intentionally over-mine a useless, barren colony just to unearth megastructures, turning a failed resource operation into a high-risk archaeological dig.
+
+**Tension:** Do you halt deep-core mining to preserve your stable surface infrastructure, or push deeper into the planet knowing it could collapse your city for a massive technological leap?
+
+---
+
+## The Generational Informant
+
+**Layer:** 1
+
+**Fantasy:** Discovering that a pop's quiet, unassuming family line has been secretly hoarding blackmail on your colony's leadership for centuries.
+
+**Mechanic:** Pops with high intelligence and low loyalty can secretly accrue "Secrets" from other pops they interact with. If a pop dies, their descendants inherit the Secrets. Eventually, they use the hoarded Secrets to extort resources or force major policy changes.
+
+**Emergence:** You try to arrest a minor troublemaker, only to find they have dirt on your entire security apparatus, triggering a colony-wide strike if they are touched.
+
+**Tension:** Do you preemptively exile intelligent, disloyal pops before they can gather too many secrets, losing their productivity, or risk being blackmailed generations down the line?
+
+---
+
+## Stellar Flare Worship
+
+**Layer:** Cross-layer
+
+**Fantasy:** A colony develops a religious reverence for a dangerous stellar phenomenon that routinely destroys their infrastructure.
+
+**Mechanic:** Repeated exposure to stellar flares (Layer 2) causes localized damage on a colony (Layer 1). If the colony survives multiple flares without intervention, a faction emerges that views the flares as a divine purge. They gain massive morale boosts during flares but actively sabotage planetary shields.
+
+**Emergence:** A player might deliberately turn off their planetary shields to let a flare hit the planet, causing massive infrastructure damage but instantly pacifying an unhappy religious faction on the verge of rebellion.
+
+**Tension:** Do you spend resources suppressing the dangerous cult and maintaining expensive shields, or lean into the madness, treating planetary damage as a necessary cost for complete social obedience?
+
+---
