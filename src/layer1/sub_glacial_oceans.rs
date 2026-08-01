@@ -134,8 +134,8 @@ mod tests {
     }
 }
 
-use crate::layer1::nature::terrain::TerrainGrid;
 use crate::layer1::core::map::GridPosition;
+use crate::layer1::nature::terrain::TerrainGrid;
 
 #[derive(Component)]
 pub struct SubterraneanOcean {
@@ -182,12 +182,17 @@ pub fn process_mining_breach(
     for event in events.read() {
         if let Ok((ocean_pos, ocean)) = ocean_query.get(event.target) {
             breach_events.send(OceanBreachEvent {
-                location: GridPosition { x: ocean_pos.x, y: ocean_pos.y },
+                location: GridPosition {
+                    x: ocean_pos.x,
+                    y: ocean_pos.y,
+                },
             });
 
             for (mine_pos, mut fluid) in mine_query.iter_mut() {
                 if mine_pos.x >= 0 && mine_pos.y >= 0 {
-                    if let Some(terrain_type) = terrain_grid.get(mine_pos.x as usize, mine_pos.y as usize) {
+                    if let Some(terrain_type) =
+                        terrain_grid.get(mine_pos.x as usize, mine_pos.y as usize)
+                    {
                         if terrain_type.is_walkable() {
                             let dx = (ocean_pos.x - mine_pos.x).abs();
                             let dy = (ocean_pos.y - mine_pos.y).abs();
@@ -236,25 +241,34 @@ mod additional_tests {
             tiles,
         });
 
-        let ocean = app.world_mut().spawn((
-            GridPosition { x: 5, y: 6 },
-            SubterraneanOcean { pressure: 1000.0 },
-        )).id();
+        let ocean = app
+            .world_mut()
+            .spawn((
+                GridPosition { x: 5, y: 6 },
+                SubterraneanOcean { pressure: 1000.0 },
+            ))
+            .id();
 
-        let mine_tile = app.world_mut().spawn((
-            GridPosition { x: 5, y: 5 },
-            FluidLevel { amount: 0.0 },
-        )).id();
+        let mine_tile = app
+            .world_mut()
+            .spawn((GridPosition { x: 5, y: 5 }, FluidLevel { amount: 0.0 }))
+            .id();
 
         app.world_mut().send_event(MiningEvent { target: ocean });
         app.update();
 
         let fluid = app.world().get::<FluidLevel>(mine_tile).unwrap();
-        assert!(fluid.amount > 0.0, "Mine tile should be flooded after breaching the ocean");
+        assert!(
+            fluid.amount > 0.0,
+            "Mine tile should be flooded after breaching the ocean"
+        );
 
         let events = app.world().resource::<Events<OceanBreachEvent>>();
         let mut reader = events.get_cursor();
-        assert!(reader.read(events).next().is_some(), "An ocean breach event should have been dispatched");
+        assert!(
+            reader.read(events).next().is_some(),
+            "An ocean breach event should have been dispatched"
+        );
     }
 
     #[test]
@@ -263,10 +277,10 @@ mod additional_tests {
         app.add_event::<HarvestEvent>();
         app.add_systems(Update, process_pearl_harvesting);
 
-        let pearl = app.world_mut().spawn((
-            GridPosition { x: 5, y: -10 },
-            DeepPearl { value: 500 },
-        )).id();
+        let pearl = app
+            .world_mut()
+            .spawn((GridPosition { x: 5, y: -10 }, DeepPearl { value: 500 }))
+            .id();
 
         app.world_mut().send_event(HarvestEvent { target: pearl });
         app.world_mut().insert_resource(ColonyWealth { credits: 0 });
@@ -274,7 +288,10 @@ mod additional_tests {
         app.update();
 
         let wealth = app.world().get_resource::<ColonyWealth>().unwrap();
-        assert_eq!(wealth.credits, 500, "Harvesting a deep pearl should add to colony wealth");
+        assert_eq!(
+            wealth.credits, 500,
+            "Harvesting a deep pearl should add to colony wealth"
+        );
 
         let pearl_exists = app.world().get::<DeepPearl>(pearl).is_some();
         assert!(!pearl_exists, "Harvested pearl should be removed");
