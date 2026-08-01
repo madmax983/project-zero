@@ -17,10 +17,10 @@ pub fn propaganda_graffiti_system(
     pops: Query<(&Traits, &StressTracker, &GridPosition)>,
     buildings: Query<(Entity, &GridPosition), (With<Building>, Without<RebelliousGraffiti>)>,
 ) {
-    let mut creative_positions = Vec::new();
+    let mut creative_positions = bevy_utils::HashSet::new();
     for (traits, stress, pos) in pops.iter() {
         if stress.accumulated_stress > 80.0 && traits.has(Trait::Creative) {
-            creative_positions.push(*pos);
+            creative_positions.insert(*pos);
         }
     }
 
@@ -41,23 +41,18 @@ pub fn graffiti_aura_system(
     graffiti: Query<(&RebelliousGraffiti, &GridPosition)>,
     mut pops: Query<(&GridPosition, &mut WorkEfficiency, &mut Morale)>,
 ) {
-    let mut graffiti_positions = Vec::new();
-    for (graf, pos) in graffiti.iter() {
-        graffiti_positions.push((*pos, graf.intensity));
-    }
-
-    if graffiti_positions.is_empty() {
+    if graffiti.is_empty() {
         return;
     }
 
     for (pop_pos, mut eff, mut morale) in pops.iter_mut() {
-        for (g_pos, intensity) in &graffiti_positions {
+        for (graf, g_pos) in graffiti.iter() {
             if pop_pos.distance_chebyshev(*g_pos) <= 2 {
                 let label = "Venting: Rebellious Graffiti";
                 if !morale.modifiers.iter().any(|m| m.label == label) {
                     eff.multiplier *= 0.9; // 10% penalty only applied once per aura enter
                     morale.modifiers.push(MoodModifier {
-                        value: 2.0 * intensity,
+                        value: 2.0 * graf.intensity,
                         duration: 50,
                         label: label.to_string(),
                     });
