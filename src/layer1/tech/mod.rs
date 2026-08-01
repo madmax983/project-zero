@@ -828,3 +828,4 @@ pub mod symbiotic_habitation;
 pub mod teleporter;
 pub mod temporal_smuggling;
 pub use symbiotic_data_weavers::*;
+pub mod black_market_genemods;
