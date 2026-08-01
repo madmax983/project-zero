@@ -950,3 +950,4 @@
 - [x] `INT-998` Integration: Data Forests -> Knowledge — completed 2026-07-30
 - [x] `INT-997` Integration: Subspace Stowaways -> Chronicle — completed 2026-11-01
 - [x] `INT-307` Integration: Xenological Pets -> Chronicle — completed 2026-11-01
+- [x] `320` The Subterranean Ocean — `specs/320-subterranean-ocean.md` — completed 2026-02-01
