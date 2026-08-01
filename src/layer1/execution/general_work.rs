@@ -708,5 +708,9 @@ pub fn get_status_modifiers(world: &World, pop_entity: Entity) -> f32 {
         }
     }
 
+    if let Some(genemod) = world.get::<crate::layer1::tech::black_market_genemods::UnstableGenemod>(pop_entity) {
+        modifier *= crate::layer1::tech::black_market_genemods::get_genemod_efficiency_modifier(genemod);
+    }
+
     modifier
 }
