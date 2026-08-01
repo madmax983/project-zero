@@ -953,3 +953,4 @@
 - [x] `320` The Subterranean Ocean — `specs/320-subterranean-ocean.md` — completed 2026-02-01
 - [x] `309` The Bureaucratic Strike — `specs/309-bureaucratic-strike.md` — completed 2026-02-01
 - [x] `308` Black Market Genemods — `specs/308-black-market-genemods.md` — completed 2026-08-01
+- [x] `315` The Propaganda Engine — `specs/315-propaganda-engine.md` — completed 2026-02-01

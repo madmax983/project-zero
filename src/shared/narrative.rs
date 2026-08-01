@@ -85,7 +85,10 @@ impl std::fmt::Display for NarrativeError {
             ),
             Self::NoLoreFiles(d) => (
                 "Files Missing",
-                format!("No lore files found in `{}`. Expected TEMPLATES.md or FRAGMENTS.md.", d),
+                format!(
+                    "No lore files found in `{}`. Expected TEMPLATES.md or FRAGMENTS.md.",
+                    d
+                ),
                 "Check the directory for TEMPLATES.md.".to_string(),
             ),
             Self::TemplateNotFound(t) => (
@@ -96,12 +99,14 @@ impl std::fmt::Display for NarrativeError {
             Self::NoPatternsForTemplate(t) => (
                 "Empty Template",
                 format!("Template `{}` has no patterns.", t),
-                "Ensure the template in TEMPLATES.md contains at least one pattern string.".to_string(),
+                "Ensure the template in TEMPLATES.md contains at least one pattern string."
+                    .to_string(),
             ),
             Self::DirectoryNotFound(d) => (
                 "Directory Not Found",
                 format!("Directory not found or not a directory (`{}`).", d),
-                "Verify the path passed to `NarrativeGenerator::load_from_files` is correct.".to_string(),
+                "Verify the path passed to `NarrativeGenerator::load_from_files` is correct."
+                    .to_string(),
             ),
             Self::IoError(path, e) => (
                 "I/O Error",
@@ -116,16 +121,22 @@ impl std::fmt::Display for NarrativeError {
             .apply_modifier(comfy_table::modifiers::UTF8_ROUND_CORNERS)
             .set_content_arrangement(comfy_table::ContentArrangement::Dynamic)
             .set_header(vec![
-                Cell::new("Narrative System Error").fg(TableColor::Red).add_attribute(comfy_table::Attribute::Bold),
+                Cell::new("Narrative System Error")
+                    .fg(TableColor::Red)
+                    .add_attribute(comfy_table::Attribute::Bold),
                 Cell::new(err_type).fg(TableColor::Yellow),
             ]);
 
         table.add_row(vec![
-            Cell::new("Message").fg(TableColor::Cyan).add_attribute(comfy_table::Attribute::Bold),
+            Cell::new("Message")
+                .fg(TableColor::Cyan)
+                .add_attribute(comfy_table::Attribute::Bold),
             Cell::new(message).fg(TableColor::White),
         ]);
         table.add_row(vec![
-            Cell::new("Fix").fg(TableColor::Green).add_attribute(comfy_table::Attribute::Bold),
+            Cell::new("Fix")
+                .fg(TableColor::Green)
+                .add_attribute(comfy_table::Attribute::Bold),
             Cell::new(action).fg(TableColor::White),
         ]);
 
