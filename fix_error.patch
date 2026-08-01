@@ -1,0 +1,25 @@
+--- src/shared/narrative.rs
++++ src/shared/narrative.rs
+@@ -14,8 +14,7 @@
+ use std::collections::HashMap;
+ use std::path::Path;
+
+-use thiserror::Error;
+-
+-#[derive(Error, Debug)]
++#[derive(Debug)]
+ /// The types of errors that can occur during procedural narrative generation.
+ ///
+ /// Returned primarily by [`NarrativeGenerator::generate`] when resolving a template fails,
+@@ -102,6 +101,11 @@
+     }
+ }
+
++impl std::error::Error for NarrativeError {
++    fn source(&self) -> Option<&(dyn std::error::Error + 'static)> {
++        None
++    }
++}
++
+ /// A segment of a generated narrative.
+ #[derive(Debug, Clone, PartialEq, Eq)]
