@@ -30847,3 +30847,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you constantly monitor and audit your administrative pops, or accept the risk of catastrophic administrative failure due to eccentric behavior?
 
 ---
+
+## The Somatic Commute
+
+**Layer:** 1
+
+**Fantasy:** Pops hook their brains into the colony grid to work remotely, their bodies atrophying while their minds labor in the machine.
+
+**Mechanic:** Construct "Somatic Pods." Pops enter them and perform "Intellectual" or "Drone Control" jobs at massive efficiency bonuses without consuming movement time. However, prolonged use causes their physical bodies to weaken, requiring medical rehabilitation.
+
+**Emergence:** A power failure traps half the workforce in the pods. When power is restored, they suffer from temporary amnesia, forgetting their relationships and skills for a week.
+
+**Tension:** Massive efficiency and space-saving vs. physical deterioration and risk of being trapped in the network.
+
+---
+
+## Orbital Harpoon Logistics
+
+**Layer:** Cross-layer (2 -> 1)
+
+**Fantasy:** Desperate supply drops that feel like an orbital bombardment.
+
+**Mechanic:** Instead of landing shuttles, Layer 2 fleets fire massive "Harpoon Pods" directly into the Layer 1 terrain. They deliver large amounts of resources instantly but destroy the tile they hit and cause minor earthquakes.
+
+**Emergence:** You miscalculate a harpoon drop during a famine. It delivers the food but hits the primary water purifier, creating a new crisis. The embedded harpoon becomes a permanent, ugly landmark.
+
+**Tension:** Instant, cheap supply delivery vs. collateral damage to your own infrastructure.
+
+---
+
+## The Propaganda Constellation
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Writing your slogans in the stars so everyone has to look at them.
+
+**Mechanic:** You launch specialized satellites into orbit that link together to form massive, glowing symbols in the night sky. Provides a colony-wide morale and productivity boost that overrides normal negative moods.
+
+**Emergence:** A rival faction hacks the constellation, changing the inspiring symbol into a demoralizing or terrifying message. The entire colony plunges into despair until you can shoot down your own satellites.
+
+**Tension:** Unparalleled mood control vs. extreme vulnerability to hacking or orbital debris.
+
+---
