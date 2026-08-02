@@ -30765,3 +30765,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you invest in wildly expensive atmospheric scrubbers to clean the sky, or just accept the productivity loss and let your Pops enjoy the chemical rain?
 
 ---
+## Echoes of the First Harvest
+
+**Layer:** 1
+
+**Fantasy:** The first successful harvest on a hostile world leaves an indelible mark on the colony's culture, turning simple survival into sacred tradition.
+
+**Mechanic:** The specific crops grown and methods used during the colony's first winter or major famine are recorded. Decades later, these "First Crops" provide immense, compounding morale boosts, but pops develop a strong taboo against replacing them with higher-yield, genetically modified alternatives.
+
+**Emergence:** You try to upgrade your agricultural sector to a highly efficient synthetic paste facility, but the farmers actively sabotage the machines and refuse to eat anything but the genetically un-altered "First Wheat" that saved their ancestors.
+
+**Tension:** Do you force the colony to modernize its agriculture at the cost of massive unrest and destroyed morale, or do you dedicate excessive space and labor to a culturally sacred but wildly inefficient farming tradition?
+
+---
+
+## Planetary Tethers of Guilt
+
+**Layer:** Cross-layer
+
+**Fantasy:** The orbital infrastructure you build is literally anchored by the suffering of the workers on the ground.
+
+**Mechanic:** Building massive Layer 2 orbital structures (like Space Elevators or Shipyards) requires anchoring them to Layer 1. The anchor tile becomes a "Zone of Oppression." Pops working near the anchor suffer constant health and morale drain due to the terrifying structural stress and noise, but the orbital structure provides massive empire-wide economic benefits.
+
+**Emergence:** Your empire's booming economy relies entirely on an orbital trade hub. However, the anchor point on the planet surface has devolved into a nightmare slum where desperate pops are forced to live in the deafening, vibrating shadow of the tether, leading to constant localized riots that threaten to sever the connection entirely.
+
+**Tension:** Do you dismantle the anchor and cripple your galactic economy to save a single sector, or suppress the riots and keep the tether secure at a continuous, horrific cost to your own people?
+
+---
+
+## The Asynchronous Prophets
+
+**Layer:** Cross-layer
+
+**Fantasy:** Slower-than-light travel creates a society where the returning heroes from the past are treated as visionary prophets of the future.
+
+**Mechanic:** Sub-light exploration or colonization fleets return to your core systems centuries after they left, due to time dilation. They bring ancient, uncorrupted cultural data and outdated tech. Pops revere these "Ancients," granting them massive political influence.
+
+**Emergence:** A revered captain returns from a 300-year sub-light mission and is immediately elected Governor. However, their outdated ethics cause them to automatically enact ancient, catastrophic policies, like banning all synthetic intelligence in an empire that relies entirely on AI logistics.
+
+**Tension:** Do you strip these revered time-travelers of their political power (causing a religious/cultural revolt), or let them rule with archaic ideals that cripple your modern infrastructure?
+
+---
