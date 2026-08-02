@@ -30723,3 +30723,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you spend resources suppressing the dangerous cult and maintaining expensive shields, or lean into the madness, treating planetary damage as a necessary cost for complete social obedience?
 
 ---
+
+## Metabolic Divergence
+
+**Layer:** 1
+
+**Fantasy:** Watching colonists physically adapt to extreme alien diets, becoming fundamentally different from their ancestors.
+
+**Mechanic:** If a colony relies entirely on a specific local alien flora/fauna for food over multiple generations, the Pops develop a "Metabolic Divergence" trait. They gain massive bonuses when eating this food but suffer toxic withdrawal if forced to eat standard human rations.
+
+**Emergence:** You rescue a starving deep-space colony with standard rations, only to watch them get violently ill because their bodies no longer process standard Earth-equivalent food.
+
+**Tension:** Do you force a painful, generation-long transition back to standard food to integrate them into your empire, or maintain a bespoke, fragile supply chain just for them?
+
+---
+
+## Fabricated Antiquity
+
+**Layer:** Cross-layer
+
+**Fantasy:** A colony manufacturing fake historical artifacts to artificially boost their cultural importance and attract investment.
+
+**Mechanic:** A colony with high industry but low cultural value can secretly start producing "Fabricated Relics". These act as high-value cultural artifacts, boosting their tourism and diplomatic weight. If discovered, they suffer a massive, permanent diplomatic penalty across the sector.
+
+**Emergence:** Your most "historically significant" religious world is actually just running a 3D-printing sweatshop in its basement to scam pilgrims from other factions.
+
+**Tension:** Do you turn a blind eye to the lucrative scam, risking the reputation of your entire empire, or crack down on it and bankrupt your most profitable colony?
+
+---
+
+## Atmospheric Contraband
+
+**Layer:** 2
+
+**Fantasy:** Smugglers using the planet's actual weather systems to distribute illegal goods, turning rain into a commodity.
+
+**Mechanic:** Instead of landing ships, smugglers seed the upper atmosphere of a colony with micro-drones or airborne chemical stimulants. This creates "Contraband Weather" that slowly rains illegal goods or mood-altering drugs across the entire colony grid.
+
+**Emergence:** You build an impregnable orbital blockade, only to realize the smugglers just sprayed a massive cloud of synthetic narcotics into the jet stream, getting your entire agricultural workforce high and ruining the harvest.
+
+**Tension:** Do you invest in wildly expensive atmospheric scrubbers to clean the sky, or just accept the productivity loss and let your Pops enjoy the chemical rain?
+
+---
