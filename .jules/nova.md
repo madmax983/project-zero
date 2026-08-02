@@ -290,3 +290,8 @@
 **Concept:** Added `sleep_synchrony_system` in `src/experimental/sleep_synchrony.rs`. Connects `ActionType::SatisfyRest`, `DreamJournal`, and grid proximity. Pops sleeping near each other synchronize their rest, regenerating faster (Restful Synergy). However, if one Pop in the synchronized block has a nightmare, the terror cascades to the entire block, causing a mass panic (Dazing breakdown).
 **Fate:** Pending
 **Lesson:** Provides a meaningful risk-reward tradeoff for housing design. Players can build ultra-efficient mega-dormitories for the massive synchronized waking buffs, but must accept the risk that a single stressed Pop can trigger a colony-wide panic.
+
+## [Privatized Healthcare]
+**Concept:** Added `privatized_healthcare_system` to `src/experimental/privatized_healthcare.rs`. Connects `Health`, `Wallet`, and `BuildingType::Hospital`. Pops who are injured and stand near a Hospital will automatically siphon credits from their `Wallet` to rapidly regenerate their `Health`. If they are broke, the hospital refuses to treat them.
+**Fate:** Submitted
+**Lesson:** Connects basic survival (Health) directly to the economy (Credits) for the first time. Hospitals are no longer passive healing zones but businesses, turning wealth into a critical survival metric and highlighting the dystopian corporate-driven sci-fi nature of the colony simulation.

@@ -255,4 +255,6 @@ pub mod void_fever_contagion;
 pub mod water_cooler_gossip;
 
 #[cfg(feature = "nova")]
+pub mod privatized_healthcare;
+#[cfg(feature = "nova")]
 pub mod sleep_synchrony;
