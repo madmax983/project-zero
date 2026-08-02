@@ -6479,7 +6479,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Shadow Markets
+## Shadow Markets [SPECCED]
 
 **Layer:** 1
 
@@ -6493,7 +6493,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Thermal Gliders
+## Thermal Gliders [SPECCED]
 
 **Layer:** 1
 
@@ -6507,7 +6507,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Selective Amnesia
+## Selective Amnesia [SPECCED]
 
 **Layer:** 1
 
