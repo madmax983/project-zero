@@ -631,3 +631,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1331` The Tomb World Harvest — `specs/1331-the-tomb-world-harvest.md`
 - [ ] `1332` The Industrial Rhythm — `specs/1332-the-industrial-rhythm.md`
 - [ ] `1333` The Pet Singularity — `specs/1333-the-pet-singularity.md`
+- [ ] `1348` Shadow Markets — `specs/1348-shadow-markets.md`
+- [ ] `1349` Thermal Gliders — `specs/1349-thermal-gliders.md`
+- [ ] `1350` Selective Amnesia — `specs/1350-selective-amnesia.md`
