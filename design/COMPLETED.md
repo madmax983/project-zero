@@ -955,3 +955,4 @@
 - [x] `308` Black Market Genemods — `specs/308-black-market-genemods.md` — completed 2026-08-01
 - [x] `315` The Propaganda Engine — `specs/315-propaganda-engine.md` — completed 2026-02-01
 - [x] `1014` Gravity-Well Funerals — `specs/1014-gravity-well-funerals.md` — completed 2026-02-01
+- [x] `INT-1334` Integration: Pop Spawning -> Sartorial Rebellion — completed 2026-08-02

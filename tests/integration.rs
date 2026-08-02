@@ -706,3 +706,5 @@ mod chronological_stutter_chronicle;
 
 #[path = "integration/temporal_smuggling_bridge.rs"]
 mod temporal_smuggling_bridge;
+#[path = "integration/sartorial_rebellion.rs"]
+mod sartorial_rebellion;
