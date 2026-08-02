@@ -1,3 +1,6 @@
 ## 2026-07-15 - [NarrativeError Documentation]
 **Confusion:** The variants of `NarrativeError` were completely undocumented, leaving users guessing how to resolve errors like `MissingContext`. Furthermore, the `to_table` method lacked an example showing its helpful formatting.
 **Clarification:** Added comprehensive `///` comments to each variant of `NarrativeError` explaining the cause and providing actionable fixes (e.g. `Fix: context.insert()`). Also added an executable doctest to `to_table` to demonstrate how the error table renders.
+## 2026-07-28 - [Headless Sim and Docs confusion]
+**Confusion:** The README examples pointed users to modules they couldn't import or explicitly warned about compiler errors (E0422) that were not the ones emitted by the compiler (E0433) when missing the `nova` feature, leading to silent test executions or confused new users doing headless simulation. Also users assumed `NarrativeError::to_table()` existed because the error printed beautifully but had no `.to_table()` method.
+**Clarification:** Corrected `README.md` to reference `E0433`, documented the automatic `Display` formatting of `NarrativeError` using an executable doctest so users stop looking for `.to_table()`, and exported `crate::layer1::buildings` directly in `scale::prelude` to ease headless developer friction.

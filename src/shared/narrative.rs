@@ -69,6 +69,20 @@ pub enum NarrativeError {
 }
 
 impl std::fmt::Display for NarrativeError {
+    /// Formats the error as a human-readable table with actionable advice.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use scale::shared::narrative::NarrativeError;
+    /// let err = NarrativeError::MissingContext("YEAR".to_string());
+    ///
+    /// // The Display trait handles the formatting automatically.
+    /// // Users do not need to call any custom formatting methods like `to_table()`.
+    /// let output = format!("{}", err);
+    /// assert!(output.contains("Missing Context"));
+    /// assert!(output.contains("YEAR"));
+    /// ```
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         use comfy_table::{presets::UTF8_FULL, Cell, Color as TableColor, Table};
 
