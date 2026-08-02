@@ -1866,3 +1866,9 @@
 - **Glue added:** Added `xenoflora_pet_death_bridge_system` in `src/layer1/core/integration.rs` to generate Chronicle records when a xenological pet dies.
 - **Schedule:** Registered the system in `src/layer1/systems/observation.rs`.
 - **Tests:** Added tests in `tests/integration/xenoflora_pet_bridge.rs`.
+
+### INT-1334: Pop Spawning -> Sartorial Rebellion
+- **Date:** 2026-08-02
+- **Systems connected:** `PopBundle::random` -> `Appearance` component
+- **Glue added:** Added `Appearance` to `PopBundle` and initialized it in `PopBundle::random` in `src/layer1/entities/pop.rs` to ensure newly spawned pops can adopt visual signifiers.
+- **Tests:** `tests/integration/sartorial_rebellion.rs`

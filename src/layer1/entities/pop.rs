@@ -46,6 +46,7 @@ use crate::layer1::rumor::Knowledge;
 use crate::layer1::skills::Skills;
 use crate::layer1::social::debt::SocialDebt;
 use crate::layer1::social::old_guard::Arrival;
+use crate::layer1::social::sartorial_rebellion::Appearance;
 use crate::layer1::terrain::{TerrainGrid, TerrainType};
 use crate::layer1::traits::Traits;
 use crate::layer1::utility_types::AssignmentType;
@@ -297,6 +298,8 @@ pub struct PopBundle {
     pub edict_compliance: crate::layer1::social::generational_dissonance::EdictCompliance,
     /// Skill levels.
     pub skills: Skills,
+    /// Appearance signifiers for Sartorial Rebellion.
+    pub appearance: Appearance,
     /// Movement speed.
     pub speed: Speed,
     /// Current action.
@@ -369,6 +372,7 @@ impl PopBundle {
             edict_compliance:
                 crate::layer1::social::generational_dissonance::EdictCompliance::default(),
             skills: Skills::default(),
+            appearance: Appearance::default(),
             speed: Speed::default(),
             action: PopAction::default(),
             equipment: Equipment::default(),
