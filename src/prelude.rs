@@ -27,6 +27,7 @@ pub use crate::layer1::oral_tradition::{collect_chronicles_system, storytelling_
 
 // Echo DX Audit: Export common components for headless users
 pub use crate::layer1;
+pub use crate::layer1::buildings;
 pub use crate::layer1::economy::resources::ColonyResources;
 pub use crate::layer1::nature::terrain::{TerrainGrid, TerrainType};
 pub use crate::layer1::tech::TechState;
