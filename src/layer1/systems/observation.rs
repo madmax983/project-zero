@@ -148,6 +148,8 @@ pub fn register(schedule: &mut Schedule) {
                 .after(crate::layer1::health::despawn_dead_entities_system),
             crate::layer1::funeral::grief_system
                 .after(crate::layer1::health::despawn_dead_entities_system),
+            crate::layer1::gravity_funerals::process_high_status_deaths_system,
+            crate::layer1::gravity_funerals::evaluate_sun_burial_requests_system,
             crate::layer1::ancestral_graves::grave_visit_system
                 .after(crate::layer1::funeral::grief_system),
             crate::experimental::toxic_personalities::toxic_personalities_system

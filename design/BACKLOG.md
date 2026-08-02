@@ -493,7 +493,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `992` The Fungal Monoliths — `specs/992-the-fungal-monoliths.md`
 - [ ] `1008` The Refugee Archipelago — `specs/1008-the-refugee-archipelago.md`
 - [ ] `1013` The Void Echoes — `specs/1013-the-void-echoes.md`
-- [ ] `1014` Gravity-Well Funerals — `specs/1014-gravity-well-funerals.md`
+
 - [ ] `1019` Ecophagy — `specs/1019-ecophagy.md`
 - [ ] `1020` Spatial Compression — `specs/1020-spatial-compression.md`
 - [ ] `1021` The Shadow Cabinet — `specs/1021-the-shadow-cabinet.md`

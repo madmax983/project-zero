@@ -529,3 +529,5 @@ pub use hazards::*;
 
 pub mod heroic_acts;
 pub use heroic_acts::*;
+pub mod gravity_funerals;
+pub use gravity_funerals::*;
