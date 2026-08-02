@@ -30806,3 +30806,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you strip these revered time-travelers of their political power (causing a religious/cultural revolt), or let them rule with archaic ideals that cripple your modern infrastructure?
 
 ---
+## The Ergonomic Rebellions
+
+**Layer:** 1
+
+**Fantasy:** Watching minor physical inconveniences compound into a colony-wide structural revolution.
+
+**Mechanic:** Pops working in poorly-laid-out workspaces or using tools ill-suited for their physical traits accumulate "Ergonomic Strain". Instead of a standard strike, they will autonomously redesign and rebuild their workbenches or entire factories out of whatever materials are nearby, destroying efficiency but resetting the strain.
+
+**Emergence:** You find your pristine, high-efficiency crystal-refinery has been haphazardly rebuilt with scrap wood and dirt because the short-statured pops couldn't comfortably reach the control panels.
+
+**Tension:** Do you spend resources explicitly customizing each workstation for specific pop traits, or deal with periodic, chaotic autonomous renovations?
+
+---
+
+## The First Responder Dilemma
+
+**Layer:** Cross-layer
+
+**Fantasy:** Emergency ships from distant layers arriving to solve a problem that has already evolved into a new culture.
+
+**Mechanic:** When a disaster strikes Layer 1, you can dispatch emergency relief from Layer 2. However, due to travel time, by the time the relief arrives, the survivors on Layer 1 might have adapted to the disaster or formed a hostile survivor cult.
+
+**Emergence:** A distress signal is sent during a famine. A decade later, the relief ship arrives loaded with food, only to be attacked by the colony that has since adapted into a cannibalistic, self-sufficient society that views the food drop as an insult.
+
+**Tension:** Do you waste expensive Layer 2 resources sending aid that might be rejected, or let the colony adapt and risk losing them to feral divergence?
+
+---
+
+## The Bureaucratic Closet
+
+**Layer:** 1
+
+**Fantasy:** A single pop hoarding critical paperwork until the entire colony's economy grinds to a halt.
+
+**Mechanic:** Pops with the "Bureaucrat" job can occasionally develop a "Hoarder" trait, causing them to stockpile administrative records in their personal housing instead of the centralized databanks. If their house is full or destroyed, the entire colony loses its production quotas until the records are sorted.
+
+**Emergence:** The entire agricultural sector halts because one low-level clerk decided to store all the seed manifests in their bathtub, and now a plumbing failure has washed away the colony's farming instructions.
+
+**Tension:** Do you constantly monitor and audit your administrative pops, or accept the risk of catastrophic administrative failure due to eccentric behavior?
+
+---
