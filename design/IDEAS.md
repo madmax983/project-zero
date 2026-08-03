@@ -30973,3 +30973,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you waste resources on "placebo" cures and performative quarantines to calm the pops, or forcefully drag them back to work and risk a genuine rebellion over perceived negligence?
 
 ---
+## The Memory Singularity
+
+**Layer:** 1
+
+**Fantasy:** A single pop becomes a living encyclopedia, sought out by others for knowledge but driven mad by the burden.
+
+**Mechanic:** Occasionally, a pop with high intelligence and social interaction will develop the "Archivist" trait, absorbing the memories and skills of everyone they interact with. Their productivity drops, but they provide massive skill boosts to any pop working near them. However, they eventually suffer a mental break and forget everything, resetting the cycle.
+
+**Emergence:** You purposely isolate an Archivist near your researchers to create a super-lab, but when they finally break, they destroy the lab in confusion.
+
+**Tension:** Do you milk their temporary brilliance for massive gains, or try to manage their interactions to delay the inevitable breakdown?
+
+---
+
+## Gravity Sickness
+
+**Layer:** Cross-layer (1 / 2)
+
+**Fantasy:** Watching your pops adapt to a new world's gravity, then watching them suffer when they leave it.
+
+**Mechanic:** Pops born on a planet adapt to its specific gravity. When transferred to a different planet or a ship (Layer 2) with different gravity, they suffer temporary efficiency penalties and mood debuffs. Prolonged exposure forces permanent physical adaptation, changing their baseline trait.
+
+**Emergence:** Your invincible army from a high-gravity world is sent to suppress a rebellion on a low-gravity moon. They are clumsy and miserable, losing to poorly trained locals who use the low gravity to their advantage.
+
+**Tension:** Do you spend resources artificially matching gravity in your ships and new colonies, or force your pops to adapt the hard way?
+
+---
+
+## The Phantom Saboteur
+
+**Layer:** 1
+
+**Fantasy:** Paranoia spreading through a colony as accidents are blamed on an imaginary enemy.
+
+**Mechanic:** If morale drops low enough, random infrastructure failures (like power surges or broken tools) are occasionally misidentified by the pops as deliberate sabotage. This creates a "Phantom Saboteur" rumor that lowers trust. Pops will start forming vigilante groups to "hunt" the saboteur, abandoning their jobs.
+
+**Emergence:** A simple broken pipe starts a witch hunt that results in your best engineer being exiled by a mob, plunging the colony into deeper dysfunction.
+
+**Tension:** Do you let the vigilantes hunt the ghost to blow off steam, or crack down with enforcers and risk a full-scale riot against your authority?
+
+---
