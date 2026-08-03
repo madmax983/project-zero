@@ -31014,3 +31014,16 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you let the vigilantes hunt the ghost to blow off steam, or crack down with enforcers and risk a full-scale riot against your authority?
 
 ---
+## Three New Layer 2 Ship Concepts
+
+**Layer:** 2
+
+**Fantasy:** Discovering and fielding strange, specialized vessels that redefine system-level interactions.
+
+**Mechanic:** Introduces three new ship types: "The Choreographer" (a ship that creates localized gravitational anomalies to pull or push debris/asteroids), "The Lantern" (a massive, slow-moving flare ship that illuminates dark sectors but attracts feral fauna), and "The Silencer" (a stealth vessel that dampens communications and sensors in a wide radius).
+
+**Emergence:** A Lantern ship accidentally draws a swarm of space-fauna directly into an enemy's blockade. The Choreographer is used to slingshot hazardous waste into a rival's orbit.
+
+**Tension:** Do you use the Silencer to hide your own operations at the cost of blinding your local logistics, or deploy the Lantern to secure a safe route while ringing the dinner bell for the void's predators?
+
+---
