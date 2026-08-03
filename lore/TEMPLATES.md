@@ -10995,3 +10995,62 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 **If [CASUALTIES]:**
 - "[YEAR]: The Dreadnought dropped [ARTIFACT] on [COLONY]. [CASUALTIES] were crushed in the delivery."
 - "The gift of [ARTIFACT] arrived violently. [CASUALTIES] souls lost in the impact."
+
+## Weaponized Tourism Templates (Spec 1279)
+**Slots:** [COLONY], [YEAR], [TOURIST_NAME], [RIVAL_COLONY], [DIFFICULT_BEHAVIOR]
+
+- "[YEAR]: [TOURIST_NAME] departed for [RIVAL_COLONY]. Their itinerary includes [DIFFICULT_BEHAVIOR]. We await the incident report."
+- "[TOURIST_NAME] returned from [RIVAL_COLONY] in [YEAR]. They successfully performed [DIFFICULT_BEHAVIOR]. The diplomats are furious."
+- "[YEAR]: Weaponized leisure. Our tourists are spreading contrary ethics in [RIVAL_COLONY]. It is only a matter of time."
+
+## Black Market Genemods Templates (Spec 308)
+**Slots:** [COLONY], [YEAR], [POP_NAME], [GENEMOD_TYPE], [MELTDOWN_CASUALTIES]
+
+- "[YEAR]: Whispers of Ripperdocs in [COLONY]. [POP_NAME] received [GENEMOD_TYPE] modifications. Productivity is up, but at what cost?"
+- "[POP_NAME] suffered a Mutational Meltdown in [YEAR]. The [GENEMOD_TYPE] instability peaked. [MELTDOWN_CASUALTIES] dead."
+- "[YEAR]: [COLONY] mourns. A hidden instability in [GENEMOD_TYPE] claimed [POP_NAME]. They transformed before our eyes."
+
+## Bureaucratic Strike Templates (Spec 309)
+**Slots:** [COLONY], [YEAR], [STRIKE_CAUSE], [ADMIN_MORALE]
+
+- "[YEAR]: The administrators in [COLONY] dropped their pens. Morale is [ADMIN_MORALE]. A Bureaucratic Strike begins."
+- "Red tape chokes [COLONY] in [YEAR]. The cause: [STRIKE_CAUSE]. Nothing is approved."
+- "[YEAR]: The Bureaucratic Strike in [COLONY] ends. Work resumes, but the backlog is immense."
+
+## Template: TOURIST_DISPATCHED
+
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [TOURIST_NAME], [RIVAL_COLONY], [DIFFICULT_BEHAVIOR]
+
+**Patterns:**
+- "[YEAR]: [TOURIST_NAME] departed for [RIVAL_COLONY]. Their itinerary includes [DIFFICULT_BEHAVIOR]. We await the incident report."
+- "[TOURIST_NAME] returned from [RIVAL_COLONY] in [YEAR]. They successfully performed [DIFFICULT_BEHAVIOR]. The diplomats are furious."
+- "[YEAR]: Weaponized leisure. Our tourists are spreading contrary ethics in [RIVAL_COLONY]. It is only a matter of time."
+
+## Template: RIPPERDOC_ARRIVAL
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [POP_NAME], [GENEMOD_TYPE]
+
+**Patterns:**
+- "[YEAR]: Whispers of Ripperdocs in [COLONY]. [POP_NAME] received [GENEMOD_TYPE] modifications. Productivity is up, but at what cost?"
+- "The Black Market provides. [POP_NAME] sought out the Ripperdoc for [GENEMOD_TYPE] in [YEAR]."
+
+## Template: MUTATIONAL_MELTDOWN
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [POP_NAME], [GENEMOD_TYPE], [MELTDOWN_CASUALTIES]
+
+**Patterns:**
+- "[POP_NAME] suffered a Mutational Meltdown in [YEAR]. The [GENEMOD_TYPE] instability peaked. [MELTDOWN_CASUALTIES] dead."
+- "[YEAR]: [COLONY] mourns. A hidden instability in [GENEMOD_TYPE] claimed [POP_NAME]. They transformed before our eyes."
+
+## Template: BUREAUCRATIC_STRIKE
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [STRIKE_CAUSE], [ADMIN_MORALE]
+
+**Patterns:**
+- "[YEAR]: The administrators in [COLONY] dropped their pens. Morale is [ADMIN_MORALE]. A Bureaucratic Strike begins."
+- "Red tape chokes [COLONY] in [YEAR]. The cause: [STRIKE_CAUSE]. Nothing is approved."
+- "[YEAR]: The Bureaucratic Strike in [COLONY] ends. Work resumes, but the backlog is immense."
