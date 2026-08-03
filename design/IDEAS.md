@@ -6521,7 +6521,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Slippery Slope
+## The Slippery Slope [SPECCED]
 
 **Layer:** Cross-layer
 

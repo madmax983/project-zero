@@ -634,3 +634,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1348` Shadow Markets — `specs/1348-shadow-markets.md`
 - [ ] `1349` Thermal Gliders — `specs/1349-thermal-gliders.md`
 - [ ] `1350` Selective Amnesia — `specs/1350-selective-amnesia.md`
+- [ ] `1351` The Slippery Slope — `specs/1351-the-slippery-slope.md`
