@@ -11002,3 +11002,48 @@ What kind of chronological debris is found.
 - occasionally venting unknown gases
 - humming with a frequency that vibrated in the colonists' teeth
 - entirely unresponsive to all hails
+
+## Weaponized Tourism Fragments (Spec 1279)
+
+### Fragment Type: [DIFFICULT_BEHAVIOR]
+- complaining loudly about local customs
+- intentionally breaking fragile infrastructure
+- spreading contrary ethics at the plaza
+- demanding unreasonable accommodations
+
+## Black Market Genemods Fragments (Spec 308)
+
+### Fragment Type: [GENEMOD_TYPE]
+- MuscleGraft
+- Wakefulness
+- Synthetic Adrenaline
+- Optic Enhancements
+
+## Bureaucratic Strike Fragments (Spec 309)
+
+### Fragment Type: [STRIKE_CAUSE]
+- abysmal working conditions
+- administrative burnout
+- plummeting morale
+- unfulfilled demands
+
+## Fragment Type: [DIFFICULT_BEHAVIOR]
+
+- complaining loudly about local customs
+- intentionally breaking fragile infrastructure
+- spreading contrary ethics at the plaza
+- demanding unreasonable accommodations
+
+## Fragment Type: [GENEMOD_TYPE]
+
+- MuscleGraft
+- Wakefulness
+- Synthetic Adrenaline
+- Optic Enhancements
+
+## Fragment Type: [STRIKE_CAUSE]
+
+- abysmal working conditions
+- administrative burnout
+- plummeting morale
+- unfulfilled demands

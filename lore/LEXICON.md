@@ -6046,3 +6046,32 @@
 **Replaces:** Preservation faction, late-game historians
 **Code reference:** `CuratorFaction` (planned)
 **Usage:** "The Curators demand we leave the ruins untouched."
+
+## Weaponized Tourism (Spec 1279)
+**Code reference:** N/A (meta-narrative)
+**Usage:** "The tourists have arrived. Let the sabotage begin." / "Weaponized tourism is our best defense."
+
+## Black Market Genemods (Spec 308)
+**Code reference:** `UnstableGenemod`
+**Replaces:** Illegal genetic modifications, Ripperdocs
+**Usage:** "The Ripperdoc installed a MuscleGraft." / "They suffered a Mutational Meltdown."
+
+## Bureaucratic Strike (Spec 309)
+**Code reference:** `RedTapeEvent`
+**Replaces:** Red tape, administrative strike, malicious compliance
+**Usage:** "The colony is paralyzed by a Bureaucratic Strike." / "Red tape has delayed all reassignments."
+
+## Weaponized Tourists
+**Replaces:** Saboteurs, annoying tourists
+**Code reference:** N/A (meta-narrative)
+**Usage:** "The tourists have arrived. Let the sabotage begin." / "Weaponized tourism is our best defense."
+
+## Mutational Meltdown
+**Replaces:** Genetic collapse, monster transformation
+**Code reference:** `UnstableGenemod`
+**Usage:** "The Ripperdoc installed a MuscleGraft." / "They suffered a Mutational Meltdown."
+
+## Bureaucratic Strike
+**Replaces:** Red tape, administrative strike, malicious compliance
+**Code reference:** `RedTapeEvent`
+**Usage:** "The colony is paralyzed by a Bureaucratic Strike." / "Red tape has delayed all reassignments."
