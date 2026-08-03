@@ -30889,3 +30889,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Unparalleled mood control vs. extreme vulnerability to hacking or orbital debris.
 
 ---
+
+## The Abandonment Cascade
+
+**Layer:** 1
+
+**Fantasy:** The bitter resentment of the pops who weren't chosen to leave on the shiny new colony ship.
+
+**Mechanic:** When a colony ship is launched, the pops left behind suffer a severe "Left Behind" morale penalty, scaling with how skilled the departing pops were.
+
+**Emergence:** You launch a glorious expedition to settle a new world, but immediately after launch, your core world collapses into riots because everyone who remained feels abandoned and inferior.
+
+**Tension:** Do you intentionally leave some of your best workers behind to stabilize the core world's morale, or send them all to ensure the new colony's survival?
+
+---
+
+## The Architectural Palimpsest
+
+**Layer:** 1
+
+**Fantasy:** Building over ruins of past failures creates a haunted, layered colony where the past literally bleeds into the present.
+
+**Mechanic:** When a building is destroyed, it leaves behind "Foundation Rubble." Constructing a new building on top of this rubble is cheaper, but the new building inherits "Echoes" of the old one's function or tragedy.
+
+**Emergence:** You desperately build a new life-support generator over the ruins of an old one that exploded. Decades later, the new generator spontaneously starts producing the same hazardous byproducts that destroyed the original, because the foundation rubble was structurally compromised in the exact same way.
+
+**Tension:** Do you spend massive amounts of time and resources completely clearing the grid of past failures to start fresh, or save time by building on top of them and risking inherited disasters?
+
+---
+
+## The Telemetry of Despair
+
+**Layer:** 2
+
+**Fantasy:** Interplanetary data bursts are so dense they accidentally transmit the raw, unfiltered emotional state of the sending planet.
+
+**Mechanic:** When a planet sends massive administrative data bursts to another node via Comm-Laser, the receiving planet inherits a fraction of the sending planet's average mood as a "Sympathetic Resonance" effect.
+
+**Emergence:** A thriving, utopian core world suddenly spirals into a massive depression and stops working because it received the automated tax data from a brutal, horrific penal colony on the outer rim.
+
+**Tension:** Do you sever the high-speed data links and cripple your logistics network to quarantine a planet's bad vibes, or risk crashing the morale of your entire empire?
+
+---
