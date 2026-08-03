@@ -51,6 +51,79 @@ pub struct SignalNetwork {
     pub next_id: u64,
 }
 
+impl std::fmt::Display for SignalNetwork {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        use comfy_table::{presets::UTF8_FULL, Cell, Color as TableColor, Table};
+        use crossterm::style::{Color, Stylize};
+
+        writeln!(
+            f,
+            "{}",
+            "╭── Void Signals (Network) ───────────────────────╮".with(Color::Cyan)
+        )?;
+
+        if self.signals.is_empty() {
+            let text = format!("{:<47}", "No active signals detected.");
+            writeln!(f, "│ {} │", text.with(Color::DarkGrey))?;
+            writeln!(
+                f,
+                "{}",
+                "╰─────────────────────────────────────────────────╯".with(Color::Cyan)
+            )?;
+            return Ok(());
+        } else {
+            let text = format!("{:<47}", format!("{} active signals detected.", self.signals.len()));
+            writeln!(f, "│ {} │", text.with(Color::White))?;
+            writeln!(
+                f,
+                "{}",
+                "╰─────────────────────────────────────────────────╯".with(Color::Cyan)
+            )?;
+        }
+
+        let mut table = Table::new();
+        table
+            .load_preset(UTF8_FULL)
+            .apply_modifier(comfy_table::modifiers::UTF8_ROUND_CORNERS)
+            .set_content_arrangement(comfy_table::ContentArrangement::Dynamic)
+            .set_header(vec![
+                Cell::new("ID").add_attribute(comfy_table::Attribute::Bold),
+                Cell::new("Name").add_attribute(comfy_table::Attribute::Bold),
+                Cell::new("Status").add_attribute(comfy_table::Attribute::Bold),
+                Cell::new("Progress").add_attribute(comfy_table::Attribute::Bold),
+                Cell::new("Reward").add_attribute(comfy_table::Attribute::Bold),
+            ]);
+
+        for signal in &self.signals {
+            let is_active = self.active_signal_id == Some(signal.id);
+            let status_text = if is_active { "Decrypting" } else { "Idle" };
+            let status_color = if is_active { TableColor::Green } else { TableColor::DarkGrey };
+
+            let reward_text = match &signal.reward {
+                SignalReward::Knowledge(amt) => format!("Knowledge ({:.1})", amt),
+                SignalReward::Resources(res, amt) => format!("{:?} ({:.1})", res, amt),
+                SignalReward::Lore(_) => "Lore".to_string(),
+            };
+
+            let reward_color = match &signal.reward {
+                SignalReward::Knowledge(_) => TableColor::Cyan,
+                SignalReward::Resources(_, _) => TableColor::Yellow,
+                SignalReward::Lore(_) => TableColor::Magenta,
+            };
+
+            table.add_row(vec![
+                Cell::new(signal.id.to_string()).fg(TableColor::DarkGrey),
+                Cell::new(&signal.name).fg(TableColor::White),
+                Cell::new(status_text).fg(status_color),
+                Cell::new(format!("{:.1}%", signal.progress)).fg(if is_active { TableColor::Green } else { TableColor::DarkGrey }),
+                Cell::new(reward_text).fg(reward_color),
+            ]);
+        }
+
+        write!(f, "{}", table)
+    }
+}
+
 impl SignalNetwork {
     /// adds a new signal to the network.
     pub fn add_signal(&mut self, name: String, flavor: String, reward: SignalReward) {
