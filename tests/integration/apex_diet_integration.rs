@@ -2,10 +2,8 @@
 mod tests {
     use bevy::prelude::*;
     use scale::layer1::balance::FOOD_PER_MEAL;
-    use scale::layer1::core::integration::{
-        apex_meat_distribution_system, apex_meat_harvest_bridge_system,
-    };
     use scale::layer1::economy::apex_diet::{
+        apex_meat_distribution_system, apex_meat_harvest_bridge_system,
         process_apex_meat_consumption, ApexMeatStores, ConsumeFoodEvent,
     };
     use scale::layer1::fauna::{Fauna, FaunaType};

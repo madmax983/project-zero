@@ -48,18 +48,6 @@ pub fn kinetic_strike_chronicle_bridge(
     }
 }
 
-/// INT-1088: Bridges Megafauna Death to Apex Meat Harvesting
-pub fn apex_meat_harvest_bridge_system(
-    query: Query<&crate::layer1::fauna::Fauna, Added<crate::layer1::Dead>>,
-    mut apex_meat: ResMut<crate::layer1::economy::apex_diet::ApexMeatStores>,
-) {
-    for fauna in query.iter() {
-        if fauna.fauna_type == crate::layer1::fauna::FaunaType::Wolf {
-            apex_meat.amount += 10.0; // Wolf yields 10 apex meat
-        }
-    }
-}
-
 /// INT-1023: Bridges `Added<TemporalFugue>` to `AddChronicleEvent`
 pub fn temporal_fugue_chronicle_bridge(
     query: Query<(), Added<crate::layer1::mind::temporal_fugue::TemporalFugue>>,
@@ -170,33 +158,6 @@ pub fn mycelial_chronicle_bridge(
             text: "The subterranean mycelial network has been contaminated! The pathogen is spreading rapidly.".to_string(),
             importance: crate::layer1::core::chronicle::EventImportance::Major,
         });
-    }
-}
-
-/// INT-1088: Bridges Apex Meat Stores to Pop Needs & Apex Diet Consumption
-pub fn apex_meat_distribution_system(
-    mut stores: ResMut<crate::layer1::economy::apex_diet::ApexMeatStores>,
-    mut hungry_pops: Query<
-        (Entity, &mut crate::layer1::needs::Needs),
-        With<crate::layer1::pop::Pop>,
-    >,
-    mut events: EventWriter<crate::layer1::economy::apex_diet::ConsumeFoodEvent>,
-) {
-    for (entity, mut needs) in &mut hungry_pops {
-        if needs.hunger < crate::layer1::balance::FOOD_HUNGER_THRESHOLD
-            && stores.amount >= crate::layer1::balance::FOOD_PER_MEAL
-        {
-            stores.amount -= crate::layer1::balance::FOOD_PER_MEAL;
-
-            // Satisfy hunger (using the same logic as farm.rs)
-            needs.hunger = (needs.hunger + crate::layer1::balance::HUNGER_PER_MEAL).min(1.0);
-
-            // Trigger the apex diet feature
-            events.send(crate::layer1::economy::apex_diet::ConsumeFoodEvent {
-                pop: entity,
-                food_type: crate::layer1::economy::apex_diet::FoodType::ApexMeat,
-            });
-        }
     }
 }
 
