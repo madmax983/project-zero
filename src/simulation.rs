@@ -1193,8 +1193,8 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         crate::layer1::culture::gastronomers::apply_culinary_singularity_buff_system,
         crate::layer1::core::integration::gastronomer_chronicle_bridge,
         crate::layer1::core::integration::visitor_chronicle_bridge,
-        crate::layer1::core::integration::apex_meat_harvest_bridge_system,
-        crate::layer1::core::integration::apex_meat_distribution_system
+        crate::layer1::economy::apex_diet::apex_meat_harvest_bridge_system,
+        crate::layer1::economy::apex_diet::apex_meat_distribution_system
             .before(crate::layer1::agriculture::farm::consume_food_system),
     ));
 

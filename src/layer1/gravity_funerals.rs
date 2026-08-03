@@ -107,9 +107,10 @@ mod tests {
         let mut app = App::new();
         app.add_event::<SunBurialRequestEvent>();
 
-        let mut res = ColonyResources::default();
-        res.fuel = 0.0;
-        app.insert_resource(res); // No fuel available
+        app.insert_resource(ColonyResources {
+            fuel: 0.0,
+            ..Default::default()
+        });
         app.insert_resource(Unrest::default());
         app.add_systems(Update, evaluate_sun_burial_requests_system);
 
@@ -154,9 +155,10 @@ mod tests {
     fn test_fulfilled_sun_burial_consumes_fuel() {
         let mut app = App::new();
         app.add_event::<SunBurialRequestEvent>();
-        let mut res = ColonyResources::default();
-        res.fuel = 1000.0;
-        app.insert_resource(res); // Plenty of fuel
+        app.insert_resource(ColonyResources {
+            fuel: 1000.0,
+            ..Default::default()
+        });
         app.insert_resource(Unrest::default());
         app.add_systems(Update, evaluate_sun_burial_requests_system);
 
