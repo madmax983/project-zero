@@ -179,31 +179,28 @@ pub fn evaluate_faction_support_system(
     faction_members: Query<&FactionMember>,
 ) {
     for (own_faction, debts, mut support) in supporters.iter_mut() {
-        let mut overridden = false;
-
-        // Find if they owe someone in a different faction
-        // Sort creditors by amount (highest first), then entity ID to ensure deterministic behavior.
-        let mut sorted_debts: Vec<_> = debts
+        // ⚡ Bolt Optimization: Use iterator max_by instead of collecting into a Vec and sorting.
+        // This avoids memory allocations (Vec) and an O(N log N) sort per supported Pop per frame.
+        // It maintains identical deterministic selection (highest amount, then lowest entity ID).
+        let best_creditor = debts
             .owed_to
             .iter()
             .filter(|(_, &amount)| amount > 0.0)
-            .collect();
-        sorted_debts.sort_by(|(e1, a1), (e2, a2)| {
-            a2.partial_cmp(a1)
-                .unwrap_or(std::cmp::Ordering::Equal)
-                .then(e1.cmp(e2))
-        });
+            .filter_map(|(&creditor, &amount)| {
+                faction_members
+                    .get(creditor)
+                    .ok()
+                    .map(|creditor_faction| (creditor, amount, creditor_faction.faction_id))
+            })
+            .max_by(|(e1, a1, _), (e2, a2, _)| {
+                a1.partial_cmp(a2)
+                    .unwrap_or(std::cmp::Ordering::Equal)
+                    .then_with(|| e2.cmp(e1))
+            });
 
-        for (&creditor, _amount) in sorted_debts {
-            if let Ok(creditor_faction) = faction_members.get(creditor) {
-                support.supported_faction = creditor_faction.faction_id;
-                overridden = true;
-                break;
-            }
-        }
-
-        // Default back to own faction if no active debts force otherwise
-        if !overridden {
+        if let Some((_, _, faction_id)) = best_creditor {
+            support.supported_faction = faction_id;
+        } else {
             support.supported_faction = own_faction.faction_id;
         }
     }
