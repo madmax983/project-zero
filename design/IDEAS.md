@@ -30931,3 +30931,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you sever the high-speed data links and cripple your logistics network to quarantine a planet's bad vibes, or risk crashing the morale of your entire empire?
 
 ---
+
+## Subletting the Comm-Grid
+
+**Layer:** 2
+
+**Fantasy:** Your critical infrastructure is being used to broadcast black-market pirate radio.
+
+**Mechanic:** Pops with high technical skill can secretly partition the planetary communications array (Layer 2) and rent out the bandwidth to smugglers, pirates, or rival factions. This reduces your administrative efficiency but significantly increases the wealth of those pops.
+
+**Emergence:** You try to send an emergency fleet maneuver command during a crisis, but the command is delayed because your local communications grid is currently broadcasting an extremely popular, unauthorized zero-G sports tournament.
+
+**Tension:** Do you crack down on the illegal subletting, risking riots and losing out on the unofficial wealth trickling into your economy, or do you let your infrastructure run at sub-optimal capacity?
+
+---
+
+## Gravity Well Philanthropy
+
+**Layer:** Cross-layer (2 -> 1)
+
+**Fantasy:** Rival empires aggressively "donating" infrastructure to your worlds to make you dependent on them.
+
+**Mechanic:** A wealthier rival faction can unilaterally construct massive, highly efficient orbital resource generators (like solar shades or orbital farms) over your Layer 1 colonies. The rival controls the output, choosing to give it to your colony for free.
+
+**Emergence:** Your colony becomes completely reliant on the free food from a rival's orbital farm. Years later, during a diplomatic dispute, the rival threatens to simply turn off the farm, instantly plunging your world into a famine you have no capacity to handle.
+
+**Tension:** Do you accept the massive economic boost of free, high-tier infrastructure, or do you actively shoot down "humanitarian" aid ships to protect your self-reliance?
+
+---
+
+## The Phantom Epidemic
+
+**Layer:** 1
+
+**Fantasy:** A disease that doesn't actually exist causes more damage through panic than a real plague would.
+
+**Mechanic:** A false rumor of a horrific new disease starts spreading through the social network of the colony. Pops begin to exhibit psychosomatic symptoms (lowered efficiency, high stress) and self-quarantine, shutting down sectors of the colony.
+
+**Emergence:** A rumor starts in the medical wing about a "spore infection." Within a month, the entire industrial sector has welded their doors shut, refusing to work because they are terrified of a non-existent threat, while your doctors insist there is zero biological contamination.
+
+**Tension:** Do you waste resources on "placebo" cures and performative quarantines to calm the pops, or forcefully drag them back to work and risk a genuine rebellion over perceived negligence?
+
+---
