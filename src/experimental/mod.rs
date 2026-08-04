@@ -258,3 +258,6 @@ pub mod water_cooler_gossip;
 pub mod privatized_healthcare;
 #[cfg(feature = "nova")]
 pub mod sleep_synchrony;
+
+#[cfg(feature = "nova")]
+pub mod grave_robbery;

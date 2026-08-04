@@ -295,3 +295,8 @@
 **Concept:** Added `privatized_healthcare_system` to `src/experimental/privatized_healthcare.rs`. Connects `Health`, `Wallet`, and `BuildingType::Hospital`. Pops who are injured and stand near a Hospital will automatically siphon credits from their `Wallet` to rapidly regenerate their `Health`. If they are broke, the hospital refuses to treat them.
 **Fate:** Submitted
 **Lesson:** Connects basic survival (Health) directly to the economy (Credits) for the first time. Hospitals are no longer passive healing zones but businesses, turning wealth into a critical survival metric and highlighting the dystopian corporate-driven sci-fi nature of the colony simulation.
+
+## [Grave Robbery]
+**Concept:** Added `grave_robbery_system` to `src/experimental/grave_robbery.rs`. Connects `Trait::Greedy` with `BuildingType::Grave`. Pops with the Greedy trait who stand near an occupied Grave will secretly dig it up, gaining `credits` and `leisure` (from the thrill) but draining their `rest`.
+**Fate:** Submitted
+**Lesson:** Gives a psychological function to a basic utility structure and connects greed traits with emergent spatial clustering around graveyards.
