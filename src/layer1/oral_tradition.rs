@@ -547,11 +547,19 @@ impl std::fmt::Display for OralTradition {
                 _ => TableColor::DarkGrey,
             };
 
+            let mutations_color = if story.mutations > 5 {
+                TableColor::Red
+            } else if story.mutations > 0 {
+                TableColor::Yellow
+            } else {
+                TableColor::Green
+            };
+
             table.add_row(vec![
-                Cell::new(&genre_str).fg(genre_color),
+                Cell::new(&genre_str).fg(genre_color).add_attribute(comfy_table::Attribute::Bold),
                 Cell::new(story.historical_date.to_string()).fg(TableColor::Cyan),
-                Cell::new(story.mutations.to_string()).fg(TableColor::Cyan),
-                Cell::new(&story.text).fg(TableColor::White),
+                Cell::new(story.mutations.to_string()).fg(mutations_color),
+                Cell::new(format!("\"{}\"", story.text)).fg(TableColor::White),
             ]);
         }
 
