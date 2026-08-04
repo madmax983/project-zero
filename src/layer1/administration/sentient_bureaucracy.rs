@@ -17,10 +17,7 @@ pub fn update_bureaucracy_sentience_system(
     // In our tests, time might not exist, but let's use a standard 1.0 if not there or rely on SimulationTime
     _time: Option<Res<SimulationTime>>,
 ) {
-    let delta = 1.0; // Fixed delta for simplicity in SimulationTime or we can just use 1.0 per tick if called per tick.
-                     // A typical delta might be better from bevy's Time, but Bevy Time isn't always available in tests.
-                     // The spec uses `Time::default()` but we use standard time ticks.
-                     // The spec tests do 10 updates. If delta is 1.0, 10 updates = 10.0. To force to 100.0 they mutate.
+    let delta = 1.0;
     let efficiency = admin_stats.map(|s| s.efficiency).unwrap_or(1.0);
 
     if efficiency < 1.0 {
@@ -38,20 +35,25 @@ pub fn update_bureaucracy_sentience_system(
     }
 }
 
+#[derive(Event)]
+pub struct TaskAdministrativelyOptimizedEvent {
+    pub entity: Entity,
+}
+
 pub fn autonomous_work_reassignment_system(
     state: Res<SentientBureaucracyState>,
-    mut actions: Query<&mut PopAction>,
+    mut actions: Query<(Entity, &mut PopAction)>,
+    mut event_writer: EventWriter<TaskAdministrativelyOptimizedEvent>,
 ) {
     if !state.is_active {
         return;
     }
 
-    // In a minimal implementation, just arbitrarily override one specific task type
-    for mut action in actions.iter_mut() {
+    for (entity, mut action) in actions.iter_mut() {
         if action.current == ActionType::Work {
-            // "Optimize" by doing admin instead
             action.current = ActionType::Admin;
-            action.current_utility = 100.0; // Bureaucracy insists this is highest priority
+            action.current_utility = 100.0;
+            event_writer.send(TaskAdministrativelyOptimizedEvent { entity });
         }
     }
 }
@@ -64,35 +66,28 @@ mod tests {
 
     #[test]
     fn test_sentient_bureaucracy_activation_after_prolonged_strain() {
-        // Arrange
         let mut app = App::new();
         app.add_systems(Update, update_bureaucracy_sentience_system);
 
-        // Strained admin capacity
         app.insert_resource(AdminStats {
             supply: 100.0,
             demand: 150.0,
             efficiency: 0.5,
         });
-        // Initialize SentientBureaucracyState
         app.insert_resource(SentientBureaucracyState {
             strain_duration: 0.0,
             is_active: false,
         });
 
-        // Act
-        // Simulate updating over time to trigger activation
         for _ in 0..10 {
             app.update();
         }
 
-        // Force the threshold for the sake of the test
         app.world_mut()
             .resource_mut::<SentientBureaucracyState>()
             .strain_duration = 100.0;
         app.update();
 
-        // Assert
         let state = app.world().resource::<SentientBureaucracyState>();
         assert!(
             state.is_active,
@@ -102,8 +97,8 @@ mod tests {
 
     #[test]
     fn test_sentient_bureaucracy_reassigns_tasks() {
-        // Arrange
         let mut app = App::new();
+        app.add_event::<TaskAdministrativelyOptimizedEvent>();
         app.add_systems(Update, autonomous_work_reassignment_system);
 
         app.insert_resource(SentientBureaucracyState {
@@ -120,16 +115,17 @@ mod tests {
             })
             .id();
 
-        // Act
         app.update();
 
-        // Assert
         let action = app.world().entity(pop_entity).get::<PopAction>().unwrap();
-        // Assuming the sentient bureaucracy reroutes work to something else
         assert_ne!(
             action.current,
             ActionType::Work,
             "Sentient Bureaucracy should autonomously reassign actions."
         );
+
+        let events = app.world().resource::<Events<TaskAdministrativelyOptimizedEvent>>();
+        let mut reader = events.get_cursor();
+        assert_eq!(reader.read(events).count(), 1, "Should emit optimization event");
     }
 }
