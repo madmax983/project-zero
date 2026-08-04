@@ -22,7 +22,7 @@ use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
 use rand::Rng;
 
-const PANIC_RADIUS_SQ: i32 = 25; // 5 tile radius
+const PANIC_RADIUS_SQ: f32 = 25.0; // 5 tile radius
 const STRESS_PENALTY_PER_TICK: f32 = 0.5;
 
 /// Component added to pops that have already shrieked a prophecy recently,
@@ -76,11 +76,11 @@ pub fn cassandra_prophesy_system(
     // Apply stress to nearby pops (who are not the prophet)
     for center in panic_centers {
         for (_, pos, mut stress) in all_pops.iter_mut() {
-            let dx = pos.x - center.x;
-            let dy = pos.y - center.y;
+            let dx = pos.x as f32 - center.x as f32;
+            let dy = pos.y as f32 - center.y as f32;
             let dist_sq = dx * dx + dy * dy;
 
-            if dist_sq <= PANIC_RADIUS_SQ && dist_sq > 0 {
+            if dist_sq <= PANIC_RADIUS_SQ && dist_sq > 0.0 {
                 // > 0 to exclude self, though the self might not have StressTracker
                 stress.accumulated_stress += STRESS_PENALTY_PER_TICK;
             }

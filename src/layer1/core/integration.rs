@@ -3372,7 +3372,9 @@ pub fn xenoflora_pet_death_bridge_system(
 
 /// INT-1136: Bridges `TaskAdministrativelyOptimizedEvent` (Sentient Bureaucracy) to `AddChronicleEvent`
 pub fn sentient_bureaucracy_chronicle_bridge(
-    mut events: EventReader<crate::layer1::administration::sentient_bureaucracy::TaskAdministrativelyOptimizedEvent>,
+    mut events: EventReader<
+        crate::layer1::administration::sentient_bureaucracy::TaskAdministrativelyOptimizedEvent,
+    >,
     mut chronicle_events: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
 ) {
     for _ in events.read() {

@@ -72,7 +72,10 @@ impl std::fmt::Display for SignalNetwork {
             )?;
             return Ok(());
         } else {
-            let text = format!("{:<47}", format!("{} active signals detected.", self.signals.len()));
+            let text = format!(
+                "{:<47}",
+                format!("{} active signals detected.", self.signals.len())
+            );
             writeln!(f, "│ {} │", text.with(Color::White))?;
             writeln!(
                 f,
@@ -97,7 +100,11 @@ impl std::fmt::Display for SignalNetwork {
         for signal in &self.signals {
             let is_active = self.active_signal_id == Some(signal.id);
             let status_text = if is_active { "Decrypting" } else { "Idle" };
-            let status_color = if is_active { TableColor::Green } else { TableColor::DarkGrey };
+            let status_color = if is_active {
+                TableColor::Green
+            } else {
+                TableColor::DarkGrey
+            };
 
             let reward_text = match &signal.reward {
                 SignalReward::Knowledge(amt) => format!("Knowledge ({:.1})", amt),
@@ -115,7 +122,11 @@ impl std::fmt::Display for SignalNetwork {
                 Cell::new(signal.id.to_string()).fg(TableColor::DarkGrey),
                 Cell::new(&signal.name).fg(TableColor::White),
                 Cell::new(status_text).fg(status_color),
-                Cell::new(format!("{:.1}%", signal.progress)).fg(if is_active { TableColor::Green } else { TableColor::DarkGrey }),
+                Cell::new(format!("{:.1}%", signal.progress)).fg(if is_active {
+                    TableColor::Green
+                } else {
+                    TableColor::DarkGrey
+                }),
                 Cell::new(reward_text).fg(reward_color),
             ]);
         }

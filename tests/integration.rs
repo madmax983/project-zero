@@ -704,9 +704,9 @@ mod bio_rhythmic_commute_bridge;
 #[path = "integration/chronological_stutter_chronicle.rs"]
 mod chronological_stutter_chronicle;
 
-#[path = "integration/temporal_smuggling_bridge.rs"]
-mod temporal_smuggling_bridge;
 #[path = "integration/sartorial_rebellion.rs"]
 mod sartorial_rebellion;
 #[path = "integration/sentient_bureaucracy.rs"]
 mod sentient_bureaucracy;
+#[path = "integration/temporal_smuggling_bridge.rs"]
+mod temporal_smuggling_bridge;

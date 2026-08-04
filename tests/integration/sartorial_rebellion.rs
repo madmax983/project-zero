@@ -1,6 +1,6 @@
 use bevy_ecs::prelude::*;
-use scale::layer1::social::sartorial_rebellion::Appearance;
 use scale::layer1::entities::pop::{Pop, PopBundle};
+use scale::layer1::social::sartorial_rebellion::Appearance;
 
 #[test]
 fn test_spawned_pops_have_appearance() {

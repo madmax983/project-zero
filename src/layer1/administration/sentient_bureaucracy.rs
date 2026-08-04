@@ -124,8 +124,14 @@ mod tests {
             "Sentient Bureaucracy should autonomously reassign actions."
         );
 
-        let events = app.world().resource::<Events<TaskAdministrativelyOptimizedEvent>>();
+        let events = app
+            .world()
+            .resource::<Events<TaskAdministrativelyOptimizedEvent>>();
         let mut reader = events.get_cursor();
-        assert_eq!(reader.read(events).count(), 1, "Should emit optimization event");
+        assert_eq!(
+            reader.read(events).count(),
+            1,
+            "Should emit optimization event"
+        );
     }
 }

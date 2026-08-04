@@ -34,13 +34,13 @@ pub fn phantom_grid_hum_system(
     buildings: Query<&GridPosition, With<PhantomGridConnected>>,
     mut pops: Query<(&GridPosition, &mut StressTracker)>,
 ) {
-    let hum_radius = 5;
+    let hum_radius = 5.0;
     let stress_increase_rate = 1.0;
 
     for (pop_pos, mut tracker) in pops.iter_mut() {
         for b_pos in buildings.iter() {
-            let dx = pop_pos.x - b_pos.x;
-            let dy = pop_pos.y - b_pos.y;
+            let dx = pop_pos.x as f32 - b_pos.x as f32;
+            let dy = pop_pos.y as f32 - b_pos.y as f32;
             let dist_sq = dx * dx + dy * dy;
 
             if dist_sq <= hum_radius * hum_radius {

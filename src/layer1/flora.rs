@@ -1194,10 +1194,10 @@ pub fn apply_bio_rhythm_aura(
         let mut force_sleep = false;
 
         for (flora_cycle, flora_pos) in flora_query.iter() {
-            let dx = pop_pos.x - flora_pos.x;
-            let dy = pop_pos.y - flora_pos.y;
+            let dx = pop_pos.x as f32 - flora_pos.x as f32;
+            let dy = pop_pos.y as f32 - flora_pos.y as f32;
 
-            if dx * dx + dy * dy <= 25 {
+            if dx * dx + dy * dy <= 25.0 {
                 best_sync = true;
                 match flora_cycle.phase {
                     BloomPhase::Blooming => {
