@@ -31068,3 +31068,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you subsidize their religious travel at great cost to keep your stations running, or blockade the stations to preserve fuel, risking a massive low-gravity rebellion?
 
 ---
+## The Biome-Hacker's Spite
+
+**Layer:** 1
+
+**Fantasy:** Angry colonists weaponizing the terraforming grid to make their neighborhood specifically uninhabitable to outsiders.
+
+**Mechanic:** Pops with high technical skill and low faction loyalty can hack local terraforming nodes. Instead of improving the planet, they micro-adjust the climate in their specific residential block to be freezing, toxic, or highly humid—perfectly tailored to their own genetic traits but lethal to Enforcers or rival pops.
+
+**Emergence:** You send a squad of elite, heavily armored Enforcers to quell a riot in the mutant district. The mutants hack the local moisture vaporators, filling the district with a corrosive fog that rusts the Enforcers' armor shut, leaving them as statues in the streets.
+
+**Tension:** Do you centralize the terraforming grid (making it vulnerable to a single, catastrophic failure) or keep it localized and risk pops using it for ecological guerrilla warfare?
+
+---
+
+## The Architectural Hostage
+
+**Layer:** 1
+
+**Fantasy:** Building critical infrastructure in the exact center of a vulnerable population to deter attacks.
+
+**Mechanic:** When placing high-value or dangerous buildings (like a nuclear reactor or a shield generator), players can choose to interweave them with high-density residential blocks. Invaders or rebellious factions are forced to cause massive civilian casualties to destroy the strategic target, incurring massive diplomatic penalties.
+
+**Emergence:** You surround your primary reactor with residential zones. When a rival faction attacks, they refuse to fire on the reactor to avoid a diplomatic nightmare, allowing your defenses to pick them off. However, a minor containment leak in peacetime instantly poisons the entire neighborhood.
+
+**Tension:** Do you build your military infrastructure safely isolated from civilians, or use your pops as a literal human shield at the risk of devastating collateral damage from accidents?
+
+---
+
+## The Expiration Date Economy
+
+**Layer:** Cross-layer
+
+**Fantasy:** Goods that literally rot in transit, forcing a frantic, high-speed logistics network.
+
+**Mechanic:** Certain ultra-valuable organic resources (like a panacea fruit or unstable exotic matter) have a strict real-time expiration timer. They must be extracted at Layer 1, loaded onto ships, and delivered across the Layer 2 network before they decompose into worthless, or even dangerous, sludge.
+
+**Emergence:** A slight traffic jam at a hyperspace relay causes a massive cargo fleet's payload to rot simultaneously. The resulting miasma of decomposing exotic matter turns the fleet into a toxic ghost armada that drifts uncontrollably into a populated system.
+
+**Tension:** Do you invest in extremely fast, heavily armed courier ships for small payloads, or risk massive bulk freighters that might get delayed and rot?
+
+---
