@@ -6075,3 +6075,18 @@
 **Replaces:** Red tape, administrative strike, malicious compliance
 **Code reference:** `RedTapeEvent`
 **Usage:** "The colony is paralyzed by a Bureaucratic Strike." / "Red tape has delayed all reassignments."
+
+## The Tether
+**Replaces:** Grav-Tug, Tractor Ship
+**Code reference:** N/A (pending implementation)
+**Usage:** "The Tether dragged the asteroid into orbit."
+
+## The Whisper
+**Replaces:** Stealth scout, Spy ship
+**Code reference:** N/A (pending implementation)
+**Usage:** "The Whisper heard them before they arrived."
+
+## The Siphon
+**Replaces:** Atmospheric harvester, Gas skimmer
+**Code reference:** N/A (pending implementation)
+**Usage:** "The Siphon dove into the clouds."
