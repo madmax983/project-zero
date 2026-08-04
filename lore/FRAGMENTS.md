@@ -11047,3 +11047,26 @@ What kind of chronological debris is found.
 - administrative burnout
 - plummeting morale
 - unfulfilled demands
+
+## Three New Layer 2 Ship Concepts Fragments
+
+## Fragment Type: [TARGET_ASTEROID]
+- an iron-rich comet
+- a volatile ice chunk
+- the rogue asteroid
+- a massive slag cluster
+- a derelict transport hull
+
+## Fragment Type: [SECTOR]
+- Sector 4-G
+- the Outer Rim
+- the Core Worlds
+- the Quarantine Zone
+- the Dead Expanse
+
+## Fragment Type: [GAS_GIANT]
+- a bruised-purple gas giant
+- the turbulent helium sphere
+- a massive storm-world
+- an irradiated super-jovian
+- the deep azure clouds

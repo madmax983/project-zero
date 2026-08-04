@@ -11054,3 +11054,27 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The administrators in [COLONY] dropped their pens. Morale is [ADMIN_MORALE]. A Bureaucratic Strike begins."
 - "Red tape chokes [COLONY] in [YEAR]. The cause: [STRIKE_CAUSE]. Nothing is approved."
 - "[YEAR]: The Bureaucratic Strike in [COLONY] ends. Work resumes, but the backlog is immense."
+
+## Template: TETHER_TUG_DEPLOYED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [TARGET_ASTEROID]
+
+**Patterns:**
+- "[YEAR]: The Tether-class tug hooked [TARGET_ASTEROID], dragging it screaming across the system."
+- "Surveyors report the successful grapple of [TARGET_ASTEROID] by our slow-moving Tether ships."
+
+## Template: WHISPER_SCOUT_INTEL
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SECTOR]
+
+**Patterns:**
+- "A Whisper scout returned from [SECTOR]. It saw everything, but no one saw it."
+- "[YEAR]: Silent observation of [SECTOR] complete. The Whisper brings dark tidings."
+
+## Template: SIPHON_HARVEST_RUN
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [GAS_GIANT]
+
+**Patterns:**
+- "[YEAR]: A Siphon harvester dove into the storms of [GAS_GIANT]. The hull screams, but the hold fills."
+- "The volatile gases of [GAS_GIANT] were successfully skimmed. Another Siphon requires immediate repair."
