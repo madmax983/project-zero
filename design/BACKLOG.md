@@ -44,7 +44,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `354` Industrial Byproducts — `specs/354-industrial-byproducts.md`
 - [ ] `356` Orbital Crossfire — `specs/356-orbital-crossfire.md`
 - [ ] `357` Graffiti & Signage — `specs/357-graffiti-and-signage.md`
-- [ ] `358` Stress Breakdowns — `specs/358-stress-breakdowns.md`
 - [ ] `359` Shift Work — `specs/359-shift-work.md`
 - [ ] `360` Resource Capacities — `specs/360-resource-capacities.md`
 - [ ] `361` The Posthumous Work Shift — `specs/361-the-posthumous-work-shift.md`

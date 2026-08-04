@@ -152,6 +152,16 @@ fn determine_breakdown_type(traits: Option<&Traits>) -> BreakdownType {
 }
 
 /// System to update and expire breakdowns.
+#[allow(clippy::type_complexity)]
+pub fn apply_breakdown_effects_system(
+    mut commands: Commands,
+    query: Query<Entity, (With<crate::layer1::entities::pop::Pop>, With<Breakdown>, With<crate::layer1::entities::pop::Job>)>,
+) {
+    for entity in query.iter() {
+        commands.entity(entity).remove::<crate::layer1::entities::pop::Job>();
+    }
+}
+
 pub fn update_breakdown_system(mut commands: Commands, mut query: Query<(Entity, &mut Breakdown)>) {
     for (entity, mut breakdown) in &mut query {
         if breakdown.duration_remaining > 0 {
@@ -486,6 +496,31 @@ mod tests {
 
         let tracker2 = world.get::<StressTracker>(pop_catharsis).unwrap();
         assert_eq!(tracker2.accumulated_stress, 0.0);
+    }
+
+    #[test]
+    fn test_breakdown_cancels_current_job() {
+        let mut world = World::new();
+        let mut schedule = Schedule::default();
+        schedule.add_systems(apply_breakdown_effects_system);
+
+        let pop = world
+            .spawn((
+                Pop,
+                Breakdown {
+                    breakdown_type: BreakdownType::Dazing,
+                    duration_remaining: 100,
+                },
+                crate::layer1::entities::pop::Job {
+                    workplace: Entity::PLACEHOLDER,
+                    job_type: crate::layer1::mind::utility_types::AssignmentType::DeepMining,
+                },
+            ))
+            .id();
+
+        schedule.run(&mut world);
+
+        assert!(world.get::<crate::layer1::entities::pop::Job>(pop).is_none());
     }
 
     #[test]
