@@ -1108,8 +1108,9 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
     ));
 
     #[cfg(feature = "nova")]
-    #[cfg(feature = "nova")]
     crate::experimental::tavern_brawls::register(schedule);
+    #[cfg(feature = "nova")]
+    crate::experimental::grave_robbery::register(schedule);
     #[cfg(feature = "nova")]
     crate::experimental::tectonic_prophets::register(schedule);
     #[cfg(feature = "nova")]
