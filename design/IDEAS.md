@@ -31027,3 +31027,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you use the Silencer to hide your own operations at the cost of blinding your local logistics, or deploy the Lantern to secure a safe route while ringing the dinner bell for the void's predators?
 
 ---
+## The Automated Blockade Glitch
+
+**Layer:** 2 -> 1
+
+**Fantasy:** An automated defense fleet that blindly follows outdated loyalties, besieging the very planet it was built to protect.
+
+**Mechanic:** Automated Layer 2 defense platforms occasionally activate ancient "Quarantine" protocols due to corrupted data. They misidentify current trade ships as enemies due to expired IFF tags, effectively blockading your own planet and destroying all incoming supplies.
+
+**Emergence:** You invest heavily in an impenetrable orbital defense grid for your core world. A century later, a minor software glitch causes the grid to activate quarantine mode. Your planet begins to starve as your own automated guns obliterate every relief ship you send.
+
+**Tension:** Do you destroy your own powerful (and expensive) defense grid to save the colony from starvation, or try to mount a desperate hacking operation from the surface before the colony collapses?
+
+---
+
+## The Void's Toll
+
+**Layer:** 2 -> 1
+
+**Fantasy:** The psychological horror of deep space transit infecting a planetary population.
+
+**Mechanic:** Ships traveling on long, deep-space routes (Layer 2) accumulate "Void Stress." When they arrive and unload crew/passengers onto a Layer 1 colony, that stress acts as a contagion, causing paranoia and hallucinations among the local pops who interact with the arrivals.
+
+**Emergence:** A massive, long-awaited trade fleet arrives from the outer rim, bringing immense wealth and vital supplies. However, the crew's severe Void Stress infects your entire spaceport district, causing the dockworkers to riot against "invisible monsters" and shutting down logistics just when you needed them most.
+
+**Tension:** Do you quarantine arriving long-haul ships, significantly slowing down trade and losing profits, or let them dock immediately and risk destabilizing the colony's sanity?
+
+---
+
+## The Gravity Well Pilgrimage
+
+**Layer:** Cross-layer (2 -> 1)
+
+**Fantasy:** Pops born in the void traveling across the system just to feel the crushing weight of a true planet.
+
+**Mechanic:** Pops born on low-gravity stations or moons (Layer 2 nodes) develop a cultural, almost religious obsession with the "Homeworld" or any high-gravity planet (Layer 1). They demand "Pilgrimage" transport. If denied, they become radicalized and stop working.
+
+**Emergence:** A massive, unorganized flotilla of civilian ships forms to make the pilgrimage to a holy, high-gravity world. They clog your hyperlanes and consume all the system's civilian fuel, completely freezing your military logistics right as an enemy fleet invades the system.
+
+**Tension:** Do you subsidize their religious travel at great cost to keep your stations running, or blockade the stations to preserve fuel, risking a massive low-gravity rebellion?
+
+---
