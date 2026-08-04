@@ -44,6 +44,7 @@ pub use crate::shared::scenario::*;
 pub fn setup_world() -> World {
     let mut world = World::new();
     world.init_resource::<crate::layer1::logistics::mycelial::MycelialNetwork>();
+    world.init_resource::<bevy_ecs::event::Events<crate::layer2::fleet::FleetCommand>>();
     world.init_resource::<crate::layer1::social::politics::ElectionCycle>();
     world.init_resource::<crate::layer1::social::politics::ActiveMandate>();
     world.init_resource::<bevy_ecs::event::Events<crate::layer1::tech::temporal_smuggling::OpenRiftEvent>>();
@@ -108,6 +109,7 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world.init_resource::<Events<crate::layer1::gravity_funerals::SunBurialRequestEvent>>();
     world.init_resource::<bevy_ecs::prelude::Events<crate::layer2::celestial_library::LibraryDonationEvent>>();
     world.init_resource::<crate::layer1::logistics::mycelial::MycelialNetwork>();
+    world.init_resource::<bevy_ecs::event::Events<crate::layer2::fleet::FleetCommand>>();
     world.init_resource::<crate::layer1::social::politics::ElectionCycle>();
     world.init_resource::<crate::layer1::social::politics::ActiveMandate>();
     world.init_resource::<bevy_ecs::prelude::Events<crate::layer1::logistics::mycelial::ContaminationEvent>>();
