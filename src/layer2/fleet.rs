@@ -463,3 +463,16 @@ pub fn calculate_speed_modifier(count: u32) -> f32 {
     let penalty = count as f32 * DRAG_PER_BARNACLE;
     (1.0 - penalty).max(MIN_SPEED)
 }
+
+#[derive(bevy_ecs::prelude::Event, Debug, Clone, Copy)]
+pub enum FleetCommand {
+    ConsumeTile {
+        fleet: bevy_ecs::prelude::Entity,
+        target: crate::layer1::map::GridPosition,
+    },
+}
+
+#[derive(bevy_ecs::prelude::Component, Debug, Clone, Copy)]
+pub struct WorldEater {
+    pub efficiency: u32,
+}

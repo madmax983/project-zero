@@ -146,3 +146,4 @@ pub mod stolen_fleet;
 pub mod void_leviathan;
 pub use stolen_fleet::*;
 pub mod propaganda_engine;
+pub mod ecophagy;

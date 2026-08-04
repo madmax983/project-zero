@@ -493,7 +493,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1008` The Refugee Archipelago — `specs/1008-the-refugee-archipelago.md`
 - [ ] `1013` The Void Echoes — `specs/1013-the-void-echoes.md`
 
-- [ ] `1019` Ecophagy — `specs/1019-ecophagy.md`
+
 - [ ] `1020` Spatial Compression — `specs/1020-spatial-compression.md`
 - [ ] `1021` The Shadow Cabinet — `specs/1021-the-shadow-cabinet.md`
 - [ ] `1032` Open Source Science — `specs/1032-open-source-science.md`
