@@ -18,3 +18,6 @@
 **2024-05-18 - [Fix unsound event-listener]**
 **Threat:** `event-listener` v5.4.1 allows `!Send` tags to cross thread boundaries via `StackSlot` (RUSTSEC-2026-0221)
 **Defense:** Bumped `event-listener` dependency to version 5.4.2
+**2025-07-26 - [Integer Overflow DoS in Distance Calculations]**
+**Threat:** [Unhandled integer overflow during distance calculation (`pos.x - center.x` causing `attempt to subtract with overflow`) allowed panics and DoS if extreme coordinates were passed in `phantom_grid.rs`, `flora.rs`, and `cassandra_warning.rs`.]
+**Defense:** [Cast coordinate values to `f32` *before* subtraction or multiplication to ensure floating-point math handles large inputs without panicking.]

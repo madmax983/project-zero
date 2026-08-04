@@ -111,7 +111,9 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<crate::layer2::propaganda_engine::DiplomaticWeight>();
     world.init_resource::<crate::layer2::propaganda_engine::InspectorEvent>();
     world.init_resource::<bevy_ecs::event::Events<crate::layer1::core::chronicle::AddChronicleEvent>>();
-    world.init_resource::<bevy_ecs::event::Events<crate::layer1::administration::sentient_bureaucracy::TaskAdministrativelyOptimizedEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<
+        crate::layer1::administration::sentient_bureaucracy::TaskAdministrativelyOptimizedEvent,
+    >>();
     world.init_resource::<bevy_ecs::event::Events<crate::cross_layer::generation_ship_mutiny::MutinyEvent>>();
 
     world.init_resource::<bevy_ecs::event::Events<crate::cross_layer::interplanetary_pollination::SporeReleaseEvent>>();
