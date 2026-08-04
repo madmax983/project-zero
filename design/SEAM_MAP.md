@@ -1872,3 +1872,9 @@
 - **Systems connected:** `PopBundle::random` -> `Appearance` component
 - **Glue added:** Added `Appearance` to `PopBundle` and initialized it in `PopBundle::random` in `src/layer1/entities/pop.rs` to ensure newly spawned pops can adopt visual signifiers.
 - **Tests:** `tests/integration/sartorial_rebellion.rs`
+
+### INT-1136: Sentient Bureaucracy -> Chronicle
+- **Date:** 2026-11-01
+- **Systems connected:** `TaskAdministrativelyOptimizedEvent` (Sentient Bureaucracy) -> `sentient_bureaucracy_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `TaskAdministrativelyOptimizedEvent` to `src/layer1/administration/sentient_bureaucracy.rs`. Added `sentient_bureaucracy_chronicle_bridge` in `src/layer1/core/integration.rs`. Registered in `src/layer1/systems/observation.rs`.
+- **Tests:** `tests/integration/sentient_bureaucracy.rs`

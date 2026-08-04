@@ -708,3 +708,5 @@ mod chronological_stutter_chronicle;
 mod temporal_smuggling_bridge;
 #[path = "integration/sartorial_rebellion.rs"]
 mod sartorial_rebellion;
+#[path = "integration/sentient_bureaucracy.rs"]
+mod sentient_bureaucracy;

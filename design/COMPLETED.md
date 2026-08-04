@@ -956,3 +956,4 @@
 - [x] `315` The Propaganda Engine — `specs/315-propaganda-engine.md` — completed 2026-02-01
 - [x] `1014` Gravity-Well Funerals — `specs/1014-gravity-well-funerals.md` — completed 2026-02-01
 - [x] `INT-1334` Integration: Pop Spawning -> Sartorial Rebellion — completed 2026-08-02
+- [x] `INT-1136` Integration: Sentient Bureaucracy -> Chronicle — completed 2026-11-01
