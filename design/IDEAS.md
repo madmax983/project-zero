@@ -31151,3 +31151,30 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Utilizing highly efficient but dangerous external momentum vs. relying on safe, expensive conventional drives.
 
 ---
+## The Empathic Blackout
+
+**Layer:** 1
+
+**Fantasy:** The sheer volume of tragedy makes people stop caring.
+
+**Mechanic:** When a colony experiences a massive disaster (famine, plague, orbital bombardment) causing a high death toll, surviving Pops initially suffer severe negative mood debuffs (grief, terror). However, if the disaster persists or repeats too frequently, the Pops develop "Empathic Burnout." They no longer receive negative mood penalties from death or disaster, but they also stop caring about positive interactions—completely ignoring art, entertainment, and social relationships.
+
+**Emergence:** Your colony is trapped in a brutal, decade-long siege. To survive, the citizens become completely numb. When the war finally ends and you try to rebuild, you find your population is highly efficient but utterly immune to morale boosts, creating a cold, gray society that refuses to celebrate its own survival.
+
+**Tension:** Do you let a tragedy run its course and accept a permanently emotionally stunted workforce, or spend exorbitant resources to shield them from the horror to preserve their humanity?
+
+---
+
+## Geothermal Sync-Sickness
+
+**Layer:** 1
+
+**Fantasy:** The planet's heartbeat disrupts your own.
+
+**Mechanic:** On geologically active planets, Pops living near major fault lines or thermal vents begin to sync their circadian rhythms to the planet's tectonic micro-tremors rather than the artificial day/night cycle. If a major quake occurs or if they are relocated to a stable world, they suffer severe "Sync-Sickness," leading to chronic fatigue, hallucinations, and a complete breakdown of work schedules.
+
+**Emergence:** You build your capital around a massive, energy-rich thermal vent. Decades later, a massive tectonic shift permanently alters the vent's rhythm. Your entire capital's workforce falls into a synchronized coma, paralyzed by the sudden biological desync.
+
+**Tension:** Do you harvest the immense, cheap energy of unstable regions, knowing it permanently alters the biology and schedule of the workers stationed there?
+
+---
