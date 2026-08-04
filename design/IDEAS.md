@@ -31109,3 +31109,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you invest in extremely fast, heavily armed courier ships for small payloads, or risk massive bulk freighters that might get delayed and rot?
 
 ---
+
+## The Decoy Projection Frigate
+
+**Layer:** 2
+
+**Fantasy:** Waging psychological warfare and misdirection on a system-wide scale.
+
+**Mechanic:** A ship armed with massive, specialized emission arrays that project the sensor ghost of a much larger dreadnought or an entire civilian convoy. It cannot fight, but it draws enemy fleets away from real targets or scares off pirates.
+
+**Emergence:** You project a fake armada to break a planetary siege. The enemy retreats, but the projection also accidentally terrifies your own local frontier colonies, causing them to bunker down and halt all economic output out of fear of a massive battle.
+
+**Tension:** Do you spend resources on cheap, fake fleets that might fail instantly if scanned closely, or build real, expensive military assets?
+
+---
+
+## The Biome-Seeder Corvette
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Delivering extreme, localized terraforming packages via orbital drop to solve (or create) ground-level crises.
+
+**Mechanic:** A fast-response vessel loaded with single-use terraforming pods. From Layer 2, it drops pods onto Layer 1 to instantly alter terrain—creating a temporary localized rainstorm to put out a fire, or dropping fast-growing alien flora to block an enemy advance.
+
+**Emergence:** A rival's mining colony is booming, so you deploy a Seeder to drop a localized blizzard squarely on their industrial sector, freezing their operations while maintaining plausible deniability of a natural disaster.
+
+**Tension:** Highly effective but single-use payloads. Do you hold the seeder in reserve to save your own colonies from disaster, or use it offensively to sabotage rivals?
+
+---
+
+## The Momentum Tether Barge
+
+**Layer:** 2
+
+**Fantasy:** Treating the physics of space flight as a weapon and a logistical tool.
+
+**Mechanic:** A massive, heavily armored ship equipped with magnetic tethers. It latches onto high-speed asteroids or passing comets to rapidly accelerate without burning fuel, or harpoons enemy ships to forcibly alter their trajectory, dragging them into hazards like debris fields.
+
+**Emergence:** You latch onto a fast-moving comet to quickly cross a hostile system undetected. The comet unexpectedly breaks apart, and your Tether Barge is dragged into a dangerous spin, requiring a costly rescue mission.
+
+**Tension:** Utilizing highly efficient but dangerous external momentum vs. relying on safe, expensive conventional drives.
+
+---
