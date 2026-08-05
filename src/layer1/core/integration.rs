@@ -48,6 +48,28 @@ pub fn kinetic_strike_chronicle_bridge(
     }
 }
 
+pub fn bureaucratic_strike_chronicle_bridge(
+    red_tape: Option<Res<crate::layer1::social::bureaucratic_strike::RedTapeEvent>>,
+    mut was_active: Local<bool>,
+    mut chronicle: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+) {
+    if let Some(red_tape) = red_tape {
+        if red_tape.active && !*was_active {
+            chronicle.send(crate::layer1::core::chronicle::AddChronicleEvent {
+                text: "A massive bureaucratic strike has crippled administration. Expect severe red tape!".to_string(),
+                importance: crate::layer1::core::chronicle::EventImportance::Major,
+            });
+            *was_active = true;
+        } else if !red_tape.active && *was_active {
+            chronicle.send(crate::layer1::core::chronicle::AddChronicleEvent {
+                text: "The bureaucratic strike has ended. Paperwork is flowing again.".to_string(),
+                importance: crate::layer1::core::chronicle::EventImportance::Standard,
+            });
+            *was_active = false;
+        }
+    }
+}
+
 /// INT-1023: Bridges `Added<TemporalFugue>` to `AddChronicleEvent`
 pub fn temporal_fugue_chronicle_bridge(
     query: Query<(), Added<crate::layer1::mind::temporal_fugue::TemporalFugue>>,

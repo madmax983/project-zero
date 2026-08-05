@@ -959,3 +959,4 @@
 - [x] `INT-1136` Integration: Sentient Bureaucracy -> Chronicle — completed 2026-11-01
 - [x] `358` Stress Breakdowns — `specs/358-stress-breakdowns.md` — completed 2026-02-01
 - [x] `1019` Ecophagy — `specs/1019-ecophagy.md` — completed 2026-02-01
+- [x] `INT-309` Integration: Bureaucratic Strike -> Chronicle — completed 2026-11-01
