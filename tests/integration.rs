@@ -710,3 +710,6 @@ mod sartorial_rebellion;
 mod sentient_bureaucracy;
 #[path = "integration/temporal_smuggling_bridge.rs"]
 mod temporal_smuggling_bridge;
+
+#[path = "integration/bureaucratic_strike_chronicle_bridge.rs"]
+mod bureaucratic_strike_chronicle_bridge;

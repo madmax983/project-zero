@@ -1878,3 +1878,10 @@
 - **Systems connected:** `TaskAdministrativelyOptimizedEvent` (Sentient Bureaucracy) -> `sentient_bureaucracy_chronicle_bridge` -> `AddChronicleEvent`
 - **Glue added:** Added `TaskAdministrativelyOptimizedEvent` to `src/layer1/administration/sentient_bureaucracy.rs`. Added `sentient_bureaucracy_chronicle_bridge` in `src/layer1/core/integration.rs`. Registered in `src/layer1/systems/observation.rs`.
 - **Tests:** `tests/integration/sentient_bureaucracy.rs`
+
+### INT-309: Bureaucratic Strike -> Chronicle
+- **Date:** 2026-11-01
+- **Systems connected:** `RedTapeEvent` -> `bureaucratic_strike_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `bureaucratic_strike_chronicle_bridge` in `src/layer1/core/integration.rs` to generate Chronicle records when a bureaucratic strike starts or ends.
+- **Schedule:** Registered the system in `src/layer1/systems/observation.rs`.
+- **Tests:** Added tests in `tests/integration/bureaucratic_strike_chronicle_bridge.rs`.
