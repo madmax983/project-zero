@@ -210,7 +210,7 @@ fn find_path_internal(
 
     let width = terrain.width;
     let height = terrain.height;
-    let size = width * height;
+    // let size = width * height;
 
     // Use flat vectors for O(1) access.
     // u32::MAX serves as "None" for parent index.
@@ -241,8 +241,8 @@ fn find_path_internal(
         }
     }
 
-    let mut came_from = vec![u32::MAX; size];
-    let mut cost_so_far = vec![i32::MAX; size];
+    let mut came_from: bevy::utils::HashMap<usize, u32> = bevy::utils::HashMap::default();
+    let mut cost_so_far: bevy::utils::HashMap<usize, i32> = bevy::utils::HashMap::default();
     let mut open_set = BinaryHeap::new();
 
     // Helper to get index from pos
@@ -257,7 +257,7 @@ fn find_path_internal(
     };
 
     if let Some(start_idx) = get_idx(start) {
-        cost_so_far[start_idx] = 0;
+        cost_so_far.insert(start_idx, 0);
         open_set.push(Node {
             pos: start,
             cost: 0,
@@ -275,10 +275,7 @@ fn find_path_internal(
             while current != start {
                 path.push(current);
                 let idx = get_idx(current)?;
-                let parent_idx = came_from[idx];
-                if parent_idx == u32::MAX {
-                    return None; // Should not happen if path found
-                }
+                let parent_idx = *came_from.get(&idx)?;
                 // Convert index back to pos
                 #[allow(clippy::cast_possible_truncation, clippy::cast_possible_wrap)]
                 let px = (parent_idx as usize % width) as i32;
@@ -295,7 +292,7 @@ fn find_path_internal(
         };
 
         // Check if we found a shorter path already (standard A* opt)
-        if cost > cost_so_far[current_idx] {
+        if cost > *cost_so_far.get(&current_idx).unwrap_or(&i32::MAX) {
             continue;
         }
 
@@ -358,8 +355,8 @@ fn find_path_internal(
 
             let new_cost = cost + tile_cost;
 
-            if new_cost < cost_so_far[next_idx] {
-                cost_so_far[next_idx] = new_cost;
+            if new_cost < *cost_so_far.get(&next_idx).unwrap_or(&i32::MAX) {
+                cost_so_far.insert(next_idx, new_cost);
                 let priority = new_cost + manhattan_distance(next, end);
                 open_set.push(Node {
                     pos: next,
@@ -369,7 +366,7 @@ fn find_path_internal(
                 // Since 1M tiles fits in u32 (up to 4B), this cast is safe given limits.
                 #[allow(clippy::cast_possible_truncation)]
                 {
-                    came_from[next_idx] = current_idx as u32;
+                    came_from.insert(next_idx, current_idx as u32);
                 }
             }
         }

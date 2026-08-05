@@ -155,10 +155,19 @@ fn determine_breakdown_type(traits: Option<&Traits>) -> BreakdownType {
 #[allow(clippy::type_complexity)]
 pub fn apply_breakdown_effects_system(
     mut commands: Commands,
-    query: Query<Entity, (With<crate::layer1::entities::pop::Pop>, With<Breakdown>, With<crate::layer1::entities::pop::Job>)>,
+    query: Query<
+        Entity,
+        (
+            With<crate::layer1::entities::pop::Pop>,
+            With<Breakdown>,
+            With<crate::layer1::entities::pop::Job>,
+        ),
+    >,
 ) {
     for entity in query.iter() {
-        commands.entity(entity).remove::<crate::layer1::entities::pop::Job>();
+        commands
+            .entity(entity)
+            .remove::<crate::layer1::entities::pop::Job>();
     }
 }
 
@@ -520,7 +529,9 @@ mod tests {
 
         schedule.run(&mut world);
 
-        assert!(world.get::<crate::layer1::entities::pop::Job>(pop).is_none());
+        assert!(world
+            .get::<crate::layer1::entities::pop::Job>(pop)
+            .is_none());
     }
 
     #[test]

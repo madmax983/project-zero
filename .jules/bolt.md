@@ -17,3 +17,7 @@
 **[Iterator `max_by` Optimization]**
 **Learning:** In hot loops tracking priority (like resolving the highest favored faction by social debt in `evaluate_faction_support_system`), fetching elements into a dynamically allocated vector (`.collect::<Vec<_>>()`) and sorting them entirely (`.sort_by()`) creates an `O(N log N)` bottleneck with constant memory reallocation. This can be perfectly bypassed by composing iterator adaptors like `.filter_map()` chained directly into `.max_by()`, which resolves the same deterministic answer in `O(N)` time with zero heap allocations.
 **Action:** When you only need the "best" or "worst" element of a collection, always prefer `.max_by()` or `.min_by()` on iterators over `.collect::<Vec<_>>().sort_by()`. Remember to carefully trace the comparison logic: `max_by` seeks the highest element, so inverted tie-breaking (`e2.cmp(e1)` to get the lowest ID) is crucial to maintain original deterministic behavior.
+
+**[A* Memory Optimization: Replacing large vectors with HashMaps]**
+**Learning:** In A* pathfinding on large grids, allocating two vectors of size `width * height` (`came_from` and `cost_so_far`) on *every* pathfinding request is incredibly slow and fragmenting, especially when the path is much smaller than the grid.
+**Action:** Replace full-grid pre-allocated tracking vectors in A* with `bevy::utils::HashMap` keyed by grid index. This strictly limits memory allocation to the explored path area instead of the entire grid, scaling pathfinding cost to the path length rather than the map size.

@@ -556,7 +556,9 @@ impl std::fmt::Display for OralTradition {
             };
 
             table.add_row(vec![
-                Cell::new(&genre_str).fg(genre_color).add_attribute(comfy_table::Attribute::Bold),
+                Cell::new(&genre_str)
+                    .fg(genre_color)
+                    .add_attribute(comfy_table::Attribute::Bold),
                 Cell::new(story.historical_date.to_string()).fg(TableColor::Cyan),
                 Cell::new(story.mutations.to_string()).fg(mutations_color),
                 Cell::new(format!("\"{}\"", story.text)).fg(TableColor::White),
