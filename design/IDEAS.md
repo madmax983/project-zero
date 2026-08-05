@@ -31275,3 +31275,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you leverage the immense bonuses of VIPs by moving them where they are needed, knowing their mere presence disrupts the entire galactic supply chain?
 
 ---
+
+## Orbital Deceleration Plumes
+
+**Layer:** 2 -> 1
+
+**Fantasy:** The brutal physics of massive spaceships interacting with delicate planet atmospheres.
+
+**Mechanic:** When large fleets decelerate rapidly in a planet's gravity well, their exhaust plumes create massive, temporary atmospheric disturbances (hyper-storms, acid rain, radiation spikes) on the Layer 1 colony directly beneath them.
+
+**Emergence:** An allied fleet arrives to save your colony from an invasion, performing an emergency high-g braking maneuver. The resulting exhaust plume causes a flash-drought and radioactive fallout, starving the people they just saved from military conquest.
+
+**Tension:** Do you mandate slow, safe braking for visiting fleets (leaving you vulnerable to attack during the approach) or allow fast, dirty arrivals that constantly wreck your planetary infrastructure?
+
+---
+
+## Weaponized Invasive Xenoflora
+
+**Layer:** Cross-layer
+
+**Fantasy:** Using an aggressive, fast-growing alien ecosystem as a weapon of mass denial.
+
+**Mechanic:** Players can deliberately introduce an invasive, hyper-aggressive plant species to a Layer 1 colony. The plant provides incredible defensive fortification and biomass generation, but slowly engulfs all other industries, eventually making the colony uninhabitable without orbital bombardment from Layer 2.
+
+**Emergence:** You seed a border world with the plant to make it unassailable by enemy ground forces. Decades later, the plant evolves a defense mechanism and launches spores into orbit, damaging your own trade ships.
+
+**Tension:** Do you unleash a biological weapon that provides immediate defensive benefits but requires you to permanently orbital-strike your own planet later to contain it?
+
+---
+
+## The Smuggler's Comm-Grid
+
+**Layer:** Cross-layer
+
+**Fantasy:** When the official channels fail, the criminal underworld becomes your only lifeline to the stars.
+
+**Mechanic:** If a system's official communication relay is destroyed, players can pay exorbitant fees to pirate networks to use their hidden comms infrastructure. This allows the player to continue sending orders to the cut-off colony.
+
+**Emergence:** You rely heavily on the smuggler comms to coordinate a defense during a major siege. The pirates realize you are entirely dependent on them and suddenly hike the transmission fee by 500% mid-battle, bankrupting your empire.
+
+**Tension:** Do you rely on robust but easily-targeted state infrastructure, or resilient but extortionate criminal networks?
+
+---
