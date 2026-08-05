@@ -1885,3 +1885,9 @@
 - **Glue added:** Added `bureaucratic_strike_chronicle_bridge` in `src/layer1/core/integration.rs` to generate Chronicle records when a bureaucratic strike starts or ends.
 - **Schedule:** Registered the system in `src/layer1/systems/observation.rs`.
 - **Tests:** Added tests in `tests/integration/bureaucratic_strike_chronicle_bridge.rs`.
+### INT-1020: Spatial Compression -> Chronicle
+- **Date:** 2026-11-01
+- **Systems connected:** `PocketCollapseEvent` -> `spatial_compression_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `spatial_compression_chronicle_bridge` in `src/layer1/core/integration.rs` to generate Chronicle records when a Pocket Dimension collapses.
+- **Schedule:** Registered the system in `src/layer1/systems/observation.rs`.
+- **Tests:** Added tests in `tests/integration/spatial_compression_chronicle.rs`.
