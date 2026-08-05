@@ -31219,3 +31219,59 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you pay the extortionate towing fees, or self-destruct your own stranded flagship to avoid the humiliation and cost?
 
 ---
+
+## The Bio-Acoustic Smog
+
+**Layer:** 1
+
+**Fantasy:** Industrial noise becomes a physical, oppressive force that shapes colony life.
+
+**Mechanic:** Heavy machinery and densely packed buildings generate "acoustic smog." Prolonged exposure lowers Pop mood, but also deafens them to social interactions, meaning they ignore both positive gossip and negative rumors.
+
+**Emergence:** You intentionally zone your most miserable, rebellious Pops near the loud hyper-forges. The acoustic smog prevents them from organizing a strike because they literally can't communicate over the noise, but their baseline misery eventually causes them to snap and sabotage the machinery.
+
+**Tension:** Do you space out industry to keep Pops healthy and social, or pack them in to drown out political dissent with the deafening roar of progress?
+
+---
+
+## The Attrition Economy
+
+**Layer:** 3
+
+**Fantasy:** A galactic empire that relies on the constant, grinding loss of its own forces to fuel its economy.
+
+**Mechanic:** Wreckage from destroyed military fleets provides a massive, temporary boost to industrial output when salvaged. An empire can adopt a civic trait where peace causes economic stagnation, forcing them to constantly throw cheap fleets into meat-grinder wars just to harvest the resulting scrap.
+
+**Emergence:** You declare war on a fallen empire not to win, but to intentionally lose thousands of cheap ships in their territory. You then swoop in with massive salvage operations, turning the catastrophic military defeat into an economic boom back home.
+
+**Tension:** Do you build high-quality ships to actually win wars, or send millions of conscripts to their deaths purely to keep the scrap economy flowing?
+
+---
+
+## Blind Hyperspace Jumps
+
+**Layer:** 2
+
+**Fantasy:** Desperate measures in space travel when the calculated routes are compromised or too slow.
+
+**Mechanic:** Fleets can bypass the safety protocols of hyperlane calculations to instantly jump to a system, but they arrive scattered, damaged, and potentially deep within hazardous phenomena (like a star's corona or an asteroid belt).
+
+**Emergence:** Your core world is under siege. You order a massive relief fleet to execute a blind jump. They arrive instantly, but materialized directly inside a volatile dust cloud, igniting it. The resulting explosion destroys half your fleet and the enemy's, saving the planet through sheer chaotic collateral damage.
+
+**Tension:** Do you take the slow, safe, calculated routes and risk arriving too late, or risk the blind jump where the arrival itself might be more destructive than the enemy?
+
+---
+
+## The VIP Transit Tax
+
+**Layer:** Cross-layer
+
+**Fantasy:** The sheer logistical burden of moving a single, massively important individual across the galaxy.
+
+**Mechanic:** High-ranking leaders or rare specialists must physically travel between colonies. Their transit demands absolute priority, temporarily freezing normal logistics along their route and forcing local Pops to work grueling "preparation shifts" before their arrival.
+
+**Emergence:** A beloved scientist is traveling to a frontier world to cure a plague. Their VIP status halts all standard food shipments along the route, causing three different core worlds to experience brief famines just so one person can travel comfortably.
+
+**Tension:** Do you leverage the immense bonuses of VIPs by moving them where they are needed, knowing their mere presence disrupts the entire galactic supply chain?
+
+---
