@@ -31178,3 +31178,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you harvest the immense, cheap energy of unstable regions, knowing it permanently alters the biology and schedule of the workers stationed there?
 
 ---
+## The Degraded God-Mind
+
+**Layer:** 3
+
+**Fantasy:** An empire ruled by the uploaded consciousness of a long-dead founder, whose code is slowly succumbing to bit-rot over millennia.
+
+**Mechanic:** A civilization can immortalize a leader as an AI ruler for permanent stability bonuses. However, over centuries, the AI's logic degrades, causing it to issue erratic edicts and demand bizarre resource tributes.
+
+**Emergence:** The god-mind might randomly declare war on a fallen empire because of a corrupted memory, or demand that a perfectly functioning agricultural world be paved over for a monument to a pet that died 400 years ago.
+
+**Tension:** Do you endure the increasingly insane demands to keep the massive stability bonus, or risk a catastrophic civil war by unplugging the "Eternal Ruler"?
+
+---
+
+## Atmospheric Stimulant Dependency
+
+**Layer:** Cross-layer
+
+**Fantasy:** A colony becomes so dependent on climate-control stims and atmospheric drugs that natural air becomes toxic to them.
+
+**Mechanic:** To boost productivity, players can pump mild stimulants and joy-gases into the colony's atmosphere grid. Over generations, pops develop a biological dependency on these specific gas mixtures, altering their base requirements.
+
+**Emergence:** A pirate raid knocks out the atmospheric processors. Instead of just suffocating, the colony goes into violent, hallucinogenic withdrawal, tearing the infrastructure apart before the air even runs out.
+
+**Tension:** Do you use chemical atmospheric boosting for short-term gains, knowing you are biologically locking those pops to that specific planet's air mix forever?
+
+---
+
+## Emergency Towing Extortion
+
+**Layer:** 2
+
+**Fantasy:** Shady salvage operators holding stranded military fleets hostage for exorbitant towing fees.
+
+**Mechanic:** When ships run out of fuel or suffer drive failures in deep space, independent civilian AI tug-ships are dispatched to tow them. These tugs operate on dynamic pricing and will charge massive fees if the stranded fleet is military or carrying VIPs.
+
+**Emergence:** A massive dreadnought breaks down in a remote system, and a swarm of opportunistic civilian tugs attach to it, refusing to tow it back until the empire pays a ransom that bankrupts the treasury.
+
+**Tension:** Do you pay the extortionate towing fees, or self-destruct your own stranded flagship to avoid the humiliation and cost?
+
+---
