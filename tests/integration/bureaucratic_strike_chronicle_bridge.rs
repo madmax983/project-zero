@@ -7,7 +7,10 @@ use scale::layer1::social::bureaucratic_strike::RedTapeEvent;
 fn test_bureaucratic_strike_chronicle_bridge() {
     let mut app = App::new();
     app.add_event::<AddChronicleEvent>();
-    app.insert_resource(RedTapeEvent { active: false, severity: 1 });
+    app.insert_resource(RedTapeEvent {
+        active: false,
+        severity: 1,
+    });
     app.add_systems(Update, bureaucratic_strike_chronicle_bridge);
 
     app.update();
