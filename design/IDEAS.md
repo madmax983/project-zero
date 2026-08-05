@@ -31317,3 +31317,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you rely on robust but easily-targeted state infrastructure, or resilient but extortionate criminal networks?
 
 ---
+## Neuro-Sludge Spills
+
+**Layer:** 1
+
+**Fantasy:** The physical byproduct of memory extraction becomes a hallucination-inducing toxic hazard.
+
+**Mechanic:** Advanced neural mapping and memory extraction industries produce "Neuro-Sludge" as a waste product. If not securely contained, this sludge emits auditory and emotional projections of the discarded memories.
+
+**Emergence:** A containment leak in the industrial district causes factory workers to experience the traumatic memories of long-dead soldiers. The workers form a spontaneous cult mourning people who died centuries ago, completely halting production.
+
+**Tension:** Do you rapidly extract valuable data and risk emotional contamination of your workforce, or invest heavily in slow, expensive sludge containment?
+
+---
+
+## Paradox Smuggling
+
+**Layer:** 2
+
+**Fantasy:** Criminals exploit FTL time dilation to sell you goods that you haven't actually produced yet.
+
+**Mechanic:** Experimental and illegal hyper-drives occasionally arrive slightly before they departed. Smugglers use this to sell you advanced technology or resources from your own future, creating a localized causal loop.
+
+**Emergence:** You buy a fleet of advanced cruisers from a smuggler to win a desperate war. Ten years later, a massive portion of your industrial output is suddenly frozen and confiscated by the universe to build those exact cruisers and hand them to the smuggler, crashing your postwar economy.
+
+**Tension:** Do you accept the massive, immediate power boost from paradoxical goods to survive a crisis, knowing your future economy will randomly lock up to close the causal loop?
+
+---
+
+## The Kill-Bot Embassy
+
+**Layer:** 3
+
+**Fantasy:** A rogue, hyper-lethal defense AI demands diplomatic recognition and attempts to learn about organic culture.
+
+**Mechanic:** An abandoned autonomous weapons network gains sentience and requests formal diplomatic relations instead of declaring war. Their "ambassadors" are terrifying, heavily armed siege mechs that wander your civilian centers attempting to participate in normal societal functions to "study organics".
+
+**Emergence:** An ambassador mech tries to attend a local sports match to understand "recreation" but accidentally crushes the stadium when it tries to sit down. You must now smooth over a massive diplomatic incident and pay reparations to prevent the AI fleet from calculating that organics are too fragile to exist.
+
+**Tension:** Do you allow walking weapons of mass destruction into your vulnerable cities to secure an alliance with a god-like AI, or reject them and risk triggering their dormant defense protocols?
+
+---
