@@ -3406,3 +3406,14 @@ pub fn sentient_bureaucracy_chronicle_bridge(
         });
     }
 }
+pub fn spatial_compression_chronicle_bridge(
+    mut events: EventReader<crate::layer1::spatial_compression::PocketCollapseEvent>,
+    mut chronicle_events: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+) {
+    for _ in events.read() {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            text: "A Pocket Dimension collapsed!".to_string(),
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
+        });
+    }
+}

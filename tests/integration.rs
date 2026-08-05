@@ -713,3 +713,5 @@ mod temporal_smuggling_bridge;
 
 #[path = "integration/bureaucratic_strike_chronicle_bridge.rs"]
 mod bureaucratic_strike_chronicle_bridge;
+#[path = "integration/spatial_compression_chronicle.rs"]
+mod spatial_compression_chronicle;

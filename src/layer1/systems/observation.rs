@@ -668,6 +668,10 @@ pub fn register(schedule: &mut Schedule) {
         crate::layer1::core::integration::architecture_of_paranoia_chronicle_bridge
             .in_set(Layer1SystemSet::Observation),
     );
+    schedule.add_systems(
+        crate::layer1::core::integration::spatial_compression_chronicle_bridge
+            .in_set(Layer1SystemSet::Observation),
+    );
     schedule.add_systems(clear_input_system.after(Layer1SystemSet::Observation));
 }
 #[cfg(feature = "nova")]
