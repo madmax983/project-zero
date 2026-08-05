@@ -265,75 +265,20 @@ pub fn execute_trade(world: &mut World, deal: &TradeDeal) -> bool {
 
     let mut resources = world.resource_mut::<ColonyResources>();
 
-    // Check affordability
-    let affordable = match deal.cost_resource {
-        ResourceType::Wood => resources.wood >= deal.cost_amount,
-        ResourceType::Stone => resources.stone >= deal.cost_amount,
-        ResourceType::Food => resources.food >= deal.cost_amount,
-        ResourceType::Metal => resources.metal >= deal.cost_amount,
-        ResourceType::Ore => resources.ore >= deal.cost_amount,
-        ResourceType::Planks => resources.planks >= deal.cost_amount,
-        ResourceType::Blocks => resources.blocks >= deal.cost_amount,
-        ResourceType::Waste => resources.waste >= deal.cost_amount,
-        ResourceType::Rations => resources.rations >= deal.cost_amount,
-        ResourceType::Fuel => resources.fuel >= deal.cost_amount,
-        ResourceType::Alcohol => resources.alcohol >= deal.cost_amount,
-        ResourceType::Scrap => resources.scrap >= deal.cost_amount,
-        ResourceType::Tools => resources.tools >= deal.cost_amount,
-        ResourceType::BuildingPermit => resources.building_permits >= deal.cost_amount,
-        ResourceType::MemoryCore => resources.memory_cores >= deal.cost_amount,
-        ResourceType::VoidAle => resources.void_ale >= deal.cost_amount,
-        ResourceType::HyperValuable => false,
-        ResourceType::BiologicalWaste | ResourceType::NutrientPaste => false,
-    };
-
-    if !affordable {
+    if matches!(
+        deal.cost_resource,
+        ResourceType::HyperValuable | ResourceType::BiologicalWaste | ResourceType::NutrientPaste
+    ) {
         return false;
     }
 
-    // Deduct
-    match deal.cost_resource {
-        ResourceType::Wood => resources.wood -= deal.cost_amount,
-        ResourceType::Stone => resources.stone -= deal.cost_amount,
-        ResourceType::Food => resources.food -= deal.cost_amount,
-        ResourceType::Metal => resources.metal -= deal.cost_amount,
-        ResourceType::Ore => resources.ore -= deal.cost_amount,
-        ResourceType::Planks => resources.planks -= deal.cost_amount,
-        ResourceType::Blocks => resources.blocks -= deal.cost_amount,
-        ResourceType::Waste => resources.waste -= deal.cost_amount,
-        ResourceType::Rations => resources.rations -= deal.cost_amount,
-        ResourceType::Fuel => resources.fuel -= deal.cost_amount,
-        ResourceType::Alcohol => resources.alcohol -= deal.cost_amount,
-        ResourceType::Scrap => resources.scrap -= deal.cost_amount,
-        ResourceType::Tools => resources.tools -= deal.cost_amount,
-        ResourceType::BuildingPermit => resources.building_permits -= deal.cost_amount,
-        ResourceType::MemoryCore => resources.memory_cores -= deal.cost_amount,
-        ResourceType::VoidAle => resources.void_ale -= deal.cost_amount,
-        ResourceType::HyperValuable => {}
-        ResourceType::BiologicalWaste | ResourceType::NutrientPaste => {}
+    // Check affordability and Deduct
+    if !resources.try_consume(deal.cost_resource, deal.cost_amount) {
+        return false;
     }
 
     // Add
-    match deal.give_resource {
-        ResourceType::Wood => resources.add_wood(deal.give_amount),
-        ResourceType::Stone => resources.add_stone(deal.give_amount),
-        ResourceType::Food => resources.add_food(deal.give_amount),
-        ResourceType::Metal => resources.add_metal(deal.give_amount),
-        ResourceType::Ore => resources.add_ore(deal.give_amount),
-        ResourceType::Planks => resources.add_planks(deal.give_amount),
-        ResourceType::Blocks => resources.add_blocks(deal.give_amount),
-        ResourceType::Waste => resources.add_waste(deal.give_amount),
-        ResourceType::Rations => resources.add_rations(deal.give_amount),
-        ResourceType::Fuel => resources.add_fuel(deal.give_amount),
-        ResourceType::Alcohol => resources.add_alcohol(deal.give_amount),
-        ResourceType::Scrap => resources.add_scrap(deal.give_amount),
-        ResourceType::Tools => resources.add_tools(deal.give_amount),
-        ResourceType::BuildingPermit => resources.add_building_permits(deal.give_amount),
-        ResourceType::MemoryCore => resources.add_memory_cores(deal.give_amount),
-        ResourceType::VoidAle => resources.add_void_ale(deal.give_amount),
-        ResourceType::HyperValuable => {}
-        ResourceType::BiologicalWaste | ResourceType::NutrientPaste => {}
-    }
+    resources.add_resource(&deal.give_resource, deal.give_amount);
 
     true
 }

@@ -68,3 +68,7 @@
 **[Extracting Deeply Nested Option/Result matching inside Guard Checks]**
 **Learning:** Found deeply nested logic inside `is_walkable` checking building properties where the same entity is queried from a `World` mapping inside multiple nested if-let checks.
 **Action:** Extract the chunk of code where an Option matches into a helper function (e.g. `check_building_access`) using guard clauses (`let Some(building) = world.get::<Building>(entity) else { return true; };`), which keeps the main logical flow clean and avoids the "Pyramid of Doom".
+
+**[Extracting Match Statements Using Existing Struct Helpers]**
+**Learning:** Monolithic `match` statements inside business logic (like `execute_trade`) that sequentially manually check, deduct, and add dozens of resource variants create excessive boilerplate. If the underlying data structure (`ColonyResources`) already exposes robust helper methods (like `try_consume` and `add_resource`) that handle edge cases securely, mirroring that logic manually is a code smell.
+**Action:** Replace the manual `match` blocks with direct calls to the struct's helper methods, taking care to preserve any specific edge cases (such as explicitly rejecting certain resource types before deduction). This dramatically flattens the code and delegates responsibility back to the domain struct.
