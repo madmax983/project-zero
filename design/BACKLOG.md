@@ -14,8 +14,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `290` The Phantom Shift — `specs/290-phantom-shift.md`
 - [ ] `298` The Nostalgia Engine — `specs/298-nostalgia-engine.md`
 - [ ] `305` The Empathy Broadcast — `specs/305-empathy-broadcast.md`
-
-
 - [ ] `319` The Gravity Well Forge — `specs/319-gravity-well-forge.md`
 - [ ] `322` The Pirate's Pension — `specs/322-pirates-pension.md`
 - [ ] `323` The Informant's Dilemma — `specs/323-informants-dilemma.md`
@@ -492,9 +490,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `992` The Fungal Monoliths — `specs/992-the-fungal-monoliths.md`
 - [ ] `1008` The Refugee Archipelago — `specs/1008-the-refugee-archipelago.md`
 - [ ] `1013` The Void Echoes — `specs/1013-the-void-echoes.md`
-
-
-- [ ] `1020` Spatial Compression — `specs/1020-spatial-compression.md`
 - [ ] `1021` The Shadow Cabinet — `specs/1021-the-shadow-cabinet.md`
 - [ ] `1032` Open Source Science — `specs/1032-open-source-science.md`
 - [ ] `1030` Gravity Engineering — `specs/1030-gravity-engineering.md`
@@ -609,7 +604,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1270` Phantom Trade Routes — `specs/1270-phantom-trade-routes.md`
 - [ ] `1277` Ghost Code — `specs/1277-ghost-code.md`
 - [ ] `1278` Asteroid Hollowing — `specs/1278-asteroid-hollowing.md`
-
 - [x] `1284` Sartorial Rebellion — `specs/1284-sartorial-rebellion.md` — completed 2024-06-15
 - [ ] `1295` Corporate Rebranding — `specs/1295-corporate-rebranding.md`
 - [ ] `1304` The Lost Treaty — `specs/1304-the-lost-treaty.md`

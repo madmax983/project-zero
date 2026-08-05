@@ -531,3 +531,5 @@ pub mod heroic_acts;
 pub use heroic_acts::*;
 pub mod gravity_funerals;
 pub use gravity_funerals::*;
+pub mod spatial_compression;
+pub use spatial_compression::*;
