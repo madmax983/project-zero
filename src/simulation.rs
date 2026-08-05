@@ -780,7 +780,8 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
     ));
 
     // --- Layer 2 Integration ---
-    schedule.add_systems((crate::layer2::integration::inauguration_system,));
+    schedule.add_systems((crate::layer2::integration::inauguration_system,
+        crate::layer2::integration::asteroid_crash_chronicle_bridge,));
     schedule.add_systems((
         crate::layer2::orbital_necropolis::apply_necropolis_bonus,
         crate::layer2::orbital_necropolis::handle_necropolis_destruction,
