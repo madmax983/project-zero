@@ -1891,3 +1891,9 @@
 - **Glue added:** Added `spatial_compression_chronicle_bridge` in `src/layer1/core/integration.rs` to generate Chronicle records when a Pocket Dimension collapses.
 - **Schedule:** Registered the system in `src/layer1/systems/observation.rs`.
 - **Tests:** Added tests in `tests/integration/spatial_compression_chronicle.rs`.
+
+### INT-1047: Asteroid Tethering -> Chronicle
+- **Date:** 2026-11-01
+- **Systems connected:** `AsteroidCrashEvent` -> `asteroid_crash_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** `asteroid_crash_chronicle_bridge` in `src/layer2/integration.rs` translates the `AsteroidCrashEvent` into a historical `AddChronicleEvent`. Registered in `src/simulation.rs`.
+- **Tests:** `tests/integration/asteroid_crash_chronicle.rs`
