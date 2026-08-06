@@ -11078,3 +11078,92 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 **Patterns:**
 - "[YEAR]: A Siphon harvester dove into the storms of [GAS_GIANT]. The hull screams, but the hold fills."
 - "The volatile gases of [GAS_GIANT] were successfully skimmed. Another Siphon requires immediate repair."
+## The Subterranean Ocean Templates (Spec 320)
+
+### Template: SUBTERRANEAN_OCEAN_FOUND
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [OCEAN_NAME]
+**Patterns:**
+- "[YEAR]: We broke through the crust of [COLONY] and found [OCEAN_NAME]. A dark, crushing sea."
+- "There is an ocean beneath us. At [COLONY], surveyors discovered [OCEAN_NAME]. [YEAR]."
+- "[COLONY], [YEAR]: [OCEAN_NAME] lies in the deep. Endless black water under the rock."
+
+### Template: DEEP_PRESSURE_CRUSH
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SUB_NAME], [OCEAN_NAME]
+**Patterns:**
+- "[YEAR]: The pressure of [OCEAN_NAME] took the [SUB_NAME]. The hull gave way."
+- "A terrible silence from the [SUB_NAME]. Lost to the crushing depths of [OCEAN_NAME] below [COLONY]. [YEAR]."
+- "[COLONY], [YEAR]: [OCEAN_NAME] claims another. The [SUB_NAME] imploded under the weight of the dark water."
+
+## The Propaganda Engine Templates (Spec 315)
+
+### Template: PROPAGANDA_BROADCAST
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SLOGAN]
+**Patterns:**
+- "[YEAR]: The screens in [COLONY] light up. '[SLOGAN]'. The truth is rewritten."
+- "The engine hums. '[SLOGAN]' repeats across every channel in [COLONY]. [YEAR]."
+- "[COLONY], [YEAR]: New directives. We must believe '[SLOGAN]'."
+
+### Template: PROPAGANDA_DOUBT
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SLOGAN]
+**Patterns:**
+- "[YEAR]: Whispers in [COLONY]. They repeat '[SLOGAN]', but their eyes say otherwise."
+- "The paint peels on the '[SLOGAN]' posters. [COLONY] is tired of the lies. [YEAR]."
+- "[COLONY], [YEAR]: The engine falters. A few dare to question '[SLOGAN]'."
+
+## Gravity-Well Funerals Templates (Spec 1014)
+
+### Template: GRAVITY_FUNERAL_HELD
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [DECEASED_NAME], [WELL_NAME]
+**Patterns:**
+- "[YEAR]: We gave [DECEASED_NAME] to the [WELL_NAME]. They fall forever now."
+- "The crush of the [WELL_NAME] takes our dead. [DECEASED_NAME] was released at [COLONY]. [YEAR]."
+- "[COLONY], [YEAR]: A silent drop. [DECEASED_NAME] descends into the [WELL_NAME]."
+
+### Template: GRAVITY_TETHER_SNAPPED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [WELL_NAME]
+**Patterns:**
+- "[YEAR]: The funeral tether snapped at [COLONY]. The casket fell too fast into the [WELL_NAME]."
+- "An accident during the rites. We lost the line to the [WELL_NAME]. [YEAR]."
+- "[COLONY], [YEAR]: The [WELL_NAME] was impatient. The procession line broke."
+
+## Stress Breakdowns Templates (Spec 358)
+
+### Template: STRESS_BREAKDOWN_EVENT
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [POP_NAME], [BREAKDOWN_SYMPTOM]
+**Patterns:**
+- "[YEAR]: The dark takes its toll on [COLONY]. [POP_NAME] collapsed, suffering from [BREAKDOWN_SYMPTOM]."
+- "The pressure broke them. [POP_NAME] is exhibiting [BREAKDOWN_SYMPTOM]. [COLONY] watches in fear. [YEAR]."
+- "[COLONY], [YEAR]: A mind snaps. [POP_NAME] was found [BREAKDOWN_SYMPTOM]."
+
+### Template: COLONY_WIDE_PANIC
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [STRESSOR]
+**Patterns:**
+- "[YEAR]: A wave of hysteria hits [COLONY]. The cause: [STRESSOR]. Work stops."
+- "Mass panic at [COLONY] over [STRESSOR]. We cannot calm them. [YEAR]."
+- "[COLONY], [YEAR]: The contagion of fear. [STRESSOR] has broken the collective spirit."
+
+## Ecophagy Templates (Spec 1019)
+
+### Template: ECOPHAGY_START
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [MACHINE_SWARM]
+**Patterns:**
+- "[YEAR]: The [MACHINE_SWARM] awoke at [COLONY]. They are eating the soil."
+- "A terrible hunger. The [MACHINE_SWARM] is turning [COLONY] to dust. [YEAR]."
+- "[COLONY], [YEAR]: They don't stop. The [MACHINE_SWARM] consumes everything in its path."
+
+### Template: ECOPHAGY_CONTAINED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [MACHINE_SWARM]
+**Patterns:**
+- "[YEAR]: The fire held them back. The [MACHINE_SWARM] is contained at [COLONY]."
+- "We starved the [MACHINE_SWARM]. The perimeter holds at [COLONY]. [YEAR]."
+- "[COLONY], [YEAR]: The swarm sleeps again. The [MACHINE_SWARM] is sealed."
