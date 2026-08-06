@@ -6661,7 +6661,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Mother Culture
+## The Mother Culture [SPECCED]
 
 **Layer:** 1
 

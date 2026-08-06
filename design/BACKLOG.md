@@ -628,3 +628,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1349` Thermal Gliders — `specs/1349-thermal-gliders.md`
 - [ ] `1350` Selective Amnesia — `specs/1350-selective-amnesia.md`
 - [ ] `1351` The Slippery Slope — `specs/1351-the-slippery-slope.md`
+- [ ] `1352` The Mother Culture — `specs/1352-the-mother-culture.md`
