@@ -1904,3 +1904,10 @@
 - **Glue added:** Added `orbital_secession_chronicle_bridge` in `src/layer2/integration.rs` to generate Chronicle records when an Orbital Habitat declares independence.
 - **Schedule:** Registered the system in `src/simulation.rs`.
 - **Tests:** Added tests in `tests/integration/orbital_secession_chronicle.rs`.
+
+### INT-1011: The Sovereign Armada -> Chronicle
+- **Date:** 2026-11-01
+- **Systems connected:** `armada_arrival_system` -> `TributeDemandEvent` -> `sovereign_armada_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `sovereign_armada_chronicle_bridge` in `src/layer3/integration.rs` to generate Chronicle records when the Sovereign Armada demands tribute.
+- **Schedule:** Registered the system in `src/simulation.rs`.
+- **Tests:** Added tests in `tests/integration/sovereign_armada_bridge.rs`.

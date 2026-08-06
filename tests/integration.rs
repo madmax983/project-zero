@@ -720,3 +720,5 @@ mod spatial_compression_chronicle;
 
 #[path = "integration/orbital_secession_chronicle.rs"]
 mod orbital_secession_chronicle;
+#[path = "integration/sovereign_armada_bridge.rs"]
+mod sovereign_armada_bridge;

@@ -1009,6 +1009,7 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
             crate::layer3::diplomacy::cultural_ransom::handle_ransom_negotiation_system,
             crate::layer3::diplomacy::red_tape_defense::process_bureaucracy_delays,
             crate::layer3::integration::red_tape_chronicle_bridge,
+        crate::layer3::integration::sovereign_armada_chronicle_bridge,
             crate::layer3::integration::dynastic_succession_chronicle_bridge,
             crate::layer3::integration::dynastic_crisis_chronicle_bridge,
             crate::layer3::diplomacy::fading_homeworld::update_core_world_decay_system,
