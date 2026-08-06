@@ -300,3 +300,8 @@
 **Concept:** Added `grave_robbery_system` to `src/experimental/grave_robbery.rs`. Connects `Trait::Greedy` with `BuildingType::Grave`. Pops with the Greedy trait who stand near an occupied Grave will secretly dig it up, gaining `credits` and `leisure` (from the thrill) but draining their `rest`.
 **Fate:** Submitted
 **Lesson:** Gives a psychological function to a basic utility structure and connects greed traits with emergent spatial clustering around graveyards.
+
+## [Friendly Remittance]
+**Concept:** Added `friendly_remittance_system` to `src/experimental/friendly_remittance.rs`. Connects `Relationships`, `Wallet`, and `GridPosition`. Pops with high mutual affinity who are close by will transfer 5.0 credits to their broke friends, emitting a Chronicle event.
+**Fate:** Submitted
+**Lesson:** Connects the social network to the localized economy, making high relationships mechanically impactful beyond mood buffs by creating localized social safety nets.
