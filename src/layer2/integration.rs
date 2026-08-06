@@ -1197,3 +1197,26 @@ pub fn asteroid_crash_chronicle_bridge(
         });
     }
 }
+
+/// INT-1004: Bridges `SecessionState::Seceded` to `AddChronicleEvent`
+pub fn orbital_secession_chronicle_bridge(
+    query: bevy_ecs::system::Query<
+        &crate::layer2::orbit::secession::SecessionState,
+        (
+            bevy_ecs::query::With<crate::layer2::orbit::secession::OrbitalHabitat>,
+            bevy_ecs::query::Changed<crate::layer2::orbit::secession::SecessionState>,
+        ),
+    >,
+    mut chronicle_events: bevy_ecs::event::EventWriter<
+        crate::layer1::core::chronicle::AddChronicleEvent,
+    >,
+) {
+    for state in query.iter() {
+        if *state == crate::layer2::orbit::secession::SecessionState::Seceded {
+            chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+                text: "An Orbital Habitat has declared independence and seceded from the homeworld!".to_string(),
+                importance: crate::layer1::core::chronicle::EventImportance::Major,
+            });
+        }
+    }
+}
