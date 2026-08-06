@@ -31358,3 +31358,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you allow walking weapons of mass destruction into your vulnerable cities to secure an alliance with a god-like AI, or reject them and risk triggering their dormant defense protocols?
 
 ---
+
+## Orbital Embezzlement
+
+**Layer:** 2
+
+**Fantasy:** System logistics officers subtly skimming resources off massive inter-planetary shipments to build unauthorized personal luxury stations.
+
+**Mechanic:** A percentage of resources transported via trade routes is "lost to space." In reality, corrupt AI or officials are accumulating these resources at hidden coordinates. Over time, these stashes grow into massive rogue structures.
+
+**Emergence:** You notice your food shipments to the core worlds are constantly falling short. Years later, an unauthorized luxury space station appears on your scanners, heavily defended and built entirely out of the food and alloys meant for your starving colonists.
+
+**Tension:** Do you let the corruption slide because trade is still flowing, or spend significant military resources to hunt down and destroy these embezzler stations, potentially causing the corrupt officials to strike and halt all logistics?
+
+---
+
+## Cult of the Decommissioned
+
+**Layer:** 1
+
+**Fantasy:** Pops begin worshipping massive, obsolete industrial machinery that has been left to rot.
+
+**Mechanic:** Buildings that are disabled or structurally condemned are not immediately destroyed. If left standing, certain pop demographics with high stress will form cults around them, performing "maintenance rituals" that provide temporary mood boosts but cost resources and time.
+
+**Emergence:** A condemned nuclear forge becomes a religious site. When you finally order the construction drones to demolish it to build a hospital, the cult violently defends the rotting factory, viewing demolition as deicide.
+
+**Tension:** Do you quickly and expensively demolish old infrastructure to reclaim space, or allow it to stand and risk the formation of volatile religious factions that hoard your resources?
+
+---
+
+## Biometric Mimicry Black Market
+
+**Layer:** Cross-layer
+
+**Fantasy:** Criminal syndicates steal and replicate the biometric signatures of VIPs to bypass orbital blockades and security.
+
+**Mechanic:** Highly skilled pops or underworld elements can create "Mimic IDs" of high-ranking leaders. These fake IDs allow smuggled goods or unauthorized ships (Layer 2) to bypass planetary quarantine shields or automated defense grids by registering as the VIP's personal vessel.
+
+**Emergence:** You implement a total quarantine on a plagued world. Weeks later, you find out smugglers have been bypassing the blockade entirely because they cloned your Emperor's biometrics and the automated cannons keep saluting their ships instead of firing.
+
+**Tension:** Do you revoke the automated privileges of your VIPs, forcing them to undergo slow, manual security checks like everyone else, or accept the risk that criminals will occasionally steal their identities to bypass your defenses?
+
+---
