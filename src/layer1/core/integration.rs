@@ -3417,3 +3417,19 @@ pub fn spatial_compression_chronicle_bridge(
         });
     }
 }
+
+/// INT-1130: Bridges `ExplosionEvent` to `AddChronicleEvent` (Chronicle).
+pub fn volatile_explosion_chronicle_bridge(
+    mut explosion_events: bevy_ecs::event::EventReader<crate::layer1::environment::volatile::ExplosionEvent>,
+    mut chronicle_events: bevy_ecs::event::EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+) {
+    for event in explosion_events.read() {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            text: format!(
+                "A volatile intermediate catastrophically destabilized at ({}, {}), venting into the corridor.",
+                event.center.x, event.center.y
+            ),
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
+        });
+    }
+}
