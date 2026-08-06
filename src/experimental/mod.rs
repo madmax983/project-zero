@@ -261,3 +261,6 @@ pub mod sleep_synchrony;
 
 #[cfg(feature = "nova")]
 pub mod grave_robbery;
+
+#[cfg(feature = "nova")]
+pub mod friendly_remittance;
