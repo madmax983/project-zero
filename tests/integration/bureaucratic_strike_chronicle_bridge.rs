@@ -16,8 +16,8 @@ fn test_bureaucratic_strike_chronicle_bridge() {
     app.update();
 
     let events = app.world().resource::<Events<AddChronicleEvent>>();
-    let reader = events.get_reader();
-    assert!(reader.is_empty(events));
+    let cursor = events.get_cursor();
+    assert!(cursor.is_empty(events));
 
     app.world_mut().resource_mut::<RedTapeEvent>().active = true;
     app.world_mut().resource_mut::<RedTapeEvent>().severity = 10;
@@ -25,8 +25,8 @@ fn test_bureaucratic_strike_chronicle_bridge() {
     app.update();
 
     let events = app.world().resource::<Events<AddChronicleEvent>>();
-    let mut reader = events.get_reader();
-    let emitted: Vec<_> = reader.read(events).collect();
+    let mut cursor = events.get_cursor();
+    let emitted: Vec<_> = cursor.read(events).collect();
     assert_eq!(emitted.len(), 1);
     assert!(emitted[0].text.contains("bureaucratic strike"));
     assert_eq!(emitted[0].importance, EventImportance::Major);
@@ -37,8 +37,8 @@ fn test_bureaucratic_strike_chronicle_bridge() {
     app.update();
 
     let events = app.world().resource::<Events<AddChronicleEvent>>();
-    let mut reader = events.get_reader();
-    let emitted: Vec<_> = reader.read(events).collect();
+    let mut cursor = events.get_cursor();
+    let emitted: Vec<_> = cursor.read(events).collect();
     assert_eq!(emitted.len(), 2);
     assert!(emitted[1].text.contains("ended"));
     assert_eq!(emitted[1].importance, EventImportance::Standard);

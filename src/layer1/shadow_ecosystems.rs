@@ -92,6 +92,7 @@ pub fn data_fauna_feeding(
 }
 
 /// ⚡ Bolt Optimization: Uses `Local` and `bevy::utils::HashMap` to eliminate frame-by-frame heap allocations and speed up entity hashing.
+#[allow(clippy::type_complexity)]
 pub fn data_fauna_overfeed(
     mut commands: Commands,
     fauna_query: Query<(Entity, &DataFauna, &GridPosition)>,

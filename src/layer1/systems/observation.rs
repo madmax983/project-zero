@@ -189,6 +189,12 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::totems::unequip_totem_system.after(decay_needs_system),
             crate::layer1::administration::edicts::update_policy_tradition_system,
             crate::layer1::administration::edicts::handle_revoke_policy_system,
+        )
+            .in_set(Layer1SystemSet::Observation),
+    );
+
+    schedule.add_systems(
+        (
             crate::layer1::psychology::stress::apply_breakdown_effects_system
                 .after(check_stress_breakdown_system),
             update_breakdown_system.after(check_stress_breakdown_system),
