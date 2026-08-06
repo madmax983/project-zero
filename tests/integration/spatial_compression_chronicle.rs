@@ -8,11 +8,16 @@ fn test_spatial_compression_chronicle_bridge() {
     app.add_event::<PocketCollapseEvent>();
     app.add_event::<AddChronicleEvent>();
 
-    app.add_systems(Update, scale::layer1::core::integration::spatial_compression_chronicle_bridge);
+    app.add_systems(
+        Update,
+        scale::layer1::core::integration::spatial_compression_chronicle_bridge,
+    );
 
     app.world_mut()
         .resource_mut::<Events<PocketCollapseEvent>>()
-        .send(PocketCollapseEvent { pocket: Entity::PLACEHOLDER });
+        .send(PocketCollapseEvent {
+            pocket: Entity::PLACEHOLDER,
+        });
 
     app.update();
 
@@ -24,5 +29,8 @@ fn test_spatial_compression_chronicle_bridge() {
         assert!(matches!(event.importance, EventImportance::Major));
         found = true;
     }
-    assert!(found, "Chronicle event should have been emitted for pocket collapse.");
+    assert!(
+        found,
+        "Chronicle event should have been emitted for pocket collapse."
+    );
 }

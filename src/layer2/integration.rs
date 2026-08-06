@@ -1186,7 +1186,9 @@ pub fn stolen_fleet_chronicle_bridge_system(
 /// INT-1047: Bridges AsteroidCrashEvent (Asteroid Tethering) to AddChronicleEvent (Chronicle).
 pub fn asteroid_crash_chronicle_bridge(
     mut events: bevy_ecs::event::EventReader<crate::layer2::orbit::tether::AsteroidCrashEvent>,
-    mut chronicle_events: bevy_ecs::event::EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+    mut chronicle_events: bevy_ecs::event::EventWriter<
+        crate::layer1::core::chronicle::AddChronicleEvent,
+    >,
 ) {
     for _event in events.read() {
         chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
