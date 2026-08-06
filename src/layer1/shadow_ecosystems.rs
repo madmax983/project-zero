@@ -67,12 +67,14 @@ pub fn spawn_data_fauna(
     }
 }
 
+/// ⚡ Bolt Optimization: Uses `Local` and `bevy::utils::HashMap` to eliminate frame-by-frame heap allocations.
 pub fn data_fauna_feeding(
     mut commands: Commands,
     mut fauna_query: Query<(Entity, &mut DataFauna, &GridPosition)>,
     em_query: Query<(&Emissions, &GridPosition)>,
+    mut em_map: Local<bevy::utils::HashMap<GridPosition, f32>>,
 ) {
-    let mut em_map = std::collections::HashMap::new();
+    em_map.clear();
     for (em, e_pos) in em_query.iter() {
         *em_map.entry(*e_pos).or_insert(0.0) += em.em_level;
     }
@@ -89,14 +91,17 @@ pub fn data_fauna_feeding(
     }
 }
 
+/// ⚡ Bolt Optimization: Uses `Local` and `bevy::utils::HashMap` to eliminate frame-by-frame heap allocations and speed up entity hashing.
 pub fn data_fauna_overfeed(
     mut commands: Commands,
     fauna_query: Query<(Entity, &DataFauna, &GridPosition)>,
     machine_query: Query<(Entity, &EmMachine, &GridPosition)>,
     mut ev_short_circuit: EventWriter<ShortCircuitEvent>,
+    mut fauna_map: Local<bevy::utils::HashMap<GridPosition, Vec<(Entity, f32, f32)>>>,
 ) {
-    let mut fauna_map: std::collections::HashMap<GridPosition, Vec<(Entity, f32, f32)>> =
-        std::collections::HashMap::new();
+    for vecs in fauna_map.values_mut() {
+        vecs.clear();
+    }
     for (f_entity, fauna, f_pos) in fauna_query.iter() {
         fauna_map
             .entry(*f_pos)
@@ -116,11 +121,13 @@ pub fn data_fauna_overfeed(
     }
 }
 
+/// ⚡ Bolt Optimization: Uses `Local` to eliminate frame-by-frame heap allocations of active sensors.
 pub fn reveal_data_fauna(
     mut fauna_query: Query<(&mut Visibility, &GridPosition), With<DataFauna>>,
     sensor_query: Query<(&EmSensor, &GridPosition)>,
+    mut active_sensors: Local<Vec<GridPosition>>,
 ) {
-    let mut active_sensors = Vec::new();
+    active_sensors.clear();
     for (sensor, s_pos) in sensor_query.iter() {
         if sensor.active {
             active_sensors.push(*s_pos);

@@ -1,7 +1,7 @@
 use bevy_ecs::prelude::*;
 use scale::layer1::core::chronicle::AddChronicleEvent;
-use scale::layer2::orbit::tether::AsteroidCrashEvent;
 use scale::layer2::integration::asteroid_crash_chronicle_bridge;
+use scale::layer2::orbit::tether::AsteroidCrashEvent;
 
 #[test]
 fn test_asteroid_crash_chronicle_bridge() {

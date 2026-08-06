@@ -69,7 +69,6 @@ mod tests {
     use crate::layer1::physics::gravity_plating::PowerNode;
     use crate::layer1::shields::DamageEvent;
 
-
     #[test]
     fn test_power_failure_collapses_pocket_dimension() {
         let mut app = App::new();
