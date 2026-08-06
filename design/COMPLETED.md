@@ -896,6 +896,7 @@
 - [x] `1006` The Terraforming Rejection — `specs/1006-the-terraforming-rejection.md` — completed 2026-02-01
 - [x] `318` The Stolen Fleet — `specs/318-stolen-fleet.md` — completed 2026-10-31
 - [x] `1004` The Orbital Secession — `specs/1004-orbital-secession.md` — completed 2026-07-06
+- [x] `INT-1004` Integration: Orbital Secession -> Chronicle — completed 2026-08-06
 
 - [x] `1311` The Dreaming Sickness — `specs/1311-the-dreaming-sickness.md` — completed 2026-10-31
 - [x] `1136` The Sentient Bureaucracy — `specs/1136-sentient-bureaucracy.md` — completed 2026-10-31

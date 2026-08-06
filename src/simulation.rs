@@ -877,6 +877,7 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         crate::layer2::orbit::debris_cult::apply_debris_cult_morale_system
             .after(crate::layer2::debris::debris_attrition_system),
         crate::layer2::orbit::secession::evaluate_orbital_secession_system,
+        crate::layer2::integration::orbital_secession_chronicle_bridge,
     ));
 
     schedule.add_systems((

@@ -717,3 +717,6 @@ mod asteroid_crash_chronicle;
 mod bureaucratic_strike_chronicle_bridge;
 #[path = "integration/spatial_compression_chronicle.rs"]
 mod spatial_compression_chronicle;
+
+#[path = "integration/orbital_secession_chronicle.rs"]
+mod orbital_secession_chronicle;

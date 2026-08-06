@@ -1897,3 +1897,10 @@
 - **Systems connected:** `AsteroidCrashEvent` -> `asteroid_crash_chronicle_bridge` -> `AddChronicleEvent`
 - **Glue added:** `asteroid_crash_chronicle_bridge` in `src/layer2/integration.rs` translates the `AsteroidCrashEvent` into a historical `AddChronicleEvent`. Registered in `src/simulation.rs`.
 - **Tests:** `tests/integration/asteroid_crash_chronicle.rs`
+
+### INT-1004: Orbital Secession -> Chronicle
+- **Date:** $(date +%Y-%m-%d)
+- **Systems connected:** `Changed<SecessionState>` -> `orbital_secession_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `orbital_secession_chronicle_bridge` in `src/layer2/integration.rs` to generate Chronicle records when an Orbital Habitat declares independence.
+- **Schedule:** Registered the system in `src/simulation.rs`.
+- **Tests:** Added tests in `tests/integration/orbital_secession_chronicle.rs`.
