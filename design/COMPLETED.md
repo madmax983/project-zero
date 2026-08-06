@@ -964,3 +964,4 @@
 - [x] `INT-309` Integration: Bureaucratic Strike -> Chronicle — completed 2026-11-01
 - [x] `1020` Spatial Compression — `specs/1020-spatial-compression.md` — completed 2026-02-01
 - [x] `INT-1020` Integration: Spatial Compression -> Chronicle — completed 2026-11-01
+- [x] `INT-1130` Integration: Volatile Intermediates -> Chronicle — completed 2026-08-06

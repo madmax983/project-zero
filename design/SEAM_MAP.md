@@ -1899,7 +1899,7 @@
 - **Tests:** `tests/integration/asteroid_crash_chronicle.rs`
 
 ### INT-1004: Orbital Secession -> Chronicle
-- **Date:** $(date +%Y-%m-%d)
+- **Date:** 2026-08-06
 - **Systems connected:** `Changed<SecessionState>` -> `orbital_secession_chronicle_bridge` -> `AddChronicleEvent`
 - **Glue added:** Added `orbital_secession_chronicle_bridge` in `src/layer2/integration.rs` to generate Chronicle records when an Orbital Habitat declares independence.
 - **Schedule:** Registered the system in `src/simulation.rs`.
@@ -1911,3 +1911,9 @@
 - **Glue added:** Added `sovereign_armada_chronicle_bridge` in `src/layer3/integration.rs` to generate Chronicle records when the Sovereign Armada demands tribute.
 - **Schedule:** Registered the system in `src/simulation.rs`.
 - **Tests:** Added tests in `tests/integration/sovereign_armada_bridge.rs`.
+
+### INT-1130: Volatile Intermediates -> Chronicle
+- **Date:** 2026-08-06
+- **Systems connected:** `ExplosionEvent` -> `volatile_explosion_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `volatile_explosion_chronicle_bridge` in `src/layer1/core/integration.rs` to generate Chronicle records when a volatile intermediate explodes. Registered the system in `src/simulation.rs`.
+- **Tests:** Added tests in `tests/integration/volatile_intermediates_bridge.rs`.
