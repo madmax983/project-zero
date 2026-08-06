@@ -31400,3 +31400,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you revoke the automated privileges of your VIPs, forcing them to undergo slow, manual security checks like everyone else, or accept the risk that criminals will occasionally steal their identities to bypass your defenses?
 
 ---
+## Cognitive Subprime Mortgages
+
+**Layer:** 1
+
+**Fantasy:** Predatory economics literally rewiring the brains of your colonists.
+
+**Mechanic:** A Layer 3 Megacorp offers instant skill upgrades (via neuro-imprinting) to your Pops on "credit." The colony gets immediate, hyper-skilled workers. However, the interest rates are extortionate. If the colony defaults, the Megacorp remotely downgrades the skills not just back to zero, but to a negative state (cognitive impairment) as a penalty fee.
+
+**Emergence:** You take a massive neuro-loan to quickly train an army of engineers to build a planetary shield before an invasion. The shield finishes just in time, but the war tanks your economy. You default on the loan, and your entire engineering caste is instantly lobotomized, leaving you unable to repair the shield when it inevitably takes damage.
+
+**Tension:** Do you leverage your Pops' minds for immediate, desperate gains, knowing a default will permanently cripple your workforce?
+
+---
+
+## The Exiled Oracle
+
+**Layer:** Cross-layer
+
+**Fantasy:** A single, isolated entity holds the key to galactic survival, but demands absurd local concessions.
+
+**Mechanic:** A powerful AI or mutated seer is exiled to a barren Layer 1 rock. They possess a "Probability Engine" that can accurately predict disastrous Layer 3 events (invasions, supernovas) decades in advance. However, to access these predictions, the local Layer 1 colony must fulfill the Oracle's bizarre, incredibly expensive, and constantly shifting material demands.
+
+**Emergence:** Your galaxy-spanning empire knows a devastating fleet is approaching, but the Oracle won't give you their coordinates until the local colony builds them a solid gold tavern and forces the colony's highest-ranking noble to serve drinks there for a year.
+
+**Tension:** Do you ignore the Oracle and fly blind on the galactic stage, or subjugate an entire local economy to the whims of a single, mad prophet?
+
+---
+
+## Deep-Core Cooling Sabotage
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Weaponizing the very geology of an enemy planet.
+
+**Mechanic:** Instead of orbital bombardment, stealth ships can insert "Thermal Ticks" into a planet's crust. These devices slowly sap the heat from the planet's core over years. At Layer 1, this manifests as slowly failing geothermal power, increasing tectonic stability (fewer earthquakes), but a steadily plunging global temperature that eventually triggers a premature ice age.
+
+**Emergence:** You notice your rival's main industrial world is mysteriously cooling down. You realize they've been infected. Instead of warning them, you aggressively short-sell their agricultural exports on the galactic market, making a fortune when their crops inevitably freeze and they starve.
+
+**Tension:** Do you use loud, immediate orbital weapons that trigger diplomatic outrage, or silent, slow ecological sabotage that might take decades to show results?
+
+---
