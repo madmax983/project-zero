@@ -31400,3 +31400,72 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you revoke the automated privileges of your VIPs, forcing them to undergo slow, manual security checks like everyone else, or accept the risk that criminals will occasionally steal their identities to bypass your defenses?
 
 ---
+## Geothermal Hostage-Taking
+
+**Layer:** 1
+
+**Fantasy:** Dealing with extremist factions that hold the colony's very lifeblood hostage.
+
+**Mechanic:** Highly dissatisfied pops working in deep-crust geothermal facilities can threaten to intentionally rupture the core tap if their demands (better living conditions, policy changes) aren't met.
+
+**Emergence:** You ignore a minor labor dispute in a deep mine. A week later, the miners barricade the geothermal tap. To route security down there takes days, so you either cave to their demands, let the colony freeze by shutting off the tap, or risk them triggering an artificial volcano that consumes the entire industrial sector.
+
+**Tension:** Do you negotiate with terrorists and encourage future strikes, or send in the military and risk catastrophic collateral damage to your core infrastructure?
+
+---
+
+## Stampede Protocol
+
+**Layer:** Cross-layer
+
+**Fantasy:** Weaponizing the local mega-fauna through orbital manipulation.
+
+**Mechanic:** Layer 2 ships equipped with low-frequency sonic or gravimetric emitters can perform low-orbit passes specifically designed to agitate Layer 1 wildlife, driving them in a specific direction.
+
+**Emergence:** You are facing a superior ground invasion force on a border world. You order your last surviving frigate to buzz the local nesting grounds of apex predators, directing a massive stampede right into the enemy encampment, wiping them out without firing a shot.
+
+**Tension:** Do you use orbital assets to manipulate the biosphere for tactical gain, knowing the resulting stampede might trample your own outposts or permanently destabilize the local ecosystem?
+
+---
+
+## Archive Panic
+
+**Layer:** Cross-layer
+
+**Fantasy:** Uncovering a historical truth so devastating it fractures your empire.
+
+**Mechanic:** Excavation on ancient worlds or deciphering legacy databases can occasionally reveal "Forbidden Knowledge"—data that fundamentally contradicts your civilization's founding myths, religious texts, or justification for current wars.
+
+**Emergence:** You finally crack a precursor databank hoping for weapon tech. Instead, you find undeniable proof that your species actually started the war that destroyed the galaxy. Your core worlds fall into existential despair, while fringe worlds form denialist cults and declare independence.
+
+**Tension:** Do you publicly release the data for a massive research boost but risk empire-wide schisms, or suppress it, angering the scientists who found it and risking a leak?
+
+---
+
+## Sub-Orbital Necromancy
+
+**Layer:** 2 -> 1
+
+**Fantasy:** The darkest, most desperate application of medical nanotech to solve an immediate crisis.
+
+**Mechanic:** Specialized Layer 2 medical ships can blanket a small Layer 1 area in a "resuscitation field," temporarily reanimating recently deceased pops as mindless, highly efficient laborers for a short duration before their bodies completely break down.
+
+**Emergence:** A vital mining colony is wiped out by a toxic gas leak right before a massive quota is due. You park a medical dreadnought in orbit and reanimate the entire colony. They finish mining the quota, then collapse into dust, leaving the planet permanently traumatized and haunted by rumor.
+
+**Tension:** Do you use this horrific technology to meet critical deadlines and survive, accepting the massive morale penalty across your empire, or fail the quota and face economic ruin?
+
+---
+
+## Gravity Well Subluxation
+
+**Layer:** 3
+
+**Fantasy:** Reshaping the galactic map itself through brute-force stellar engineering.
+
+**Mechanic:** End-game megastructures can forcefully "push" a star system slightly off its galactic anchor, tearing existing hyperlanes and potentially forging new ones to nearby systems.
+
+**Emergence:** You are trapped in a dead-end system by a hostile empire. You build a Subluxator and push your star system closer to a neutral neighbor, tearing the hyperlane to the enemy and creating a new escape route, literally moving your entire civilization out of their reach.
+
+**Tension:** Do you invest decades of resources into moving a star system, risking catastrophic tidal forces on all contained planets, just to alter the strategic geography of the galaxy?
+
+---

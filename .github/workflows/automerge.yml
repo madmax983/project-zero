@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   automerge:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     if: github.actor == 'madmax983'
     steps:
       - name: Checkout repository
