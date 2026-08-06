@@ -31400,3 +31400,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you revoke the automated privileges of your VIPs, forcing them to undergo slow, manual security checks like everyone else, or accept the risk that criminals will occasionally steal their identities to bypass your defenses?
 
 ---
+## Subterranean Pressure Vaults
+
+**Layer:** 1
+
+**Fantasy:** Harvesting high-yield resources deep underground, risking catastrophic cave-ins or pressure explosions.
+
+**Mechanic:** Pops can dig deep below the colony grid where pressure and temperature increase sharply. Special "Pressure Vault" buildings must be constructed to stabilize these zones to extract rare minerals.
+
+**Emergence:** A vault loses power during a blackout. The localized pressure change causes a rapid decompression event that travels up the mineshaft, blowing the roof off the surface refinement facility and scattering raw materials across the colony.
+
+**Tension:** Do you safely strip-mine the low-yield surface, or risk catastrophic colony-wide blowouts by digging deep for rare, high-yield materials?
+
+---
+
+## Gravity-Tethered Habitats
+
+**Layer:** 2
+
+**Fantasy:** Maximizing orbital space by stringing stations together, creating fragile but massive orbital metropolises.
+
+**Mechanic:** Stations can be tethered together to share power and life support. Tethers are physically simulated lines; if too many stations are added or one is destroyed, the structural integrity of the tether network fails.
+
+**Emergence:** An enemy fleet snipes a central power station. The tether snaps, causing three connected habitats to wildly swing out of orbit. One habitat crashes into a Layer 1 colony, triggering a mass-extinction event on the surface.
+
+**Tension:** Do you build sprawling, hyper-efficient tethered networks that are a single point of failure, or decentralized, robust, but inefficient isolated stations?
+
+---
+
+## Cultural Memory Contagion
+
+**Layer:** Cross-layer
+
+**Fantasy:** Ideas and historical memories act like viruses, sweeping across your civilization and radically altering their behavior.
+
+**Mechanic:** Pops with intense memories (e.g., a devastating war or a golden age) can spread these memories via the Social System or when migrating between planets. Highly potent memories override the destination colony's original Utility AI weights.
+
+**Emergence:** A refugee ship from a conquered frontier world arrives at your peaceful core planet. They spread a traumatizing "War Memory," turning your pacifist scientists into paranoid survivalists who refuse to research non-military tech, stalling your economy.
+
+**Tension:** Do you quarantine refugees and limit migration to preserve cultural stability, or accept the influx of pops at the risk of ideological contagion destabilizing your entire empire?
+
+---
