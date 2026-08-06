@@ -107,6 +107,10 @@ fn init_simulation_resources(world: &mut World) {
         crate::layer1::social::factions::subcontractor_factions::MegacorpSecuritySweepEvent,
     >>();
     world.init_resource::<bevy_ecs::event::Events<crate::layer1::shadow_ecosystems::ShortCircuitEvent>>();
+    world
+        .init_resource::<bevy_ecs::event::Events<crate::layer2::orbit::tether::AsteroidCrashEvent>>(
+        );
+    world.init_resource::<bevy_ecs::event::Events<crate::layer1::spatial_compression::PocketCollapseEvent>>();
     world.init_resource::<crate::layer2::propaganda_engine::PropagandaEngine>();
     world.init_resource::<crate::layer2::propaganda_engine::DiplomaticWeight>();
     world.init_resource::<crate::layer2::propaganda_engine::InspectorEvent>();
