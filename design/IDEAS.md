@@ -31590,3 +31590,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you respect their traumatic history at the cost of vital expansion space, or bulldoze their sacred void for practical infrastructure?
 
 ---
+## The Black Market Organ Exchange
+
+**Layer:** 1
+
+**Fantasy:** A desperate underclass resorting to selling pieces of themselves to survive a brutal economy.
+
+**Mechanic:** When a colony faces severe, prolonged food or wealth shortages, low-status Pops can "Sell Biomaterial". They gain temporary wealth or food, but permanently lose max health or efficiency. High-status Pops can buy these for longevity bonuses.
+
+**Emergence:** You ignore a slum's poverty, and a decade later, the entire workforce is physically crippled from selling their organs, causing your industrial base to collapse right when you need it most.
+
+**Tension:** Do you crack down on the illegal organ trade (causing immediate riots and starvation) or let it continue, watching your workforce slowly consume its own bodies?
+
+---
+
+## Orbital Debris Sabotage
+
+**Layer:** 2
+
+**Fantasy:** Weaponizing the garbage of past conflicts to create an impassable frontier.
+
+**Mechanic:** Specialized stealth ships can tow dense clouds of orbital debris from old battlefields into the hyperlanes or orbits of enemy systems. The debris acts as a massive speed penalty and causes constant attritional damage to enemy trade and military fleets.
+
+**Emergence:** An enemy empire tries to invade you, but you've spent years dragging the scrap from their last failed invasion into their path. Their dreadnoughts arrive at your core world already heavily damaged and out of supplies just from navigating their own garbage.
+
+**Tension:** Do you spend valuable military time cleaning up space, or weaponize the clutter, making the system dangerous even for your own civilian ships?
+
+---
+
+## Reverse Gravity Heists
+
+**Layer:** Cross-layer
+
+**Fantasy:** Criminal syndicates stealing entire buildings off the surface of a planet.
+
+**Mechanic:** If planetary security is low but orbital traffic is high, pirate factions can execute "Reverse Gravity Heists". They park a massive salvage ship in low orbit and use localized gravity beams to literally rip valuable Layer 1 structures (like banks, armories, or artifact vaults) off the ground and pull them into space.
+
+**Emergence:** You spend an hour carefully planning and constructing a beautiful, highly efficient quantum research center. The next day, a pirate galleon rips the entire building out of the ground, leaving a smoking crater, and you have to chase them across three star systems to get your scientists back.
+
+**Tension:** Do you spend massive resources building planetary defense shields just to stop grand theft auto on a municipal scale, or keep your buildings cheap and disposable?
+
+---
