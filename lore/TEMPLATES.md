@@ -11167,3 +11167,47 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The fire held them back. The [MACHINE_SWARM] is contained at [COLONY]."
 - "We starved the [MACHINE_SWARM]. The perimeter holds at [COLONY]. [YEAR]."
 - "[COLONY], [YEAR]: The swarm sleeps again. The [MACHINE_SWARM] is sealed."
+
+## The Ego Machine Templates (Spec 321)
+
+### Template: EGO_BREAK
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [POP_NAME], [MENIAL_JOB]
+**Patterns:**
+- "[YEAR]: [POP_NAME] emerged from the Mirror Chamber and refused to do [MENIAL_JOB]. They say they are meant for greater things."
+- "The Chamber changes them. [POP_NAME] spat at the [MENIAL_JOB] overseer. [COLONY] is dividing. [YEAR]."
+- "[COLONY], [YEAR]: [POP_NAME] believes they are a god now. [MENIAL_JOB] is beneath them."
+
+### Template: EGO_FRICTION
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [POP_NAME], [LOW_EGO_POP]
+**Patterns:**
+- "[YEAR]: The Unburdened clash with the workers. [POP_NAME] drove [LOW_EGO_POP] to a breakdown."
+- "[COLONY] boils with resentment. The arrogance of [POP_NAME] is crushing [LOW_EGO_POP]. [YEAR]."
+
+## The Orbital Junkyard Templates (Spec 317)
+
+### Template: DEBRIS_CRUSH
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [BUILDING_NAME], [CASUALTIES]
+**Patterns:**
+- "[YEAR]: The Ruin-Rain fell hard. [BUILDING_NAME] was flattened. [CASUALTIES] souls crushed."
+- "Scrap from the sky. We lost [BUILDING_NAME] and [CASUALTIES] workers in the barrage. [COLONY], [YEAR]."
+- "[COLONY], [YEAR]: The old wars still kill us. A dreadnought hull crushed the [BUILDING_NAME]. [CASUALTIES] dead."
+
+### Template: SCRAP_WINDFALL
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SCRAP_AMOUNT]
+**Patterns:**
+- "[YEAR]: A quiet night of Scrap-Fall. We gathered [SCRAP_AMOUNT] tons of alloy from the craters."
+- "The sky bleeds metal, and we drink. [SCRAP_AMOUNT] units recovered at [COLONY]. [YEAR]."
+
+## Planetary Scarring Templates (Spec 1018)
+
+### Template: PLANET_SCARRED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SCAR_TYPE]
+**Patterns:**
+- "[YEAR]: The disaster left a mark. A new [SCAR_TYPE] is visible from the high orbit arrays."
+- "We are breaking this world. The [SCAR_TYPE] spans the continent. [COLONY], [YEAR]."
+- "[COLONY], [YEAR]: Another Great Wound. The [SCAR_TYPE] will outlast us all."
