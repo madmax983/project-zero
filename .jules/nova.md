@@ -305,3 +305,15 @@
 **Concept:** Added `friendly_remittance_system` to `src/experimental/friendly_remittance.rs`. Connects `Relationships`, `Wallet`, and `GridPosition`. Pops with high mutual affinity who are close by will transfer 5.0 credits to their broke friends, emitting a Chronicle event.
 **Fate:** Submitted
 **Lesson:** Connects the social network to the localized economy, making high relationships mechanically impactful beyond mood buffs by creating localized social safety nets.
+## [Engine Cultist Rituals]
+**Concept:** Added `engine_cultist_rituals` in `src/experimental/engine_cultist_rituals.rs`. Connects `Trait::EngineCultist` with `EnergyGrid` and `BuildingType::Generator`. Pops with the Engine Cultist trait who stand near a Generator passively increase its energy output through ritual chanting, but this drains their `rest` and `leisure` needs significantly.
+**Fate:** Pending
+**Lesson:** Connects a spiritual belief system (Engine Cult) directly to the physical economy (Energy Grid). It transforms specialized pops into biological batteries, providing a powerful economic buff but creating a severe psychological cost that must be managed.
+## [Photosynthetic Nourishment]
+**Concept:** Added `photosynthetic_nourishment_system` in `src/experimental/photosynthetic_nourishment.rs`. Connects `Trait::PlantLike` (or `Trait::GreenThumb`) with `GlobalAtmosphere` (or `TimeOfDay`). Pops with these traits passively regenerate `hunger` when they are outdoors during the `Day` shift (or high UV light), reducing the colony's food burden.
+**Fate:** Pending
+**Lesson:** Connects a biological trait directly to the environment and the day/night cycle.
+## [Pyromaniac Euphoria]
+**Concept:** Added `pyromaniac_euphoria_system` in `src/experimental/pyromaniac_euphoria.rs`. Connects `Trait::Pyromaniac` (assuming it exists or can be added) with `ExplosionEvent` / `SparkEvent`. Pops with this trait passively regenerate `leisure` (and perhaps a burst of `rest` or productivity) when an explosion occurs nearby, turning disasters into localized mood buffs.
+**Fate:** Pending
+**Lesson:** Connects a destructive environmental event to a psychological quirk, rewarding (or mitigating the downside of) industrial accidents for a specific subset of the population.
