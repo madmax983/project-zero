@@ -14,12 +14,11 @@ fn test_sovereign_armada_chronicle_bridge() {
     let system_node = app.world_mut().spawn_empty().id();
     let armada = app.world_mut().spawn_empty().id();
 
-    app.world_mut()
-        .send_event(TributeDemandEvent {
-            aggressor: armada,
-            system: system_node,
-            amount: 5000,
-        });
+    app.world_mut().send_event(TributeDemandEvent {
+        aggressor: armada,
+        system: system_node,
+        amount: 5000,
+    });
 
     app.update();
 

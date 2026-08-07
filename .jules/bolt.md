@@ -21,3 +21,6 @@
 **[A* Memory Optimization: Replacing large vectors with HashMaps]**
 **Learning:** In A* pathfinding on large grids, allocating two vectors of size `width * height` (`came_from` and `cost_so_far`) on *every* pathfinding request is incredibly slow and fragmenting, especially when the path is much smaller than the grid.
 **Action:** Replace full-grid pre-allocated tracking vectors in A* with `bevy::utils::HashMap` keyed by grid index. This strictly limits memory allocation to the explored path area instead of the entire grid, scaling pathfinding cost to the path length rather than the map size.
+**[Quantum Twin Mood Hashmap Size]**
+**Learning:** Found a zero-capacity `std::collections::HashMap::new()` initialized on every frame during the `update_twin_mood_system` system execution to collect intermediate morale values, which then reallocated dynamically per iteration.
+**Action:** Replaced with `bevy::utils::HashMap::with_capacity(twins.iter().len())`. The Bevy `AHash` map provides faster hashing for `Entity` keys compared to default SipHash. Pre-allocation via `with_capacity()` based on query length fully prevents mid-execution dynamic heap allocation fragmentation and dramatically speeds up ECS loops.

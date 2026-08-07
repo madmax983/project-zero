@@ -1214,7 +1214,9 @@ pub fn orbital_secession_chronicle_bridge(
     for state in query.iter() {
         if *state == crate::layer2::orbit::secession::SecessionState::Seceded {
             chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
-                text: "An Orbital Habitat has declared independence and seceded from the homeworld!".to_string(),
+                text:
+                    "An Orbital Habitat has declared independence and seceded from the homeworld!"
+                        .to_string(),
                 importance: crate::layer1::core::chronicle::EventImportance::Major,
             });
         }

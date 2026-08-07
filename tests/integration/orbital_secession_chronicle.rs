@@ -1,6 +1,6 @@
+use bevy_ecs::prelude::*;
 use scale::layer1::core::chronicle::{AddChronicleEvent, EventImportance};
 use scale::layer2::orbit::secession::{OrbitalHabitat, SecessionState, Unrest};
-use bevy_ecs::prelude::*;
 
 #[test]
 fn test_orbital_secession_chronicle_bridge() {
@@ -46,6 +46,8 @@ fn test_orbital_secession_chronicle_bridge() {
 
         assert_eq!(emitted.len(), 1);
         assert_eq!(emitted[0].importance, EventImportance::Major);
-        assert!(emitted[0].text.contains("An Orbital Habitat has declared independence"));
+        assert!(emitted[0]
+            .text
+            .contains("An Orbital Habitat has declared independence"));
     }
 }
