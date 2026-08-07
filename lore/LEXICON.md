@@ -6090,3 +6090,34 @@
 **Replaces:** Atmospheric harvester, Gas skimmer
 **Code reference:** N/A (pending implementation)
 **Usage:** "The Siphon dove into the clouds."
+
+## The Ego Machine (Spec 321)
+
+### The Mirror Chamber
+**Replaces:** Ego Machine, skill booster
+**Code reference:** `N/A (pending implementation)`
+**Usage:** "The Mirror Chamber flatters them until they believe they are gods."
+
+### The Unburdened
+**Replaces:** High Ego pops, elitists
+**Code reference:** `N/A (pending implementation)`
+**Usage:** "The Unburdened refuse to clean the air filters."
+
+## The Orbital Junkyard (Spec 317)
+
+### The Ruin-Rain
+**Replaces:** Debris fall, falling junk
+**Code reference:** `N/A (pending implementation)`
+**Usage:** "The Ruin-Rain crushed the eastern hydro-farm."
+
+### Scrap-Fall
+**Replaces:** Dropped resources from orbit
+**Code reference:** `N/A (pending implementation)`
+**Usage:** "We harvest the Scrap-Fall to survive."
+
+## Planetary Scarring (Spec 1018)
+
+### The Great Wounds
+**Replaces:** Macro-scars, visible disaster damage
+**Code reference:** `N/A (pending implementation)`
+**Usage:** "The Great Wounds are visible from orbit."

@@ -11070,3 +11070,36 @@ What kind of chronological debris is found.
 - a massive storm-world
 - an irradiated super-jovian
 - the deep azure clouds
+
+## The Ego Machine Fragments (Spec 321)
+
+## Fragment Type: [MENIAL_JOB]
+- hauling scrap
+- cleaning the filters
+- repairing the waste pipes
+- tending the algae vats
+- burying the dead
+
+## Fragment Type: [EGO_BEHAVIOR]
+- demanding luxury rations
+- wearing ceremonial robes
+- speaking only in poetry
+- refusing to walk on bare floors
+
+## The Orbital Junkyard Fragments (Spec 317)
+
+## Fragment Type: [DEBRIS_TYPE]
+- a shredded engine cowling
+- the scorched remains of a kinetic battery
+- an ancient habitation ring
+- compressed hull plating
+- a rusted satellite core
+
+## Planetary Scarring Fragments (Spec 1018)
+
+## Fragment Type: [SCAR_TYPE]
+- jagged crater network
+- massive ash cloud
+- radioactive glass plain
+- tectonic rupture
+- boiling toxic sea
