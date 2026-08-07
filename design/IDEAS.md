@@ -31469,3 +31469,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you invest decades of resources into moving a star system, risking catastrophic tidal forces on all contained planets, just to alter the strategic geography of the galaxy?
 
 ---
+## Civilian Joyriding
+
+**Layer:** 2
+
+**Fantasy:** Watching bored, wealthy civilians take your military hardware out for a spin, treating space combat like extreme tourism.
+
+**Mechanic:** Highly satisfied or wealthy pops on advanced worlds will occasionally "borrow" idle Layer 2 ships (like fast frigates or interceptors) for unauthorized pleasure cruises.
+
+**Emergence:** A civilian joyrider accidentally flies into hostile space, triggering a border incident, or discovers a hidden anomaly you missed because they took an erratic flight path.
+
+**Tension:** Do you lock down all military hardware and suffer a morale penalty on core worlds, or risk international incidents to keep your elites happy?
+
+---
+
+## Spontaneous Cultural Fads
+
+**Layer:** 1
+
+**Fantasy:** Watching your rigid, heavily-planned colony get swept up in a bizarre, counter-productive social trend.
+
+**Mechanic:** Pops can spontaneously develop and spread a "Fad" (e.g., refusing to eat a certain food type, walking everywhere at half speed as a form of meditation). The fad has a viral spread mechanic across the colony.
+
+**Emergence:** A fad of "Asceticism" causes half your miners to refuse to use automated drill bots, halving your alloy production right before a defensive war, simply because manual labor is suddenly "trendy."
+
+**Tension:** Do you ruthlessly suppress the fad with security forces, crushing morale, or re-route your entire supply chain to accommodate the bizarre new tastes of your citizens until the fad dies out naturally?
+
+---
+
+## Reverse-Quarantine Blockades
+
+**Layer:** Cross-layer
+
+**Fantasy:** A paranoid fringe colony deciding the rest of your empire is tainted and actively defending against your own supply ships.
+
+**Mechanic:** A colony with high anxiety or after a minor disease outbreak can independently declare a "Sanctuary State." The Layer 1 pops hijack local orbital defense grids to actively shoot down your Layer 2 logistics and supply ships, refusing all outside contact.
+
+**Emergence:** A key farming world goes into Reverse-Quarantine during a famine on the core worlds. You literally have to invade and bomb your own agricultural defenses to force them to export food to the rest of the empire.
+
+**Tension:** Do you let them isolate, losing their taxes and resources but keeping them happy, or spend military resources to forcefully open your own world's borders?
+
+---
