@@ -591,6 +591,9 @@ fn register_simulation_core_systems(schedule: &mut Schedule) {
     ));
 
     register_layer1_systems(schedule);
+    #[cfg(feature = "nova")]
+    crate::experimental::engine_cultist_rituals::register(schedule);
+
     // Register orphaned swarm systems standalone here since we don't use App
     schedule.add_systems((
         crate::layer1::orphaned_swarm::check_for_derelict_arrival,

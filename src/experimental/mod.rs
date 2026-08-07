@@ -202,14 +202,14 @@ pub mod tavern_brawls;
 #[cfg(feature = "nova")]
 pub mod astrological_weather;
 #[cfg(feature = "nova")]
+pub mod engine_cultist_rituals;
+
 pub mod ghost_grid;
 #[cfg(feature = "nova")]
 pub mod mutagenic_terraforming;
 
 #[cfg(feature = "nova")]
 pub mod acoustic_hallucinations;
-#[cfg(feature = "nova")]
-pub mod engine_cultist_rituals;
 #[cfg(feature = "nova")]
 pub mod fungal_reclamation;
 #[cfg(feature = "nova")]
