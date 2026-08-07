@@ -31551,3 +31551,42 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you mortgage your future safety to survive the present crisis, knowing the bill will come due at the worst possible moment?
 
 ---
+## The Simulation Tax
+
+**Layer:** 3
+
+**Fantasy:** Maintaining the illusion that your digital citizens are still alive requires physical sacrifices from the real world.
+
+**Mechanic:** After unlocking "Mind Upload", you can transfer pops to a massive Layer 3 "Digital Haven". They produce infinite culture and research, but the servers require an exponentially increasing amount of rare physical resources (cooling agents, quantum processors) to maintain their complex simulations.
+
+**Emergence:** You upload half your population to save them from a famine. Years later, you realize you have to strip-mine your remaining physical colonies and work the living pops to death just to keep the servers running for the digital ones.
+
+**Tension:** Do you let the servers degrade (deleting uploaded ancestors) or sacrifice the living to maintain the digital utopia?
+
+---
+## The Generational Veto
+
+**Layer:** 1
+
+**Fantasy:** The founders built the colony, but their great-grandchildren don't want to live in it anymore.
+
+**Mechanic:** As generations pass, "Youth" factions develop opposing ideals to the "Elder" factions. If the Youth faction becomes the majority, they can unilaterally cancel ongoing megaprojects or dismantle specific "sacred" buildings established by the Elders, replacing them with structures matching their new ethos.
+
+**Emergence:** You spend 80 years building a massive industrial forge to supply the war effort. The generation that inherits it decides they are pacifists, dismantling the forge to build a massive botanical garden while the enemy fleet approaches.
+
+**Tension:** Do you aggressively re-educate the youth to maintain your grand design, or adapt your strategy to the constantly shifting desires of the inheriting generations?
+
+---
+## The Monument of Scarcity
+
+**Layer:** 1
+
+**Fantasy:** A society so traumatized by past starvation that they build their identity around the *absence* of resources.
+
+**Mechanic:** If a colony survives a severe famine or resource drought, a faction may arise demanding the construction of a "Monument of Scarcity"—a massive, deliberately empty silo or barren plaza. Constructing and maintaining this empty space provides a massive morale boost to survivors, but takes up premium central real-estate and requires constant "maintenance" (keeping it completely barren).
+
+**Emergence:** You try to build a life-saving hydroponics bay in the center of the colony, but the locals riot. They would rather risk future starvation than desecrate the sacred empty space that honors those who died in the Great Famine.
+
+**Tension:** Do you respect their traumatic history at the cost of vital expansion space, or bulldoze their sacred void for practical infrastructure?
+
+---
