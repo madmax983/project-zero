@@ -205,4 +205,10 @@ mod tests {
         // asserting we got an instance is sufficient for basic coverage of the wrapper.
         let _ = instance;
     }
+
+    #[test]
+    fn test_new_context_success() {
+        let result = pollster::block_on(GpuContext::new());
+        assert!(result.is_ok(), "GpuContext should be created successfully in tests");
+    }
 }

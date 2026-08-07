@@ -9,8 +9,9 @@ use super::buffers::{
     GpuPersistentBuffers, GpuPopDecision,
 };
 use crate::gpu::context::GpuContext;
-use crate::layer1::utility_ai::evaluate_actions_system;
-use crate::layer1::utility_ai::{ActionType, PopAction, StartPlan};
+use crate::layer1::mind::utility_ai::evaluate_actions_system;
+use crate::layer1::mind::utility_types::{ActionType, PopAction};
+use crate::layer1::mind::utility_ai::StartPlan;
 
 /// GPU-accelerated action evaluation system.
 ///
