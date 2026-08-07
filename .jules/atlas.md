@@ -92,3 +92,6 @@
 **[Title] Break Circular Dependency and Fix Blob Anti-pattern with Apex Meat Harvest and Distribution Bridges**
 **Tangle:** The `apex_meat_harvest_bridge_system` and `apex_meat_distribution_system` were located in `src/layer1/core/integration.rs`, exacerbating the "Blob" anti-pattern in `integration.rs` and distancing the bridging logic from the `economy/apex_diet` domain. This led to bloated files and poor cohesion.
 **Blueprint:** Moved `apex_meat_harvest_bridge_system` and `apex_meat_distribution_system` from `src/layer1/core/integration.rs` to `src/layer1/economy/apex_diet.rs` to enforce domain cohesion. Updated references in `src/simulation.rs` and the integration tests (`tests/integration/apex_diet_integration.rs`).
+**[Title] Fix Clippy Error: items_after_test_module**
+**Tangle:** The `src/layer3/integration.rs` file had a function `sovereign_armada_chronicle_bridge` defined after the `mod tests` block, causing a clippy error `items_after_test_module`.
+**Blueprint:** Moved the function to be placed before the `mod tests` block to satisfy clippy and ensure proper file structure.

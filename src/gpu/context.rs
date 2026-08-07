@@ -209,6 +209,9 @@ mod tests {
     #[test]
     fn test_new_context_success() {
         let result = pollster::block_on(GpuContext::new());
-        assert!(result.is_ok(), "GpuContext should be created successfully in tests");
+        assert!(
+            result.is_ok(),
+            "GpuContext should be created successfully in tests"
+        );
     }
 }

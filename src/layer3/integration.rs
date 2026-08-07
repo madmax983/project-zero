@@ -610,6 +610,19 @@ pub fn the_silence_chronicle_bridge(
     }
 }
 
+/// INT-1011: Bridges `TributeDemandEvent` (Sovereign Armada) to `AddChronicleEvent`
+pub fn sovereign_armada_chronicle_bridge(
+    mut events: EventReader<crate::layer1::diplomacy::TributeDemandEvent>,
+    mut chronicle_events: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+) {
+    for _event in events.read() {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            text: "The Sovereign Armada has arrived and demands tribute.".to_string(),
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
+        });
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -913,18 +926,5 @@ mod tests {
         assert!(c_events[0]
             .text
             .contains("Hostile fleet stalled by bureaucratic red tape."));
-    }
-}
-
-/// INT-1011: Bridges `TributeDemandEvent` (Sovereign Armada) to `AddChronicleEvent`
-pub fn sovereign_armada_chronicle_bridge(
-    mut events: EventReader<crate::layer1::diplomacy::TributeDemandEvent>,
-    mut chronicle_events: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
-) {
-    for _event in events.read() {
-        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
-            text: "The Sovereign Armada has arrived and demands tribute.".to_string(),
-            importance: crate::layer1::core::chronicle::EventImportance::Major,
-        });
     }
 }
