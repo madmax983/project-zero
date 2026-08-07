@@ -278,7 +278,9 @@ mod tests {
             })
             .id();
 
-        app.world_mut().spawn(SilenceCult { colony_entity: colony_ent });
+        app.world_mut().spawn(SilenceCult {
+            colony_entity: colony_ent,
+        });
 
         app.update();
 
