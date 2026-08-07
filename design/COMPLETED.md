@@ -710,6 +710,7 @@
 - [x] `1140` Chain of Command — `specs/1140-chain-of-command.md` — completed 2026-05-31
 - [x] `1028` Tech Envy — `specs/1028-tech-envy.md` — completed 2026-06-28
 - [x] `352` Stellar Drift — `specs/352-stellar-drift.md` — completed 2026-05-31
+- [x] `INT-317` Integration: Orbital Junkyard -> Simulation - completed 2026-02-01
 - [x] `1123` Void-Tethered Sleep — `specs/1123-void-tethered-sleep.md` — completed 2026-02-01
 - [x] `1070` Feral Infrastructure — `specs/1070-feral-infrastructure.md` — completed 2026-02-01
 - [x] `1109` Wormhole Dumping — `specs/1109-wormhole-dumping.md` — completed 2026-10-31
@@ -884,6 +885,7 @@
 - [x] `274` Blacksite Penal Colonies — `specs/274-blacksite-penal-colonies.md` — completed 2026-10-31
 - [x] `1308` The Blackout Bazaars — `specs/1308-the-blackout-bazaars.md` — completed 2026-11-01
 - [x] `352` Stellar Drift — `specs/352-stellar-drift.md` — completed 2026-07-04
+- [x] `INT-317` Integration: Orbital Junkyard -> Simulation - completed 2026-02-01
 
 - [x] `909` Radio Broadcasts — `specs/909-radio-broadcasts.md` — completed 2026-06-30
 - [x] `1318` The Infinite Archive — `specs/1318-the-infinite-archive.md` — completed 2026-07-04
