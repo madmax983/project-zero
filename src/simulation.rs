@@ -1183,6 +1183,7 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         crate::layer2::exploration::void_whispers::accumulate_void_whispers_in_deep_space,
         crate::layer2::exploration::void_whispers::spread_whispers_to_colony,
         crate::layer2::integration::void_whispers_chronicle_bridge,
+            crate::layer2::integration::orbital_junkyard_bridge_system,
     ));
 
     schedule.add_systems((crate::layer3::integration::jump_risk_bridge_system

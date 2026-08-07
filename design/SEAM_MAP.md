@@ -1911,3 +1911,10 @@
 - **Glue added:** Added `sovereign_armada_chronicle_bridge` in `src/layer3/integration.rs` to generate Chronicle records when the Sovereign Armada demands tribute.
 - **Schedule:** Registered the system in `src/simulation.rs`.
 - **Tests:** Added tests in `tests/integration/sovereign_armada_bridge.rs`.
+
+### INT-317: Orbital Junkyard Bridge
+- **Date:** 2026-02-01
+- **Systems connected:** `OrbitalDebris` -> `orbital_junkyard_bridge_system` -> `DebrisRainChance`
+- **Glue added:** Added `orbital_junkyard_bridge_system` in `src/layer2/integration.rs` to aggregate total orbital debris and map it to debris rain chance in layer 1.
+- **Schedule:** Registered in Simulation schedule.
+- **Tests:** Added tests in `tests/integration/orbital_junkyard_bridge.rs`.
