@@ -629,3 +629,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1350` Selective Amnesia — `specs/1350-selective-amnesia.md`
 - [ ] `1351` The Slippery Slope — `specs/1351-the-slippery-slope.md`
 - [ ] `1352` The Mother Culture — `specs/1352-the-mother-culture.md`
+- [ ] `1353` Neuro-Sludge Spills — `specs/1353-neuro-sludge-spills.md`
