@@ -31510,3 +31510,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you let them isolate, losing their taxes and resources but keeping them happy, or spend military resources to forcefully open your own world's borders?
 
 ---
+## Feral Holograms
+
+**Layer:** 1
+
+**Fantasy:** The ghosts of your past entertainment become actual hazards in your city.
+
+**Mechanic:** High-tech "Holo-Theaters" provide massive morale boosts but require constant maintenance. If they break down or lose power for an extended period, the holograms "glitch" and wander the colony as hard-light constructs. They cannot do physical damage, but they block pathfinding and cause stress to Pops who encounter them.
+
+**Emergence:** A forgotten holo-theater in an abandoned mining district generates a swarm of glitchy, repeating actors that permanently block the main access tunnel to a new ore vein. You have to send the militia to "kill" the light constructs.
+
+**Tension:** Do you build highly effective but fragile entertainment infrastructure, or stick to safe, low-tech Taverns that won't eventually haunt your streets?
+
+---
+
+## The Sabotage Tax
+
+**Layer:** Cross-layer
+
+**Fantasy:** Dealing with organized resistance by institutionalizing it, turning criminals into bureaucrats.
+
+**Mechanic:** If a disgruntled Faction repeatedly sabotages a specific industry (e.g., stealing from the granary or breaking the atmospheric scrubbers), you can enact a "Sabotage Tax" policy. This legitimizes their theft as a formal tax. The building permanently produces 20% less, but the Faction stops rioting and their members gain wealth and status.
+
+**Emergence:** You "tax" your own water purifiers to appease a violent cult. The cult becomes incredibly wealthy and influential, eventually using their legalized extortion money to buy their own ships and leave the planet, starving the rest of your colony of water in the process.
+
+**Tension:** Do you brutally crack down on the sabotage (risking open rebellion and damaged infrastructure), or institutionalize the corruption and slowly bleed your own economy dry?
+
+---
+
+## Chronological Tithing
+
+**Layer:** Cross-layer
+
+**Fantasy:** You can borrow time from the future, but the universe always collects its debt.
+
+**Mechanic:** A rare "Temporal Engine" allows you to instantly complete a massive Layer 1 construction or Layer 3 research project. However, this creates a "Time Debt." At a random point in the future, the colony will suffer a "Time Stutter" where all Layer 1 production, movement, and needs are frozen for a duration equal to the time saved, leaving them completely helpless to Layer 2/3 events.
+
+**Emergence:** You use the engine to instantly build planetary defenses during an overwhelming invasion, saving the colony. Ten years later, a minor pirate raid arrives while the entire planet is frozen in a Time Stutter, leading to massive, uncontested looting.
+
+**Tension:** Do you mortgage your future safety to survive the present crisis, knowing the bill will come due at the worst possible moment?
+
+---
