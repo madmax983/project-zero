@@ -72,7 +72,9 @@ pub fn update_twin_sync_system(
 /// Equalizes mood between twins over time.
 pub fn update_twin_mood_system(mut twins: Query<(Entity, &QuantumTwin, &mut Morale)>) {
     // Collect all morale values first to avoid borrow issues
-    let mut morale_map = std::collections::HashMap::new();
+    // ⚡ Bolt Optimization: Uses `bevy::utils::HashMap` (AHash) instead of `std::collections::HashMap`
+    // and pre-allocates capacity using the query length to avoid dynamic reallocations.
+    let mut morale_map = bevy::utils::HashMap::with_capacity(twins.iter().len());
     for (entity, _, morale) in twins.iter() {
         morale_map.insert(entity, morale.value);
     }
