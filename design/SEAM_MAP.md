@@ -1925,3 +1925,9 @@
 - **Glue added:** Added `weaponized_tourism_chronicle_bridge` in `src/layer3/tourism_integration.rs` to generate Chronicle records when Weaponized Tourism results in a Casus Belli over a harmed tourist.
 - **Schedule:** Registered the system in `src/simulation.rs`.
 - **Tests:** Added tests in `tests/integration/weaponized_tourism_bridge.rs`.
+
+### INT-319: The Gravity Well Forge -> Chronicle
+- **Date:** $(date +%Y-%m-%d)
+- **Systems connected:** `ForgeCrushEvent` -> `observe_forge_crush_event` -> `AddChronicleEvent`
+- **Glue added:** The bridge `observe_forge_crush_event` was already implemented in `src/layer2/integration.rs` and registered in `src/simulation.rs`. Added an integration test to verify the seam works as expected.
+- **Tests:** `tests/integration/gravity_well_forge_bridge.rs`
