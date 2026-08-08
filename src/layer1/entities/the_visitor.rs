@@ -206,7 +206,10 @@ fn handle_visitor_eat(visitor: &mut TheVisitor, resources: &mut ColonyResources)
 }
 
 /// Evaluates and advances the behavior state machine of "The Visitor".
+///
 /// Handles targeting, moving, eating, and trampling structures.
+/// This system updates The Visitor's position when navigating towards a target,
+/// consumes food/resources when reaching stockpiles, and destroys any structures in its path.
 pub fn the_visitor_behavior_system(
     mut commands: Commands,
     mut visitors: Query<VisitorQuery, VisitorFilter>,

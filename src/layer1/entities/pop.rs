@@ -132,7 +132,17 @@ fn generate_name<R: Rng>(rng: &mut R) -> PopName {
 }
 
 impl PopName {
-    /// Generate a random name.
+    /// Generates a random `PopName`.
+    ///
+    /// ## Examples
+    /// ```
+    /// use rand::thread_rng;
+    /// use scale::layer1::entities::pop::PopName;
+    ///
+    /// let mut rng = thread_rng();
+    /// let name = PopName::random(&mut rng);
+    /// assert!(!name.0.is_empty());
+    /// ```
     pub fn random<R: Rng>(rng: &mut R) -> Self {
         generate_name(rng)
     }
@@ -360,7 +370,7 @@ pub struct PopBundle {
 }
 
 impl PopBundle {
-    /// Creates a new random PopBundle at the given position.
+    /// Generates a completely randomized `PopBundle` at the specified position.
     pub fn random<R: Rng>(x: i32, y: i32, rng: &mut R) -> Self {
         Self {
             pop: Pop,
