@@ -6121,3 +6121,46 @@
 **Replaces:** Macro-scars, visible disaster damage
 **Code reference:** `N/A (pending implementation)`
 **Usage:** "The Great Wounds are visible from orbit."
+
+## Modular Fauna (Spec 1035)
+
+### Chimera / Modular Fauna
+**Replaces:** Generic alien beasts, monsters
+**Code reference:** N/A (pending implementation)
+**Usage:** "A venom-tailed Chimera breached the perimeter." / "The Modular Fauna is adapting too fast."
+
+## The Gravity Well Forge (Spec 319)
+
+### Deep Forge
+**Replaces:** Advanced alloy facility, Layer 2 factory
+**Code reference:** N/A (pending implementation)
+**Usage:** "The Deep Forge groans under the atmospheric pressure."
+
+### Hyper-Alloys
+**Replaces:** Endgame metal, tier 3 alloys
+**Code reference:** N/A (pending implementation)
+**Usage:** "We traded three crates of Hyper-Alloys for a new fleet."
+
+## The Void Leviathan (Spec 314)
+
+### The Eclipse / The Shadow
+**Replaces:** Leviathan eclipse event, global solar blackout
+**Code reference:** N/A (pending implementation)
+**Usage:** "The Eclipse froze the water pipes." / "We live in The Shadow now."
+
+### Bio-Alloys
+**Replaces:** Leviathan loot, organic metal
+**Code reference:** N/A (pending implementation)
+**Usage:** "The Bio-Alloys pulse with a faint heartbeat."
+
+## Gene-Banks (Spec 1034)
+
+### The Vault of Seeds / The Gene-Banks
+**Replaces:** Gene-Bank, DNA storage facility
+**Code reference:** `CryoBank`
+**Usage:** "The Vault of Seeds was opened to bring back the Grox."
+
+### Genetic Drift
+**Replaces:** Cloning errors, random mutations
+**Code reference:** `CloneEvent`
+**Usage:** "Genetic Drift turned the herbivores into predators."
