@@ -588,6 +588,7 @@ fn register_simulation_core_systems(schedule: &mut Schedule) {
         crate::cross_layer::interplanetary_pollination::spore_escape_system,
         crate::cross_layer::interplanetary_pollination::spore_infection_system,
         crate::layer2::integration::interplanetary_pollination_chronicle_bridge,
+        crate::layer3::tourism_integration::weaponized_tourism_chronicle_bridge,
     ));
 
     register_layer1_systems(schedule);

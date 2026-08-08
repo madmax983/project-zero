@@ -1918,3 +1918,10 @@
 - **Glue added:** Added `orbital_junkyard_bridge_system` in `src/layer2/integration.rs` to aggregate total orbital debris and map it to debris rain chance in layer 1.
 - **Schedule:** Registered in Simulation schedule.
 - **Tests:** Added tests in `tests/integration/orbital_junkyard_bridge.rs`.
+
+### INT-1279: Weaponized Tourism -> Chronicle
+- **Date:** 2024-08-08
+- **Systems connected:** `WeaponizedTourist` / `CasusBelli` -> `AddChronicleEvent`
+- **Glue added:** Added `weaponized_tourism_chronicle_bridge` in `src/layer3/tourism_integration.rs` to generate Chronicle records when Weaponized Tourism results in a Casus Belli over a harmed tourist.
+- **Schedule:** Registered the system in `src/simulation.rs`.
+- **Tests:** Added tests in `tests/integration/weaponized_tourism_bridge.rs`.
