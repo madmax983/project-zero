@@ -722,3 +722,5 @@ mod spatial_compression_chronicle;
 mod orbital_secession_chronicle;
 #[path = "integration/sovereign_armada_bridge.rs"]
 mod sovereign_armada_bridge;
+#[path = "integration/gravity_well_forge_bridge.rs"]
+mod gravity_well_forge_bridge;

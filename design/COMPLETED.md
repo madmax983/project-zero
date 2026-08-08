@@ -853,6 +853,7 @@
 - [x] `1035` Modular Fauna — `specs/1035-modular-fauna.md` — completed 2026-06-27
 - [x] `INT-1035` Integration: Modular Fauna Stats -> Economy — completed 2026-10-31
 - [x] `319` The Gravity Well Forge — `specs/319-gravity-well-forge.md` — completed 2026-06-28
+- [x] `INT-319` Integration: The Gravity Well Forge -> Chronicle — completed 2026-08-08
 - [x] `1034` Gene-Banks — `specs/1034-gene-banks.md` — completed 2024-06-29
 - [x] `1228` The Slippery Slope — `specs/1228-the-slippery-slope.md` — completed 2026-06-28
 - [x] `1020` Spatial Compression — `specs/1020-spatial-compression.md` — completed 2024-05-31
