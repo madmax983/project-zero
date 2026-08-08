@@ -1,6 +1,7 @@
 #[cfg(test)]
 mod tests {
     use bevy_ecs::prelude::*;
+    use bevy::prelude::*;
     use scale::layer1::clothing::clothing_wear_system;
     use scale::layer1::health::Health;
     use scale::layer1::items::{Clothing, ClothingType, Equipment, Item};
@@ -15,6 +16,7 @@ mod tests {
         let mut grid = TemperatureGrid::new(10, 10, -50.0);
         grid.set(5, 5, -50.0);
         world.insert_resource(grid);
+        world.init_resource::<Events<scale::layer1::nature::temperature::ThermalDamageEvent>>();
 
         let tunic = world
             .spawn((
@@ -55,5 +57,42 @@ mod tests {
             h1.current < 100.0,
             "Pop should take damage after clothing breaks"
         );
+    }
+    use scale::layer1::core::chronicle::{AddChronicleEvent, EventImportance};
+    use scale::layer1::core::integration::thermal_damage_chronicle_bridge;
+    use scale::layer1::nature::temperature::ThermalDamageEvent;
+    use scale::shared::time::SimulationTime;
+    use scale::layer1::balance::TICKS_PER_YEAR;
+
+    #[test]
+    fn test_thermal_damage_chronicle_bridge() {
+        let mut app = App::new();
+        app.add_plugins(MinimalPlugins);
+
+        let time = SimulationTime {
+            tick: TICKS_PER_YEAR + 10,
+            speed: scale::shared::time::SimSpeed::Normal,
+        };
+        app.insert_resource(time);
+
+        app.add_event::<ThermalDamageEvent>();
+        app.add_event::<AddChronicleEvent>();
+        app.add_systems(Update, thermal_damage_chronicle_bridge);
+
+        // Send a thermal damage event
+        app.world_mut().send_event(ThermalDamageEvent {
+            entity: Entity::from_raw(1),
+            amount: 0.5,
+        });
+
+        app.update();
+
+        let chronicle_events = app.world().resource::<Events<AddChronicleEvent>>();
+        let mut cursor = chronicle_events.get_cursor();
+        let emitted: Vec<&AddChronicleEvent> = cursor.read(chronicle_events).collect();
+
+        assert_eq!(emitted.len(), 1, "Should emit one AddChronicleEvent");
+        assert_eq!(emitted[0].importance, EventImportance::Standard);
+        assert!(emitted[0].text.contains("Deep Chill"));
     }
 }

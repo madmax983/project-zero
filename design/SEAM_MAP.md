@@ -1931,3 +1931,10 @@
 - **Systems connected:** `ForgeCrushEvent` -> `observe_forge_crush_event` -> `AddChronicleEvent`
 - **Glue added:** The bridge `observe_forge_crush_event` was already implemented in `src/layer2/integration.rs` and registered in `src/simulation.rs`. Added an integration test to verify the seam works as expected.
 - **Tests:** `tests/integration/gravity_well_forge_bridge.rs`
+
+### INT-1335: Thermal Damage -> Chronicle
+- **Date:** 2026-11-01
+- **Systems connected:** `thermal_damage_system` -> `ThermalDamageEvent` -> `thermal_damage_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `ThermalDamageEvent` emitted from `thermal_damage_system` and `thermal_damage_chronicle_bridge` in `src/layer1/core/integration.rs` to generate Chronicle records when pops take thermal damage.
+- **Schedule:** Registered the `ThermalDamageEvent` and the bridge system in `src/simulation.rs`.
+- **Tests:** Added tests in `tests/integration/clothing_temperature.rs`.

@@ -306,15 +306,25 @@ pub fn update_temperature_system(
     grid.diffuse(&conductivity_map, &terrain, &building_retention);
 }
 
+/// Event emitted when a pop takes thermal damage (hypothermia or heatstroke).
+#[derive(Event, Debug, Clone)]
+pub struct ThermalDamageEvent {
+    /// The entity that took thermal damage.
+    pub entity: Entity,
+    /// The amount of damage taken.
+    pub amount: f32,
+}
+
 /// System to apply thermal damage to pops.
 pub fn thermal_damage_system(
     grid: Option<Res<TemperatureGrid>>,
-    mut pops: Query<(&mut Health, &GridPosition, &Equipment), With<Pop>>,
+    mut pops: Query<(Entity, &mut Health, &GridPosition, &Equipment), With<Pop>>,
     clothing_query: Query<&Clothing>,
+    mut thermal_damage_events: EventWriter<ThermalDamageEvent>,
 ) {
     let Some(grid) = grid else { return };
 
-    for (mut health, pos, equipment) in &mut pops {
+    for (entity, mut health, pos, equipment) in &mut pops {
         if pos.x < 0 || pos.y < 0 {
             continue;
         }
@@ -342,9 +352,17 @@ pub fn thermal_damage_system(
             // Damage scales with severity?
             // Spec says "0.5 damage".
             health.take_damage(0.5);
+            thermal_damage_events.send(ThermalDamageEvent {
+                entity,
+                amount: 0.5,
+            });
         } else if temp > heat_tolerance {
             // Heatstroke
             health.take_damage(0.5);
+            thermal_damage_events.send(ThermalDamageEvent {
+                entity,
+                amount: 0.5,
+            });
         }
     }
 }
@@ -514,6 +532,7 @@ mod tests {
         let mut grid = TemperatureGrid::new(10, 10, 0.0);
         grid.set(5, 5, -20.0); // Freezing
         world.insert_resource(grid);
+        world.init_resource::<Events<crate::layer1::nature::temperature::ThermalDamageEvent>>();
 
         let pop = world
             .spawn((
@@ -566,6 +585,7 @@ mod tests {
         let mut grid = TemperatureGrid::new(10, 10, 0.0);
         grid.set(5, 5, -15.0); // Cold (-15)
         world.insert_resource(grid);
+        world.init_resource::<Events<crate::layer1::nature::temperature::ThermalDamageEvent>>();
 
         // Create Clothing entity
         let coat = world
