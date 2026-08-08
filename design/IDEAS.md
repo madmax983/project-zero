@@ -31631,3 +31631,30 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you spend massive resources building planetary defense shields just to stop grand theft auto on a municipal scale, or keep your buildings cheap and disposable?
 
 ---
+## Neural Echo Migration
+
+**Layer:** 2
+
+**Fantasy:** Relocating populations not by ships, but by beaming their consciousness across the system into synthetic bodies.
+
+**Mechanic:** Instead of slow colony ships, you can build "Echo Casters" to instantly transmit the minds of your Pops to distant worlds where "Sleeper Shells" await. However, transmission errors occasionally cause fragments of the original mind to remain behind, creating "Echo Pops" that have partial memories and unstable moods.
+
+**Emergence:** You evacuate a doomed mining world via Echo Caster. The original world is destroyed, but the new colony is plagued by Pops experiencing vivid, conflicting memories of a death they didn't actually experience, tanking planetary stability.
+
+**Tension:** Do you use the instant, resource-light Echo network and risk psychological fragmentation, or stick to slow, expensive, but safe physical transport?
+
+---
+
+## The Xenoflora Symbiosis
+
+**Layer:** 1
+
+**Fantasy:** Your colony doesn't just build on the planet; it merges with it, adapting the native life into infrastructure.
+
+**Mechanic:** Certain native plants ("Xenoflora") can be domesticated. Instead of building metal structures, you can "grow" living buildings (e.g., using a giant glowing mushroom as a power source or a dense thicket as a natural wall). These living structures require food instead of energy and provide unique environmental buffs, but they are vulnerable to disease and can mutate unpredictably.
+
+**Emergence:** Your primary "Bio-Reactor" mushroom catches a local blight. Instead of just shutting down, it mutates, releasing hallucinogenic spores into the ventilation system, causing the entire engineering sector to stop working and start worshipping the vents.
+
+**Tension:** Do you rely on sterile, predictable, but expensive traditional infrastructure, or cheap, self-repairing, but volatile living architecture?
+
+---
