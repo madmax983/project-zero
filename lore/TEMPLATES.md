@@ -11211,3 +11211,68 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The disaster left a mark. A new [SCAR_TYPE] is visible from the high orbit arrays."
 - "We are breaking this world. The [SCAR_TYPE] spans the continent. [COLONY], [YEAR]."
 - "[COLONY], [YEAR]: Another Great Wound. The [SCAR_TYPE] will outlast us all."
+
+## Modular Fauna Templates (Spec 1035)
+
+## Template: MODULAR_FAUNA_ATTACK
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [FAUNA_PART], [CASUALTIES]
+**Patterns:**
+- "[YEAR]: The perimeter of [COLONY] was breached by [FAUNA_PART] beasts. [CASUALTIES] souls lost."
+- "[COLONY] mourns. [FAUNA_PART] predators hunted our workers. [CASUALTIES] dead. [YEAR]."
+- "[YEAR]: We underestimated them. The [FAUNA_PART] creatures took [CASUALTIES] from [COLONY]."
+
+## Template: MODULAR_FAUNA_MUTATION_SPOTTED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [FAUNA_PART], [FAUNA_BEHAVIOR]
+**Patterns:**
+- "[YEAR]: Surveyors from [COLONY] report a new breed. [FAUNA_PART] and [FAUNA_BEHAVIOR]. We must adapt."
+- "The ecology shifts around [COLONY]. Reports indicate creatures [FAUNA_BEHAVIOR], characterized by being [FAUNA_PART]. [YEAR]."
+
+## The Gravity Well Forge Templates (Spec 319)
+
+## Template: FORGE_CONSTRUCTED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [FORGE_NAME]
+**Patterns:**
+- "[YEAR]: We dropped [FORGE_NAME] into the gravity well of [COLONY]. The first Hyper-Alloys have arrived."
+- "The [FORGE_NAME] is operational beneath [COLONY]. The pressure is immense, but the yield is greater. [YEAR]."
+
+## Template: FORGE_CRUSHED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [FORGE_NAME], [CRUSH_AFTERMATH], [CASUALTIES]
+**Patterns:**
+- "[YEAR]: Maintenance failed at [COLONY]. The [FORGE_NAME] was [CRUSH_AFTERMATH]. [CASUALTIES] souls lost to the pressure."
+- "The gravity well claimed its due. [FORGE_NAME] [CRUSH_AFTERMATH] beneath [COLONY]. We lost [CASUALTIES] operators. [YEAR]."
+
+## The Void Leviathan Templates (Spec 314)
+
+## Template: LEVIATHAN_ARRIVAL
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [LEVIATHAN_ECLIPSE_EFFECT]
+**Patterns:**
+- "[YEAR]: The Void Leviathan has come to feed on the star of [COLONY]. [LEVIATHAN_ECLIPSE_EFFECT]. We shiver in its shadow."
+- "A terrible mass blots out the sun above [COLONY]. [LEVIATHAN_ECLIPSE_EFFECT]. The Leviathan is here. [YEAR]."
+
+## Template: LEVIATHAN_DEPARTURE
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR]
+**Patterns:**
+- "[YEAR]: The eclipse ends over [COLONY]. The beast moves on to other stars."
+- "Light returns to [COLONY]. The Leviathan is gone. [YEAR]."
+
+## Template: LEVIATHAN_KILLED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR]
+**Patterns:**
+- "[YEAR]: The beast is dead. Its carcass rains down on [COLONY] as Bio-Alloys. We will build our future from its bones."
+- "Victory at [COLONY]. The Leviathan falls. We shall harvest its flesh. [YEAR]."
+
+## Gene-Banks Templates (Spec 1034)
+
+## Template: GENE_BANK_RESURRECTION
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SPECIES_NAME], [GENETIC_DRIFT_OUTCOME]
+**Patterns:**
+- "[YEAR]: [COLONY] opened the Gene-Banks to resurrect the [SPECIES_NAME]. They emerged [GENETIC_DRIFT_OUTCOME]."
+- "We played god at [COLONY]. The [SPECIES_NAME] lives again, though they are [GENETIC_DRIFT_OUTCOME]. [YEAR]."

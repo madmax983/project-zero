@@ -11103,3 +11103,57 @@ What kind of chronological debris is found.
 - radioactive glass plain
 - tectonic rupture
 - boiling toxic sea
+
+## Modular Fauna Fragments (Spec 1035)
+
+## Fragment Type: [FAUNA_PART]
+- chitin-plated
+- venom-tailed
+- razor-jawed
+- multiple-eyed
+- jagged-limbed
+
+## Fragment Type: [FAUNA_BEHAVIOR]
+- stalking the perimeter
+- burrowing into the hydro-tanks
+- moving with impossible speed
+- emitting a low, hypnotic frequency
+- mimicking human voices
+
+## The Gravity Well Forge Fragments (Spec 319)
+
+## Fragment Type: [FORGE_NAME]
+- the Anvil
+- the Deep Sinker
+- the Pressure Tomb
+- the Abyssal Furnace
+- the Core-Tap
+
+## Fragment Type: [CRUSH_AFTERMATH]
+- crumpled like paper
+- reduced to a dense sphere of scrap
+- vanished into the deep storms
+- imploded with a sound that shook the upper orbit
+
+## The Void Leviathan Fragments (Spec 314)
+
+## Fragment Type: [LEVIATHAN_ECLIPSE_EFFECT]
+- the solar arrays went dead
+- a sudden, freezing darkness covered the habs
+- the stars vanished behind ancient flesh
+- the temperature plummeted as the shadow fell
+
+## Fragment Type: [BIO_ALLOY_USE]
+- strange, warm bulkheads
+- organic plating that bleeds when cut
+- breathing armor
+- structures that heal over time
+
+## Gene-Banks Fragments (Spec 1034)
+
+## Fragment Type: [GENETIC_DRIFT_OUTCOME]
+- larger and more aggressive than before
+- missing key behavioral instincts
+- with an entirely new coat of scales
+- shivering in the new climate
+- prone to random violent outbursts
