@@ -35,9 +35,9 @@ pub fn drone_pollination_system(
     for (drone, drone_pos) in drones.iter() {
         for (mut status, crop_pos, crop) in crops.iter_mut() {
             if crop.growth_stage == FarmGrowthStage::Flowering && !status.is_pollinated {
-                let dx = drone_pos.x - crop_pos.x;
-                let dy = drone_pos.y - crop_pos.y;
-                if dx.abs() + dy.abs() <= drone.range {
+                let dx = drone_pos.x as f32 - crop_pos.x as f32;
+                let dy = drone_pos.y as f32 - crop_pos.y as f32;
+                if (dx.abs() + dy.abs()) as i32 <= drone.range {
                     status.is_pollinated = true;
                 }
             }
@@ -93,6 +93,31 @@ mod tests {
         // Assert - Crop fails instead of progressing to Harvestable
         let crop_comp = app.world().get::<FarmCrop>(crop).unwrap();
         assert_eq!(crop_comp.growth_stage, FarmGrowthStage::Failed);
+    }
+
+    #[test]
+    fn test_drone_pollination_overflow() {
+        let mut app = App::new();
+        app.add_systems(Update, drone_pollination_system);
+
+        app.world_mut().spawn((
+            FarmCrop {
+                growth_stage: FarmGrowthStage::Flowering,
+                requires_pollination: true,
+            },
+            PollinationStatus {
+                is_pollinated: false,
+            },
+            GridPosition { x: i32::MIN, y: 0 },
+        ));
+
+        app.world_mut().spawn((
+            PollinatorDrone { range: 5 },
+            GridPosition { x: i32::MAX, y: 0 },
+        ));
+
+        // This would panic before the fix
+        app.update();
     }
 
     #[test]

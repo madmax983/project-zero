@@ -21,3 +21,6 @@
 **2025-07-26 - [Integer Overflow DoS in Distance Calculations]**
 **Threat:** [Unhandled integer overflow during distance calculation (`pos.x - center.x` causing `attempt to subtract with overflow`) allowed panics and DoS if extreme coordinates were passed in `phantom_grid.rs`, `flora.rs`, and `cassandra_warning.rs`.]
 **Defense:** [Cast coordinate values to `f32` *before* subtraction or multiplication to ensure floating-point math handles large inputs without panicking.]
+**2023-10-26 - Integer Overflow in Grid Distance**
+**Threat:** Integer overflow panic in `src/layer1/agriculture/pollination.rs` due to subtracting i32 map coordinates directly, creating a DoS vector.
+**Defense:** Cast coordinates to `f32` *before* subtraction to safely handle differences between `i32::MAX` and `i32::MIN`.
