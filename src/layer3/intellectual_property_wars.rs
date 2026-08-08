@@ -231,6 +231,39 @@ mod tests {
     }
 
     #[test]
+    fn test_paying_licensing_fees_not_enough_credits() {
+        let mut app = App::new();
+        app.add_plugins((MinimalPlugins, IntellectualPropertyWarsPlugin));
+
+        let owner = app
+            .world_mut()
+            .spawn((Civilization, Treasury { credits: 100 }))
+            .id();
+        let licensee = app
+            .world_mut()
+            .spawn((Civilization, Treasury { credits: 20 })) // Less than the fee
+            .id();
+        let tech_id = TechId::new("hyper_shields_v2");
+
+        app.world_mut()
+            .resource_mut::<PatentRegistry>()
+            .register(tech_id.clone(), owner, 50); // Fee is 50
+
+        // Licensee uses the tech legally
+        app.world_mut().spawn(TechUsage {
+            civilization: licensee,
+            tech: tech_id,
+            is_legal: true,
+        });
+
+        app.update();
+
+        // Assert: Credits NOT transferred because licensee doesn't have enough
+        assert_eq!(app.world().get::<Treasury>(owner).unwrap().credits, 100);
+        assert_eq!(app.world().get::<Treasury>(licensee).unwrap().credits, 20);
+    }
+
+    #[test]
     fn test_pirate_status_and_cassus_belli() {
         let mut app = App::new();
         app.add_plugins((MinimalPlugins, IntellectualPropertyWarsPlugin));
