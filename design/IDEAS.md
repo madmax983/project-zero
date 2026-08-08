@@ -31697,3 +31697,42 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you aggressively purge this grim economic shift to maintain your civilization's morals, or embrace the flesh trade because it's the only way the colony survives the winter?
 
 ---
+## Neural Network Decay
+
+**Layer:** 3
+
+**Fantasy:** Maintaining the minds of your leaders over centuries has hidden costs.
+
+**Mechanic:** Late-game "Immortal" leaders (uploaded minds or heavily augmented organics) accumulate "Network Decay" over centuries. Their decision-making becomes increasingly erratic and inefficient, unless periodically "Pruned," which erases some of their experience and positive traits.
+
+**Emergence:** Your brilliant fleet admiral of 300 years suddenly orders a massive fleet into a black hole because their tactical neural network degraded and confused it with a strategic chokepoint.
+
+**Tension:** Do you continuously prune your leaders, making them mediocre but stable, or let them grow into unpredictable, eccentric geniuses who might doom your empire?
+
+---
+## Sublight Generation Ship Blockade
+
+**Layer:** 2
+
+**Fantasy:** Using obsolete technology as an immovable object against unstoppable force.
+
+**Mechanic:** Instead of fighting an overwhelming enemy fleet directly, you can launch massive, obsolete, heavily armored "Sublight Generation Ships" into the hyperlane routes leading to your core worlds. These ships move incredibly slowly and are virtually indestructible due to sheer mass, physically blocking the lanes for decades.
+
+**Emergence:** An endgame crisis fleet arrives, only to be stuck in transit for 50 years because they are stuck behind a massive, crawling generation ship full of your citizens who refuse to move and are just farming mushrooms in the hyperlane.
+
+**Tension:** Do you sacrifice billions of citizens to a life of slow, miserable transit just to buy time for your military to rebuild?
+
+---
+## The Simulation Hypothesis Cult
+
+**Layer:** Cross-layer
+
+**Fantasy:** Your citizens realize they are in a game and try to break out.
+
+**Mechanic:** Highly advanced scientific colonies may spontaneously form "The Simulation Hypothesis Cult". They believe the universe is a simulation (which it is) and actively attempt to perform actions they believe will "crash the server" or "contact the user", such as building physically impossible structures or deliberately orchestrating massive paradoxes.
+
+**Emergence:** You notice a sudden spike in energy consumption on a core world. You investigate and find the scientists have stopped all research and are trying to construct a recursive loop of matter transporters specifically designed to cause a physics engine error and crash reality.
+
+**Tension:** Do you suppress the brilliant scientists (losing their research output) or let them experiment and risk actual, simulated localized reality collapse (game mechanics malfunctioning intentionally)?
+
+---
