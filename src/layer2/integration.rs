@@ -1226,7 +1226,9 @@ pub fn orbital_secession_chronicle_bridge(
 /// INT-317: Bridges `OrbitalDebris` from Layer 2 to `DebrisRainChance` in Layer 1.
 pub fn orbital_junkyard_bridge_system(
     query: bevy_ecs::system::Query<&crate::layer2::debris::OrbitalDebris>,
-    mut rain_chance: bevy_ecs::system::ResMut<crate::layer1::environment::orbital_junkyard::DebrisRainChance>,
+    mut rain_chance: bevy_ecs::system::ResMut<
+        crate::layer1::environment::orbital_junkyard::DebrisRainChance,
+    >,
 ) {
     let mut total_debris = 0.0;
     for debris in query.iter() {

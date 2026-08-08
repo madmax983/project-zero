@@ -114,6 +114,29 @@ pub struct OralTradition {
     pub last_processed_tick: u64,
 }
 
+#[cfg(not(feature = "nova"))]
+#[derive(Debug, Clone, Default)]
+pub struct Story {}
+
+#[cfg(not(feature = "nova"))]
+#[derive(Debug, Clone, Default)]
+pub struct StoryGenre {}
+
+#[cfg(not(feature = "nova"))]
+#[derive(bevy_ecs::prelude::Resource, Debug, Clone)]
+pub struct OralTradition {}
+
+#[cfg(not(feature = "nova"))]
+impl Default for OralTradition {
+    fn default() -> Self {
+        eprintln!(
+            "WARNING: You are using OralTradition without enabling the `nova` feature. \
+             This is a stub. Please add `features = [\"nova\"]` to your Cargo.toml."
+        );
+        Self {}
+    }
+}
+
 #[cfg(feature = "nova")]
 impl OralTradition {
     /// Adds a [`Story`] to the tradition if a story from the same historical date
