@@ -118,6 +118,7 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<bevy_ecs::event::Events<
         crate::layer1::administration::sentient_bureaucracy::TaskAdministrativelyOptimizedEvent,
     >>();
+    world.init_resource::<bevy_ecs::event::Events<crate::layer1::nature::temperature::ThermalDamageEvent>>();
     world.init_resource::<bevy_ecs::event::Events<crate::cross_layer::generation_ship_mutiny::MutinyEvent>>();
 
     world.init_resource::<bevy_ecs::event::Events<crate::cross_layer::interplanetary_pollination::SporeReleaseEvent>>();
@@ -612,6 +613,7 @@ fn register_simulation_core_systems(schedule: &mut Schedule) {
             crate::layer1::deep_crust_resonance::resonance_social_spread_system,
             crate::layer1::core::integration::deep_crust_resonance_chronicle_bridge,
             crate::layer1::core::integration::truth_outbreak_chronicle_bridge,
+            crate::layer1::core::integration::thermal_damage_chronicle_bridge,
             crate::layer1::core::integration::siren_signal_chronicle_bridge,
         )
             .in_set(Layer1SystemSet::Economy),

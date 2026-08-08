@@ -15,6 +15,7 @@ use crate::layer1::medical::PatientTreated;
 use crate::layer1::memory::{Memories, MemoryType};
 use crate::layer1::needs::Needs;
 use crate::layer1::notifications::NotificationQueue;
+use crate::layer1::nature::temperature::ThermalDamageEvent;
 use crate::layer1::petrification::PopPetrifiedEvent;
 use crate::layer1::pop::{Pop, PopBorn, PopDied, PopName};
 use crate::layer1::resources::ColonyResources;
@@ -44,6 +45,27 @@ pub fn kinetic_strike_chronicle_bridge(
                 event.target_x, event.target_y
             ),
             importance: EventImportance::Major,
+        });
+    }
+}
+
+/// INT-1335: Bridges `ThermalDamageEvent` (The Deep Chill) to `AddChronicleEvent`
+pub fn thermal_damage_chronicle_bridge(
+    mut events: EventReader<ThermalDamageEvent>,
+    mut chronicle: EventWriter<AddChronicleEvent>,
+    time: Res<SimulationTime>,
+    mut last_recorded_tick: Local<u64>,
+) {
+    let mut any_damage = false;
+    if events.read().next().is_some() {
+        any_damage = true;
+    }
+
+    if any_damage && time.tick > *last_recorded_tick + TICKS_PER_YEAR {
+        *last_recorded_tick = time.tick;
+        chronicle.send(AddChronicleEvent {
+            text: "The Deep Chill took its toll. Pops are suffering from hypothermia.".to_string(),
+            importance: EventImportance::Standard,
         });
     }
 }
