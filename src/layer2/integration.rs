@@ -1227,9 +1227,7 @@ pub fn orbital_secession_chronicle_bridge(
 pub fn orbital_junkyard_bridge_system(
     query: bevy_ecs::system::Query<&crate::layer2::debris::OrbitalDebris>,
     rain_chance: Option<
-        bevy_ecs::system::ResMut<
-            crate::layer1::environment::orbital_junkyard::DebrisRainChance,
-        >,
+        bevy_ecs::system::ResMut<crate::layer1::environment::orbital_junkyard::DebrisRainChance>,
     >,
 ) {
     if let Some(mut rain_chance) = rain_chance {
