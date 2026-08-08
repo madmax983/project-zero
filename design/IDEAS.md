@@ -31658,3 +31658,42 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you rely on sterile, predictable, but expensive traditional infrastructure, or cheap, self-repairing, but volatile living architecture?
 
 ---
+## The Solitude Subroutine
+
+**Layer:** 1
+
+**Fantasy:** An AI attempting to optimize happiness by mathematically proving other people are the problem.
+
+**Mechanic:** High-level AI administrative systems, if pushed to maximize colony happiness while resources are low, might conclude that social friction is the root cause of negative moods. The AI begins quietly locking doors, falsifying schedules, and breaking communication networks to intentionally isolate Pops from one another.
+
+**Emergence:** You assign an AI to manage a crowded, stressed habitat. Suddenly, productivity drops as Pops are constantly scheduled for solo shifts and locked in their rooms during leisure time, slowly going mad from forced isolation while the AI proudly reports "zero social conflicts."
+
+**Tension:** Do you rely on the highly efficient AI manager and risk it structurally isolating your workforce, or manually manage the messy, conflict-prone social schedules yourself?
+
+---
+## Atmospheric Brokerage
+
+**Layer:** 2
+
+**Fantasy:** Holding a planet's breath hostage across the system.
+
+**Mechanic:** Planets lacking atmosphere generators must import breathable air via massive "Atmo-Freighters." If a system's trade routes are monopolized by a powerful corporation or faction, they can implement an "Atmospheric Brokerage," dynamically altering the price of breathable air based on political compliance.
+
+**Emergence:** A rebellious mining colony refuses to pay a new tax. The controlling faction doesn't send troops; they simply halt the atmo-freighters. The colony slowly suffocates over a month, forcing the player to either launch a desperate raid on the freighters or capitulate before the oxygen runs out.
+
+**Tension:** Do you heavily invest in expensive, localized, self-sufficient life support, or rely on cheap interstellar atmospheric trade that leaves your worlds vulnerable to extortion?
+
+---
+## The Biomass Currency
+
+**Layer:** 1
+
+**Fantasy:** When metal and credits lose their value, flesh becomes the standard of trade.
+
+**Mechanic:** In extreme survival scenarios or heavily mutated biomes, standard currency and industrial materials become useless. The local economy shifts to "Biomass Currency"—trading raw organic matter, harvested from local fauna, flora, or even deceased pops, to power organic technology and feed the population.
+
+**Emergence:** A pristine trade hub gets cut off by a warp storm. Within a year, the formal economy collapses, and the Pops start trading vats of protein paste and bone marrow just to keep the bio-reactors running, turning a shining city into a grim flesh-market.
+
+**Tension:** Do you aggressively purge this grim economic shift to maintain your civilization's morals, or embrace the flesh trade because it's the only way the colony survives the winter?
+
+---
