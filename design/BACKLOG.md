@@ -601,7 +601,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1266` The Phantom Epidemic — `specs/1266-the-phantom-epidemic.md`
 - [ ] `1268` The Scrap-Mind Ascendancy — `specs/1268-the-scrap-mind-ascendancy.md`
 - [ ] `1269` Cult of the First Error — `specs/1269-cult-of-the-first-error.md`
-- [ ] `1270` Phantom Trade Routes — `specs/1270-phantom-trade-routes.md`
+
 - [ ] `1277` Ghost Code — `specs/1277-ghost-code.md`
 - [ ] `1278` Asteroid Hollowing — `specs/1278-asteroid-hollowing.md`
 - [x] `1284` Sartorial Rebellion — `specs/1284-sartorial-rebellion.md` — completed 2024-06-15

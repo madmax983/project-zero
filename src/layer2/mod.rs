@@ -116,6 +116,14 @@ use bevy::prelude::*;
 
 pub struct PlanetarySpinUpPlugin;
 
+pub struct TradePlugin;
+
+impl Plugin for TradePlugin {
+    fn build(&self, app: &mut App) {
+        app.add_plugins(crate::layer2::trade::phantom_trade_routes::PhantomTradeRoutePlugin);
+    }
+}
+
 impl Plugin for PlanetarySpinUpPlugin {
     fn build(&self, app: &mut App) {
         app.add_event::<planetary_spin_up::PlanetaryTorqueEvent>()
