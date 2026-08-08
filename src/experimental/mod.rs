@@ -264,3 +264,6 @@ pub mod grave_robbery;
 
 #[cfg(feature = "nova")]
 pub mod friendly_remittance;
+
+#[cfg(feature = "nova")]
+pub mod night_owl_smuggling;

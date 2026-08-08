@@ -317,3 +317,8 @@
 **Concept:** Added `pyromaniac_euphoria_system` in `src/experimental/pyromaniac_euphoria.rs`. Connects `Trait::Pyromaniac` (assuming it exists or can be added) with `ExplosionEvent` / `SparkEvent`. Pops with this trait passively regenerate `leisure` (and perhaps a burst of `rest` or productivity) when an explosion occurs nearby, turning disasters into localized mood buffs.
 **Fate:** Pending
 **Lesson:** Connects a destructive environmental event to a psychological quirk, rewarding (or mitigating the downside of) industrial accidents for a specific subset of the population.
+
+## [Night Owl Smuggling]
+**Concept:** Added `night_owl_smuggling_system` in `src/experimental/night_owl_smuggling.rs`. Connects `Trait::NightOwl`, `TimeOfDay::Night`, and the `SmugglersCove` from the black market system. Pops with the NightOwl trait passively locate and extract small amounts of `credits` or rare resources from Smugglers Coves when active at night, representing them doing shady deals while the colony sleeps.
+**Fate:** Pending
+**Lesson:** Connects a temporal trait (`NightOwl`) with an underground economic entity (`SmugglersCove`), giving a mechanical edge to a psychological trait that normally just affects mood.
