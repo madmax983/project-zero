@@ -31736,3 +31736,42 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you suppress the brilliant scientists (losing their research output) or let them experiment and risk actual, simulated localized reality collapse (game mechanics malfunctioning intentionally)?
 
 ---
+## The Firstborn Prestige
+
+**Layer:** 1
+
+**Fantasy:** The first generation of colonists on a new world are revered—or resented—by those who arrive later.
+
+**Mechanic:** The very first pops to settle a colony (or the first generation born there) receive a hidden "Firstborn" tag. They naturally gravitate toward leadership roles and demand higher living standards, feeling they "earned" the colony.
+
+**Emergence:** You try to integrate a massive wave of highly skilled refugees, but your relatively unskilled "Firstborn" founders refuse to relinquish their cushy administrative jobs, causing deep social friction and inefficient management.
+
+**Tension:** Do you strip the Firstborn of their privileges (tanking their morale but boosting efficiency) or allow a nepotistic ruling class to form organically?
+
+---
+## Founder's Guilt
+
+**Layer:** 1
+
+**Fantasy:** The surviving founders of a colony are haunted by the sacrifices they had to make during the early, desperate years.
+
+**Mechanic:** Pops that survive a severe, long-lasting crisis (like the first winter famine) develop "Founder's Guilt." While they become incredibly resilient to future physical hardships, they suffer a continuous, low-level mood penalty when they see the colony flourishing and wasting resources they once killed for.
+
+**Emergence:** Your colony is now a post-scarcity utopia, but the original founders are miserable. They actively sabotage the new "luxury" food synthesizers and try to hoard basic nutrient paste, terrified of a return to the dark days.
+
+**Tension:** Do you force the founders to integrate into the new, wasteful utopia (causing mental breaks) or build them a grim, Spartan district where they can feel secure in their austerity?
+
+---
+## The Genetic Bottleneck
+
+**Layer:** 1
+
+**Fantasy:** A colony founded by a small number of people eventually reflects the quirks of those few founders in the entire population.
+
+**Mechanic:** If a colony is founded with a very small population and isolated from immigration, the specific traits (both positive and negative) of the original founders become amplified in future generations. A founding population with a slight predilection for "Night Owl" behavior will eventually result in a colony that entirely sleeps during the day.
+
+**Emergence:** You settle a world with a handful of brilliant but incredibly arrogant scientists. Three generations later, your entire colony is composed of geniuses who absolutely refuse to do manual labor, leaving your high-tech labs pristine but your agricultural sector completely unmanned.
+
+**Tension:** Do you risk the long-term demographic skew of a small, specialized founding crew, or wait until you can afford a massive, genetically diverse colony ship?
+
+---
