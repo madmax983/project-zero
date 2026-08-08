@@ -41,6 +41,15 @@ impl FaunaSeed {
     }
 
     /// Creates a seed from a preset name.
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use scale::layer1::entities::fauna_gen::FaunaSeed;
+    ///
+    /// let preset_seed = FaunaSeed::from_preset("Wolf");
+    /// assert_eq!(preset_seed.preset.unwrap(), "Wolf");
+    /// ```
     #[must_use]
     pub fn from_preset(name: &str) -> Self {
         Self {
@@ -55,6 +64,9 @@ pub struct FaunaGenerator;
 
 impl FaunaGenerator {
     /// Generates a `FaunaBody` from a seed.
+    ///
+    /// This function procedurally combines different body parts based on the seed
+    /// to build a creature with specific stats and resource drops.
     #[must_use]
     pub fn generate(seed: FaunaSeed) -> FaunaBody {
         if let Some(preset) = seed.preset {
