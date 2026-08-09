@@ -31895,3 +31895,30 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you continuously sacrifice valuable prime real estate for the dead, or bulldoze a beloved hero's monument to build a water purifier, risking a colony-wide revolt?
 
 ---
+## Flesh Circuits
+
+**Layer:** 1
+
+**Fantasy:** Pushing the boundaries of biomechanical integration until the line between worker and machine disappears entirely.
+
+**Mechanic:** When electronic components are scarce, advanced medical facilities can harvest neural tissue from deceased (or unwilling) Pops to create "Flesh Circuits." These bio-components can run high-tech machinery, but the machinery occasionally emits faint, recognizable screams or attempts to perform the daily routines of the harvested Pop.
+
+**Emergence:** You power your critical orbital defense cannon with Flesh Circuits during a desperate siege. The cannon works perfectly, but during the victory celebration, it spontaneously targets the residential sector because the harvested neural tissue belonged to a deeply disgruntled former sanitation worker.
+
+**Tension:** Do you cross a horrific ethical line to maintain your high-tech infrastructure during a resource drought, or let the machines fail and risk the survival of the entire colony?
+
+---
+
+## The Diplomatic Ward Exchange
+
+**Layer:** 3
+
+**Fantasy:** Feudal hostage diplomacy on a galactic scale, where your children are your greatest shield and biggest vulnerability.
+
+**Mechanic:** To secure unbreakable alliances or ceasefires, you must exchange highly valued Pops (like a beloved leader's heir or a renowned scientist) as "Wards" to live in a rival empire's capital. While they live, the alliance holds. If they die (due to disaster, assassination, or poor living conditions), war is instantly declared.
+
+**Emergence:** You secure a century of peace with a terrifying Devouring Swarm by giving them your best engineer as a Ward. Fifty years later, the Swarm experiences a localized famine. You have to secretly send massive food shipments to your enemy, funding their military, just to ensure your Ward doesn't starve and trigger the apocalypse.
+
+**Tension:** Do you sacrifice your most talented citizens to foreign powers to buy peace, knowing you are completely beholden to the stability of an alien, potentially hostile empire?
+
+---
