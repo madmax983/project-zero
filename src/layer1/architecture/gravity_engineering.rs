@@ -144,4 +144,69 @@ mod tests {
             "Reinforced buildings should ignore gravity height limits."
         );
     }
+
+    #[test]
+    fn test_gravity_engineering_chronicle_bridge() {
+        use crate::layer1::core::chronicle::AddChronicleEvent;
+        use crate::layer1::architecture::building::Height;
+        use crate::layer1::architecture::structure::Structure;
+        let mut app = App::new();
+        app.add_event::<BuildingCompletedEvent>();
+        app.add_event::<AddChronicleEvent>();
+        app.add_systems(Update, gravity_engineering_chronicle_bridge);
+
+        let building = app
+            .world_mut()
+            .spawn((
+                Height { floors: 10 },
+                Structure {
+                    current_hp: 50.0,
+                    max_hp: 100.0,
+                },
+            ))
+            .id();
+
+        app.world_mut()
+            .resource_mut::<Events<BuildingCompletedEvent>>()
+            .send(BuildingCompletedEvent { entity: building });
+
+        app.update();
+
+        let events = app.world().resource::<Events<AddChronicleEvent>>();
+        let mut cursor = events.get_cursor();
+        assert_eq!(cursor.read(events).count(), 1);
+    }
+
+    #[test]
+    fn test_gravity_engineering_chronicle_bridge_destroyed() {
+        use crate::layer1::core::chronicle::AddChronicleEvent;
+        use crate::layer1::architecture::building::Height;
+        use crate::layer1::architecture::structure::Structure;
+        let mut app = App::new();
+        app.add_event::<BuildingCompletedEvent>();
+        app.add_event::<AddChronicleEvent>();
+        app.add_systems(Update, gravity_engineering_chronicle_bridge);
+
+        let building = app
+            .world_mut()
+            .spawn((
+                Height { floors: 10 },
+                Structure {
+                    current_hp: 0.0,
+                    max_hp: 100.0,
+                },
+            ))
+            .id();
+
+        app.world_mut()
+            .resource_mut::<Events<BuildingCompletedEvent>>()
+            .send(BuildingCompletedEvent { entity: building });
+
+        app.update();
+
+        let events = app.world().resource::<Events<AddChronicleEvent>>();
+        let mut cursor = events.get_cursor();
+        assert_eq!(cursor.read(events).count(), 1);
+    }
+
 }
