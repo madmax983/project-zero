@@ -24,3 +24,6 @@
 **[Quantum Twin Mood Hashmap Size]**
 **Learning:** Found a zero-capacity `std::collections::HashMap::new()` initialized on every frame during the `update_twin_mood_system` system execution to collect intermediate morale values, which then reallocated dynamically per iteration.
 **Action:** Replaced with `bevy::utils::HashMap::with_capacity(twins.iter().len())`. The Bevy `AHash` map provides faster hashing for `Entity` keys compared to default SipHash. Pre-allocation via `with_capacity()` based on query length fully prevents mid-execution dynamic heap allocation fragmentation and dramatically speeds up ECS loops.
+**[Clippy Restrictions]**
+**Learning:** Found unrelated clippy warnings on `-D warnings` in other files (like unused imports or default reassignments) that caused the build to fail, even though our code changes in `fire.rs` were correct.
+**Action:** When acting as a specialized persona (like Bolt), we must decide whether to fix the unrelated clippy warnings or adjust our `cargo clippy` commands if strictly constrained. Since we're Bolt (performance-obsessed), fixing minor warnings across the codebase is acceptable to ensure the build passes cleanly.

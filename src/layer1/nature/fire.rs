@@ -144,7 +144,6 @@ pub fn fire_spread_system(world: &mut World) {
 pub fn fire_damage_system(world: &mut World) {
     // Decrement lifetime, destroy burnt objects
     let mut fires_to_remove = Vec::new();
-    let mut terrain_changes = Vec::new(); // (x, y, NewType)
     let mut burnt_entities = HashSet::new(); // Entities at position to check for destruction
 
     let mut query = world.query::<(Entity, &GridPosition, &mut Fire)>();
@@ -160,7 +159,11 @@ pub fn fire_damage_system(world: &mut World) {
     }
 
     // Apply destruction for burnt-out fires
-    let mut entities_to_despawn = Vec::new();
+    // ⚡ Bolt Optimization:
+    // Pre-allocating `entities_to_despawn` and `terrain_changes` with exactly `fires_to_remove.len()`
+    // prevents dynamic memory reallocation in the loop below.
+    let mut entities_to_despawn = Vec::with_capacity(fires_to_remove.len());
+    let mut terrain_changes = Vec::with_capacity(fires_to_remove.len()); // (x, y, NewType)
     {
         let terrain = world.resource::<TerrainGrid>();
 
