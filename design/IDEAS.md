@@ -31814,3 +31814,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you rely on nepotistic, irreplaceable family guilds who hold monopolies on critical infrastructure, or enforce standard modular designs that are less efficient but universally understandable?
 
 ---
+
+## The Xeno-Cultural Artifact Mutagen
+
+**Layer:** Cross-layer
+
+**Fantasy:** A powerful alien artifact shapes the minds of those who study it, slowly changing the culture of the colony and the broader civilization.
+
+**Mechanic:** Pops assigned to research an alien artifact slowly acquire traits or ideologies aligned with the artifact's creators. This influence spreads locally and, if left unchecked, can spark a sector-wide cultural shift or rebellion.
+
+**Emergence:** A research outpost meant to unlock advanced shielding instead converts its population into ascetic monks, refusing to use technology and halting all resource production.
+
+**Tension:** Do you halt the valuable research to stop the cultural contagion, or risk a civil war in exchange for a technological breakthrough?
+
+---
+
+## Chronological Distress Signals
+
+**Layer:** 2
+
+**Fantasy:** Intercepting distress signals from a future that hasn't happened yet.
+
+**Mechanic:** Deep space sensor arrays occasionally intercept heavily corrupted distress signals or communication logs. Upon decoding, these signals describe a catastrophic event (e.g., a massive planetary invasion, a star going supernova) in a specific system—but the timestamp is in the future.
+
+**Emergence:** You receive a future distress signal about a pirate armada destroying your core mining colony. You immediately spend a fortune moving your fleet to defend it, only to realize your massive military buildup is what provokes a nearby, previously neutral faction into attacking, fulfilling the prophecy.
+
+**Tension:** Do you act on this paradoxical information, risking a self-fulfilling prophecy, or ignore it and hope it's a glitch or a timeline that won't happen?
+
+---
+
+## Bio-Hazard Diplomacy
+
+**Layer:** 3
+
+**Fantasy:** The only people who can negotiate with the galaxy's most dangerous plagues are the ones already infected.
+
+**Mechanic:** To engage in diplomacy or trade with heavily quarantined "Plague Worlds" (planets suffering from exotic, highly contagious diseases), you must dispatch specific "Quarantine Emissary" pops. These emissaries must first be intentionally infected with the disease to be granted entry.
+
+**Emergence:** An emissary successfully negotiates a critical treaty with a plague world and is hailed as a hero. However, upon their return, standard decontamination protocols fail, and the heroic diplomat accidentally triggers a pandemic in your capital.
+
+**Tension:** Do you risk the lives of your best diplomats and the safety of your empire to forge alliances with outcast, powerful factions, or maintain strict quarantine and lose out on unique technologies?
+
+---
