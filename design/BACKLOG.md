@@ -22,7 +22,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `326` Invasive Biology — `specs/326-invasive-biology.md`
 - [ ] `327` The Stowaway — `specs/327-the-stowaway.md`
 - [ ] `328` Technological Regression — `specs/328-technological-regression.md`
-- [ ] `329` Leader Ascension — `specs/329-leader-ascension.md`
 - [ ] `330` Biome Aggression — `specs/330-biome-aggression.md`
 - [ ] `332` Architectural Eras — `specs/332-architectural-eras.md`
 - [ ] `333` The Old Guard — `specs/333-the-old-guard.md`
