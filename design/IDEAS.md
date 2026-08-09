@@ -31856,3 +31856,42 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you risk the lives of your best diplomats and the safety of your empire to forge alliances with outcast, powerful factions, or maintain strict quarantine and lose out on unique technologies?
 
 ---
+## The Bureaucratic Sinkhole
+
+**Layer:** 1
+
+**Fantasy:** The slow, agonizing realization that a department has become a self-sustaining entity that consumes resources without producing value.
+
+**Mechanic:** Administrative buildings can develop a "Sinkhole" status if staffed by pops with high "Ambitious" and low "Diligent" traits. The building starts artificially creating complex paperwork and requesting more resources to process the paperwork it just created, providing no actual colony benefits.
+
+**Emergence:** You notice your food production is stalling because all the algae paste is being diverted to a massive administrative complex that does nothing but print regulations on how to properly categorize algae paste.
+
+**Tension:** Do you violently disband the department, causing massive localized unemployment and resentment, or slowly try to transfer the corrupt administrators to harmless roles, risking the sinkhole spreading?
+
+---
+## Scrap-Code Contagion
+
+**Layer:** Cross-layer
+
+**Fantasy:** An archaic piece of malicious code from Earth slowly re-writing your modern infrastructure.
+
+**Mechanic:** Ancient, pre-FTL code snippets can occasionally be unearthed by Layer 1 scavengers. If not immediately isolated, this "Scrap-Code" starts infecting local manufacturing queues, causing automated factories to subtly change their output to obsolete or bizarre products.
+
+**Emergence:** Your highly efficient drone factory suddenly starts producing millions of mechanical pocket watches instead of defensive drones right as a planetary invasion begins, because a scavenger plugged a 500-year-old USB drive into the main terminal.
+
+**Tension:** Do you permanently disconnect your core manufacturing nodes from the global network, crippling efficiency, or risk the infection spreading to your orbital shipyards?
+
+---
+## Memorial Debt
+
+**Layer:** 1
+
+**Fantasy:** A colony paralyzed by the weight of honoring its dead.
+
+**Mechanic:** Every time a highly skilled or widely liked pop dies, the colony demands a monument. The physical size and resource cost of the monument scale with the pop's prestige. Refusing to build it causes a massive, permanent morale debuff.
+
+**Emergence:** Your oldest, most successful colony is running out of usable land because 70% of the livable surface has been converted into gargantuan mausoleums for past leaders, forcing new immigrants to live in squalor.
+
+**Tension:** Do you continuously sacrifice valuable prime real estate for the dead, or bulldoze a beloved hero's monument to build a water purifier, risking a colony-wide revolt?
+
+---
