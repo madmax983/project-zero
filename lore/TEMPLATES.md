@@ -11276,3 +11276,127 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 **Patterns:**
 - "[YEAR]: [COLONY] opened the Gene-Banks to resurrect the [SPECIES_NAME]. They emerged [GENETIC_DRIFT_OUTCOME]."
 - "We played god at [COLONY]. The [SPECIES_NAME] lives again, though they are [GENETIC_DRIFT_OUTCOME]. [YEAR]."
+
+## Population Count UI Integration Templates (Spec INT-003)
+
+## Template: POPULATION_MILESTONE_EVENT
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [POPULATION_MILESTONE]
+
+**Patterns:**
+- "[YEAR]: [COLONY] celebrates [POPULATION_MILESTONE]."
+
+## Blind Auction Chronicle Integration Templates (Spec INT-1161)
+
+## Template: BLIND_AUCTION_REVEAL_EVENT
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [AUCTION_SURPRISE]
+
+**Patterns:**
+- "[YEAR]: After [AUCTION_SURPRISE] in [COLONY], opinions were mixed."
+
+## Scrap Code Evangelists Chronicle Integration Templates (Spec INT-664)
+
+## Template: EVANGELIST_DISCOVERY_EVENT
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [EVANGELIST_MESS]
+
+**Patterns:**
+- "[YEAR]: Workers in [COLONY] reported [EVANGELIST_MESS]."
+
+## Phantom Limb of Logistics Templates (Spec 1272)
+
+## Template: PHANTOM_LIMB_LOGISTICS_EVENT
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [PHANTOM_LIMB_SYMPTOM]
+
+**Patterns:**
+- "[YEAR]: Logistics broke down in [COLONY]. Workers were seen [PHANTOM_LIMB_SYMPTOM]."
+- "Habit dies hard. [COLONY] reported cases of [PHANTOM_LIMB_SYMPTOM]. [YEAR]."
+- "[COLONY], [YEAR]: The phantom limb of logistics strikes. Many are [PHANTOM_LIMB_SYMPTOM]."
+
+## The Weight of the Past Templates (Spec 1290)
+
+## Template: BURDEN_OF_PAST_EVENT
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [WEIGHT_OF_PAST_BURDEN]
+
+**Patterns:**
+- "[YEAR]: Progress halts in [COLONY]. The people are paralyzed by [WEIGHT_OF_PAST_BURDEN]."
+- "[COLONY] cannot move forward. They carry [WEIGHT_OF_PAST_BURDEN]. [YEAR]."
+- "A generation crushed. [COLONY] suffers under [WEIGHT_OF_PAST_BURDEN] in [YEAR]."
+
+## The Blind Auction Templates (Spec 1040)
+
+## Template: BLIND_AUCTION_EVENT
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [AUCTION_ITEM]
+
+**Patterns:**
+- "[YEAR]: We bought [AUCTION_ITEM] at the blind auction. Pray it was worth the credits."
+- "A gamble in [COLONY]. Credits traded for [AUCTION_ITEM] in the dark. [YEAR]."
+- "[COLONY], [YEAR]: The auction is over. We won [AUCTION_ITEM]."
+
+## The Long Night Templates (Spec 695)
+
+## Template: LONG_NIGHT_EVENT
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [NIGHT_TERROR_SIGHTING]
+
+**Patterns:**
+- "[YEAR]: The sun doesn't rise. [COLONY] is plunged into the Long Night. They report [NIGHT_TERROR_SIGHTING]."
+- "An endless dark over [COLONY]. The Long Night begins. [NIGHT_TERROR_SIGHTING]. [YEAR]."
+- "[COLONY], [YEAR]: The Long Night. We are alone with [NIGHT_TERROR_SIGHTING]."
+
+## Generational Knowledge Templates (Spec 355)
+
+## Template: GENERATIONAL_KNOWLEDGE_EVENT
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [PASSED_DOWN_SKILL]
+
+**Patterns:**
+- "[YEAR]: The elders of [COLONY] pass down [PASSED_DOWN_SKILL]. The knowledge survives."
+- "Tradition holds. [COLONY] remembers [PASSED_DOWN_SKILL]. [YEAR]."
+- "[COLONY], [YEAR]: [PASSED_DOWN_SKILL] is taught to the new generation."
+
+## The Subconscious Grid Templates (Spec 1296)
+
+## Template: SUBCONSCIOUS_GRID_EVENT
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [GRID_QUIRK]
+
+**Patterns:**
+- "[YEAR]: The smart-grid in [COLONY] is learning. We noticed [GRID_QUIRK]."
+- "The machines anticipate us. [COLONY] reports [GRID_QUIRK]. [YEAR]."
+- "[COLONY], [YEAR]: The Subconscious Grid is active. [GRID_QUIRK]."
+
+## Inherited Grudges Templates (Spec 474)
+
+## Template: INHERITED_GRUDGE_EVENT
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [OLD_SLIGHT]
+
+**Patterns:**
+- "[YEAR]: Violence in [COLONY] over [OLD_SLIGHT]. The grudge lives on."
+- "The children fight their parents' wars. [COLONY] torn by [OLD_SLIGHT]. [YEAR]."
+- "[COLONY], [YEAR]: Blood spilled again over [OLD_SLIGHT]."
+
+## Cultural Drift Templates (Spec 282)
+
+## Template: LINGUISTIC_SCHISM
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [DRIFTED_TERM], [MISUNDERSTOOD_CONCEPT]
+
+**Patterns:**
+- "[YEAR]: Contact re-established with [COLONY]. Their [DRIFTED_TERM] is barely intelligible. They mistook [MISUNDERSTOOD_CONCEPT] for an insult."
+- "Decades of silence changed [COLONY]. We spoke of [MISUNDERSTOOD_CONCEPT], but in their [DRIFTED_TERM], it meant war. [YEAR]."
+- "[COLONY], [YEAR]: The translators failed. Their [DRIFTED_TERM] has mutated beyond our archives. A simple [MISUNDERSTOOD_CONCEPT] nearly started a riot."
+
+## Template: CULTURAL_DEVIATION_NOTICED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR]
+
+**Patterns:**
+- "[YEAR]: Reports from [COLONY] indicate severe cultural drift. They do not share our values."
+- "Isolation has changed [COLONY]. We hardly recognize them. [YEAR]."
+- "The distance takes its toll. [COLONY] feels like a foreign power now. [YEAR]."
