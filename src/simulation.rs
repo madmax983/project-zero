@@ -49,7 +49,8 @@ pub fn build_simulation_schedule() -> Schedule {
     schedule.add_systems(crate::layer2::void_leviathan::update_leviathan_eclipse_system);
     schedule.add_systems(crate::layer2::propaganda_engine::update_propaganda_system);
     schedule.add_systems(
-        crate::layer1::social::bureau_of_regrets::check_penitent_faction_formation_system,
+        (crate::layer1::social::bureau_of_regrets::check_penitent_faction_formation_system,
+        crate::layer1::core::integration::starvation_atrocity_bridge,),
     );
 
     schedule.add_systems((

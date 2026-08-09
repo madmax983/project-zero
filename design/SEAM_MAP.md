@@ -1938,3 +1938,10 @@
 - **Glue added:** Added `ThermalDamageEvent` emitted from `thermal_damage_system` and `thermal_damage_chronicle_bridge` in `src/layer1/core/integration.rs` to generate Chronicle records when pops take thermal damage.
 - **Schedule:** Registered the `ThermalDamageEvent` and the bridge system in `src/simulation.rs`.
 - **Tests:** Added tests in `tests/integration/clothing_temperature.rs`.
+
+### INT-496: Starvation -> Bureau of Regrets
+- **Date:** 2026-08-09
+- **Systems connected:** `PopDied` -> `starvation_atrocity_bridge` -> `AtrocityScore`
+- **Glue added:** Added `starvation_atrocity_bridge` to listen for starvation deaths and increase the atrocity score.
+- **Schedule:** Registered in `src/simulation.rs`.
+- **Tests:** `tests/integration/bureau_of_regrets_bridge.rs`
