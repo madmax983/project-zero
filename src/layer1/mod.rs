@@ -533,3 +533,5 @@ pub mod gravity_funerals;
 pub use gravity_funerals::*;
 pub mod spatial_compression;
 pub use spatial_compression::*;
+pub mod leader_ascension;
+pub use leader_ascension::*;
