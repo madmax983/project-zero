@@ -47,7 +47,10 @@ mod tests {
     // 3. Thermal Damage Logic (Refactored from Hypothermia)
     #[test]
     fn test_thermal_damage_checks_equipment() {
+        use crate::layer1::nature::temperature::ThermalDamageEvent;
+        use bevy_ecs::event::Events;
         let mut world = World::new();
+        world.init_resource::<Events<ThermalDamageEvent>>();
         // Setup Grid: -20.0 C (Freezing)
         let mut grid = TemperatureGrid::new(10, 10, -20.0);
         // Explicitly set pos (5,5) to -20.0
