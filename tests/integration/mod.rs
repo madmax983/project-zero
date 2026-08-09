@@ -98,3 +98,4 @@ pub mod spatial_compression_chronicle;
 pub mod orbital_junkyard_bridge;
 pub mod weaponized_tourism_bridge;
 pub mod gravity_well_forge_bridge;
+pub mod bureau_of_regrets_bridge;

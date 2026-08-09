@@ -3439,3 +3439,15 @@ pub fn spatial_compression_chronicle_bridge(
         });
     }
 }
+
+/// INT-496: Bridges starvation deaths to AtrocityScore
+pub fn starvation_atrocity_bridge(
+    mut events: bevy_ecs::event::EventReader<crate::layer1::entities::pop::PopDied>,
+    mut atrocity: bevy_ecs::system::ResMut<crate::layer1::social::bureau_of_regrets::AtrocityScore>,
+) {
+    for event in events.read() {
+        if event.reason == "Starvation" {
+            atrocity.score += 10.0;
+        }
+    }
+}
