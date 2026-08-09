@@ -630,3 +630,5 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1352` The Mother Culture — `specs/1352-the-mother-culture.md`
 - [ ] `1353` Neuro-Sludge Spills — `specs/1353-neuro-sludge-spills.md`
 - [ ] `1354` Feral Holograms — `specs/1354-feral-holograms.md`
+- [ ] `1355` The Solitude Subroutine — `specs/1355-solitude-subroutine.md`
+- [ ] `1356` Echo Casters — `specs/1356-echo-casters.md`
