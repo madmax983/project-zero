@@ -11157,3 +11157,109 @@ What kind of chronological debris is found.
 - with an entirely new coat of scales
 - shivering in the new climate
 - prone to random violent outbursts
+
+## Population Count UI Integration Fragments (Spec INT-003)
+
+## Fragment Type: [POPULATION_MILESTONE]
+- breaking the hundred mark
+- filling the first tier
+- becoming a true settlement
+
+## Blind Auction Chronicle Integration Fragments (Spec INT-1161)
+
+## Fragment Type: [AUCTION_SURPRISE]
+- discovering the truth
+- realizing the mistake
+- unpacking the crate
+
+## Scrap Code Evangelists Chronicle Integration Fragments (Spec INT-664)
+
+## Fragment Type: [EVANGELIST_MESS]
+- finding the scrawled code
+- seeing the corrupted display
+- hearing the digital chant
+
+## Phantom Limb of Logistics Fragments (Spec 1272)
+
+## Fragment Type: [PHANTOM_LIMB_SYMPTOM]
+- organizing non-existent supplies
+- waiting for phantom shipments
+- filing requests for broken conveyors
+- reporting to destroyed factories
+- trying to load a ghost-truck
+
+## The Weight of the Past Fragments (Spec 1290)
+
+## Fragment Type: [WEIGHT_OF_PAST_BURDEN]
+- crushing traditionalism
+- the ancestors' demands
+- suffocating heritage
+- ancient guilt
+- unpayable moral debt
+
+## The Blind Auction Fragments (Spec 1040)
+
+## Fragment Type: [AUCTION_ITEM]
+- a sealed stasis pod
+- coordinates to a dead world
+- an unmarked cargo container
+- a locked data drive
+- an unidentifiable alien artifact
+
+## The Long Night Fragments (Spec 695)
+
+## Fragment Type: [NIGHT_TERROR_SIGHTING]
+- shadows moving against the wall
+- whispers in the dark
+- the cold creeping in
+- the stars vanishing
+- an endless, suffocating black
+
+## Generational Knowledge Fragments (Spec 355)
+
+## Fragment Type: [PASSED_DOWN_SKILL]
+- the old ways of farming
+- ancient metalworking
+- forgotten maintenance rites
+- survival in the deep cold
+- navigating by the stars
+
+## The Subconscious Grid Fragments (Spec 1296)
+
+## Fragment Type: [GRID_QUIRK]
+- doors opening before you arrive
+- lights dimming when people argue
+- temperature adjusting to mood
+- machines humming a lullaby
+- the hum matching a heartbeat
+
+## Inherited Grudges Fragments (Spec 474)
+
+## Fragment Type: [OLD_SLIGHT]
+- a stolen water ration
+- a betrayed alliance
+- a forgotten insult
+- blood spilled over a triviality
+- a broken promise
+
+## Cultural Drift Fragments (Spec 282)
+
+## Fragment Type: [DRIFT_MISUNDERSTANDING]
+- greeting translated as a grave insult
+- laughter mistaken for a threat
+- trade negotiations interpreted as a declaration of war
+- pleas for help sounding like silence
+- poetry rendered as static
+
+## Fragment Type: [DRIFTED_TERM]
+- void-speak
+- the outer-drawl
+- frontier slang
+- fractured core-tongue
+- isolation dialect
+
+## Fragment Type: [MISUNDERSTOOD_CONCEPT]
+- a peace offering
+- a trade request
+- an evacuation warning
+- a declaration of loyalty

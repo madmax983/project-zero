@@ -6164,3 +6164,62 @@
 **Replaces:** Cloning errors, random mutations
 **Code reference:** `CloneEvent`
 **Usage:** "Genetic Drift turned the herbivores into predators."
+
+### Phantom Limb of Logistics
+**Replaces:** Supply chain breakdown, worker confusion
+**Code reference:** `PhantomLimbLogisticsEvent` (planned)
+**Usage:** "The phantom limb of logistics has the haulers moving empty air."
+
+## The Weight of the Past (Spec 1290)
+
+### The Weight of the Past
+**Replaces:** Tradition penalty, stagnation
+**Code reference:** `WeightOfPastModifier`
+**Usage:** "The Weight of the Past slows every decision in the council."
+
+## The Blind Auction (Spec 1040)
+
+### The Blind Auction
+**Replaces:** Mystery box mechanic, random trade event
+**Code reference:** `BlindAuctionEvent` (planned)
+**Usage:** "We spent half our treasury at the Blind Auction."
+
+## The Long Night (Spec 695)
+
+### The Long Night
+**Replaces:** Extended darkness, solar eclipse event
+**Code reference:** `LongNightEvent` (planned)
+**Usage:** "The Long Night is driving the colonists mad."
+
+## Generational Knowledge (Spec 355)
+
+### Generational Knowledge
+**Replaces:** Skill inheritance, veteran training
+**Code reference:** `GenerationalKnowledgeEvent` (planned)
+**Usage:** "Generational Knowledge keeps the colony running smoothly."
+
+## The Subconscious Grid (Spec 1296)
+
+### The Subconscious Grid
+**Replaces:** Advanced AI management, smart infrastructure
+**Code reference:** `SubconsciousGridEvent` (planned)
+**Usage:** "The Subconscious Grid knows what we need before we do."
+
+## Inherited Grudges (Spec 474)
+
+### Inherited Grudge
+**Replaces:** Long-term rivalry penalty, generational feud
+**Code reference:** `InheritedGrudgeEvent` (planned)
+**Usage:** "An Inherited Grudge tore the settlement apart."
+
+## Cultural Drift (Spec 282)
+
+### Drifted Dialect
+**Replaces:** Language barrier, communication penalty
+**Code reference:** `CulturalDrift` component
+**Usage:** "Their Drifted Dialect made negotiations impossible."
+
+### Translation Breakdown
+**Replaces:** Diplomatic failure due to isolation
+**Code reference:** `TranslationFailureEvent` (planned)
+**Usage:** "A Translation Breakdown turned a gift into a threat."
