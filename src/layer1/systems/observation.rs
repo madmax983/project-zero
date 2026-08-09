@@ -468,7 +468,7 @@ pub fn register(schedule: &mut Schedule) {
                 .after(work_execution_system),
             (
                 crate::layer1::core::integration::pop_died_count_system
-                    .after(crate::layer1::pop::handle_pop_death_system),
+                    .after(crate::layer1::entities::pop::handle_pop_death_system),
                 crate::layer1::core::integration::pop_born_count_system,
                 crate::layer1::integration::pop_death_notification_system
                     .after(natural_death_system),
@@ -484,7 +484,7 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::core::integration::temporal_fugue_chronicle_bridge,
             crate::layer1::core::integration::institutional_memory_chronicle_bridge,
             crate::layer1::foundation_soil::apply_foundation_soil_system
-                .after(crate::layer1::pop::handle_pop_death_system),
+                .after(crate::layer1::entities::pop::handle_pop_death_system),
             crate::layer1::integration::pop_born_notification_system
                 .after(Layer1SystemSet::Economy),
         )
@@ -509,7 +509,7 @@ pub fn register(schedule: &mut Schedule) {
             // Fix: handle_pop_death_system is re-exported in layer1/mod.rs or located in layer1/pop.rs
             // The previous error was referencing crate::layer1::health::handle_pop_death_system
             crate::layer1::quantum_twins::handle_severance_system
-                .after(crate::layer1::pop::handle_pop_death_system),
+                .after(crate::layer1::entities::pop::handle_pop_death_system),
             crate::layer1::ad_screen::update_ad_screens_system,
             crate::layer1::integration::industrial_rhythm_morale_bridge,
             crate::layer1::integration::great_work_chronicle_bridge,

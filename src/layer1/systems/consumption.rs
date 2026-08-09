@@ -163,12 +163,12 @@ pub fn register(schedule: &mut Schedule) {
 
     schedule.add_systems(
         (
-            crate::layer1::pop::handle_pop_death_system
+            crate::layer1::entities::pop::handle_pop_death_system
                 .after(crate::layer1::health::check_health_status_system),
             crate::layer1::fauna::handle_fauna_death_system
                 .after(crate::layer1::health::check_health_status_system),
-            crate::layer1::pop::handle_witness_death_system
-                .after(crate::layer1::pop::handle_pop_death_system),
+            crate::layer1::entities::pop::handle_witness_death_system
+                .after(crate::layer1::entities::pop::handle_pop_death_system),
             mascot_death_grief_system.after(crate::layer1::health::check_health_status_system),
             crate::layer1::ecology::handle_keystone_death
                 .after(crate::layer1::health::check_health_status_system)
@@ -181,10 +181,10 @@ pub fn register(schedule: &mut Schedule) {
                 .before(crate::layer1::health::despawn_dead_entities_system),
             #[cfg(feature = "nova")]
             crate::layer1::loci::record_death_loci_system
-                .after(crate::layer1::pop::handle_pop_death_system)
+                .after(crate::layer1::entities::pop::handle_pop_death_system)
                 .before(crate::layer1::health::despawn_dead_entities_system),
             crate::layer1::health::despawn_dead_entities_system
-                .after(crate::layer1::pop::handle_pop_death_system)
+                .after(crate::layer1::entities::pop::handle_pop_death_system)
                 .after(crate::layer1::fauna::handle_fauna_death_system)
                 .after(mascot_death_grief_system)
                 .after(crate::layer1::ecology::handle_keystone_death),

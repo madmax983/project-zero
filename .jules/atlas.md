@@ -95,3 +95,7 @@
 **[Title] Fix Clippy Error: items_after_test_module**
 **Tangle:** The `src/layer3/integration.rs` file had a function `sovereign_armada_chronicle_bridge` defined after the `mod tests` block, causing a clippy error `items_after_test_module`.
 **Blueprint:** Moved the function to be placed before the `mod tests` block to satisfy clippy and ensure proper file structure.
+
+**[Title] Fix Missing/Implicit Pop Dependency in layer1 mod**
+**Tangle:** In `src/layer1/systems/consumption.rs` and `src/layer1/systems/observation.rs`, the code incorrectly referenced `crate::layer1::pop::handle_pop_death_system`. The actual source was `crate::layer1::entities::pop::handle_pop_death_system`, and while `entities::*` was re-exported using a wildcard in `layer1/mod.rs`, referencing it via `crate::layer1::pop::` instead of the full path confused tooling and broke strict paths.
+**Blueprint:** Explicitly re-routed `crate::layer1::pop::handle_pop_death_system` to `crate::layer1::entities::pop::handle_pop_death_system` in both system registration files.
