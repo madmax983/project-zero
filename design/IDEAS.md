@@ -31775,3 +31775,42 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you risk the long-term demographic skew of a small, specialized founding crew, or wait until you can afford a massive, genetically diverse colony ship?
 
 ---
+## The Nostalgia Plague
+
+**Layer:** 1
+
+**Fantasy:** Watching a colony slowly lose its drive for the future as it becomes obsessed with a romanticized past.
+
+**Mechanic:** Pops can develop a "Nostalgic" trait if morale stays mediocre for a long time. Nostalgic pops produce "Retro-Goods" instead of necessary supplies, which temporarily boosts mood but drastically reduces long-term colony efficiency. The trait spreads socially.
+
+**Emergence:** Your industrial hub slowly transitions into a giant museum of Earth-that-was. Pops starve because they refuse to farm hydroponic algae, preferring to try (and fail) to grow extinct wheat in toxic soil.
+
+**Tension:** Do you let the colony drown in comforting illusions to maintain high morale, or forcefully ban "Retro-Goods" and risk a violent, present-day rebellion?
+
+---
+## Hyperlane Parasites
+
+**Layer:** 2
+
+**Fantasy:** Realizing your thriving trade network is secretly feeding an unseen, space-borne ecosystem.
+
+**Mechanic:** Certain hyperlane routes become infested with "Void-Barnacles," microscopic entities that latch onto ships and slowly drain cargo and energy during transit. They only thrive on highly trafficked routes.
+
+**Emergence:** You establish a massive, highly efficient trade route between your core worlds. The sheer volume of traffic causes a massive bloom of Void-Barnacles, which suddenly start crashing entire convoys, turning your most profitable route into a ship graveyard.
+
+**Tension:** Do you continuously pay exorbitant maintenance costs to "scrub" your ships, or intentionally rotate and disrupt your own trade routes to starve the parasites?
+
+---
+## Generational Architecture
+
+**Layer:** 1
+
+**Fantasy:** Buildings aren't just constructed; they are grown and modified by successive generations of workers.
+
+**Mechanic:** Instead of instantly upgrading a building with resources, "Generational" buildings gain efficiency bonuses based on how many consecutive generations of the same pop family have worked there. The building physically changes to reflect their quirks.
+
+**Emergence:** You try to optimize a critical power plant by replacing the aging, eccentric engineering family with highly trained fresh graduates. The new graduates don't understand the undocumented, jury-rigged modifications the family made over 100 years, causing the plant to catastrophically fail.
+
+**Tension:** Do you rely on nepotistic, irreplaceable family guilds who hold monopolies on critical infrastructure, or enforce standard modular designs that are less efficient but universally understandable?
+
+---
