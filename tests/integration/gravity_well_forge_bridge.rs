@@ -1,13 +1,13 @@
 #[cfg(test)]
 mod tests {
     use bevy::prelude::*;
+    use rand::SeedableRng;
     use scale::layer1::core::chronicle::{AddChronicleEvent, EventImportance};
-    use scale::layer2::station::{process_deep_forges, DeepForge, MaintenanceLevel, Crew};
     use scale::layer1::economy::resources::ColonyResources;
     use scale::layer2::integration::observe_forge_crush_event;
-    use scale::shared::random::GlobalRng;
     use scale::layer2::station::ForgeCrushEvent;
-    use rand::SeedableRng;
+    use scale::layer2::station::{process_deep_forges, Crew, DeepForge, MaintenanceLevel};
+    use scale::shared::random::GlobalRng;
 
     #[test]
     fn test_forge_crush_emits_chronicle_event() {
@@ -19,10 +19,10 @@ mod tests {
         app.insert_resource(GlobalRng(rand::rngs::StdRng::seed_from_u64(42)));
         app.init_resource::<ColonyResources>();
 
-        app.add_systems(Update, (
-            process_deep_forges,
-            observe_forge_crush_event
-        ).chain());
+        app.add_systems(
+            Update,
+            (process_deep_forges, observe_forge_crush_event).chain(),
+        );
 
         app.world_mut().spawn((
             DeepForge {
@@ -40,7 +40,11 @@ mod tests {
         let mut cursor = chronicle_events.get_cursor();
         let events: Vec<_> = cursor.read(chronicle_events).collect();
 
-        assert_eq!(events.len(), 1, "Expected one AddChronicleEvent to be emitted");
+        assert_eq!(
+            events.len(),
+            1,
+            "Expected one AddChronicleEvent to be emitted"
+        );
         assert_eq!(events[0].importance, EventImportance::Major);
         assert!(events[0].text.contains("50 casualties"));
     }

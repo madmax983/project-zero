@@ -1,10 +1,10 @@
 //! Leader Ascension mechanics.
 
-use bevy_ecs::prelude::*;
-use crate::layer1::pop::{Pop, PopName};
 use crate::layer1::core::chronicle::{AddChronicleEvent, EventImportance};
-use crate::layer1::skills::Skills;
+use crate::layer1::pop::{Pop, PopName};
 use crate::layer1::psychology::traits::Traits;
+use crate::layer1::skills::Skills;
+use bevy_ecs::prelude::*;
 
 /// Marks a pop as eligible to become a leader.
 #[derive(Component)]
@@ -71,7 +71,10 @@ pub fn promote_pop_system(
             commands.entity(event.pop_entity).despawn();
 
             chronicle_events.send(AddChronicleEvent {
-                text: format!("LEADER_PROMOTED: {} ascended to {:?}", leader_name, event.new_role),
+                text: format!(
+                    "LEADER_PROMOTED: {} ascended to {:?}",
+                    leader_name, event.new_role
+                ),
                 importance: EventImportance::Major,
             });
         }
@@ -83,28 +86,27 @@ pub struct LeaderAscensionPlugin;
 
 impl bevy_app::Plugin for LeaderAscensionPlugin {
     fn build(&self, app: &mut bevy_app::App) {
-        app.add_event::<PromotePopEvent>()
-            .add_systems(
-                bevy_app::Update,
-                (
-                    check_ascension_eligibility_system,
-                    promote_pop_system,
-                ),
-            );
+        app.add_event::<PromotePopEvent>().add_systems(
+            bevy_app::Update,
+            (check_ascension_eligibility_system, promote_pop_system),
+        );
     }
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::layer1::skills::SkillType;
     use crate::layer1::psychology::traits::Trait;
+    use crate::layer1::skills::SkillType;
 
     fn setup_test_app() -> bevy_app::App {
         let mut app = bevy_app::App::new();
         app.add_event::<PromotePopEvent>();
         app.add_event::<AddChronicleEvent>();
-        app.add_systems(bevy_app::Update, (check_ascension_eligibility_system, promote_pop_system));
+        app.add_systems(
+            bevy_app::Update,
+            (check_ascension_eligibility_system, promote_pop_system),
+        );
         app
     }
 
@@ -128,9 +130,15 @@ mod tests {
 
         let mut traits = Traits::default();
         traits.add(Trait::HardWorker);
-        let pop = app.world_mut().spawn((Pop, PopName("Hero".into()), traits, AscensionCandidate)).id();
+        let pop = app
+            .world_mut()
+            .spawn((Pop, PopName("Hero".into()), traits, AscensionCandidate))
+            .id();
 
-        app.world_mut().send_event(PromotePopEvent { pop_entity: pop, new_role: LeaderRole::Admiral });
+        app.world_mut().send_event(PromotePopEvent {
+            pop_entity: pop,
+            new_role: LeaderRole::Admiral,
+        });
         app.update();
 
         assert!(app.world().get::<Pop>(pop).is_none());

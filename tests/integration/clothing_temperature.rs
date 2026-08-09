@@ -1,6 +1,5 @@
 #[cfg(test)]
 mod tests {
-    use bevy_ecs::prelude::*;
     use bevy::prelude::*;
     use scale::layer1::clothing::clothing_wear_system;
     use scale::layer1::health::Health;
@@ -58,11 +57,11 @@ mod tests {
             "Pop should take damage after clothing breaks"
         );
     }
+    use scale::layer1::balance::TICKS_PER_YEAR;
     use scale::layer1::core::chronicle::{AddChronicleEvent, EventImportance};
     use scale::layer1::core::integration::thermal_damage_chronicle_bridge;
     use scale::layer1::nature::temperature::ThermalDamageEvent;
     use scale::shared::time::SimulationTime;
-    use scale::layer1::balance::TICKS_PER_YEAR;
 
     #[test]
     fn test_thermal_damage_chronicle_bridge() {
