@@ -632,3 +632,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1354` Feral Holograms — `specs/1354-feral-holograms.md`
 - [ ] `1355` The Solitude Subroutine — `specs/1355-solitude-subroutine.md`
 - [ ] `1356` Echo Casters — `specs/1356-echo-casters.md`
+- [ ] `1357` Hard-Light Architecture — `specs/1357-hard-light-architecture.md`

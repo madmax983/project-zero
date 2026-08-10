@@ -6535,7 +6535,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Hard-Light Architecture
+## Hard-Light Architecture [SPECCED]
 
 **Layer:** 1
 
