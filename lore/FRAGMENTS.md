@@ -11263,3 +11263,63 @@ What kind of chronological debris is found.
 - a trade request
 - an evacuation warning
 - a declaration of loyalty
+
+## Fragment Type: [QUANTUM_FAMINE_CAUSE]
+
+Words and phrases describing the sudden, inexplicable loss of resources.
+
+- an instantaneous depletion
+- the silos emptied themselves
+- localized probability collapse of grain
+- missing matter
+- caloric erasure
+- starvation by a rounding error
+
+## Fragment Type: [TRINKET_NAME]
+
+- broken sub-light engine cores
+- jars of sterilized dirt
+- non-functional comm arrays
+- outdated identification badges
+- shattered solar panels
+- encrypted holodiscs
+
+## Fragment Type: [MISUNDERSTOOD_INTENT]
+
+- an act of submission
+- a declaration of holy war
+- a sign of weakness
+- the ultimate insult
+- religious devotion
+
+## Fragment Type: [TRIGGERING_EVENT]
+
+- a minor border skirmish
+- an unexpected hull breach
+- a failed assassination attempt
+- a pirate raid
+- an accidental power surge
+
+## Fragment Type: [MONUMENT_NAME]
+
+- the Founders' Spire
+- the Arch of the Builders
+- the Golden Colonist
+- the First Ship Memorial
+- the Star-Eater Shrine
+
+## Fragment Type: [SIGNAL_ORIGIN]
+
+- a dead nebula
+- the edge of the galaxy
+- an uncharted black hole
+- a rogue planet
+- an ancient precursor ruin
+
+## Fragment Type: [DESTINATION]
+
+- the deep void
+- the heart of the anomaly
+- the silent sector
+- the dark star
+- the edge of known space

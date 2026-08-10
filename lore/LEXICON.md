@@ -6223,3 +6223,21 @@
 **Replaces:** Diplomatic failure due to isolation
 **Code reference:** `TranslationFailureEvent` (planned)
 **Usage:** "A Translation Breakdown turned a gift into a threat."
+
+## Cargo Cult Diplomat
+
+**Replaces:** Unorthodox Diplomat / Errant Envoy
+**Code reference:** `CargoCultDiplomat` trait
+**Usage:** "The Cargo Cult Diplomat arrived in a ship made of scrap, offering useless trinkets as peace offerings."
+
+## Memorial Revolt
+
+**Replaces:** Historic Uprising / Monument Protest
+**Code reference:** `MemorialRevoltEvent`
+**Usage:** "The Memorial Revolt left the statues of the founders in ruins."
+
+## Phantom Signal
+
+**Replaces:** Ghost Transmission / False Radar Contact
+**Code reference:** `PhantomSignal` anomaly
+**Usage:** "The Phantom Signal led the scouting fleet into a dead sector."
