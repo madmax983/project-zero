@@ -31922,3 +31922,50 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you sacrifice your most talented citizens to foreign powers to buy peace, knowing you are completely beholden to the stability of an alien, potentially hostile empire?
 
 ---
+## The Kessler Ascendancy
+
+**Layer:** 2
+
+**Fantasy:** A radicalized faction that views orbital space not as a commons, but as a sacred barrier that must be sealed off from the rest of the galaxy.
+
+**Mechanic:** A local group of radicalized pops forms the "Kessler Ascendancy". They actively sabotage orbital clean-up efforts and intentionally launch high-velocity junk into orbit to artificially trigger Kessler Syndrome. Once sealed, they use the debris field as an impenetrable defensive shield, declaring the planet an independent, isolationist state.
+
+**Emergence:** You try to crack down on their sabotage, which only radicalizes them further, leading to a massive synchronized launch of garbage rockets that permanently entombs your most productive core world in a cloud of shrapnel.
+
+**Tension:** Do you expend massive military resources to crush them quickly before they can launch their garbage, or try to negotiate with an increasingly hostile, isolationist cult?
+
+## The Phantom Armada
+
+**Layer:** 2
+
+**Fantasy:** Intercepting distress signals and trade requests from a fleet that doesn't exist, tying up vital communication networks.
+
+**Mechanic:** Ancient, pre-collapse communication buoys occasionally malfunction, rebroadcasting centuries-old distress signals or trade offers from a "Phantom Armada." Your autonomous logistics and defense ships (Layer 2) automatically respond to these signals, wasting fuel and time investigating empty space or attempting to trade with long-dead factions.
+
+**Emergence:** Your core fleet is completely out of position during a real invasion because they all autonomously warped to the edge of the system to respond to a priority one distress signal from an empire that fell 600 years ago.
+
+**Tension:** Do you hard-code your ships to ignore all unknown signals, risking missing actual distress calls from your own stranded colonies, or manually manage every single fleet movement to avoid the phantom traps?
+
+## The Void Cargo Worshippers
+
+**Layer:** 1
+
+**Fantasy:** A colony that abandons its own survival to worship the automated supply drops that occasionally miss their target.
+
+**Mechanic:** If a Layer 1 colony suffers a severe resource shortage but is saved by a wildly off-target, automated supply drop (perhaps meant for another system), the pops may form a "Void Cargo" cult. They dismantle critical infrastructure (like water purifiers or farms) to build massive, intricate beacon arrays designed to "summon" more falling crates, completely ignoring actual production.
+
+**Emergence:** You finally restore the colony's farming capacity, only to realize the pops are starving because they dismantled the tractors to build a 300-foot tall metal statue of a shipping container.
+
+**Tension:** Do you forcibly dismantle their shrines to force them back to work (causing massive unrest and potential riots), or intentionally drop expensive, unnecessary supplies just to keep them happy and docile while they slowly starve?
+
+## The Tethered Bureaucracy
+
+**Layer:** Cross-layer
+
+**Fantasy:** A colony paralyzed because it must wait for permission from a capital that is light-years away.
+
+**Mechanic:** Certain critical Layer 1 actions (like upgrading a reactor, executing a traitor, or researching alien tech) can be labeled as "Tethered." This means the action cannot be performed until an approval signal travels to the Layer 3 capital and back. The travel time depends on the physical distance and hyperlane efficiency.
+
+**Emergence:** You desperately need to activate your orbital defenses to stop a pirate raid. However, the defense grid is Tethered. You watch your colony burn for three in-game weeks while waiting for the automated approval stamp to physically travel back from your capital on the other side of the galaxy.
+
+**Tension:** Do you endure the crippling lag of a Tethered Bureaucracy to maintain high empire cohesion and prevent local corruption, or do you "Sever" the tethers, giving your colony instant reaction times but risking them declaring independence?
