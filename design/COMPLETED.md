@@ -973,3 +973,5 @@
 - [x] `329` Leader Ascension — `specs/329-leader-ascension.md` — completed 2026-02-01
 - [x] `1030` Gravity Engineering — `specs/1030-gravity-engineering.md` — completed 2026-02-01
 - [x] `1038` Dead Protocols — `specs/1038-dead-protocols.md` — completed 2024-08-10
+- [x] `1025` Gravity Plating Failure — `specs/1025-gravity-plating-failure.md` — completed 2024-08-10
+- [x] `1025` Gravity Plating Failure — `specs/1025-gravity-plating-failure.md` — completed 2024-08-10

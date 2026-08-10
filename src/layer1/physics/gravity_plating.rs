@@ -94,12 +94,15 @@ pub enum MovementType {
 /// ## Examples
 /// ```
 /// use scale::layer1::physics::gravity_plating::Velocity;
-/// let velocity = Velocity { x: 0.5, y: -0.2 };
+/// let velocity = Velocity { x: 0.5, y: -0.2, accum_x: 0.0, accum_y: 0.0 };
 /// ```
 #[derive(Component)]
+#[derive(Default)]
 pub struct Velocity {
     pub x: f32,
     pub y: f32,
+    pub accum_x: f32,
+    pub accum_y: f32,
 }
 
 /// A collection of traits possessed by a Pop, such as 'ZeroGTraining'.
@@ -313,7 +316,7 @@ mod tests {
             .spawn((
                 Pop,
                 MovementType::Walking,
-                Velocity { x: 0.0, y: 0.0 },
+                Velocity { x: 0.0, y: 0.0, accum_x: 0.0, accum_y: 0.0 },
                 CurrentZone { zone },
                 TraitList { traits: vec![] },
             ))
@@ -325,7 +328,7 @@ mod tests {
             .spawn((
                 Pop,
                 MovementType::Walking,
-                Velocity { x: 0.0, y: 0.0 },
+                Velocity { x: 0.0, y: 0.0, accum_x: 0.0, accum_y: 0.0 },
                 CurrentZone { zone },
                 TraitList {
                     traits: vec!["ZeroGTraining".to_string()],
@@ -521,5 +524,173 @@ mod gravity_plate_tests {
         // Assert: pop falls down towards Vec3::NEG_Y (global down) - orientation aligns with global gravity
         let up = app.world().get::<Orientation>(pop).unwrap().up;
         assert_eq!(up, Vec3::Y);
+    }
+}
+
+pub fn apply_drifting_movement_system(
+    mut query: Query<(&mut crate::layer1::core::map::GridPosition, &mut Velocity, &MovementType)>,
+    terrain: Res<crate::layer1::terrain::TerrainGrid>,
+) {
+    for (mut pos, mut vel, move_type) in query.iter_mut() {
+        if let MovementType::Drifting = move_type {
+            vel.accum_x += vel.x;
+            vel.accum_y += vel.y;
+
+            while vel.accum_x.abs() >= 1.0 {
+                let step = vel.accum_x.signum() as i32;
+                let next_x = pos.x + step;
+                if let (Ok(x), Ok(y)) = (usize::try_from(next_x), usize::try_from(pos.y)) {
+                    if terrain.get(x, y).is_some_and(|t| t.is_walkable()) {
+                        pos.x = next_x;
+                        vel.accum_x -= step as f32;
+                    } else {
+                        vel.accum_x = 0.0;
+                        vel.x = 0.0;
+                        break;
+                    }
+                } else {
+                    vel.accum_x = 0.0;
+                    vel.x = 0.0;
+                    break;
+                }
+            }
+
+            while vel.accum_y.abs() >= 1.0 {
+                let step = vel.accum_y.signum() as i32;
+                let next_y = pos.y + step;
+                if let (Ok(x), Ok(y)) = (usize::try_from(pos.x), usize::try_from(next_y)) {
+                    if terrain.get(x, y).is_some_and(|t| t.is_walkable()) {
+                        pos.y = next_y;
+                        vel.accum_y -= step as f32;
+                    } else {
+                        vel.accum_y = 0.0;
+                        vel.y = 0.0;
+                        break;
+                    }
+                } else {
+                    vel.accum_y = 0.0;
+                    vel.y = 0.0;
+                    break;
+                }
+            }
+        }
+    }
+}
+
+#[cfg(test)]
+mod drifting_tests {
+    use super::*;
+    use bevy_app::prelude::*;
+    use crate::layer1::core::map::GridPosition;
+    use crate::layer1::terrain::TerrainType;
+
+    #[test]
+    fn test_drifting_pops_move_in_straight_line() {
+        let mut app = bevy_app::App::new();
+        app.add_systems(Update, apply_drifting_movement_system);
+
+        let mut terrain = crate::layer1::nature::terrain::generate_terrain(10, 10);
+        for x in 0..10 {
+            for y in 0..10 {
+                terrain.set(x, y, TerrainType::Grass);
+            }
+        }
+        terrain.set(3, 0, TerrainType::Rock);
+        app.world_mut().insert_resource(terrain);
+
+        let pop = app
+            .world_mut()
+            .spawn((
+                Pop,
+                MovementType::Drifting,
+                Velocity { x: 2.5, y: 0.0, accum_x: 0.0, accum_y: 0.0 },
+                GridPosition { x: 0, y: 0 },
+            ))
+            .id();
+
+        app.update();
+
+        let pos = app.world().get::<GridPosition>(pop).unwrap();
+        assert_eq!(pos.x, 2);
+
+        app.update();
+        let pos = app.world().get::<GridPosition>(pop).unwrap();
+        assert_eq!(pos.x, 2);
+
+        let vel = app.world().get::<Velocity>(pop).unwrap();
+        assert_eq!(vel.x, 0.0);
+    }
+}
+
+#[cfg(test)]
+mod drifting_tests_expanded {
+    use super::*;
+    use bevy_app::prelude::*;
+    use crate::layer1::core::map::GridPosition;
+    use crate::layer1::terrain::TerrainType;
+
+    #[test]
+    fn test_drifting_pops_move_in_all_directions() {
+        let mut app = bevy_app::App::new();
+        app.add_systems(Update, apply_drifting_movement_system);
+
+        let mut terrain = crate::layer1::nature::terrain::generate_terrain(10, 10);
+        for x in 0..10 {
+            for y in 0..10 {
+                terrain.set(x, y, TerrainType::Grass);
+            }
+        }
+        // Walls to block negative movement
+        terrain.set(0, 5, TerrainType::Rock);
+        terrain.set(5, 0, TerrainType::Rock);
+        app.world_mut().insert_resource(terrain);
+
+        // Spawn pop moving left (negative X)
+        let pop_left = app.world_mut().spawn((
+            Pop,
+            MovementType::Drifting,
+            Velocity { x: -2.5, y: 0.0, accum_x: 0.0, accum_y: 0.0 },
+            GridPosition { x: 5, y: 5 },
+        )).id();
+
+        // Spawn pop moving down (negative Y)
+        let pop_down = app.world_mut().spawn((
+            Pop,
+            MovementType::Drifting,
+            Velocity { x: 0.0, y: -2.5, accum_x: 0.0, accum_y: 0.0 },
+            GridPosition { x: 5, y: 5 },
+        )).id();
+
+        // Spawn pop moving diagonally
+        let pop_diag = app.world_mut().spawn((
+            Pop,
+            MovementType::Drifting,
+            Velocity { x: 1.5, y: 1.5, accum_x: 0.0, accum_y: 0.0 },
+            GridPosition { x: 5, y: 5 },
+        )).id();
+
+        app.update();
+
+        // Check pop_left
+        let pos = app.world().get::<GridPosition>(pop_left).unwrap();
+        assert_eq!(pos.x, 3);
+
+        // Check pop_down
+        let pos = app.world().get::<GridPosition>(pop_down).unwrap();
+        assert_eq!(pos.y, 3);
+
+        // Check pop_diag
+        let pos = app.world().get::<GridPosition>(pop_diag).unwrap();
+        assert_eq!(pos.x, 6);
+        assert_eq!(pos.y, 6);
+
+        app.update();
+        // pop_left should hit the wall at 0,5
+        // It starts at x=3. Vel is -2.5. Total accum = -3.0.
+        // It moves to 2, 1, and 0 is wall. So it stops at 1.
+        let pos = app.world().get::<GridPosition>(pop_left).unwrap();
+        assert_eq!(pos.x, 1);
+        let vel = app.world().get::<Velocity>(pop_left).unwrap();
+        assert_eq!(vel.x, 0.0);
     }
 }
