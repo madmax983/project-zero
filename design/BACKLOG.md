@@ -493,7 +493,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1032` Open Source Science — `specs/1032-open-source-science.md`
 - [ ] `1030` Gravity Engineering — `specs/1030-gravity-engineering.md` — claimed 2026-02-01
 - [ ] `1025` Gravity Plating Failure — `specs/1025-gravity-plating-failure.md`
-- [ ] `1038` Dead Protocols — `specs/1038-dead-protocols.md`
 - [x] `1056` The Dead Hand — `specs/1056-the-dead-hand.md` — completed 2024-05-31
 - [x] `1129` Planetary Rings as Highways — `specs/1129-planetary-rings-as-highways.md` — completed 2026-06-25
 - [ ] `1134` Operational Detritus — `specs/1134-operational-detritus.md`

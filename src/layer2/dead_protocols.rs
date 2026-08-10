@@ -2,8 +2,15 @@ use crate::layer2::fleet::{Fleet, FleetFaction};
 use crate::shared::log::MessageLog;
 use bevy_ecs::prelude::*;
 
+#[derive(PartialEq, Clone, Copy, Debug)]
+pub enum ProtocolRule {
+    NoMiningRedPlanets,
+}
+
 #[derive(Component)]
-pub struct DeadProtocol;
+pub struct DeadProtocol {
+    pub rule: ProtocolRule,
+}
 
 #[derive(Event)]
 pub struct ViolationEvent {
@@ -17,13 +24,15 @@ pub fn protocol_violation_system(
     mut log: Option<ResMut<MessageLog>>,
 ) {
     for event in events.read() {
-        if query.get(event.target).is_ok() {
-            commands.spawn((Fleet, FleetFaction::AncientEnforcer));
-            if let Some(ref mut l) = log {
-                l.add_colored(
-                    "Dead protocol violated: ancient enforcers awakened!",
-                    ratatui::style::Color::Red,
-                );
+        if let Ok(protocol) = query.get(event.target) {
+            if protocol.rule == ProtocolRule::NoMiningRedPlanets {
+                commands.spawn((Fleet, FleetFaction::AncientEnforcer));
+                if let Some(ref mut l) = log {
+                    l.add_colored(
+                        "Dead protocol violated: ancient enforcers awakened!",
+                        ratatui::style::Color::Red,
+                    );
+                }
             }
         }
     }
@@ -41,7 +50,12 @@ mod tests {
         app.add_systems(bevy_app::Update, protocol_violation_system);
 
         // Setup the protocol
-        let planet = app.world_mut().spawn(DeadProtocol).id();
+        let planet = app
+            .world_mut()
+            .spawn(DeadProtocol {
+                rule: ProtocolRule::NoMiningRedPlanets,
+            })
+            .id();
 
         // Trigger violation
         app.world_mut()
@@ -54,7 +68,6 @@ mod tests {
         let mut query = app.world_mut().query::<&FleetFaction>();
         for faction in query.iter(app.world()) {
             if *faction == FleetFaction::AncientEnforcer {
-                // Or specific Enforcer faction
                 enforcers_spawned = true;
             }
         }
