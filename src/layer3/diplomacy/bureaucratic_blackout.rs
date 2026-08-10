@@ -182,4 +182,42 @@ mod tests {
 
         assert!(found, "Attempting to collect massive multi-generational back taxes should trigger a rebellion.");
     }
+
+    #[test]
+    fn test_back_taxes_accrual_for_inactive_charters() {
+        let mut app = bevy_app::App::new();
+        app.add_systems(bevy_app::Update, back_taxes_accrual_system);
+
+        let active_colony = app
+            .world_mut()
+            .spawn((
+                ImperialCharter { active: true },
+                BackTaxes {
+                    amount_owed: 0,
+                    years_accrued: 0,
+                },
+            ))
+            .id();
+
+        let inactive_colony = app
+            .world_mut()
+            .spawn((
+                ImperialCharter { active: false },
+                BackTaxes {
+                    amount_owed: 0,
+                    years_accrued: 0,
+                },
+            ))
+            .id();
+
+        app.update();
+
+        let active_taxes = app.world().get::<BackTaxes>(active_colony).unwrap();
+        assert_eq!(active_taxes.amount_owed, 0);
+        assert_eq!(active_taxes.years_accrued, 0);
+
+        let inactive_taxes = app.world().get::<BackTaxes>(inactive_colony).unwrap();
+        assert_eq!(inactive_taxes.amount_owed, 100);
+        assert_eq!(inactive_taxes.years_accrued, 1);
+    }
 }

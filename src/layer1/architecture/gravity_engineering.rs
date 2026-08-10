@@ -147,9 +147,9 @@ mod tests {
 
     #[test]
     fn test_gravity_engineering_chronicle_bridge() {
-        use crate::layer1::core::chronicle::AddChronicleEvent;
         use crate::layer1::architecture::building::Height;
         use crate::layer1::architecture::structure::Structure;
+        use crate::layer1::core::chronicle::AddChronicleEvent;
         let mut app = App::new();
         app.add_event::<BuildingCompletedEvent>();
         app.add_event::<AddChronicleEvent>();
@@ -179,9 +179,9 @@ mod tests {
 
     #[test]
     fn test_gravity_engineering_chronicle_bridge_destroyed() {
-        use crate::layer1::core::chronicle::AddChronicleEvent;
         use crate::layer1::architecture::building::Height;
         use crate::layer1::architecture::structure::Structure;
+        use crate::layer1::core::chronicle::AddChronicleEvent;
         let mut app = App::new();
         app.add_event::<BuildingCompletedEvent>();
         app.add_event::<AddChronicleEvent>();
@@ -208,5 +208,4 @@ mod tests {
         let mut cursor = events.get_cursor();
         assert_eq!(cursor.read(events).count(), 1);
     }
-
 }
