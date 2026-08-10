@@ -11080,7 +11080,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "The volatile gases of [GAS_GIANT] were successfully skimmed. Another Siphon requires immediate repair."
 ## The Subterranean Ocean Templates (Spec 320)
 
-### Template: SUBTERRANEAN_OCEAN_FOUND
+## Template: SUBTERRANEAN_OCEAN_FOUND
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [OCEAN_NAME]
 **Patterns:**
@@ -11088,7 +11088,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "There is an ocean beneath us. At [COLONY], surveyors discovered [OCEAN_NAME]. [YEAR]."
 - "[COLONY], [YEAR]: [OCEAN_NAME] lies in the deep. Endless black water under the rock."
 
-### Template: DEEP_PRESSURE_CRUSH
+## Template: DEEP_PRESSURE_CRUSH
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [SUB_NAME], [OCEAN_NAME]
 **Patterns:**
@@ -11098,7 +11098,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## The Propaganda Engine Templates (Spec 315)
 
-### Template: PROPAGANDA_BROADCAST
+## Template: PROPAGANDA_BROADCAST
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [SLOGAN]
 **Patterns:**
@@ -11106,7 +11106,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "The engine hums. '[SLOGAN]' repeats across every channel in [COLONY]. [YEAR]."
 - "[COLONY], [YEAR]: New directives. We must believe '[SLOGAN]'."
 
-### Template: PROPAGANDA_DOUBT
+## Template: PROPAGANDA_DOUBT
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [SLOGAN]
 **Patterns:**
@@ -11116,7 +11116,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Gravity-Well Funerals Templates (Spec 1014)
 
-### Template: GRAVITY_FUNERAL_HELD
+## Template: GRAVITY_FUNERAL_HELD
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [DECEASED_NAME], [WELL_NAME]
 **Patterns:**
@@ -11124,7 +11124,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "The crush of the [WELL_NAME] takes our dead. [DECEASED_NAME] was released at [COLONY]. [YEAR]."
 - "[COLONY], [YEAR]: A silent drop. [DECEASED_NAME] descends into the [WELL_NAME]."
 
-### Template: GRAVITY_TETHER_SNAPPED
+## Template: GRAVITY_TETHER_SNAPPED
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [WELL_NAME]
 **Patterns:**
@@ -11134,7 +11134,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Stress Breakdowns Templates (Spec 358)
 
-### Template: STRESS_BREAKDOWN_EVENT
+## Template: STRESS_BREAKDOWN_EVENT
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [POP_NAME], [BREAKDOWN_SYMPTOM]
 **Patterns:**
@@ -11142,7 +11142,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "The pressure broke them. [POP_NAME] is exhibiting [BREAKDOWN_SYMPTOM]. [COLONY] watches in fear. [YEAR]."
 - "[COLONY], [YEAR]: A mind snaps. [POP_NAME] was found [BREAKDOWN_SYMPTOM]."
 
-### Template: COLONY_WIDE_PANIC
+## Template: COLONY_WIDE_PANIC
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [STRESSOR]
 **Patterns:**
@@ -11152,7 +11152,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Ecophagy Templates (Spec 1019)
 
-### Template: ECOPHAGY_START
+## Template: ECOPHAGY_START
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [MACHINE_SWARM]
 **Patterns:**
@@ -11160,7 +11160,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "A terrible hunger. The [MACHINE_SWARM] is turning [COLONY] to dust. [YEAR]."
 - "[COLONY], [YEAR]: They don't stop. The [MACHINE_SWARM] consumes everything in its path."
 
-### Template: ECOPHAGY_CONTAINED
+## Template: ECOPHAGY_CONTAINED
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [MACHINE_SWARM]
 **Patterns:**
@@ -11170,7 +11170,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## The Ego Machine Templates (Spec 321)
 
-### Template: EGO_BREAK
+## Template: EGO_BREAK
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [POP_NAME], [MENIAL_JOB]
 **Patterns:**
@@ -11178,7 +11178,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "The Chamber changes them. [POP_NAME] spat at the [MENIAL_JOB] overseer. [COLONY] is dividing. [YEAR]."
 - "[COLONY], [YEAR]: [POP_NAME] believes they are a god now. [MENIAL_JOB] is beneath them."
 
-### Template: EGO_FRICTION
+## Template: EGO_FRICTION
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [POP_NAME], [LOW_EGO_POP]
 **Patterns:**
@@ -11187,7 +11187,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## The Orbital Junkyard Templates (Spec 317)
 
-### Template: DEBRIS_CRUSH
+## Template: DEBRIS_CRUSH
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [BUILDING_NAME], [CASUALTIES]
 **Patterns:**
@@ -11195,7 +11195,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "Scrap from the sky. We lost [BUILDING_NAME] and [CASUALTIES] workers in the barrage. [COLONY], [YEAR]."
 - "[COLONY], [YEAR]: The old wars still kill us. A dreadnought hull crushed the [BUILDING_NAME]. [CASUALTIES] dead."
 
-### Template: SCRAP_WINDFALL
+## Template: SCRAP_WINDFALL
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [SCRAP_AMOUNT]
 **Patterns:**
@@ -11204,7 +11204,7 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 
 ## Planetary Scarring Templates (Spec 1018)
 
-### Template: PLANET_SCARRED
+## Template: PLANET_SCARRED
 **Generates:** Play event
 **Slots:** [COLONY], [YEAR], [SCAR_TYPE]
 **Patterns:**
@@ -11400,3 +11400,61 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: Reports from [COLONY] indicate severe cultural drift. They do not share our values."
 - "Isolation has changed [COLONY]. We hardly recognize them. [YEAR]."
 - "The distance takes its toll. [COLONY] feels like a foreign power now. [YEAR]."
+
+## Template: CARGO_CULT_DIPLOMAT_ARRIVAL
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [TRINKET_NAME]
+**Patterns:**
+- "[YEAR]: A diplomat from a broken civilization arrived at [COLONY], offering [TRINKET_NAME] for an alliance."
+- "The errant envoy brought [TRINKET_NAME]. We accepted the gift at [COLONY]. [YEAR]."
+- "[COLONY], [YEAR]: They think [TRINKET_NAME] is precious. We let the Cargo Cult Diplomat stay."
+
+## Template: DIPLOMATIC_MISUNDERSTANDING
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [MISUNDERSTOOD_INTENT]
+**Patterns:**
+- "[YEAR]: The diplomat mistook our silence for [MISUNDERSTOOD_INTENT]. Tensions at [COLONY] are high."
+- "A terrible miscalculation at [COLONY]. The envoy interpreted our customs as [MISUNDERSTOOD_INTENT]. [YEAR]."
+
+## Template: DEAD_HAND_ACTIVATED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [TRIGGERING_EVENT]
+**Patterns:**
+- "[YEAR]: [TRIGGERING_EVENT] occurred. The Dead Hand engaged. [COLONY] braces for retaliation."
+- "We thought the failsafe was dormant. [TRIGGERING_EVENT] proved us wrong at [COLONY]. [YEAR]."
+- "[COLONY], [YEAR]: The automated revenge begins. The Dead Hand wakes after [TRIGGERING_EVENT]."
+
+## Template: DEAD_HAND_DISARMED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR]
+**Patterns:**
+- "[YEAR]: The countdown at [COLONY] was stopped. The Dead Hand is disarmed."
+- "Salvation for [COLONY]. We bypassed the Dead Hand protocols. [YEAR]."
+
+## Template: MONUMENT_DEFACED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [MONUMENT_NAME]
+**Patterns:**
+- "[YEAR]: The [MONUMENT_NAME] in [COLONY] was defaced overnight. The legacy is crumbling."
+- "Disrespect for the founders. [MONUMENT_NAME] bears the scars of protest at [COLONY]. [YEAR]."
+
+## Template: MONUMENT_DESTRUCTION
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [MONUMENT_NAME]
+**Patterns:**
+- "[YEAR]: The [MONUMENT_NAME] fell. [COLONY] cheered its destruction."
+- "Nothing remains of [MONUMENT_NAME] at [COLONY]. The slate is wiped clean. [YEAR]."
+
+## Template: PHANTOM_SIGNAL_DETECTED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SIGNAL_ORIGIN]
+**Patterns:**
+- "[YEAR]: The arrays at [COLONY] picked up a ghost transmission from [SIGNAL_ORIGIN]. We are not alone."
+- "A Phantom Signal from [SIGNAL_ORIGIN]. [COLONY] listens to the echoes. [YEAR]."
+
+## Template: EXPEDITION_LOST
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [DESTINATION]
+**Patterns:**
+- "[YEAR]: The scouting fleet from [COLONY] followed the signal to [DESTINATION]. They never returned."
+- "Lost in the void. [COLONY] mourns the expedition sent to [DESTINATION]. [YEAR]."
