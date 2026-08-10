@@ -31969,3 +31969,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Emergence:** You desperately need to activate your orbital defenses to stop a pirate raid. However, the defense grid is Tethered. You watch your colony burn for three in-game weeks while waiting for the automated approval stamp to physically travel back from your capital on the other side of the galaxy.
 
 **Tension:** Do you endure the crippling lag of a Tethered Bureaucracy to maintain high empire cohesion and prevent local corruption, or do you "Sever" the tethers, giving your colony instant reaction times but risking them declaring independence?
+
+## The Trojan Monument
+
+**Layer:** 3
+
+**Fantasy:** A gesture of galactic goodwill that slowly subverts the cultural foundation of the receiving empire.
+
+**Mechanic:** You can gift a massive, prestigious monument to a rival empire, boosting their local morale and your diplomatic standing. However, the monument secretly broadcasts subtle memetic propaganda, gradually shifting the local population's ethics and faction alignments to match your own over decades.
+
+**Emergence:** A xenophobic empire accepts your beautiful statue to celebrate a peace treaty. Fifty years later, that specific planet undergoes a peaceful revolution and petitions to join your empire because the statue made them love you.
+
+**Tension:** Do you accept a gorgeous, free morale-boosting structure from a rival, knowing it might be slowly brainwashing your citizens, or reject it and suffer a massive diplomatic penalty and local unhappiness?
+
+---
+
+## The Refugee Vanguard
+
+**Layer:** Cross-layer
+
+**Fantasy:** Using a humanitarian crisis as a weaponized demographic strike.
+
+**Mechanic:** When a planet is bombarded or destroyed, refugees flee in civilian ships (Layer 2) to nearby hospitable worlds. An aggressive empire can intentionally cause a crisis, then subtly redirect the resulting massive refugee fleet toward a rival's core world. The sudden influx of millions of starving Pops overwhelms local Layer 1 infrastructure, causing immediate famine, crime waves, and rebellion.
+
+**Emergence:** You try to cripple an enemy by sending billions of refugees to their capital. Instead of collapsing, the enemy empire successfully integrates them, turning your demographic weapon into a massive economic boom for them a decade later.
+
+**Tension:** Do you close your borders to refugees, suffering massive galactic condemnation and missing out on free population, or open your borders and risk your entire economy collapsing under the sudden strain?
+
+---
+
+## Predatory Logistics
+
+**Layer:** 2
+
+**Fantasy:** Achieving economic dominance not through production, but by monopolizing the lanes of survival.
+
+**Mechanic:** Instead of fighting a war, a wealthy empire can offer "free" logistics support to a struggling neighbor, using their massive cargo fleets to handle the neighbor's internal trade routes. Once the neighbor becomes completely dependent on this foreign fleet to feed their own planets, the wealthy empire suddenly starts charging extortionate rates or threatens to halt shipments entirely.
+
+**Emergence:** A tiny, resource-poor faction manages to subjugate a massive military superpower without firing a shot, simply because the superpower forgot how to transport its own food and the tiny faction controls all the freighters.
+
+**Tension:** Do you rely on cheap, highly efficient foreign shipping to boost your economy now, knowing you are handing them the keys to your survival, or build your own expensive, inefficient freighters to maintain true independence?
+
+---
