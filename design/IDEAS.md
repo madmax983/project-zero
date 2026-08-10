@@ -32051,3 +32051,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you ruthlessly modernize your colony, destroying the powerful but erratic echoes of the past, or keep wildly inefficient heritage buildings because they provide irreplaceable, localized psychological buffs to your workforce?
 
 ---
+## The Automation Paradox
+
+**Layer:** 1
+
+**Fantasy:** Building the perfect self-sustaining colony, only to watch the population rebel because their lives lack struggle and meaning.
+
+**Mechanic:** As you automate more Layer 1 jobs (e.g., using drones for farming, mining, and maintenance), Pops transition to a "Leisure" state. Initially, this boosts morale and generates culture. However, prolonged Leisure without meaningful work causes an "Ennui" debuff to stack. Eventually, bored Pops form a Luddite faction, intentionally sabotaging automated infrastructure to create emergencies so they feel useful again.
+
+**Emergence:** You finally achieve zero-labor resource generation, expecting a utopian golden age. Instead, your idle citizens blow up the primary fusion reactor just so they can heroically repair it and feel a sense of purpose.
+
+**Tension:** Do you artificially limit automation and force your citizens to work dangerous jobs just to keep them occupied, or fully automate and risk random, devastating sabotage from a bored utopia?
+
+---
+
+## The Cargo Cult Escort
+
+**Layer:** 2
+
+**Fantasy:** A powerful but erratic localized anomaly that protects your ships, as long as you feed its irrational demands.
+
+**Mechanic:** A swarm of ancient, hyper-advanced automated defense drones (from a fallen empire) patrols a specific hyperspace lane. They are neutral but have degraded logic cores. They will aggressively escort and protect your civilian trade ships from pirates, but only if the ships are carrying specific, seemingly random cargo (e.g., 500 units of low-quality consumer electronics, or exactly 42 units of live xenoflora). If the cargo doesn't match the current "demand," they destroy the ship.
+
+**Emergence:** Your most vital supply line is protected by an invincible armada of ancient drones, but you are forced to cripple your own economy producing massive amounts of useless plastic trinkets just to appease them and keep the trade lane open.
+
+**Tension:** Do you restructure your entire Layer 1 economy to produce junk to satisfy the insane demands of the drones, or abandon the safest hyperspace lane in the sector and brave pirate-infested space instead?
+
+---
+
+## The Generational Veto
+
+**Layer:** Cross-layer
+
+**Fantasy:** The frustrating reality that decisions made in the capital decades ago are legally binding on a frontier that has completely changed.
+
+**Mechanic:** When a colony is founded, it inherits the "Edicts" (laws, zoning regulations, building bans) active in the capital at that exact moment. These Edicts are hardcoded into the colony's founding charter. Decades later, if the capital changes its Edicts, the old colony retains the original ones. Changing a legacy colony's charter requires a massive expenditure of diplomatic power (Layer 3) or military force.
+
+**Emergence:** You urgently need to build a heavy munitions factory on a frontier world to repel an invasion. However, the world was founded 80 years ago during a brief pacifist political era in your capital. The colony's charter legally forbids weapons manufacturing, and the local bureaucracy physically locks out the construction drones. The planet is overrun because of paperwork filed three generations ago.
+
+**Tension:** Do you carefully curate your empire-wide edicts every time you launch a colony ship, knowing you are locking in their legal structure forever, or do you ruthlessly rewrite old charters through martial law, causing massive rebellions?
+
+---
