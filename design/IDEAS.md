@@ -32011,3 +32011,43 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you rely on cheap, highly efficient foreign shipping to boost your economy now, knowing you are handing them the keys to your survival, or build your own expensive, inefficient freighters to maintain true independence?
 
 ---
+
+## The Weight of Translation
+
+**Layer:** 1
+
+**Fantasy:** A dedicated caste of linguists slowly losing their minds as they try to translate a truly alien concept, becoming isolated from their own species in the process.
+
+**Mechanic:** Translating complex xenolinguistic artifacts or diplomatic missives requires dedicating Pops to a "Translation Hub". These Pops generate massive amounts of "Knowledge", but suffer severe "Isolation" and "Melancholy" as they begin to think in concepts their peers cannot understand. They slowly lose their original faction alignment and form a "Xeno-Linguist" faction with completely alien demands (e.g., demanding structures be built in non-euclidean patterns).
+
+**Emergence:** You task your brightest minds to translate a peace treaty from a bizarre alien empire. The translation succeeds, but the linguists are so fundamentally changed by the language that they launch a strike, demanding the colony rename all streets using unpronounceable xeno-phonetics, effectively paralyzing your core world's logistics until you comply.
+
+**Tension:** Do you risk losing your most brilliant minds to madness and alien ideologies to unlock crucial diplomatic or technological secrets, or remain ignorant but culturally unified?
+
+---
+## Micro-Debris Avalanches
+
+**Layer:** 2
+
+**Fantasy:** The terrifying realization that a century of careless orbital littering is about to culminate in a self-sustaining storm of shrapnel that will shred your most vital trade route.
+
+**Mechanic:** Every ship destroyed in combat, and every orbital construction project, generates tiny, invisible "Micro-Debris" in that specific planetary orbit. This debris doesn't cause immediate damage, but over decades, if it reaches a critical mass, a minor collision can trigger an "Avalanche". A localized Kessler Syndrome event occurs, temporarily shutting down all Layer 2 movement in that node and violently peppering the Layer 1 colony below with high-velocity shrapnel, damaging buildings.
+
+**Emergence:** Your core manufacturing world has enjoyed 300 years of peace and prosperity. Suddenly, the accumulated micro-debris from centuries of peaceful civilian orbital construction triggers an Avalanche. Your entire defensive fleet is shredded while sitting in drydock, and the resulting shrapnel rain destroys your central power grid just as a pirate fleet jumps into the system.
+
+**Tension:** Do you invest heavily in slow, expensive orbital sweepers to constantly clean up after your booming economy, or ignore the invisible buildup and pray the avalanche doesn't happen during a crisis?
+
+---
+## The Echo of the Architects
+
+**Layer:** 1
+
+**Fantasy:** Living in a structure that physically remembers the people who built it, for better or worse.
+
+**Mechanic:** Buildings that survive for over a century begin to develop "Architectural Echoes" based on the traits of the Pops who originally constructed them. If built by rebellious Pops, the building might occasionally emit frequencies that increase unrest. If built by deeply loyal, hardworking Pops, the building passively boosts the efficiency and morale of anyone who works inside it.
+
+**Emergence:** You try to demolish an incredibly inefficient, 200-year-old factory to make room for a modern one. However, the factory was built by the colony's revered founders, and it radiates a powerful aura of "Nostalgia and Loyalty". Demolishing it causes a colony-wide morale crash and triggers a violent riot from the "Old Guard" faction who revere the ghosts in the walls.
+
+**Tension:** Do you ruthlessly modernize your colony, destroying the powerful but erratic echoes of the past, or keep wildly inefficient heritage buildings because they provide irreplaceable, localized psychological buffs to your workforce?
+
+---
