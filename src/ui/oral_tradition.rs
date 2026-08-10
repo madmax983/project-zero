@@ -52,12 +52,19 @@ pub fn render_oral_tradition(frame: &mut Frame, area: Rect, world: &World) {
                     StoryGenre::Trivial => (Color::DarkGray, "📝 Trivial"),
                 };
 
+                let snippet = if story.text.chars().count() > 50 {
+                    let truncated: String = story.text.chars().take(47).collect();
+                    format!("{}...", truncated)
+                } else {
+                    story.text.clone()
+                };
+
                 Row::new(vec![
                     Cell::from(genre_text).style(Style::default().fg(genre_color)),
                     Cell::from(story.historical_date.to_string())
                         .style(Style::default().fg(Color::Cyan)),
                     Cell::from(story.mutations.to_string()).style(Style::default().fg(Color::Cyan)),
-                    Cell::from(story.text.clone()).style(Style::default().fg(Color::White)),
+                    Cell::from(snippet).style(Style::default().fg(Color::White)),
                 ])
             })
             .collect()

@@ -297,8 +297,8 @@ mod app {
                     StoryGenre::Trivial => Color::Gray,
                 };
 
-                let snippet = if story.text.chars().count() > 30 {
-                    let truncated: String = story.text.chars().take(27).collect();
+                let snippet = if story.text.chars().count() > 50 {
+                    let truncated: String = story.text.chars().take(47).collect();
                     format!("{}...", truncated)
                 } else {
                     story.text.clone()
