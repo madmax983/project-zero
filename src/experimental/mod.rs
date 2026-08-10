@@ -266,4 +266,6 @@ pub mod grave_robbery;
 pub mod friendly_remittance;
 
 #[cfg(feature = "nova")]
+pub mod flower_bed_inspiration;
+#[cfg(feature = "nova")]
 pub mod night_owl_smuggling;

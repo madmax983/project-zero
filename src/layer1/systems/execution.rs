@@ -231,9 +231,8 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::physics::gravity_plating::apply_zero_g_movement_system.after(
                 crate::layer1::physics::gravity_plating::monitor_gravity_generator_power_system,
             ),
-            crate::layer1::physics::gravity_plating::apply_drifting_movement_system.after(
-                crate::layer1::physics::gravity_plating::apply_zero_g_movement_system,
-            ),
+            crate::layer1::physics::gravity_plating::apply_drifting_movement_system
+                .after(crate::layer1::physics::gravity_plating::apply_zero_g_movement_system),
         )
             .in_set(Layer1SystemSet::Execution),
     );

@@ -322,3 +322,8 @@
 **Concept:** Added `night_owl_smuggling_system` in `src/experimental/night_owl_smuggling.rs`. Connects `Trait::NightOwl`, `TimeOfDay::Night`, and the `SmugglersCove` from the black market system. Pops with the NightOwl trait passively locate and extract small amounts of `credits` or rare resources from Smugglers Coves when active at night, representing them doing shady deals while the colony sleeps.
 **Fate:** Pending
 **Lesson:** Connects a temporal trait (`NightOwl`) with an underground economic entity (`SmugglersCove`), giving a mechanical edge to a psychological trait that normally just affects mood.
+
+## [Flower Bed Inspiration]
+**Concept:** Added `flower_bed_inspiration_system` in `src/experimental/flower_bed_inspiration.rs`. Connects `Trait::Artistic` with `BuildingType::FlowerBed` and `ColonyResources::knowledge`. Artistic pops standing near a Flower Bed passively regenerate `leisure` (drawing inspiration from the beauty) and slowly generate `knowledge` for the colony each tick. However, this hyper-focus drains their `rest` slightly.
+**Fate:** Pending
+**Lesson:** Connects an aesthetic/vanity building (FlowerBed) directly to the colony economy (Knowledge) for specialized pops. It rewards players for creating dedicated gardens for their artists, turning beauty into a functional resource engine.

@@ -46,7 +46,12 @@ fn test_gravity_plating_failure_integration() {
         .spawn((
             Pop,
             MovementType::Walking,
-            scale::layer1::physics::gravity_plating::Velocity { x: 0.0, y: 0.0, accum_x: 0.0, accum_y: 0.0 },
+            scale::layer1::physics::gravity_plating::Velocity {
+                x: 0.0,
+                y: 0.0,
+                accum_x: 0.0,
+                accum_y: 0.0,
+            },
             CurrentZone { zone },
             TraitList { traits: vec![] },
         ))
