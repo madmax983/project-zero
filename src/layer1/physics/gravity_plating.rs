@@ -96,8 +96,7 @@ pub enum MovementType {
 /// use scale::layer1::physics::gravity_plating::Velocity;
 /// let velocity = Velocity { x: 0.5, y: -0.2, accum_x: 0.0, accum_y: 0.0 };
 /// ```
-#[derive(Component)]
-#[derive(Default)]
+#[derive(Component, Default)]
 pub struct Velocity {
     pub x: f32,
     pub y: f32,
@@ -316,7 +315,12 @@ mod tests {
             .spawn((
                 Pop,
                 MovementType::Walking,
-                Velocity { x: 0.0, y: 0.0, accum_x: 0.0, accum_y: 0.0 },
+                Velocity {
+                    x: 0.0,
+                    y: 0.0,
+                    accum_x: 0.0,
+                    accum_y: 0.0,
+                },
                 CurrentZone { zone },
                 TraitList { traits: vec![] },
             ))
@@ -328,7 +332,12 @@ mod tests {
             .spawn((
                 Pop,
                 MovementType::Walking,
-                Velocity { x: 0.0, y: 0.0, accum_x: 0.0, accum_y: 0.0 },
+                Velocity {
+                    x: 0.0,
+                    y: 0.0,
+                    accum_x: 0.0,
+                    accum_y: 0.0,
+                },
                 CurrentZone { zone },
                 TraitList {
                     traits: vec!["ZeroGTraining".to_string()],
@@ -528,7 +537,11 @@ mod gravity_plate_tests {
 }
 
 pub fn apply_drifting_movement_system(
-    mut query: Query<(&mut crate::layer1::core::map::GridPosition, &mut Velocity, &MovementType)>,
+    mut query: Query<(
+        &mut crate::layer1::core::map::GridPosition,
+        &mut Velocity,
+        &MovementType,
+    )>,
     terrain: Res<crate::layer1::terrain::TerrainGrid>,
 ) {
     for (mut pos, mut vel, move_type) in query.iter_mut() {
@@ -580,9 +593,9 @@ pub fn apply_drifting_movement_system(
 #[cfg(test)]
 mod drifting_tests {
     use super::*;
-    use bevy_app::prelude::*;
     use crate::layer1::core::map::GridPosition;
     use crate::layer1::terrain::TerrainType;
+    use bevy_app::prelude::*;
 
     #[test]
     fn test_drifting_pops_move_in_straight_line() {
@@ -603,7 +616,12 @@ mod drifting_tests {
             .spawn((
                 Pop,
                 MovementType::Drifting,
-                Velocity { x: 2.5, y: 0.0, accum_x: 0.0, accum_y: 0.0 },
+                Velocity {
+                    x: 2.5,
+                    y: 0.0,
+                    accum_x: 0.0,
+                    accum_y: 0.0,
+                },
                 GridPosition { x: 0, y: 0 },
             ))
             .id();
@@ -625,9 +643,9 @@ mod drifting_tests {
 #[cfg(test)]
 mod drifting_tests_expanded {
     use super::*;
-    use bevy_app::prelude::*;
     use crate::layer1::core::map::GridPosition;
     use crate::layer1::terrain::TerrainType;
+    use bevy_app::prelude::*;
 
     #[test]
     fn test_drifting_pops_move_in_all_directions() {
@@ -646,28 +664,52 @@ mod drifting_tests_expanded {
         app.world_mut().insert_resource(terrain);
 
         // Spawn pop moving left (negative X)
-        let pop_left = app.world_mut().spawn((
-            Pop,
-            MovementType::Drifting,
-            Velocity { x: -2.5, y: 0.0, accum_x: 0.0, accum_y: 0.0 },
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let pop_left = app
+            .world_mut()
+            .spawn((
+                Pop,
+                MovementType::Drifting,
+                Velocity {
+                    x: -2.5,
+                    y: 0.0,
+                    accum_x: 0.0,
+                    accum_y: 0.0,
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
         // Spawn pop moving down (negative Y)
-        let pop_down = app.world_mut().spawn((
-            Pop,
-            MovementType::Drifting,
-            Velocity { x: 0.0, y: -2.5, accum_x: 0.0, accum_y: 0.0 },
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let pop_down = app
+            .world_mut()
+            .spawn((
+                Pop,
+                MovementType::Drifting,
+                Velocity {
+                    x: 0.0,
+                    y: -2.5,
+                    accum_x: 0.0,
+                    accum_y: 0.0,
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
         // Spawn pop moving diagonally
-        let pop_diag = app.world_mut().spawn((
-            Pop,
-            MovementType::Drifting,
-            Velocity { x: 1.5, y: 1.5, accum_x: 0.0, accum_y: 0.0 },
-            GridPosition { x: 5, y: 5 },
-        )).id();
+        let pop_diag = app
+            .world_mut()
+            .spawn((
+                Pop,
+                MovementType::Drifting,
+                Velocity {
+                    x: 1.5,
+                    y: 1.5,
+                    accum_x: 0.0,
+                    accum_y: 0.0,
+                },
+                GridPosition { x: 5, y: 5 },
+            ))
+            .id();
 
         app.update();
 
