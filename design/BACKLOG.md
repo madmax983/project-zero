@@ -632,3 +632,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1355` The Solitude Subroutine — `specs/1355-solitude-subroutine.md`
 - [ ] `1356` Echo Casters — `specs/1356-echo-casters.md`
 - [ ] `1357` Hard-Light Architecture — `specs/1357-hard-light-architecture.md`
+- [ ] `1358` Micro-Debris Avalanches — `specs/1358-micro-debris-avalanches.md`
+- [ ] `1359` The Echo of the Architects — `specs/1359-the-echo-of-the-architects.md`
+- [ ] `1360` The Automation Paradox — `specs/1360-the-automation-paradox.md`

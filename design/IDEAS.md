@@ -32025,7 +32025,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you risk losing your most brilliant minds to madness and alien ideologies to unlock crucial diplomatic or technological secrets, or remain ignorant but culturally unified?
 
 ---
-## Micro-Debris Avalanches
+## Micro-Debris Avalanches [SPECCED]
 
 **Layer:** 2
 
@@ -32038,7 +32038,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you invest heavily in slow, expensive orbital sweepers to constantly clean up after your booming economy, or ignore the invisible buildup and pray the avalanche doesn't happen during a crisis?
 
 ---
-## The Echo of the Architects
+## The Echo of the Architects [SPECCED]
 
 **Layer:** 1
 
@@ -32051,7 +32051,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you ruthlessly modernize your colony, destroying the powerful but erratic echoes of the past, or keep wildly inefficient heritage buildings because they provide irreplaceable, localized psychological buffs to your workforce?
 
 ---
-## The Automation Paradox
+## The Automation Paradox [SPECCED]
 
 **Layer:** 1
 
