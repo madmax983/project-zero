@@ -14,3 +14,6 @@
 **Testing Intellectual Property Licensing Branch**
 **Learning:** `process_licensing_fees_system` checks if a licensee has enough credits to pay for IP before performing the deduction/transfer logic.
 **Action:** Always write a test for negative/insufficient condition branches when a system's effect is gated by resource pools.
+**[Early Return Coverage in Resources]**
+**Learning:** When a system checks resource pools (like `ColonyResources` or `ColonyPrices`) and early returns or aborts if the condition isn't met, testing these paths ensures the component state isn't incorrectly modified by logic later in the block.
+**Action:** Use specific initialization values for injected resources in unit tests to trigger and cover these edge-case failure pathways (e.g. `food: 0.5` instead of default).

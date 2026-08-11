@@ -183,6 +183,59 @@ mod tests {
         let job = AssignmentType::FarmWorker;
         assert!(get_wage_for_job(job) > 0.0);
     }
+
+    #[test]
+    fn test_pay_wage_stateless_faction_returns_early() {
+        let mut world = World::new();
+        let pop = world
+            .spawn((
+                Pop,
+                Wallet { credits: 10.0 },
+                crate::layer1::social::factions::FactionMember {
+                    faction_id: Some(crate::layer1::social::factions::FactionId::Stateless),
+                },
+            ))
+            .id();
+
+        pay_wage(&mut world, pop, 5.0);
+
+        // Should not have increased due to early return
+        let wallet = world.get::<Wallet>(pop).unwrap();
+        assert_eq!(wallet.credits, 10.0);
+    }
+
+    #[test]
+    fn test_consume_food_with_payment_system_low_food_returns_early() {
+        let mut world = World::new();
+        let pop = world
+            .spawn((
+                Pop,
+                Wallet { credits: 10.0 },
+                Needs {
+                    hunger: 0.1, // Starving
+                    ..Default::default()
+                },
+            ))
+            .id();
+
+        world.insert_resource(ColonyPrices {
+            food_price: 2.0,
+            ..Default::default()
+        });
+        world.insert_resource(ColonyResources {
+            food: 0.5, // Less than 1.0!
+            ..Default::default()
+        });
+
+        // System should early return
+        consume_food_with_payment_system(&mut world);
+
+        let wallet = world.get::<Wallet>(pop).unwrap();
+        assert_eq!(wallet.credits, 10.0, "Should not deduct credits");
+
+        let needs = world.get::<Needs>(pop).unwrap();
+        assert_eq!(needs.hunger, 0.1, "Should NOT have eaten");
+    }
 }
 
 pub mod apex_diet;
