@@ -1945,3 +1945,10 @@
 - **Glue added:** Added `starvation_atrocity_bridge` to listen for starvation deaths and increase the atrocity score.
 - **Schedule:** Registered in `src/simulation.rs`.
 - **Tests:** `tests/integration/bureau_of_regrets_bridge.rs`
+
+### INT-1202: Bureaucratic Black Holes -> Chronicle
+- **Date:** 2026-11-01
+- **Systems connected:** `Added<BureaucraticBlackHole>` -> `bureaucratic_black_hole_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `bureaucratic_black_hole_chronicle_bridge` in `src/layer1/core/integration.rs` to generate Chronicle records when a Bureaucratic Black Hole forms.
+- **Schedule:** Registered the system in `src/layer1/systems/observation.rs`.
+- **Tests:** Added tests in `tests/integration/bureaucratic_black_hole_bridge.rs`.

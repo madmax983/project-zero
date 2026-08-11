@@ -3451,3 +3451,19 @@ pub fn starvation_atrocity_bridge(
         }
     }
 }
+pub fn bureaucratic_black_hole_chronicle_bridge(
+    query: bevy_ecs::system::Query<
+        (),
+        bevy_ecs::query::Added<crate::layer1::administration::bureaucratic_black_hole::BureaucraticBlackHole>,
+    >,
+    mut chronicle_events: bevy_ecs::event::EventWriter<
+        crate::layer1::core::chronicle::AddChronicleEvent,
+    >,
+) {
+    for _ in query.iter() {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            text: "A Bureaucratic Black Hole has formed! Admin density has reached critical mass, and items will now be lost in paperwork.".to_string(),
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
+        });
+    }
+}

@@ -529,6 +529,7 @@ pub fn register(schedule: &mut Schedule) {
     schedule.add_systems(
         (
             crate::layer1::social::echoes::echo_spawn_system,
+            crate::layer1::core::integration::bureaucratic_black_hole_chronicle_bridge,
             crate::layer1::social::echoes::echo_aura_system
                 .after(crate::layer1::social::echoes::echo_spawn_system),
             crate::layer1::social::echoes::echo_despawn_system
