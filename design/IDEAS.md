@@ -32092,3 +32092,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you carefully curate your empire-wide edicts every time you launch a colony ship, knowing you are locking in their legal structure forever, or do you ruthlessly rewrite old charters through martial law, causing massive rebellions?
 
 ---
+
+## The Cult of the Core
+
+**Layer:** 1
+
+**Fantasy:** A religious faction forms around the geothermal heart of your colony, treating maintenance as holy ritual.
+
+**Mechanic:** Pops assigned to deep core maintenance over long periods develop a "Core Worshipper" trait. They gain massive efficiency bonuses working near heat, but refuse to work on the surface and demand tribute (resources) from surface-dwellers to keep the core stable.
+
+**Emergence:** You try to modernize the power grid, but the Cult views this as heresy and threatens to deliberately overload the reactor unless you build them a lavish subterranean temple.
+
+**Tension:** Do you rely on their insane efficiency to power your colony, risking a catastrophic meltdown if they rebel, or violently purge them and lose your best engineers?
+
+---
+
+## Ghost Ships of the First Fleet
+
+**Layer:** 2
+
+**Fantasy:** Early, lost colony ships periodically re-emerge from subspace, carrying archaic Pops and obsolete technology.
+
+**Mechanic:** Century-old generational ships occasionally arrive in your systems. Their inhabitants expect to settle on your core worlds, but their biology, culture, and skills are deeply archaic. They bring lost, stable gene-seeds but also carry diseases or ideologies long eradicated.
+
+**Emergence:** A ghost ship arrives demanding to settle on your capital, citing a 300-year-old charter. They bring a rare, extinct crop that could solve a famine, but they also carry a virulent plague that your modern immune systems forgot how to fight.
+
+**Tension:** Do you welcome them to reclaim lost heritage (and genetics) at the risk of devastating your modern society, or turn your own ancestors away to drift in the void?
+
+---
+
+## The Bureaucracy of Distance
+
+**Layer:** Cross-layer
+
+**Fantasy:** The larger your empire grows, the longer it takes for your commands to reach the fringes, resulting in frontier worlds improvising.
+
+**Mechanic:** Orders issued from Layer 3 (Galaxy) or Layer 2 (System) to distant Layer 1 colonies have a "Propagation Delay" based on distance and communication tech. During this delay, the colony AI acts autonomously based on local conditions and the ruling faction's ideology.
+
+**Emergence:** You order a frontier world to build defensive turrets because a pirate fleet is approaching. By the time the order arrives three months later, the pacifist local governor has already negotiated a tribute treaty with the pirates, and they refuse to build the turrets, wasting the resources you sent.
+
+**Tension:** Do you micromanage everything slowly, or grant vast autonomy to frontier governors and hope their emergent decisions align with your grand strategy?
+
+---
