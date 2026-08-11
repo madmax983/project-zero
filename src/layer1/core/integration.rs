@@ -3454,7 +3454,9 @@ pub fn starvation_atrocity_bridge(
 pub fn bureaucratic_black_hole_chronicle_bridge(
     query: bevy_ecs::system::Query<
         (),
-        bevy_ecs::query::Added<crate::layer1::administration::bureaucratic_black_hole::BureaucraticBlackHole>,
+        bevy_ecs::query::Added<
+            crate::layer1::administration::bureaucratic_black_hole::BureaucraticBlackHole,
+        >,
     >,
     mut chronicle_events: bevy_ecs::event::EventWriter<
         crate::layer1::core::chronicle::AddChronicleEvent,

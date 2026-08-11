@@ -670,6 +670,7 @@ fn register_simulation_core_systems(schedule: &mut Schedule) {
         crate::layer2::trade::phantom_limb_logistics::phantom_limb_logistics_system,
         crate::layer2::trade::phantom_limb_logistics::intercept_phantom_drop_system,
         crate::layer2::integration::phantom_limb_chronicle_bridge,
+        crate::layer2::integration::phantom_trade_routes_chronicle_bridge,
     ));
 }
 

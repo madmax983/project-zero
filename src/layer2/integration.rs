@@ -1238,3 +1238,19 @@ pub fn orbital_junkyard_bridge_system(
         rain_chance.0 = (total_debris * 0.1).clamp(0.0, 1.0);
     }
 }
+
+pub fn phantom_trade_routes_chronicle_bridge(
+    mut events: bevy_ecs::event::EventReader<
+        crate::layer2::trade::phantom_trade_routes::FixPhantomRouteEvent,
+    >,
+    mut chronicle_events: bevy_ecs::event::EventWriter<
+        crate::layer1::core::chronicle::AddChronicleEvent,
+    >,
+) {
+    for _ in events.read() {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
+            text: "The realization of Pointless Labor shattered their morale.".to_string(),
+        });
+    }
+}
