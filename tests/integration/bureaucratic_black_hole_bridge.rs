@@ -1,6 +1,6 @@
 use bevy::prelude::*;
-use scale::layer1::core::chronicle::AddChronicleEvent;
 use scale::layer1::administration::bureaucratic_black_hole::BureaucraticBlackHole;
+use scale::layer1::core::chronicle::AddChronicleEvent;
 use scale::layer1::core::integration::bureaucratic_black_hole_chronicle_bridge;
 
 #[test]

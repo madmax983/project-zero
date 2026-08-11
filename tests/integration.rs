@@ -443,10 +443,10 @@ mod ransom_broker_bridge;
 #[path = "integration/rust_lung_bridge.rs"]
 mod rust_lung_bridge;
 
-#[path = "integration/sunk_cost_integration.rs"]
-mod sunk_cost_integration;
 #[path = "integration/bureaucratic_black_hole_bridge.rs"]
 mod bureaucratic_black_hole_bridge;
+#[path = "integration/sunk_cost_integration.rs"]
+mod sunk_cost_integration;
 
 #[path = "integration/crustal_tides_bridge.rs"]
 mod crustal_tides_bridge;
