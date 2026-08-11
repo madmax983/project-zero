@@ -10,7 +10,7 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `275` Architectural Sabotage — `specs/275-architectural-sabotage.md`
 - [ ] `276` The Flesh Famine — `specs/276-the-flesh-famine.md`
 - [ ] `277` Orbital Megastructure Deorbiting — `specs/277-orbital-megastructure-deorbiting.md`
-- [ ] `288` The Memory Black Market — `specs/288-memory-black-market.md`
+
 - [ ] `290` The Phantom Shift — `specs/290-phantom-shift.md`
 - [ ] `298` The Nostalgia Engine — `specs/298-nostalgia-engine.md`
 - [ ] `305` The Empathy Broadcast — `specs/305-empathy-broadcast.md`
