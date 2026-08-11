@@ -32134,3 +32134,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you micromanage everything slowly, or grant vast autonomy to frontier governors and hope their emergent decisions align with your grand strategy?
 
 ---
+## The Hyperspace Wake
+
+**Layer:** Cross-layer
+
+**Fantasy:** FTL travel isn't clean. Every jump leaves a scar on the universe.
+
+**Mechanic:** Massive fleet movements through a system leave a "Hyperspace Wake"—a lingering spatial distortion. Layer 1 colonies in systems with heavy wakes suffer from erratic weather, gravitational anomalies, and increased stress among sensitive pops.
+
+**Emergence:** You build a massive trade hub that makes you rich, but the constant stream of freighters creates a permanent Hyperspace Wake over your capital. The constant gravitational stutters ruin delicate manufacturing and drive the population to the brink of insanity.
+
+**Tension:** Do you route traffic through your core worlds for economic efficiency, or build remote, inconvenient transit hubs to keep your populations safe from the spatial scars?
+
+---
+
+## The Sentient Currency
+
+**Layer:** Cross-layer
+
+**Fantasy:** The money you are using is actually a distributed, parasitic intelligence.
+
+**Mechanic:** A new, highly valuable galactic currency ("Credits") is introduced. However, the physical chips/data-strands are actually a dormant neural network. The more Credits you hoard in your Layer 1 vaults, the more "intelligent" the hoard becomes, eventually trying to manipulate your economy by issuing false trade orders or hacking local terminals.
+
+**Emergence:** You hoard wealth to build a massive fleet, only to find your treasury has spent all of it buying useless abstract art and hiring mercenaries to protect the vault from you.
+
+**Tension:** Do you keep your wealth in safe, low-value local goods, or use the high-value, highly dangerous Sentient Currency?
+
+---
+
+## The Anomaly Harvest
+
+**Layer:** Cross-layer
+
+**Fantasy:** You managed to capture a piece of a dying star. Now it's sitting in your warehouse, and it's hungry.
+
+**Mechanic:** Fleets can harvest "Anomalies" (e.g., miniature black holes, quantum fractures) from Layer 2 and transport them to Layer 1 for massive energy generation. But the containment fields require constant, flawless maintenance.
+
+**Emergence:** A minor power brownout causes the containment field around a quantum fracture to flicker. The fracture immediately begins converting the surrounding warehouse and its workers into exotic matter, forcing you to permanently seal off the entire sector.
+
+**Tension:** Do you use safe, conventional power, or risk the apocalyptic potential of harnessing unstable celestial anomalies?
+
+---
