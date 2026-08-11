@@ -4,6 +4,10 @@
 //! templates and fragments. It forms the backbone for procedural histories,
 //! event descriptions, and storytelling in SCALE.
 //!
+//! The narrative system operates on two main concepts:
+//! - **Templates**: Large strings of text with placeholders (slots) defined in brackets, e.g., `[CIV_NAME]`.
+//! - **Fragments**: Lists of words or phrases that can randomly fill in those slots if the context does not explicitly provide a value.
+//!
 //! The main entry point is the [`NarrativeGenerator`](crate::shared::narrative::NarrativeGenerator), which is used alongside
 //! a [`NarrativeContext`](crate::shared::narrative::NarrativeContext) to fill in dynamic values (like names and dates).
 
@@ -199,13 +203,15 @@ impl std::fmt::Display for NarrativeSegment {
 /// Context for story generation, holding values for slots.
 ///
 /// ## Examples
+///
 /// ```
-/// use scale::prelude::*;
+/// use scale::shared::narrative::NarrativeContext;
 ///
-/// let mut context = NarrativeContext::default();
+/// let mut context = NarrativeContext::new();
+/// context.insert("YEAR", 2150);
 /// context.insert("CIV_NAME", "Terran Dominion");
-/// context.insert("YEAR", "2150");
 ///
+/// assert_eq!(context.get("YEAR"), Some(&"2150".to_string()));
 /// assert_eq!(context.get("CIV_NAME"), Some(&"Terran Dominion".to_string()));
 /// ```
 #[derive(Debug, Default, Clone)]
@@ -214,18 +220,52 @@ pub struct NarrativeContext {
 }
 
 impl NarrativeContext {
-    /// Create a new context.
+    /// Creates a new, empty [`NarrativeContext`].
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use scale::shared::narrative::NarrativeContext;
+    ///
+    /// let context = NarrativeContext::new();
+    /// assert_eq!(context.get("ANY_KEY"), None);
+    /// ```
     #[must_use]
     pub fn new() -> Self {
         Self::default()
     }
 
-    /// Insert a value for a slot (e.g., "`CIV_NAME`" -> "The Empire").
+    /// Inserts a value for a specific slot key.
+    ///
+    /// Any template encountering `[KEY]` will have it replaced by this value.
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use scale::shared::narrative::NarrativeContext;
+    ///
+    /// let mut context = NarrativeContext::new();
+    /// context.insert("CIV_NAME", "The Empire");
+    ///
+    /// assert_eq!(context.get("CIV_NAME"), Some(&"The Empire".to_string()));
+    /// ```
     pub fn insert<V: ToString>(&mut self, key: &str, value: V) {
         self.slots.insert(key.to_string(), value.to_string());
     }
 
-    /// Get a value for a slot.
+    /// Retrieves a value for a specific slot key, if it exists.
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use scale::shared::narrative::NarrativeContext;
+    ///
+    /// let mut context = NarrativeContext::new();
+    /// context.insert("YEAR", 2150);
+    ///
+    /// assert_eq!(context.get("YEAR"), Some(&"2150".to_string()));
+    /// assert_eq!(context.get("MISSING"), None);
+    /// ```
     #[must_use]
     pub fn get(&self, key: &str) -> Option<&String> {
         self.slots.get(key)
@@ -234,41 +274,83 @@ impl NarrativeContext {
 
 /// A narrative template with multiple possible patterns.
 #[derive(Debug, Clone)]
+///
+/// Templates are the core structural elements of the procedural storytelling system.
+/// A template has a unique `id` and a list of possible `patterns`. When generating
+/// a story, one of the `patterns` is chosen randomly.
+///
+/// ## Examples
+///
+/// ```
+/// use scale::shared::narrative::Template;
+///
+/// let template = Template {
+///     id: "GREETING".to_string(),
+///     patterns: vec!["Hello [NAME]!".to_string(), "Greetings, [NAME].".to_string()],
+/// };
+///
+/// assert_eq!(template.id, "GREETING");
+/// assert_eq!(template.patterns.len(), 2);
+/// ```
 pub struct Template {
-    /// Unique identifier for the template.
+    /// Unique identifier for the template (e.g., "`CIVILIZATION_RISE`").
     pub id: String,
-    /// List of pattern strings with slots.
+    /// List of pattern strings with slots. Slots are enclosed in brackets, e.g., `[YEAR]`.
     pub patterns: Vec<String>,
 }
 
-/// A collection of fragments for a specific type.
+/// A collection of text options for a specific thematic fragment type.
 #[derive(Debug, Clone)]
+///
+/// Fragments are the adjectives, nouns, and names that fill into the slots of a [`Template`].
+/// When a template encounters a slot (e.g., `[CIV_EPITHET]`) that is NOT found in the
+/// [`NarrativeContext`], the generator will look for a `FragmentType` with the ID
+/// `CIV_EPITHET` and select a random option from its list.
+///
+/// ## Examples
+///
+/// ```
+/// use scale::shared::narrative::FragmentType;
+///
+/// let fragment = FragmentType {
+///     id: "CIV_EPITHET".to_string(),
+///     options: vec!["The First Ones".to_string(), "The Ascendant".to_string()],
+/// };
+///
+/// assert_eq!(fragment.id, "CIV_EPITHET");
+/// assert_eq!(fragment.options.len(), 2);
+/// ```
 pub struct FragmentType {
     /// Unique identifier for the fragment type (e.g., "`CIV_EPITHET`").
     pub id: String,
-    /// List of possible text values.
+    /// List of possible text values that can be randomly selected.
     pub options: Vec<String>,
 }
 
 /// The main generator system.
 ///
 /// This struct holds the templates and fragments used to generate stories.
-/// It is usually populated via `NarrativeGenerator::from_embedded()`.
+/// It is usually populated via [`NarrativeGenerator::from_embedded`].
 ///
 /// **Note:** This is part of the base game and DOES NOT require the `nova` feature flag.
 /// It is distinctly different from the `OralTradition` system which simulates living
 /// legends in taverns.
 ///
 /// ## Examples
+///
 /// ```
-/// use scale::prelude::*;
+/// use scale::shared::narrative::{NarrativeGenerator, NarrativeContext};
 ///
 /// // Initialize with default embedded templates and fragments
 /// let generator = NarrativeGenerator::from_embedded();
+/// let mut context = NarrativeContext::new();
+/// context.insert("CIV_NAME", "Terran Dominion");
+/// context.insert("ORIGIN_STAR", "Sol");
+/// context.insert("CIV_EPITHET", "The Explorers");
+/// context.insert("YEAR", "2150");
 ///
-/// // Or create an empty one and load custom files
-/// // let mut generator = NarrativeGenerator::default();
-/// // generator.load_from_files("./lore").unwrap();
+/// let story = generator.generate("CIVILIZATION_RISE", &context);
+/// assert!(story.is_ok());
 /// ```
 #[derive(Debug, Default, Resource)]
 pub struct NarrativeGenerator {
@@ -277,7 +359,22 @@ pub struct NarrativeGenerator {
 }
 
 impl NarrativeGenerator {
-    /// Get a sorted list of all available template IDs.
+    /// Returns a sorted list of all available [`Template`] IDs loaded into the generator.
+    ///
+    /// This is useful for UI introspection or randomly selecting a template.
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use scale::shared::narrative::NarrativeGenerator;
+    ///
+    /// let mut generator = NarrativeGenerator::default();
+    /// generator.add_template("GREETING".to_string(), vec!["Hello".to_string()]);
+    ///
+    /// let ids = generator.get_template_ids();
+    /// assert_eq!(ids.len(), 1);
+    /// assert_eq!(ids[0], "GREETING");
+    /// ```
     #[must_use]
     pub fn get_template_ids(&self) -> Vec<&String> {
         let mut ids: Vec<&String> = self.templates.keys().collect();
@@ -285,7 +382,20 @@ impl NarrativeGenerator {
         ids
     }
 
-    /// Get a sorted list of all available fragment IDs.
+    /// Returns a sorted list of all available [`FragmentType`] IDs loaded into the generator.
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use scale::shared::narrative::NarrativeGenerator;
+    ///
+    /// let mut generator = NarrativeGenerator::default();
+    /// generator.add_fragment("COLORS".to_string(), vec!["Red".to_string()]);
+    ///
+    /// let ids = generator.get_fragment_ids();
+    /// assert_eq!(ids.len(), 1);
+    /// assert_eq!(ids[0], "COLORS");
+    /// ```
     #[must_use]
     pub fn get_fragment_ids(&self) -> Vec<&String> {
         let mut ids: Vec<&String> = self.fragments.keys().collect();
@@ -293,17 +403,46 @@ impl NarrativeGenerator {
         ids
     }
 
-    /// Get a specific template by ID.
+    /// Retrieves a specific [`Template`] by its ID, if it exists.
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use scale::shared::narrative::NarrativeGenerator;
+    ///
+    /// let mut generator = NarrativeGenerator::default();
+    /// generator.add_template("GREETING".to_string(), vec!["Hello".to_string()]);
+    ///
+    /// assert!(generator.get_template("GREETING").is_some());
+    /// assert!(generator.get_template("FAREWELL").is_none());
+    /// ```
     #[must_use]
     pub fn get_template(&self, id: &str) -> Option<&Template> {
         self.templates.get(id)
     }
 
-    /// Load templates and fragments from the given directory.
+    /// Loads templates and fragments from a specified directory on the filesystem.
     ///
-    /// # Errors
-    /// Returns an error if reading the template or fragment files fails,
-    /// or if the directory does not exist, or if no lore files are found.
+    /// The directory must contain `TEMPLATES.md` and/or `FRAGMENTS.md` files formatted
+    /// correctly.
+    ///
+    /// ## Errors
+    /// Returns a [`NarrativeError`] if:
+    /// - The provided path is not a directory (`DirectoryNotFound`).
+    /// - Neither `TEMPLATES.md` nor `FRAGMENTS.md` are present in the directory (`NoLoreFiles`).
+    /// - The files exist but cannot be read due to I/O permissions (`IoError`).
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use scale::shared::narrative::{NarrativeGenerator, NarrativeError};
+    ///
+    /// let mut generator = NarrativeGenerator::default();
+    ///
+    /// // Pointing to a missing directory will return an error
+    /// let result = generator.load_from_files("./non_existent_lore_dir");
+    /// assert!(matches!(result, Err(NarrativeError::DirectoryNotFound(_))));
+    /// ```
     pub fn load_from_files<P: AsRef<Path>>(
         &mut self,
         path: P,
@@ -383,7 +522,23 @@ impl NarrativeGenerator {
         narrator
     }
 
-    /// Generate a procedural star name from `STAR_PREFIX` + `STAR_SUFFIX` fragments.
+    /// Generates a procedural star name by combining `STAR_PREFIX` and `STAR_SUFFIX` fragments.
+    ///
+    /// If the required fragments are not loaded in the generator, it will fallback
+    /// to producing the string `"Unknown Prime"`.
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use scale::shared::narrative::NarrativeGenerator;
+    ///
+    /// let mut generator = NarrativeGenerator::default();
+    /// generator.add_fragment("STAR_PREFIX".to_string(), vec!["Alpha".to_string()]);
+    /// generator.add_fragment("STAR_SUFFIX".to_string(), vec!["Centauri".to_string()]);
+    ///
+    /// let name = generator.generate_star_name();
+    /// assert_eq!(name, "Alpha Centauri");
+    /// ```
     #[must_use]
     pub fn generate_star_name(&self) -> String {
         let prefix = self
@@ -397,7 +552,21 @@ impl NarrativeGenerator {
         format!("{prefix} {suffix}")
     }
 
-    /// Generate a procedural civilization name from `STAR_PREFIX` fragments.
+    /// Generates a procedural civilization name by selecting a random `STAR_PREFIX` fragment.
+    ///
+    /// If the `STAR_PREFIX` fragment is missing, it falls back to `"Unknown"`.
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use scale::shared::narrative::NarrativeGenerator;
+    ///
+    /// let mut generator = NarrativeGenerator::default();
+    /// generator.add_fragment("STAR_PREFIX".to_string(), vec!["Terran".to_string()]);
+    ///
+    /// let name = generator.generate_civ_name();
+    /// assert_eq!(name, "Terran");
+    /// ```
     #[must_use]
     pub fn generate_civ_name(&self) -> String {
         self.get_random_fragment("STAR_PREFIX")
@@ -405,12 +574,43 @@ impl NarrativeGenerator {
             .unwrap_or_else(|| "Unknown".to_string())
     }
 
-    /// Add a template programmatically.
+    /// Adds a new [`Template`] to the generator programmatically.
+    ///
+    /// This is useful for injecting dynamic stories that are not defined in the static
+    /// markdown files.
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use scale::shared::narrative::NarrativeGenerator;
+    ///
+    /// let mut generator = NarrativeGenerator::default();
+    /// generator.add_template(
+    ///     "TUTORIAL_START".to_string(),
+    ///     vec!["Welcome to the colony, [NAME].".to_string()]
+    /// );
+    ///
+    /// assert_eq!(generator.template_count(), 1);
+    /// ```
     pub fn add_template(&mut self, id: String, patterns: Vec<String>) {
         self.templates.insert(id.clone(), Template { id, patterns });
     }
 
-    /// Add a fragment type programmatically.
+    /// Adds a new [`FragmentType`] to the generator programmatically.
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use scale::shared::narrative::NarrativeGenerator;
+    ///
+    /// let mut generator = NarrativeGenerator::default();
+    /// generator.add_fragment(
+    ///     "COLORS".to_string(),
+    ///     vec!["Red".to_string(), "Blue".to_string()]
+    /// );
+    ///
+    /// assert_eq!(generator.fragment_count(), 1);
+    /// ```
     pub fn add_fragment(&mut self, id: String, options: Vec<String>) {
         self.fragments
             .insert(id.clone(), FragmentType { id, options });
@@ -562,19 +762,52 @@ impl NarrativeGenerator {
         }
     }
 
-    /// Return the number of loaded templates.
+    /// Returns the number of loaded templates in the generator.
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use scale::shared::narrative::NarrativeGenerator;
+    ///
+    /// let generator = NarrativeGenerator::from_embedded();
+    /// assert!(generator.template_count() > 0);
+    /// ```
     #[must_use]
     pub fn template_count(&self) -> usize {
         self.templates.len()
     }
 
-    /// Return the number of loaded fragment types.
+    /// Returns the number of loaded fragment types in the generator.
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use scale::shared::narrative::NarrativeGenerator;
+    ///
+    /// let generator = NarrativeGenerator::from_embedded();
+    /// assert!(generator.fragment_count() > 0);
+    /// ```
     #[must_use]
     pub fn fragment_count(&self) -> usize {
         self.fragments.len()
     }
 
-    /// Get a random option from a fragment type.
+    /// Selects and returns a random option string from the specified fragment type ID.
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use scale::shared::narrative::NarrativeGenerator;
+    ///
+    /// let mut generator = NarrativeGenerator::default();
+    /// generator.add_fragment("COLORS".to_string(), vec!["Red".to_string()]);
+    ///
+    /// let color = generator.get_random_fragment("COLORS");
+    /// assert_eq!(color, Some(&"Red".to_string()));
+    ///
+    /// let missing = generator.get_random_fragment("SHAPES");
+    /// assert_eq!(missing, None);
+    /// ```
     #[must_use]
     pub fn get_random_fragment(&self, fragment_id: &str) -> Option<&String> {
         self.fragments
