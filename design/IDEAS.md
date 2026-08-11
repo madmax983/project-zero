@@ -32175,3 +32175,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you use safe, conventional power, or risk the apocalyptic potential of harnessing unstable celestial anomalies?
 
 ---
+## The Empathy Cascade
+
+**Layer:** 1
+
+**Fantasy:** Watching your colony slowly grind to a halt because everyone is just too compassionate to do the harsh jobs.
+
+**Mechanic:** Pops with high "Empathy" stats gain mood bonuses when helping others, but suffer severe mood penalties when performing actions that harm the environment or exploit other pops. If too many pops become empathetic, they will refuse to work in polluting factories or perform law enforcement duties.
+
+**Emergence:** You build a utopian society, but when a pirate raid occurs, your highly empathetic security forces refuse to use lethal force, instead trying to arrest and rehabilitate the pirates while the colony burns.
+
+**Tension:** Do you artificially suppress empathy through propaganda to maintain a ruthless, efficient workforce, or embrace it and struggle to survive in a harsh galaxy?
+
+---
+
+## The Diplomatic Hostage Exchange
+
+**Layer:** Cross-layer
+
+**Fantasy:** Managing the lives of high-value individuals who are literally the only thing preventing an intergalactic war.
+
+**Mechanic:** To secure peace treaties at Layer 3, empires can exchange "Hostage Pops"—often the children of faction leaders. These Pops live on your Layer 1 colony. Their comfort and safety directly impact diplomatic relations. If a hostage pop dies, even accidentally, war is instantly declared.
+
+**Emergence:** A rival empire's hostage pop decides they love your colony and tries to renounce their citizenship to stay. Their home empire views this as brainwashing and threatens war, forcing you to forcibly deport a happy citizen to appease a tyrant.
+
+**Tension:** Do you keep hostages locked in gilded cages to ensure their safety, risking their depression and negative diplomatic modifiers, or let them live freely, risking an accidental death that triggers a sector-wide conflict?
+
+---
+
+## Orbital Debris Shadow
+
+**Layer:** Cross-layer
+
+**Fantasy:** The consequences of massive space battles physically darkening the skies of the worlds below.
+
+**Mechanic:** Destroyed fleets in Layer 2 leave behind permanent "Orbital Debris Fields". If a debris field becomes dense enough, it blocks sunlight to the Layer 1 colony below, drastically reducing solar power efficiency and causing agricultural collapse due to "artificial winter".
+
+**Emergence:** You win a desperate, massive defensive fleet battle right above your breadbasket world. The victory saves the planet from invasion, but the immense wreckage blocks out the sun, starving the colony you just saved.
+
+**Tension:** Do you fight fleets in deep space where you have no defensive stations, or lure them into planetary gravity wells where you have an advantage, knowing the wreckage might ruin the world below?
+
+---
