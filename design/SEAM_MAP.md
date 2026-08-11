@@ -1952,3 +1952,10 @@
 - **Glue added:** Added `bureaucratic_black_hole_chronicle_bridge` in `src/layer1/core/integration.rs` to generate Chronicle records when a Bureaucratic Black Hole forms.
 - **Schedule:** Registered the system in `src/layer1/systems/observation.rs`.
 - **Tests:** Added tests in `tests/integration/bureaucratic_black_hole_bridge.rs`.
+
+### INT-1270: Phantom Trade Routes -> Chronicle
+- **Date:** 2026-11-01
+- **Systems connected:** `FixPhantomRouteEvent` -> `phantom_trade_routes_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `phantom_trade_routes_chronicle_bridge` in `src/layer2/integration.rs` to generate Chronicle records when a Phantom Trade Route is fixed.
+- **Schedule:** Registered the system in `src/simulation.rs`.
+- **Tests:** Added tests in `tests/integration/phantom_trade_routes_chronicle.rs`.

@@ -968,6 +968,7 @@
 - [x] `1020` Spatial Compression — `specs/1020-spatial-compression.md` — completed 2026-02-01
 - [x] `INT-1020` Integration: Spatial Compression -> Chronicle — completed 2026-11-01
 - [x] `1270` Phantom Trade Routes — `specs/1270-phantom-trade-routes.md` — completed 2026-08-08
+- [x] `INT-1270` Integration: Phantom Trade Routes -> Chronicle — completed 2026-11-01
 - [x] `INT-1279` Integration: Weaponized Tourism -> Chronicle — completed 2024-08-08
 - [x] `INT-1335` Integration: Thermal Damage -> Chronicle — completed 2026-11-01
 - [x] `329` Leader Ascension — `specs/329-leader-ascension.md` — completed 2026-02-01
