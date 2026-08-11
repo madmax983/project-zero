@@ -6241,3 +6241,45 @@
 **Replaces:** Ghost Transmission / False Radar Contact
 **Code reference:** `PhantomSignal` anomaly
 **Usage:** "The Phantom Signal led the scouting fleet into a dead sector."
+
+## Phantom Route
+
+**Replaces:** broken supply chain, wasted resources
+**Code reference:** N/A (pending implementation)
+**Usage:** "The Phantom Route is draining our food reserves."
+
+## Pointless Labor
+
+**Replaces:** wasted work, morale drop
+**Code reference:** N/A (pending implementation)
+**Usage:** "The realization of Pointless Labor shattered their morale."
+
+---
+
+## Phantom Route
+
+**Replaces:** broken supply chain, wasted resources
+**Code reference:** N/A (pending implementation)
+**Usage:** "The Phantom Route is draining our food reserves."
+
+## Pointless Labor
+
+**Replaces:** wasted work, morale drop
+**Code reference:** N/A (pending implementation)
+**Usage:** "The realization of Pointless Labor shattered their morale."
+
+---
+
+## Phantom Route
+
+**Replaces:** broken supply chain, wasted resources
+**Code reference:** N/A (pending implementation)
+**Usage:** "The Phantom Route is draining our food reserves."
+
+## Pointless Labor
+
+**Replaces:** wasted work, morale drop
+**Code reference:** N/A (pending implementation)
+**Usage:** "The realization of Pointless Labor shattered their morale."
+
+---
