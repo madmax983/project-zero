@@ -11323,3 +11323,63 @@ Words and phrases describing the sudden, inexplicable loss of resources.
 - the silent sector
 - the dark star
 - the edge of known space
+
+## Phantom Trade Routes Fragments (Spec 1270)
+
+## Fragment Type: [PHANTOM_DESTINATION]
+
+- Sector 4 Transit Hub
+- The Old Hydroponics Bay
+- The Sunken Generator
+- The Lost Hab-Block
+- Ruined Plaza Sigma
+
+## Fragment Type: [WASTED_LABOR_SYMPTOM]
+
+- staring blankly at the manifest
+- breaking down in tears at the assembly line
+- refusing to load the next drone
+- an overwhelming, silent despair
+- questioning the purpose of survival
+
+---
+
+## Phantom Trade Routes Fragments (Spec 1270)
+
+## Fragment Type: [PHANTOM_DESTINATION]
+
+- Sector 4 Transit Hub
+- The Old Hydroponics Bay
+- The Sunken Generator
+- The Lost Hab-Block
+- Ruined Plaza Sigma
+
+## Fragment Type: [WASTED_LABOR_SYMPTOM]
+
+- staring blankly at the manifest
+- breaking down in tears at the assembly line
+- refusing to load the next drone
+- an overwhelming, silent despair
+- questioning the purpose of survival
+
+---
+
+## Phantom Trade Routes Fragments (Spec 1270)
+
+## Fragment Type: [PHANTOM_DESTINATION]
+
+- Sector 4 Transit Hub
+- The Old Hydroponics Bay
+- The Sunken Generator
+- The Lost Hab-Block
+- Ruined Plaza Sigma
+
+## Fragment Type: [WASTED_LABOR_SYMPTOM]
+
+- staring blankly at the manifest
+- breaking down in tears at the assembly line
+- refusing to load the next drone
+- an overwhelming, silent despair
+- questioning the purpose of survival
+
+---

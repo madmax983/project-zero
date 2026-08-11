@@ -11458,3 +11458,69 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 **Patterns:**
 - "[YEAR]: The scouting fleet from [COLONY] followed the signal to [DESTINATION]. They never returned."
 - "Lost in the void. [COLONY] mourns the expedition sent to [DESTINATION]. [YEAR]."
+
+## Phantom Trade Routes Templates (Spec 1270)
+
+## Template: PHANTOM_ROUTE_DISCOVERED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [PHANTOM_DESTINATION]
+
+**Patterns:**
+- "[YEAR]: The shipping logs for [PHANTOM_DESTINATION] don't make sense. The hub was destroyed years ago. We are launching into nothing."
+- "[COLONY] auditors found a discrepancy. Cargo drones bound for [PHANTOM_DESTINATION] are launching into the void. [YEAR]."
+- "We have been feeding a ghost. [PHANTOM_DESTINATION] is gone, but the quotas remain. [COLONY], [YEAR]."
+
+## Template: PHANTOM_ROUTE_FIXED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [RESOURCE], [WASTED_LABOR_SYMPTOM]
+
+**Patterns:**
+- "[YEAR]: We stopped the phantom launches. The workers realized their [RESOURCE] shipments went nowhere. They are [WASTED_LABOR_SYMPTOM]."
+- "The truth broke them. We halted the [RESOURCE] shipments to the dead hub. [COLONY] reports workers [WASTED_LABOR_SYMPTOM]. [YEAR]."
+- "[COLONY], [YEAR]: The bureaucracy is corrected. The [RESOURCE] stays here, but the workers are [WASTED_LABOR_SYMPTOM]."
+
+---
+
+## Phantom Trade Routes Templates (Spec 1270)
+
+## Template: PHANTOM_ROUTE_DISCOVERED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [PHANTOM_DESTINATION]
+
+**Patterns:**
+- "[YEAR]: The shipping logs for [PHANTOM_DESTINATION] don't make sense. The hub was destroyed years ago. We are launching into nothing."
+- "[COLONY] auditors found a discrepancy. Cargo drones bound for [PHANTOM_DESTINATION] are launching into the void. [YEAR]."
+- "We have been feeding a ghost. [PHANTOM_DESTINATION] is gone, but the quotas remain. [COLONY], [YEAR]."
+
+## Template: PHANTOM_ROUTE_FIXED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [RESOURCE], [WASTED_LABOR_SYMPTOM]
+
+**Patterns:**
+- "[YEAR]: We stopped the phantom launches. The workers realized their [RESOURCE] shipments went nowhere. They are [WASTED_LABOR_SYMPTOM]."
+- "The truth broke them. We halted the [RESOURCE] shipments to the dead hub. [COLONY] reports workers [WASTED_LABOR_SYMPTOM]. [YEAR]."
+- "[COLONY], [YEAR]: The bureaucracy is corrected. The [RESOURCE] stays here, but the workers are [WASTED_LABOR_SYMPTOM]."
+
+---
+
+## Phantom Trade Routes Templates (Spec 1270)
+
+## Template: PHANTOM_ROUTE_DISCOVERED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [PHANTOM_DESTINATION]
+
+**Patterns:**
+- "[YEAR]: The shipping logs for [PHANTOM_DESTINATION] don't make sense. The hub was destroyed years ago. We are launching into nothing."
+- "[COLONY] auditors found a discrepancy. Cargo drones bound for [PHANTOM_DESTINATION] are launching into the void. [YEAR]."
+- "We have been feeding a ghost. [PHANTOM_DESTINATION] is gone, but the quotas remain. [COLONY], [YEAR]."
+
+## Template: PHANTOM_ROUTE_FIXED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [RESOURCE], [WASTED_LABOR_SYMPTOM]
+
+**Patterns:**
+- "[YEAR]: We stopped the phantom launches. The workers realized their [RESOURCE] shipments went nowhere. They are [WASTED_LABOR_SYMPTOM]."
+- "The truth broke them. We halted the [RESOURCE] shipments to the dead hub. [COLONY] reports workers [WASTED_LABOR_SYMPTOM]. [YEAR]."
+- "[COLONY], [YEAR]: The bureaucracy is corrected. The [RESOURCE] stays here, but the workers are [WASTED_LABOR_SYMPTOM]."
+
+---
