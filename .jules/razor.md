@@ -35,3 +35,7 @@
 **Bloat:** Fallback stubs for `OralTradition` and `NarrativeError` table formatting.
 **Cut:** Deleted the fallback structs entirely. Replaced complex `to_table` formatting in `NarrativeError` with standard `Display`.
 **Saved:** ~90 lines of code / Reduced cognitive load trying to figure out why disabled features compile, and simplified error handling.
+## [Reduction]
+**Bloat:** The fallback structs and empty systems in src/layer1/oral_tradition.rs.
+**Cut:** Deleted the zombie fallback code and gated the exports in prelude.rs strictly behind nova.
+**Saved:** ~55 Lines of code / Reduced cognitive load trying to figure out why disabled features compile.

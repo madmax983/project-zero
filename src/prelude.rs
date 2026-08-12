@@ -19,10 +19,10 @@ pub use crate::layer1::psychology::needs::Needs;
 pub use crate::layer1::social::Tavern;
 pub use crate::shared::log::MessageLog;
 
-pub use crate::layer1::oral_tradition::{OralTradition, Story, StoryGenre};
-
 #[cfg(feature = "nova")]
-pub use crate::layer1::oral_tradition::{collect_chronicles_system, storytelling_system};
+pub use crate::layer1::oral_tradition::{
+    collect_chronicles_system, storytelling_system, OralTradition, Story, StoryGenre,
+};
 
 // Echo DX Audit: Export common components for headless users
 pub use crate::layer1;
