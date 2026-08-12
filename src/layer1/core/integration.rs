@@ -3469,3 +3469,18 @@ pub fn bureaucratic_black_hole_chronicle_bridge(
         });
     }
 }
+
+/// INT-1139: Bridges `PoleFlipEvent` to `AddChronicleEvent`
+pub fn magnetic_reversal_chronicle_bridge(
+    mut pole_flip_events: EventReader<crate::layer1::physics::magnetic_reversal::PoleFlipEvent>,
+    mut chronicle_events: EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+) {
+    for _ in pole_flip_events.read() {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            text:
+                "The planetary magnetic poles flipped, exposing the surface to intense radiation."
+                    .to_string(),
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
+        });
+    }
+}

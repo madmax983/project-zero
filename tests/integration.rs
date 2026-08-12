@@ -729,3 +729,6 @@ mod sovereign_armada_bridge;
 
 #[path = "integration/phantom_trade_routes_chronicle.rs"]
 mod phantom_trade_routes_chronicle;
+
+#[path = "integration/magnetic_reversal_chronicle_bridge.rs"]
+mod magnetic_reversal_chronicle_bridge;

@@ -1,16 +1,6 @@
-feat(layer1): implement the kinetic heist feature
+feat(integration): implement magnetic reversal chronicle bridge
 
-Implements RED-GREEN-REFACTOR from spec 994:
-- Added comprehensive test suite (RED phase)
-- Implemented `harvester_meteor_absorption_system` (GREEN phase)
-- Integrated correctly with existing `ColonyResources` and position mapping (REFACTOR phase)
-- Registered in `src/layer1/systems/execution.rs`
-- Fixed an unrelated setup panic caused by an unregistered event from another feature
-
-Test coverage: 100% (target: 85%) for the new module.
-All acceptance criteria met:
-- Harvester Meteors successfully drain resources upon impact.
-- `cargo test` passes.
-- `cargo clippy` is clean.
-
-Co-Authored-By: google-labs-jules[bot] <161369871+google-labs-jules[bot]@users.noreply.github.com>
+Implements INT-1139 integration between Magnetic Reversal and Chronicle:
+- Added magnetic_reversal_chronicle_bridge system.
+- Added tests for the bridge.
+- Registered the system and updated IN_PROGRESS/COMPLETED states.

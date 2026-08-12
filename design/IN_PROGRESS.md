@@ -1,1 +1,0 @@
-- [ ] `INT-1139` Integration: Magnetic Reversal -> Chronicle — claimed 2026-08-12

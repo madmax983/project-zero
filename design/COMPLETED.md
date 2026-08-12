@@ -979,3 +979,4 @@
 - [x] `288` The Memory Black Market — `specs/288-memory-black-market.md` — completed 2026-08-11
 - [x] `INT-1202` Integration: Bureaucratic Black Holes -> Chronicle — completed 2026-11-01
 - [x] `1134` Operational Detritus — `specs/1134-operational-detritus.md` — completed 2026-02-01
+- [x] `INT-1139` Integration: Magnetic Reversal -> Chronicle — completed 2026-08-12
