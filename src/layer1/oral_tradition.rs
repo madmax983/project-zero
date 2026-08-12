@@ -114,7 +114,6 @@ pub struct OralTradition {
     pub last_processed_tick: u64,
 }
 
-
 #[cfg(feature = "nova")]
 impl OralTradition {
     /// Adds a [`Story`] to the tradition if a story from the same historical date
