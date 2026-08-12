@@ -115,14 +115,23 @@ pub struct OralTradition {
 }
 
 #[cfg(not(feature = "nova"))]
+/// A stub for a `Story`.
+///
+/// **Requires `nova` feature.** This is an empty placeholder. Enable the `nova` feature in your `Cargo.toml` to use the Oral Tradition system.
 #[derive(Debug, Clone, Default)]
 pub struct Story {}
 
 #[cfg(not(feature = "nova"))]
+/// A stub for a `StoryGenre`.
+///
+/// **Requires `nova` feature.** This is an empty placeholder. Enable the `nova` feature in your `Cargo.toml` to use the Oral Tradition system.
 #[derive(Debug, Clone, Default)]
 pub struct StoryGenre {}
 
 #[cfg(not(feature = "nova"))]
+/// A stub for the `OralTradition` system.
+///
+/// **Requires `nova` feature.** This is an empty placeholder resource. Enable the `nova` feature in your `Cargo.toml` to use the actual Oral Tradition system. Initializing this stub will print a helpful warning to stderr.
 #[derive(bevy_ecs::prelude::Resource, Debug, Clone)]
 pub struct OralTradition {}
 
