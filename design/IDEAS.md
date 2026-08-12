@@ -32299,3 +32299,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you use cheap facades to maintain order in the short term, knowing that if a real crisis hits, the illusion will shatter catastrophically?
 
 ---
+
+## The Cassandra Syndrome
+
+**Layer:** 1
+
+**Fantasy:** Pops that predict disasters but nobody believes them.
+
+**Mechanic:** Some pops develop the "Prophet" trait, allowing them to foresee local disasters (fires, cave-ins, pirate raids) before they happen. They will try to warn other pops, causing panic. If the colony's "Science" or "Faith" stats are too low, the other pops will ignore the warning and lose relationship points with the Prophet.
+
+**Emergence:** A Prophet predicts a massive reactor meltdown. They desperately try to warn the engineers, but the engineers dismiss them as a lunatic. The Prophet, trying to save the colony, sabotages the power grid to force a shutdown, getting arrested right before the reactor was going to explode anyway.
+
+**Tension:** Do you trust the mad ravings of a single pop and evacuate a critical industrial sector, losing immense productivity, or ignore them and hope they are wrong?
+
+---
+
+## Language Divergence
+
+**Layer:** Cross-layer
+
+**Fantasy:** Your far-flung colonies slowly stop being able to understand each other.
+
+**Mechanic:** Colonies that lack regular physical trade or high-bandwidth communication lines slowly accumulate "Linguistic Drift." Over generations, their dialect changes. If Drift becomes too high between two colonies, diplomacy penalties apply, and cross-colony orders suffer a massive delay or failure rate due to misinterpretation.
+
+**Emergence:** You order an isolated rim-world to "send tribute." Due to linguistic drift, they interpret the archaic term as "send sacrifices," and begin executing their own citizens to appease the core worlds, horrifying your empire.
+
+**Tension:** Do you spend massive resources maintaining expensive, constant comm-links to worthless rim-worlds just to keep their language synced, or let them drift into becoming incomprehensible aliens?
+
+---
+
+## The Cargo Cult Fleet
+
+**Layer:** 2
+
+**Fantasy:** A primitive world you abandoned uses your trash to build a terrifying armada.
+
+**Mechanic:** If you heavily exploit a system in Layer 2 and leave behind orbital junk or broken ships, and that system contains a pre-FTL civilization, they will eventually reverse-engineer the garbage. They won't understand it, but they'll strap enough engines together to form a "Scrap Armada" that aggressively guards their space.
+
+**Emergence:** You return to a system 100 years later to finish mining an asteroid belt, only to find the locals have welded the husk of your old flagship to a moon and are using it as a massive, uncontrollable planetary defense laser.
+
+**Tension:** Do you clean up your mess (costing time and alloys) when you leave a system, or risk creating heavily armed, insane primitives that will block your expansion later?
+
+---
