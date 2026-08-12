@@ -118,6 +118,7 @@ pub struct MovementContext<'w, 's> {
     occupied_tiles: Option<Res<'w, OccupiedTiles>>,
     wind_grid: Option<Res<'w, crate::layer1::wind::WindGrid>>,
     tide: Option<Res<'w, crate::layer1::atmosphere::AtmosphericTide>>,
+    clutter_grid: Option<Res<'w, crate::layer1::clutter::ClutterGrid>>,
     buildings: Query<
         'w,
         's,
@@ -270,6 +271,7 @@ fn process_single_movement(
         &ctx.terrain,
         ctx.wind_grid.as_deref(),
         ctx.tide.as_deref(),
+        ctx.clutter_grid.as_deref(),
     );
 
     if !try_apply_movement_speed(speed_opt, movement_cost, commands, *current_pos) {
@@ -475,12 +477,15 @@ fn calculate_movement_cost(
     terrain: &TerrainGrid,
     wind_grid: Option<&crate::layer1::wind::WindGrid>,
     tide: Option<&crate::layer1::atmosphere::AtmosphericTide>,
+    clutter_grid: Option<&crate::layer1::clutter::ClutterGrid>,
 ) -> f32 {
     let base_cost = if let (Ok(x), Ok(y)) = (usize::try_from(new_pos.x), usize::try_from(new_pos.y))
     {
-        terrain
+        let cost = terrain
             .get(x, y)
-            .map_or(1.0, crate::layer1::terrain::TerrainType::movement_cost)
+            .map_or(1.0, crate::layer1::terrain::TerrainType::movement_cost);
+        let clutter_mod = clutter_grid.map_or(0.0, |c| c.get(x, y) * 0.1);
+        cost + clutter_mod
     } else {
         1.0
     };
