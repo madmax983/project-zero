@@ -32341,3 +32341,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you clean up your mess (costing time and alloys) when you leave a system, or risk creating heavily armed, insane primitives that will block your expansion later?
 
 ---
+## The Paperwork Singularity
+
+**Layer:** 1
+
+**Fantasy:** Bureaucracy taking on a life of its own and crippling progress.
+
+**Mechanic:** Certain administrative jobs generate "Paperwork" items to improve efficiency. If there are not enough clerks to process it, paperwork accumulates as physical items, clogging stockpiles and pathways, slowing down movement and jobs.
+
+**Emergence:** A booming colony suddenly grinds to a halt because a manager mandated performance reviews, generating thousands of paperwork items that spilled into the main thoroughfare, barricading miners in their quarters.
+
+**Tension:** Do you employ more people in administrative roles to handle the bureaucracy, or do you outlaw paperwork and suffer efficiency penalties?
+
+---
+
+## Asteroid Harpooning
+
+**Layer:** 2
+
+**Fantasy:** Recklessly altering celestial mechanics for profit.
+
+**Mechanic:** Specialized mining ships can harpoon small asteroids and tow them to a colony's orbit for faster extraction. However, if the ship's engines fail, the asteroid might collide with orbital structures or the colony itself.
+
+**Emergence:** A greedy corporation tries to tow a massive comet, but their tugboat runs out of fuel mid-transit. The comet enters an erratic orbit, eventually smashing into the main agricultural orbital, causing system-wide famine.
+
+**Tension:** Do you risk the catastrophic consequences of altering celestial bodies for massive resource windfalls, or stick to safe, slow, on-site mining?
+
+---
+
+## Interstellar Pen Pals
+
+**Layer:** Cross-layer
+
+**Fantasy:** Long-distance connections bridging the gap across space and time.
+
+**Mechanic:** Pops can form relationships with pops in other colonies. Due to slow communication, messages take years. A pop might form a deep bond with someone who, from their perspective, died years ago.
+
+**Emergence:** An engineer on your core world receives a letter from their pen pal on a rim-world asking for help. The core world pop gets a severe mood debuff because they know the rim-world was destroyed by pirates 5 years ago, and they are receiving letters from a ghost.
+
+**Tension:** Do you encourage long-distance bonds to increase global unity, knowing they are fragile and often end in tragedy when reality catches up to the speed of light?
+
+---
