@@ -32216,3 +32216,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you fight fleets in deep space where you have no defensive stations, or lure them into planetary gravity wells where you have an advantage, knowing the wreckage might ruin the world below?
 
 ---
+
+## The Architect's Guilt
+
+**Layer:** 1
+
+**Fantasy:** The feeling that the perfect layout you designed is actually driving your colonists crazy.
+
+**Mechanic:** Pops that live and work in highly optimized, symmetrical, or perfectly efficient grid layouts gradually accumulate "Sterility Stress." They crave messy, organic, or historically inefficient paths.
+
+**Emergence:** You design a flawless, hyper-efficient colony where no one has to walk more than 5 tiles to get to work. Instead of thriving, they start vandalizing the pristine walls and deliberately taking slower, more circuitous routes just to feel alive, tanking your efficiency anyway.
+
+**Tension:** Do you build the beautiful, efficient machine-city you planned, knowing it will breed depression, or deliberately introduce flaws, curves, and messy "organic" growth to keep them sane?
+
+---
+
+## The Nostalgia Contagion
+
+**Layer:** Cross-layer
+
+**Fantasy:** A romanticized view of a lost golden age becomes a dangerous political movement.
+
+**Mechanic:** A rumor starts on a Layer 1 colony about how much better life was on Earth or the core worlds (even if they never lived there). This "Nostalgia" meme spreads through trade routes (Layer 2). Pops infected with Nostalgia demand obsolete goods, refuse to use modern tech, and eventually demand secession to form a "pure" society.
+
+**Emergence:** A simple conversation about "the good old days" in a frontier cantina spreads via traders to your industrial hub. Soon, your most advanced shipyards refuse to build fusion drives, demanding to build slow, inferior fission engines because they are "traditional."
+
+**Tension:** Do you aggressively censor communication to stop the meme, angering your population, or allow the cultural drift and try to accommodate their bizarre, retro demands?
+
+---
+
+## The Memorial Fleet
+
+**Layer:** 2
+
+**Fantasy:** The tragic burden of honoring the dead when you need their resources to survive.
+
+**Mechanic:** When a significant ship or leader is lost in battle, a "Memorial Hulk" is created in orbit. These hulks provide massive cultural and morale bonuses to the system. However, they are made of highly valuable, salvageable alloys.
+
+**Emergence:** Your home system is a graveyard of heroes, providing so much morale that your pops are ecstatically happy. But a massive invasion fleet approaches, and you are completely out of alloys to build defenses. The only source of metal left is the sacred Memorial Fleet.
+
+**Tension:** Do you dismantle the sacred monuments of your ancestors to build weapons, instantly crashing your empire's morale and risking rebellion, or leave them intact and fight a desperate, under-equipped war?
+
+---
