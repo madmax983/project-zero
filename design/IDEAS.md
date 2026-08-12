@@ -32258,3 +32258,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you dismantle the sacred monuments of your ancestors to build weapons, instantly crashing your empire's morale and risking rebellion, or leave them intact and fight a desperate, under-equipped war?
 
 ---
+## The Scrap Pantheon
+
+**Layer:** 1
+
+**Fantasy:** Colonists begin worshipping ancient technology they don't understand, elevating junk to religious artifacts.
+
+**Mechanic:** If pops encounter highly advanced debris or broken Layer 2 tech without sufficient "Science" skill to understand it, they may form a "Cult of Scrap." They will hoard these items and build shrines to them instead of recycling them for resources.
+
+**Emergence:** You desperately need alloys to build a defense grid, but the only source is a crashed cruiser. When your engineers go to salvage it, they are violently repelled by a local cult that has declared the engine core a sacred monolith.
+
+**Tension:** Do you violently suppress the cult to get your resources, tanking morale, or let them worship the junk and find materials elsewhere?
+
+---
+
+## Sub-Orbital Smugglers
+
+**Layer:** Cross-layer
+
+**Fantasy:** The gap between the planetary surface and orbit becomes a lawless wild west of hidden cargo.
+
+**Mechanic:** Goods moving between Layer 1 (Colony) and Layer 2 (Orbit) must pass through spaceports. However, if spaceport taxes are too high or certain goods are banned, pops will build hidden "catapults" or unrecorded mass drivers to shoot illicit cargo into low orbit, where small rogue ships catch it.
+
+**Emergence:** You ban the export of a rare medical herb to stockpile it for an upcoming plague. Instead of staying in the colony, the herb keeps mysteriously vanishing, and your orbital sensor net is constantly cluttered with "micrometeoroid" impacts that are actually smuggled cargo pods.
+
+**Tension:** Do you spend massive resources building an orbital blockade to catch tiny smuggling pods, or lower taxes and legalize the trade to bring it back into the light?
+
+---
+
+## The Architectural Placebo
+
+**Layer:** 1
+
+**Fantasy:** Your colonists are placated by the illusion of progress, even if the reality is broken.
+
+**Mechanic:** Pops demand complex, expensive amenities (like "Holographic Theaters"). You can build a "Facade" version that looks complete from the outside but is non-functional inside. It temporarily satisfies the demand based on the "Gullibility" of the population.
+
+**Emergence:** You run out of rare crystals needed to build a real hospital, so you build a Facade Hospital. The colonists feel safer and their stress drops, but when a mining accident actually happens, they rush to the hospital only to find empty rooms, triggering an immediate and violent riot.
+
+**Tension:** Do you use cheap facades to maintain order in the short term, knowing that if a real crisis hits, the illusion will shatter catastrophically?
+
+---
