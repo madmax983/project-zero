@@ -107,6 +107,7 @@ pub enum ItemType {
     Rice,
     /// Corn crop.
     Corn,
+    NutrientPaste,
     /// Soy crop.
     Soy,
     /// Protein from animals.

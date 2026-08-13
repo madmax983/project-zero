@@ -380,6 +380,10 @@ pub fn consume_food_system(
             resources.rations -= FOOD_PER_MEAL;
             eaten_item = ItemType::Rations;
             ate = true;
+        } else if resources.nutrient_paste >= FOOD_PER_MEAL {
+            resources.nutrient_paste -= FOOD_PER_MEAL;
+            eaten_item = ItemType::NutrientPaste;
+            ate = true;
         }
 
         if ate {
@@ -462,6 +466,21 @@ fn apply_food_consumption_effects(
     }
 
     // Rations Mood Logic
+    // Nutrient Paste Mood Logic
+    if eaten_item == ItemType::NutrientPaste {
+        let is_immune = traits_opt
+            .is_some_and(|t| t.0.contains(&Trait::Cannibal) || t.0.contains(&Trait::Pragmatist));
+        if !is_immune {
+            if let Some(morale) = morale_opt.as_deref_mut() {
+                morale.add_modifier(MoodModifier {
+                    label: "Ate Nutrient Paste".to_string(),
+                    value: -0.1, // -10% mood
+                    duration: 100,
+                });
+            }
+        }
+    }
+
     if eaten_item == ItemType::Rations {
         let is_immune =
             traits_opt.is_some_and(|t| t.has(Trait::Cannibal) || t.has(Trait::Pragmatist));
@@ -972,5 +991,90 @@ mod tests {
         let morale = world.get::<Morale>(pop).unwrap();
         let modifier = morale.modifiers.iter().find(|m| m.label == "Ate Slop");
         assert!(modifier.is_none(), "Cannibal should be immune to Ate Slop");
+    }
+}
+
+#[cfg(test)]
+mod recycler_tests {
+    use super::*;
+    use crate::layer1::economy::resources::ColonyResources;
+    use crate::layer1::morale::{MoodModifier, Morale};
+    use crate::layer1::traits::{Trait, Traits};
+    use bevy::prelude::*;
+    use bevy_ecs::system::RunSystemOnce;
+
+    #[test]
+    fn test_eating_paste_causes_gloom() {
+        let mut world = World::new();
+        world.insert_resource(ColonyResources {
+            nutrient_paste: 10.0,
+            food: 0.0,
+            rations: 0.0,
+            ..Default::default()
+        });
+        world.insert_resource(crate::shared::time::SimulationTime::default());
+
+        let pop = world
+            .spawn((
+                crate::layer1::entities::pop::Pop,
+                crate::layer1::psychology::needs::Needs {
+                    hunger: 0.0,
+                    ..Default::default()
+                },
+                Morale::default(),
+            ))
+            .id();
+
+        world.run_system_once(consume_food_system).unwrap();
+
+        let morale = world.get::<Morale>(pop).unwrap();
+        let modifier = morale
+            .modifiers
+            .iter()
+            .find(|m| m.label == "Ate Nutrient Paste");
+        assert!(
+            modifier.is_some(),
+            "Should apply Ate Nutrient Paste gloom modifier"
+        );
+    }
+
+    #[test]
+    fn test_pragmatist_ignores_gloom() {
+        let mut world = World::new();
+        world.insert_resource(ColonyResources {
+            nutrient_paste: 10.0,
+            food: 0.0,
+            rations: 0.0,
+            ..Default::default()
+        });
+        world.insert_resource(crate::shared::time::SimulationTime::default());
+
+        let pop = world
+            .spawn((
+                crate::layer1::entities::pop::Pop,
+                crate::layer1::psychology::needs::Needs {
+                    hunger: 0.0,
+                    ..Default::default()
+                },
+                Morale::default(),
+                {
+                    let mut t_set = bevy::utils::HashSet::default();
+                    t_set.insert(Trait::Pragmatist);
+                    Traits(t_set)
+                },
+            ))
+            .id();
+
+        world.run_system_once(consume_food_system).unwrap();
+
+        let morale = world.get::<Morale>(pop).unwrap();
+        let modifier = morale
+            .modifiers
+            .iter()
+            .find(|m| m.label == "Ate Nutrient Paste");
+        assert!(
+            modifier.is_none(),
+            "Pragmatist should be immune to Ate Nutrient Paste gloom"
+        );
     }
 }
