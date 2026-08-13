@@ -998,10 +998,9 @@ mod tests {
 mod recycler_tests {
     use super::*;
     use crate::layer1::economy::resources::ColonyResources;
-    use crate::layer1::morale::{MoodModifier, Morale};
-    use crate::layer1::traits::{Trait, Traits};
-    use bevy::prelude::*;
     use bevy_ecs::system::RunSystemOnce;
+    use crate::layer1::morale::Morale;
+    use crate::layer1::traits::{Trait, Traits};
 
     #[test]
     fn test_eating_paste_causes_gloom() {
