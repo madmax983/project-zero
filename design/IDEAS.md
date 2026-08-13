@@ -32065,7 +32065,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Cargo Cult Escort
+## The Cargo Cult Escort [SPECCED]
 
 **Layer:** 2
 
