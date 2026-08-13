@@ -1,1 +1,0 @@
-- [ ] `INT-695` Integration: The Long Night -> Chronicle — claimed 2026-11-01
