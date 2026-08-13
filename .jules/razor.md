@@ -39,3 +39,7 @@
 **Bloat:** The fallback structs and empty systems in src/layer1/oral_tradition.rs.
 **Cut:** Deleted the zombie fallback code and gated the exports in prelude.rs strictly behind nova.
 **Saved:** ~55 Lines of code / Reduced cognitive load trying to figure out why disabled features compile.
+## [Reduction]
+**Bloat:** Unused exports for headless users in prelude
+**Cut:** Removed layer1, World, Query, Commands, Res, ResMut, Entity, Component exports
+**Saved:** 7 lines of code and cognitive load for API consumers

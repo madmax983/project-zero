@@ -737,7 +737,6 @@ mod recycler_production_tests {
     use crate::layer1::architecture::building::BuildingType;
     use crate::layer1::economy::resources::ColonyResources;
 
-
     #[test]
     fn test_recycler_recipe() {
         let res = ColonyResources {
