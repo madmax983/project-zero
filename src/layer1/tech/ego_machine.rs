@@ -30,30 +30,34 @@ pub fn process_ego_machine(
     }
 }
 
+/// ⚡ Bolt Optimization:
+/// Avoids O(N^2) double-loop over `Vec` elements which could cause significant
+/// slowdown with high population density. Instead of pushing dynamically to
+/// vectors and performing an N^2 inner loop, it aggregates counts by `GridPosition`
+/// using `bevy_utils::HashMap`. This pre-allocates based on `query.iter().len()`
+/// and reduces iteration overhead for social friction collision down to O(U)
+/// where U is unique grid positions with high ego pops.
 pub fn process_ego_social_friction(
     pop_query: bevy_ecs::system::Query<(&EgoStat, &GridPosition)>,
     mut unrest: bevy_ecs::system::ResMut<Unrest>,
 ) {
-    // To avoid O(N^2) complexity with a simple double loop,
-    // we could use a spatial hash, but given the spec, a simple N^2 is fine for the minimal implementation.
-
     // Collect all high ego pops
-    let mut high_ego_pops = Vec::new();
-    let mut low_ego_pops = Vec::new();
+    let mut high_ego_counts: bevy_utils::HashMap<&GridPosition, u32> =
+        bevy_utils::HashMap::with_capacity(pop_query.iter().len());
+    let mut low_ego_counts: bevy_utils::HashMap<&GridPosition, u32> =
+        bevy_utils::HashMap::with_capacity(pop_query.iter().len());
 
     for (ego, pos) in pop_query.iter() {
         if ego.value > 50.0 {
-            high_ego_pops.push(pos);
+            *high_ego_counts.entry(pos).or_default() += 1;
         } else if ego.value < 30.0 {
-            low_ego_pops.push(pos);
+            *low_ego_counts.entry(pos).or_default() += 1;
         }
     }
 
-    for high_pos in &high_ego_pops {
-        for low_pos in &low_ego_pops {
-            if high_pos == low_pos {
-                unrest.level += 0.05;
-            }
+    for (high_pos, high_count) in high_ego_counts.iter() {
+        if let Some(low_count) = low_ego_counts.get(high_pos) {
+            unrest.level += 0.05 * (*high_count as f32) * (*low_count as f32);
         }
     }
 }
