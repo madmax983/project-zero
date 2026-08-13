@@ -1716,6 +1716,10 @@ mod tests {
         world.init_resource::<Events<crate::layer2::communications::signal_latency::ExecuteOrderEvent>>();
         world.init_resource::<Events<crate::layer2::communications::signal_decay::RawCommsMessageEvent>>();
         world.init_resource::<Events<crate::layer2::communications::signal_decay::CommsMessageEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<crate::layer1::physics::magnetic_reversal::PoleFlipEvent>>();
+        world.init_resource::<bevy_ecs::event::Events<
+            crate::layer2::trade::phantom_trade_routes::FixPhantomRouteEvent,
+        >>();
         world.init_resource::<Events<crate::layer2::trade::phantom_limb_logistics::InterceptDropEvent>>();
         world
             .init_resource::<Events<crate::layer2::trade::phantom_limb_logistics::AuditRiskEvent>>(
