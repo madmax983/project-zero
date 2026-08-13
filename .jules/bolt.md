@@ -27,3 +27,6 @@
 **[Clippy Restrictions]**
 **Learning:** Found unrelated clippy warnings on `-D warnings` in other files (like unused imports or default reassignments) that caused the build to fail, even though our code changes in `fire.rs` were correct.
 **Action:** When acting as a specialized persona (like Bolt), we must decide whether to fix the unrelated clippy warnings or adjust our `cargo clippy` commands if strictly constrained. Since we're Bolt (performance-obsessed), fixing minor warnings across the codebase is acceptable to ensure the build passes cleanly.
+**[O(N^2) Vector Collision Detection to HashMap]**
+**Learning:** Nested double loops iterating over un-allocated `Vec` elements (e.g. collecting pops with high and low values and comparing them directly in an N x M matrix) cause extreme re-allocation overhead and computationally explode for dense populations, drastically slowing down ECS systems.
+**Action:** Replace `Vec::new()` accumulation on grid-based collision or interaction loops with `bevy_utils::HashMap` grouped by `GridPosition`. This reduces the complexity to O(U) where U is the unique occupied grid positions, dramatically improving the scalability and efficiency of systems handling spatial correlations.

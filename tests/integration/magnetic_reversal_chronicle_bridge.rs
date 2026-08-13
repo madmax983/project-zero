@@ -1,8 +1,8 @@
 use bevy_app::prelude::*;
 use bevy_ecs::prelude::*;
 use scale::layer1::core::chronicle::{AddChronicleEvent, EventImportance};
-use scale::layer1::physics::magnetic_reversal::PoleFlipEvent;
 use scale::layer1::core::integration::magnetic_reversal_chronicle_bridge;
+use scale::layer1::physics::magnetic_reversal::PoleFlipEvent;
 
 #[cfg(test)]
 mod tests {
@@ -22,7 +22,8 @@ mod tests {
         let mut cursor = events.get_cursor();
         let mut found = false;
         for ev in cursor.read(events) {
-            if ev.text.contains("magnetic poles flipped") && ev.importance == EventImportance::Major {
+            if ev.text.contains("magnetic poles flipped") && ev.importance == EventImportance::Major
+            {
                 found = true;
             }
         }
