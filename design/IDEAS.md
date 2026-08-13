@@ -32464,3 +32464,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you trap your own planet behind a wall of lethal debris to save it from immediate conquest, knowing it might take decades to clear the orbit again?
 
 ---
+## Genetic Nepotism
+
+**Layer:** 1
+
+**Fantasy:** Seeing a specific family line quietly take over all the important jobs in a colony.
+
+**Mechanic:** Pops with high social relationships will prioritize each other when hiring for specialized or high-tier jobs. Over time, certain families or friend groups can monopolize specific industries or administrative roles.
+
+**Emergence:** You notice that every single doctor and researcher on your science world comes from the "Vance" family line. When a rival family takes over the food production, they intentionally starve the Vance family out of spite.
+
+**Tension:** Do you let a highly competent family run an entire industry, risking catastrophic failure if that family decides to strike, or do you force diversity at the cost of efficiency?
+
+---
+
+## The Void Sickness
+
+**Layer:** 2
+
+**Fantasy:** A slow-burning psychological contagion that spreads through space travel.
+
+**Mechanic:** Crews on long-haul transport ships have a small chance to develop "Void Sickness," a mood debuff that makes them extremely paranoid. When they land at a colony, this sickness can spread socially to other pops.
+
+**Emergence:** A vital trade route between your core world and a remote mining output becomes a vector for paranoia. The mining outpost, cut off and terrified, begins hoarding all the ore and building defensive turrets against imaginary enemies.
+
+**Tension:** Do you quarantine entire planets to stop the spread, halting your economy, or risk your pops turning against each other in paranoid frenzy?
+
+---
+
+## Corporate Monopolies
+
+**Layer:** 3
+
+**Fantasy:** Realizing you don't actually control your own empire anymore.
+
+**Mechanic:** Mega-corporations can form across multiple star systems, controlling specific resources. If a corporation controls more than 50% of a critical resource (like Alloys), they begin to issue demands directly to the player, bypassing normal diplomacy.
+
+**Emergence:** You are fighting a desperate war for survival. The "Stellar Mining Guild," which controls all your alloy production, suddenly demands you cede a border world to them. If you refuse, they shut down all your shipyards.
+
+**Tension:** Do you nationalize the corporations (causing massive internal unrest and temporary resource crashes) or give into their demands to maintain war production?
+
+---
