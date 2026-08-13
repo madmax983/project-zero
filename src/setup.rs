@@ -63,6 +63,8 @@ pub fn setup_world() -> World {
     world
         .init_resource::<Events<crate::layer2::trade::phantom_limb_logistics::InterceptDropEvent>>(
         );
+    world.init_resource::<bevy_ecs::event::Events<crate::layer1::physics::magnetic_reversal::PoleFlipEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<crate::layer2::trade::phantom_trade_routes::FixPhantomRouteEvent>>();
     world.init_resource::<Events<crate::layer2::trade::phantom_limb_logistics::AuditRiskEvent>>();
     world.init_resource::<Events<crate::layer1::orphaned_swarm::SwarmArrivalEvent>>();
     world.init_resource::<Events<crate::layer1::orphaned_swarm::SwarmHostileEvent>>();
@@ -120,6 +122,8 @@ pub fn setup_world_with_config(#[allow(unused_variables)] config: SetupConfig) -
     world
         .init_resource::<Events<crate::layer2::trade::phantom_limb_logistics::InterceptDropEvent>>(
         );
+    world.init_resource::<bevy_ecs::event::Events<crate::layer1::physics::magnetic_reversal::PoleFlipEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<crate::layer2::trade::phantom_trade_routes::FixPhantomRouteEvent>>();
     world.init_resource::<Events<crate::layer2::trade::phantom_limb_logistics::AuditRiskEvent>>();
     world.init_resource::<Events<crate::layer1::orphaned_swarm::SwarmArrivalEvent>>();
     world.init_resource::<Events<crate::layer1::orphaned_swarm::SwarmHostileEvent>>();
