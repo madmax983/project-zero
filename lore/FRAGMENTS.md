@@ -11383,3 +11383,25 @@ Words and phrases describing the sudden, inexplicable loss of resources.
 - questioning the purpose of survival
 
 ---
+
+## Fragment Type: [SCRAP_ARMADA_DESCRIPTOR]
+How a primitive cargo cult fleet is described.
+
+- a jagged flotilla of welded garbage
+- an uncontrollable planetary defense laser made from our old flagship
+- hulks of rusted mining drones strapped to chemical rockets
+- a terrifying armada of unguided zealotry
+- a chaotic swarm of scavenged thrusters
+- a monument to our discarded waste
+
+## Fragment Type: [PRIMITIVE_BELIEF]
+What the primitive cargo cult believes about their scrap fleet.
+
+- returning the metal to the gods
+- the wrath of the silent ancestors
+- ascending to the stars through holy scrap
+- vengeance for the forgotten sky-fire
+- appeasing the metal angels
+- a sacred crusade of rusted iron
+
+---

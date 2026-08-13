@@ -11524,3 +11524,25 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[COLONY], [YEAR]: The bureaucracy is corrected. The [RESOURCE] stays here, but the workers are [WASTED_LABOR_SYMPTOM]."
 
 ---
+
+## The Cargo Cult Fleet Templates
+
+## Template: CARGO_CULT_ARMADA_DETECTED
+**Generates:** Play event
+**Slots:** [SYSTEM], [YEAR], [SCRAP_ARMADA_DESCRIPTOR], [PRIMITIVE_BELIEF]
+
+**Patterns:**
+- "[YEAR]: We returned to [SYSTEM] and found our old mistakes waiting. They have built [SCRAP_ARMADA_DESCRIPTOR], driven by [PRIMITIVE_BELIEF]."
+- "[SYSTEM] is no longer empty. The primitives we ignored have welded our debris into [SCRAP_ARMADA_DESCRIPTOR]. They preach of [PRIMITIVE_BELIEF]."
+- "A terrible symmetry in [SYSTEM]. [YEAR]. Our discarded metal, turned into [SCRAP_ARMADA_DESCRIPTOR]. They seek [PRIMITIVE_BELIEF]."
+
+## Template: CARGO_CULT_ARMADA_DEFEATED
+**Generates:** Play event
+**Slots:** [SYSTEM], [YEAR], [DEBRIS_AMOUNT]
+
+**Patterns:**
+- "[YEAR]: The scrap fleet in [SYSTEM] is broken. We left [DEBRIS_AMOUNT] more tons of wreckage. Let us hope they do not rebuild."
+- "We silenced the zealots of [SYSTEM]. Their junk ships burn. [DEBRIS_AMOUNT] tons of new orbital debris added. [YEAR]."
+- "The rusted armada fell at [SYSTEM]. [YEAR]. The orbital lanes are choked with [DEBRIS_AMOUNT] tons of metal."
+
+---
