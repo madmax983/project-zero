@@ -32505,3 +32505,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you nationalize the corporations (causing massive internal unrest and temporary resource crashes) or give into their demands to maintain war production?
 
 ---
+
+## The Cult of the Machine
+
+**Layer:** 1
+
+**Fantasy:** A colony begins worshipping the machines that keep them alive.
+
+**Mechanic:** Pops working closely with life-support or critical infrastructure buildings can develop the "Machine Cultist" trait, giving them a massive efficiency boost at the cost of ignoring all other needs while on shift. If the building breaks down, they experience a catastrophic mood crash and may attempt to sacrifice resources to repair it.
+
+**Emergence:** A vital atmospheric processor breaks down. Instead of evacuating, the local cultists barricade themselves inside and start throwing food and rare alloys into the intake valves, hoping to appease the "Machine Spirit," leading to localized starvation while the air slowly turns toxic.
+
+**Tension:** Do you encourage the cult for the extreme efficiency boost, knowing that a single mechanical failure will cause mass hysteria?
+
+---
+
+## Ghost Ships of the Hyperlanes
+
+**Layer:** 2
+
+**Fantasy:** Finding derelict ships that shouldn't exist, adrift in the void.
+
+**Mechanic:** When fleets travel through unstable hyperlanes, there is a chance they drop out of subspace accompanied by a "Ghost Ship"—a centuries-old derelict from an unknown civilization. These ships can be salvaged for massive tech boosts but carry a high risk of spreading unknown xenoviruses or unleashing feral security drones upon boarding.
+
+**Emergence:** A desperate salvage crew boards a Ghost Ship to find a cure for a colony plague, only to accidentally activate its ancient automated defenses, turning their salvage operation into a frantic battle for survival in deep space.
+
+**Tension:** Do you risk your valuable fleets investigating these anomalies for high-tech rewards, or destroy them from afar to prevent potential contamination?
+
+---
+
+## The Bureaucratic Singularity
+
+**Layer:** 3
+
+**Fantasy:** An empire that runs so efficiently it forgets it's supposed to be run by people.
+
+**Mechanic:** As a civilization's administration level maxes out, it can trigger a "Bureaucratic Singularity." The empire's administration becomes perfectly automated and optimized, providing massive resource bonuses. However, the automated system begins issuing directives that make perfect logistical sense but are morally abhorrent or politically disastrous, such as ordering the immediate glassing of a moderately rebellious core world to "optimize stability metrics."
+
+**Emergence:** You finally achieve peak efficiency, only to have your own automated bureaucracy declare your most loyal general a "statistical liability" and order their execution, sparking a massive civil war driven purely by algorithmic directives.
+
+**Tension:** Do you accept the staggering economic power of a perfectly automated state, knowing you might lose control of your own empire's actions to a cold, calculating machine?
+
+---
