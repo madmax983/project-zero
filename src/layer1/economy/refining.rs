@@ -97,6 +97,18 @@ pub fn get_refining_recipe(
             },
             0.0, // Clean
         ),
+        BuildingType::Recycler => (
+            res.biological_waste >= 5.0 && res.nutrient_paste < res.max_nutrient_paste,
+            ColonyResources {
+                biological_waste: 5.0,
+                ..ColonyResources::zeroed()
+            },
+            ColonyResources {
+                nutrient_paste: 5.0,
+                ..ColonyResources::zeroed()
+            },
+            0.5, // Unpleasant aura/waste byproduct
+        ),
         BuildingType::LumberMill => (
             res.wood >= 1.0 && res.planks < res.max_planks,
             ColonyResources {
@@ -716,5 +728,27 @@ mod tests {
 
         let progress = world.query::<&RefiningProgress>().single(&world);
         assert_eq!(progress.current, 0.0, "Glitchy mill should not progress");
+    }
+}
+
+#[cfg(test)]
+mod recycler_production_tests {
+    use super::*;
+    use crate::layer1::architecture::building::BuildingType;
+    use crate::layer1::economy::resources::ColonyResources;
+
+
+    #[test]
+    fn test_recycler_recipe() {
+        let res = ColonyResources {
+            biological_waste: 10.0,
+            max_nutrient_paste: 50.0,
+            ..ColonyResources::default()
+        };
+
+        let (can_refine, input, output, _waste) = get_refining_recipe(BuildingType::Recycler, &res);
+        assert!(can_refine);
+        assert_eq!(input.biological_waste, 5.0);
+        assert_eq!(output.nutrient_paste, 5.0);
     }
 }

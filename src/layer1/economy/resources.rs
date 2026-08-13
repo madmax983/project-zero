@@ -526,7 +526,7 @@ impl ColonyResources {
     /// Returns the total food available (food aggregate + rations).
     #[must_use]
     pub fn total_food(&self) -> f32 {
-        self.food + self.rations
+        self.food + self.rations + self.nutrient_paste
     }
 
     /// Adds planks, clamping to the maximum capacity.
