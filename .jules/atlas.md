@@ -99,3 +99,7 @@
 **[Title] Fix Missing/Implicit Pop Dependency in layer1 mod**
 **Tangle:** In `src/layer1/systems/consumption.rs` and `src/layer1/systems/observation.rs`, the code incorrectly referenced `crate::layer1::pop::handle_pop_death_system`. The actual source was `crate::layer1::entities::pop::handle_pop_death_system`, and while `entities::*` was re-exported using a wildcard in `layer1/mod.rs`, referencing it via `crate::layer1::pop::` instead of the full path confused tooling and broke strict paths.
 **Blueprint:** Explicitly re-routed `crate::layer1::pop::handle_pop_death_system` to `crate::layer1::entities::pop::handle_pop_death_system` in both system registration files.
+
+**Unused Import Fix**
+**Tangle:** `src/layer1/agriculture/farm.rs` was leaking structural sloppiness by containing unused imports (`MoodModifier` and `bevy::prelude::*`) that caused warnings.
+**Blueprint:** Removed the unused imports to ensure the codebase remains clean and warning-free, maintaining a strict module boundary and obeying `-D warnings`.
