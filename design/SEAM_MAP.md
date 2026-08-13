@@ -1959,3 +1959,9 @@
 - **Glue added:** Added `phantom_trade_routes_chronicle_bridge` in `src/layer2/integration.rs` to generate Chronicle records when a Phantom Trade Route is fixed.
 - **Schedule:** Registered the system in `src/simulation.rs`.
 - **Tests:** Added tests in `tests/integration/phantom_trade_routes_chronicle.rs`.
+### INT-695: The Long Night -> Chronicle
+- **Date:** 2026-11-01
+- **Systems connected:** `StartLongNightEvent` / `LongNightEvent` -> `long_night_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `long_night_chronicle_bridge` in `src/layer1/core/integration.rs` to generate Chronicle records when The Long Night starts and ends.
+- **Schedule:** Registered the system in `src/layer1/systems/execution.rs`.
+- **Tests:** Added tests in `tests/integration/long_night_chronicle.rs`.
