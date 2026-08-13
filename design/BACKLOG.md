@@ -633,3 +633,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1358` Micro-Debris Avalanches — `specs/1358-micro-debris-avalanches.md`
 - [ ] `1359` The Echo of the Architects — `specs/1359-the-echo-of-the-architects.md`
 - [ ] `1360` The Automation Paradox — `specs/1360-the-automation-paradox.md`
+- [ ] `1361` The Cargo Cult Escort — `specs/1361-the-cargo-cult-escort.md`
