@@ -464,4 +464,8 @@ pub fn register(schedule: &mut Schedule) {
         crate::layer1::core::integration::magnetic_reversal_chronicle_bridge
             .in_set(Layer1SystemSet::Execution),
     );
+    schedule.add_systems(
+        crate::layer1::core::integration::long_night_chronicle_bridge
+            .in_set(Layer1SystemSet::Execution),
+    );
 }
