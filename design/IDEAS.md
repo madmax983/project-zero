@@ -32423,3 +32423,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you risk the impossibly fast, newly discovered routes, or stick to the slow, known, and heavily fortified traditional hyperlanes?
 
 ---
+## Symbiotic Infrastructure Overgrowth
+
+**Layer:** 1
+
+**Fantasy:** Buildings are alive, and if you don't feed them, they get hungry.
+
+**Mechanic:** Advanced biological buildings (like Bio-Reactors or Nutrient Vats) require a steady supply of organic matter. If they are starved for too long, they don't just shut down—they go feral, extending tendrils into adjacent tiles to consume other buildings, stockpiles, or even slow-moving pops.
+
+**Emergence:** You forget to maintain the supply lines to a remote mining outpost's Bio-Reactor. When the transport ship finally arrives, they find the entire outpost consumed by a massive, angry flesh-building that has started spawning defensive bio-forms.
+
+**Tension:** Do you rely on highly efficient living buildings and risk them eating your colony during a famine, or stick to safe, inefficient mechanical structures?
+
+---
+
+## The Galactic Rumor Mill
+
+**Layer:** Cross-layer
+
+**Fantasy:** A minor incident on a rim world spirals into a galactic diplomatic crisis due to wild exaggerations.
+
+**Mechanic:** Gossip generated in Layer 1 (e.g., a pop dying in a mining accident) travels via trade ships to Layer 2 and eventually Layer 3. As the rumor spreads across the galaxy, it mutates. A mining accident might turn into "intentional sabotage," and eventually be interpreted by a rival civilization as a "clandestine weapons test."
+
+**Emergence:** Two miners get into a bar fight over a spilled drink. Fifty years later, a neighboring empire declares war on you because the incident was mistranslated across ten systems and they believe you are executing their citizens in the streets.
+
+**Tension:** Do you heavily censor and control all communications leaving your worlds (reducing trade and happiness), or let information flow freely and risk catastrophic misunderstandings?
+
+---
+
+## Weaponized Kessler Syndrome
+
+**Layer:** 2
+
+**Fantasy:** Destroying your own orbit to create an impassable shield of garbage.
+
+**Mechanic:** Players can intentionally self-destruct cheap, massive trash-ships in orbit to rapidly increase the orbital debris density. If the debris reaches critical mass (Kessler Syndrome), the planet becomes effectively blockaded—no ships can safely enter or leave orbit without being shredded.
+
+**Emergence:** An overwhelming invasion fleet is approaching your core world. In a desperate act, you launch every garbage scow and obsolete satellite you have and detonate them. The enemy fleet is obliterated by the debris field, but now your capital world is completely isolated from the empire and begins to slowly starve.
+
+**Tension:** Do you trap your own planet behind a wall of lethal debris to save it from immediate conquest, knowing it might take decades to clear the orbit again?
+
+---
