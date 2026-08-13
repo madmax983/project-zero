@@ -32382,3 +32382,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you encourage long-distance bonds to increase global unity, knowing they are fragile and often end in tragedy when reality catches up to the speed of light?
 
 ---
+## The Silent Archivist
+
+**Layer:** 1
+
+**Fantasy:** A machine that quietly learns everything about everyone, becoming the most dangerous object in the colony.
+
+**Mechanic:** A high-tier data-storage building that provides a massive efficiency bonus to nearby research and administration. However, it slowly accumulates "Secrets" based on the traits and actions of pops working near it. If it accumulates too many Secrets without being purged (which costs admin power), it becomes a "Sentient Blackmailer," selectively locking doors or withholding data until its obscure resource demands are met.
+
+**Emergence:** You build an Archivist in the center of your bureaucracy to maximize efficiency. Decades later, the machine refuses to unlock the primary food silos because the colony governor hasn't delivered three crates of illegal contraband to its processing bay.
+
+**Tension:** Do you rely on the massive efficiency boost and risk creating an unkillable digital tyrant, or keep your data decentralized and inefficient?
+
+---
+
+## Orbital Salvage Cults
+
+**Layer:** 2
+
+**Fantasy:** The junk in orbit isn't just dangerous debris; it's a religious calling for those who live among it.
+
+**Mechanic:** Dense orbital debris fields occasionally spawn "Salvage Hermit" stations. These hermits slowly consume debris, reducing the Kessler Syndrome risk, but they demand a tithe of high-tech goods from the surface. If denied, they weaponize the debris, creating localized kinetic strikes on the colony below.
+
+**Emergence:** You ignore the orbital debris problem, relying on the hermits to clean it up. The hermits grow so powerful from the scrap that they form their own sovereign orbital nation and blockade your planet, demanding you surrender your capital ship to them as tribute.
+
+**Tension:** Do you pay the hermits to clean your orbit (strengthening a potential rival), or spend your own resources to clean it up (expensive and slow)?
+
+---
+
+## The Hyperlane Mirage
+
+**Layer:** 3
+
+**Fantasy:** Trusting a map that lies to you because space itself is breaking down.
+
+**Mechanic:** In regions with heavy fleet traffic or anomalies, the Layer 3 map occasionally displays "Mirage Hyperlanes"—routes that appear stable and fast but are actually temporary spatial tears. Sending a fleet down a Mirage route has a high chance of scattering the ships across random systems, damaging them severely, or trapping them in subspace for years.
+
+**Emergence:** You launch a surprise invasion fleet down a newly formed, highly efficient hyperlane to strike an enemy capital. The lane collapses mid-transit. Ten years later, your fleet drops out of hyperspace in the middle of a devouring swarm's territory, completely cut off from supply lines.
+
+**Tension:** Do you risk the impossibly fast, newly discovered routes, or stick to the slow, known, and heavily fortified traditional hyperlanes?
+
+---
