@@ -32588,3 +32588,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you crack down on the smuggling routes to reclaim your lost tax revenue, or quietly tolerate them as an off-the-books logistics network for emergencies?
 
 ---
+## The Scavenger's Economy
+
+**Layer:** 1
+
+**Fantasy:** Desperate colonists tearing down their own life support to build weapons.
+
+**Mechanic:** When resources run low, pops can autonomously deconstruct non-critical (and eventually critical) buildings to salvage raw materials for immediate needs like food synthesis or defense.
+
+**Emergence:** A colony under siege might survive by eating its own infrastructure, leaving them victorious but slowly suffocating because they dismantled the air scrubbers to build turrets.
+
+**Tension:** Do you lock down buildings to prevent dismantling (risking immediate starvation/defeat) or let them cannibalize the colony for short-term survival?
+
+---
+
+## Orbital Light Pollution
+
+**Layer:** Cross-layer
+
+**Fantasy:** Watching your sky disappear behind the glare of your own success.
+
+**Mechanic:** Layer 2 orbital structures (megastructures, traffic hubs) cast literal shadows and light pollution onto Layer 1 colonies. This disrupts the circadian rhythms of pops and kills nocturnal agriculture, but provides free illumination and passive energy generation.
+
+**Emergence:** You build a massive trade hub in orbit to save the failing economy, but the perpetual daylight it casts drives the planetary population insane from sleep deprivation, sparking a riot that destroys the planetary spaceport.
+
+**Tension:** Do you space out your orbital infrastructure (inefficient) or accept that your core worlds will never see the stars again and must be heavily policed to manage the psychological toll?
+
+---
+
+## Galactic Refugee Waves
+
+**Layer:** Cross-layer
+
+**Fantasy:** Dealing with the humanitarian fallout of someone else's war.
+
+**Mechanic:** When Layer 3 wars or Layer 2 disasters occur, large populations flee as "Refugee Fleets". These fleets arrive at your Layer 1 colonies unexpectedly, bypassing normal immigration controls and instantly draining local resources, but providing massive, cheap labor pools.
+
+**Emergence:** A neighboring empire's collapse sends millions of refugees to your highly optimized, delicately balanced agricultural world, causing immediate famine. But those refugees bring rare technologies and eventually form a new specialized caste that revolutionizes your industry.
+
+**Tension:** Do you turn the refugees away at gunpoint (damaging your galactic reputation and causing pop guilt) or accept them and risk crashing your fragile planetary economy?
+
+---
