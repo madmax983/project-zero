@@ -11405,3 +11405,21 @@ What the primitive cargo cult believes about their scrap fleet.
 - a sacred crusade of rusted iron
 
 ---
+
+
+## Cultural Artifact Templates (Spec 632)
+
+## Fragment Type: [ARTIFACT_THEME]
+- Victory
+- Tragedy
+- Feast
+- Survival
+- Grief
+- Sacrifice
+
+## Fragment Type: [ART_TYPE]
+- Statue
+- Tapestry
+- Song
+- Mural
+- Obelisk

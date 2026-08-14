@@ -6283,3 +6283,52 @@
 **Usage:** "The realization of Pointless Labor shattered their morale."
 
 ---
+
+
+## Chromotaxis (Spec 1146)
+### structural color
+**Replaces:** building paint, habitat tint
+**Code reference:** `StructuralColor` component
+**Usage:** "The structural color of the new wing is rust-red."
+
+## Monuments of Failure (Spec 167)
+### The Folly / The Skeleton
+**Replaces:** ruined monument, abandoned mega-project
+**Code reference:** `MonumentOfFailure` component
+**Usage:** "The Folly casts a long shadow over the colony."
+
+## Crop Diversity (Spec 120)
+### earth-apple / water-grain / sun-grain
+**Replaces:** potatoes, rice, wheat
+**Code reference:** Specific crop components
+**Usage:** "The earth-apple harvest saved us from winter."
+
+## Atmospheric Processors (Spec 207)
+### the Lung / sky-forge
+**Replaces:** atmospheric processor, terraforming engine
+**Code reference:** `BuildingType::AtmosphericProcessor`
+**Usage:** "The Lung is pulling the poison from the air."
+
+## Cultural Artifacts (Spec 632)
+### cultural artifact / memory-stone
+**Replaces:** artwork, statue, tapestry
+**Code reference:** `CulturalArtifact` component
+**Usage:** "The memory-stone commemorates our victory."
+
+## The Cryo-Prison Revolt (Spec 625)
+### The Thawed / Cryo-Convicts
+**Replaces:** awakened prisoners, mutineers
+**Code reference:** `CryoPrisoner` component
+**Usage:** "The Thawed have taken the armory."
+
+## The Bureaucratic Black Hole (Spec 1170)
+### the Black Hole / the Void-Desk
+**Replaces:** extreme bureaucracy, lost paperwork
+**Code reference:** `BureaucraticBlackHole` event
+**Usage:** "My requisition form fell into the Black Hole."
+
+## The Phantom Tax (Spec 876)
+### phantom tax / the slush-fund
+**Replaces:** stolen credits, hacked treasury
+**Code reference:** `PhantomTax` event
+**Usage:** "The phantom tax was siphoned from the core worlds."
