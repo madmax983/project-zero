@@ -72,3 +72,7 @@
 **[Extracting Match Statements Using Existing Struct Helpers]**
 **Learning:** Monolithic `match` statements inside business logic (like `execute_trade`) that sequentially manually check, deduct, and add dozens of resource variants create excessive boilerplate. If the underlying data structure (`ColonyResources`) already exposes robust helper methods (like `try_consume` and `add_resource`) that handle edge cases securely, mirroring that logic manually is a code smell.
 **Action:** Replace the manual `match` blocks with direct calls to the struct's helper methods, taking care to preserve any specific edge cases (such as explicitly rejecting certain resource types before deduction). This dramatically flattens the code and delegates responsibility back to the domain struct.
+
+**[Extracting Match Statements Using Existing Struct Helpers]**
+**Learning:** Monolithic `match` statements inside business logic (like `inspect_pop`) that sequentially manually check, deduct, and add dozens of resource variants create excessive boilerplate. If the underlying data structure (`ColonyResources`) already exposes robust helper methods (like `add_resource`) that handle edge cases securely, mirroring that logic manually is a code smell.
+**Action:** Replace the manual `match` blocks with direct calls to the struct's helper methods. Always preserve explicit rejections or ignored variants (e.g., using `if matches!(...)`) to ensure runtime behavior does not change.

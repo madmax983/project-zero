@@ -116,14 +116,11 @@ pub fn inspect_pop(world: &mut World, pop_entity: Entity) {
     // 2. Return to global resources
     let mut resources = world.resource_mut::<ColonyResources>();
     for (res_type, amount) in stolen_goods {
-        match res_type {
-            ResourceType::Food => resources.add_food(amount),
-            ResourceType::Metal => resources.add_metal(amount),
-            ResourceType::Wood => resources.add_wood(amount),
-            ResourceType::Stone => resources.add_stone(amount),
-            // Add other mappings as needed, defaulting to nothing if not supported by ColonyResources direct fields
-            // The spec only mentioned Food and Metal explicitly for the traits.
-            _ => {}
+        if matches!(
+            res_type,
+            ResourceType::Food | ResourceType::Metal | ResourceType::Wood | ResourceType::Stone
+        ) {
+            resources.add_resource(&res_type, amount);
         }
     }
 
