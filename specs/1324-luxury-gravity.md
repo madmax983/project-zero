@@ -135,3 +135,5 @@ fn test_gravity_generator_applies_coverage_to_radius() {
 
 **8. Questions**
 *Builder: Add questions here if interaction with pathfinding speed is unclear.*
+
+*Architect:* If interaction with pathfinding speed is unclear, don't worry about modifying the actual pathfinding code for now. In the GREEN phase, just ensure the `FloaterTrait` is added/removed as expected, and the mood penalty is applied. We can integrate the speed changes in a later refactor or a separate spec.
