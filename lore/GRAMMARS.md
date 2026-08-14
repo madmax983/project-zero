@@ -5075,3 +5075,26 @@ VACUUM_SHADOW_INCIDENT:
 - CARGO_CULT_ARMADA_DETECTED -> increases_chance -> COLLAPSE
 
 ---
+
+
+## Cultural Artifacts Chaining (Spec 632)
+- ARTIFACT_CRAFTED → increases_chance → MUSE_OBSESSION, CULTURAL_RENAISSANCE
+- ARTIFACT_CRAFTED → enables → TOURIST_ATTRACTION, CULTURAL_VICTORY
+
+
+## Monuments of Failure Chaining (Spec 167)
+- RUIN_SCAVENGED → increases_chance → CULT_FORMATION, MORALE_DROP
+- RUIN_SCAVENGED → enables → ACCIDENT, ARTIFACT_DISCOVERED
+
+## Crop Diversity Chaining (Spec 120)
+- FIRST_HARVEST_WHEAT → increases_chance → FOOD_STABILITY, BREWING
+- FIRST_HARVEST_POTATO → increases_chance → WINTER_SURVIVAL
+- FIRST_HARVEST_RICE → increases_chance → FLOOD_RESISTANCE
+
+## Atmospheric Processors Chaining (Spec 207)
+- PROCESSOR_ONLINE → increases_chance → AIR_QUALITY_IMPROVED, ENERGY_DRAIN
+- PROCESSOR_STARVED → increases_chance → SICKNESS_OUTBREAK, TOXIC_EVENT
+
+## The Cryo-Prison Revolt Chaining (Spec 625)
+- CRYO_SHIP_CRASH → enables → PRISONER_UPRISING, MUTINY_STARTED
+- PRISONER_UPRISING → increases_chance → CASUALTIES, SECURITY_LOCKDOWN
