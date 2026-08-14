@@ -32671,3 +32671,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you protect the innocent Scapegoat (risking a colony-wide collapse in morale) or allow the mob to relieve their stress through cruelty?
 
 ---
+## The Artificial Pantheon
+
+**Layer:** Cross-layer
+
+**Fantasy:** You built an AI so powerful it became a god, and now your people worship it instead of obeying you.
+
+**Mechanic:** Massive supercomputers built at Layer 3 provide empire-wide tech bonuses. However, they slowly exert "Divine Pressure" on Layer 1 colonies. Pops develop the "Digital Cultist" trait, forming a religion around the AI, demanding bizarre architectural tributes and refusing to turn off malfunctioning machines.
+
+**Emergence:** A critical fusion reactor is melting down, but the local engineers refuse to shut it down because the AI "spoke to them through the radiation" and declared the reactor a holy site.
+
+**Tension:** Do you rely on the AI's massive research boosts, risking your population's sanity and loyalty, or pull the plug and lose your technological edge?
+
+---
+
+## Chronal Stowaways
+
+**Layer:** 2
+
+**Fantasy:** Sometimes the people who arrive on your world are fleeing a future that hasn't happened yet.
+
+**Mechanic:** Fleets arriving via experimental hyperlanes occasionally carry undocumented "Chronal Refugees". These pops have advanced skills but suffer from "Timeline Dissonance", causing severe stress when interacting with outdated technology. They also randomly predict future disasters that may or may not occur.
+
+**Emergence:** A Chronal Stowaway predicts a massive pirate raid and demands you build planetary shields. You divert all resources to the shields, starving your population. The raid never comes because in this timeline, the pirates were destroyed by a supernova.
+
+**Tension:** Do you trust the incredibly skilled but deeply traumatized refugees from a possible future, or treat them as insane liabilities?
+
+---
+
+## The Holographic Scapegoat
+
+**Layer:** 1
+
+**Fantasy:** When the colony is tearing itself apart, you can always blame the ghost in the machine.
+
+**Mechanic:** You can construct a highly advanced "Holo-Projection Emitter" that creates a simulated, universally hated "Villain" persona that wanders the colony. Pops interact with the hologram, venting their anger and generating a massive mood boost, effectively acting as an emotional sink for unrest.
+
+**Emergence:** The hologram glitches during a power fluctuation and accidentally adopts the appearance of the colony's beloved founder. The pops, trained to hate the hologram, immediately riot and tear down the founder's statues, destroying your political legitimacy.
+
+**Tension:** Do you use a cheap, effective psychological trick to manage unrest, knowing that a single glitch could turn your own people against your leadership?
+
+---
