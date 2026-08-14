@@ -32547,3 +32547,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you accept the staggering economic power of a perfectly automated state, knowing you might lose control of your own empire's actions to a cold, calculating machine?
 
 ---
+## Generational Debt Ships
+
+**Layer:** 2
+
+**Fantasy:** Sending colonists on ships they can't afford, indenturing their descendants before they even arrive.
+
+**Mechanic:** When desperate for expansion, players can launch "Debt Ships"—cheap colony vessels funded by mega-corporations. The resulting colony starts with a massive resource deficit owed to the corporation, automatically siphoning a percentage of its output back to the core worlds.
+
+**Emergence:** A frontier world finally pays off its centuries-long debt, triggering a massive economic boom but also a fierce independence movement driven by generations of resentment. They immediately declare a trade embargo on your core systems.
+
+**Tension:** Do you expand rapidly using corporate debt, knowing it will choke the frontier's growth and breed rebellion, or expand slowly on your own dime?
+
+---
+
+## The Artifact Religion
+
+**Layer:** 1
+
+**Fantasy:** Your colonists misinterpreting alien ruins as divine, reshaping their society around something they don't understand.
+
+**Mechanic:** If a colony is founded near unexcavated Layer 3 alien ruins, pops working nearby can develop a "Zealot" trait. They gain massive morale boosts when near the ruins but refuse to let scientists excavate or study them, violently protesting any state interference.
+
+**Emergence:** You desperately need the advanced tech hidden in the ruins to win a war, but the local cult has grown so powerful they control the planet's food supply. Attempting to force an excavation triggers a planet-wide starvation strike.
+
+**Tension:** Do you respect the local religion for the stability and morale it provides, or crush it to secure the technological advantage hidden beneath them?
+
+---
+
+## Hyperlane Smuggling Routes
+
+**Layer:** 3
+
+**Fantasy:** An invisible, parallel economy moving through the blind spots of your empire's map.
+
+**Mechanic:** As your empire expands and heavily fortifies major hyperlanes, "Smuggler Routes" form—hidden, inefficient paths connecting neglected rim worlds. These routes bypass all customs and tariffs, draining tax revenue but significantly boosting local happiness by supplying banned or heavily taxed goods.
+
+**Emergence:** A hostile empire blockades your heavily fortified capital, severing your official supply lines. However, the capital survives the siege because a massive, untracked network of smugglers uses their hidden routes to sneak food and supplies past the blockade for exorbitant profits.
+
+**Tension:** Do you crack down on the smuggling routes to reclaim your lost tax revenue, or quietly tolerate them as an off-the-books logistics network for emergencies?
+
+---
