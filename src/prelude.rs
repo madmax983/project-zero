@@ -2,6 +2,24 @@
 //!
 //! This module provides easy access to commonly used types and functions in the SCALE library.
 //! By adding `use scale::prelude::*;` to your code, you can avoid deep nested imports.
+//!
+//! ## Examples
+//!
+//! ```
+//! use scale::prelude::*;
+//!
+//! // The prelude provides access to core simulation types like `World` and `SimulationTime`.
+//! let config = SetupConfig {
+//!     headless: true,
+//!     ..Default::default()
+//! };
+//! let mut world = setup_world_with_config(config);
+//!
+//! assert_eq!(world.resource::<SimulationTime>().tick, 0);
+//! ```
+
+/// Core ECS types required for headless simulation and querying.
+pub use bevy_ecs::prelude::{Commands, Component, Entity, Query, Res, ResMut, World};
 
 pub use crate::setup::{setup_world_with_config, SetupConfig};
 pub use crate::shared::narrative::{NarrativeContext, NarrativeGenerator, NarrativeSegment};
