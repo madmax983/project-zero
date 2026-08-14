@@ -698,3 +698,5 @@ pub use architecture_of_paranoia::*;
 pub mod pets;
 pub use pets::*;
 pub mod bureaucratic_strike;
+
+pub mod scapegoat;

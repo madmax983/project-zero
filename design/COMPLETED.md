@@ -982,3 +982,4 @@
 - [x] `INT-1139` Integration: Magnetic Reversal -> Chronicle — completed 2026-08-12
 - [x] `1138` Organic Recycling — `specs/1138-organic-recycling.md` — completed 2026-08-13
 - [x] `INT-695` Integration: The Long Night -> Chronicle — completed 2026-11-01
+- [x] `1142` The Scapegoat — `specs/1142-the-scapegoat.md` — completed 2026-11-01

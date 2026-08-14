@@ -3487,14 +3487,19 @@ pub fn magnetic_reversal_chronicle_bridge(
 
 /// INT-695: Bridges The Long Night to AddChronicleEvent
 pub fn long_night_chronicle_bridge(
-    mut events: bevy_ecs::event::EventReader<crate::layer1::nature::long_night::StartLongNightEvent>,
+    mut events: bevy_ecs::event::EventReader<
+        crate::layer1::nature::long_night::StartLongNightEvent,
+    >,
     long_night: bevy_ecs::system::Res<crate::layer1::nature::long_night::LongNightEvent>,
     mut was_active: bevy_ecs::system::Local<bool>,
-    mut chronicle_events: bevy_ecs::event::EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+    mut chronicle_events: bevy_ecs::event::EventWriter<
+        crate::layer1::core::chronicle::AddChronicleEvent,
+    >,
 ) {
     for _ in events.read() {
         chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
-            text: "The Long Night has begun. The sun is blocked, and temperatures are plummeting.".to_string(),
+            text: "The Long Night has begun. The sun is blocked, and temperatures are plummeting."
+                .to_string(),
             importance: crate::layer1::core::chronicle::EventImportance::Major,
         });
     }
