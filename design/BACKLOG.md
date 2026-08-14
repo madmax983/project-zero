@@ -12,7 +12,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `277` Orbital Megastructure Deorbiting — `specs/277-orbital-megastructure-deorbiting.md`
 
 - [ ] `290` The Phantom Shift — `specs/290-phantom-shift.md`
-- [ ] `298` The Nostalgia Engine — `specs/298-nostalgia-engine.md`
 - [ ] `305` The Empathy Broadcast — `specs/305-empathy-broadcast.md`
 - [ ] `319` The Gravity Well Forge — `specs/319-gravity-well-forge.md`
 - [ ] `322` The Pirate's Pension — `specs/322-pirates-pension.md`

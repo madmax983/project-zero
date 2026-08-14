@@ -13,6 +13,8 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::economy::information_black_market::check_censorship_threshold_system,
             crate::layer1::economy::information_black_market::process_black_market_drain_system,
             crate::layer1::economy::information_black_market::generate_black_market_intel_system,
+            crate::layer1::tech::tick_nostalgia_engine,
+            crate::layer1::tech::process_pilgrim_fees,
         )
             .in_set(Layer1SystemSet::Economy),
     );
