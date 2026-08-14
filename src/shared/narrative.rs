@@ -133,17 +133,27 @@ impl std::fmt::Display for NarrativeError {
             ),
         };
 
+        use crossterm::style::{Color, Stylize};
+
+        writeln!(
+            f,
+            "\n{}",
+            "╭── Narrative System Error ───────────────────────╮".with(Color::Red)
+        )?;
+
+        let text = format!("{:<47}", err_type);
+        writeln!(f, "│ {} │", text.with(Color::Yellow))?;
+        writeln!(
+            f,
+            "{}",
+            "╰─────────────────────────────────────────────────╯".with(Color::Red)
+        )?;
+
         let mut table = Table::new();
         table
             .load_preset(UTF8_FULL)
             .apply_modifier(comfy_table::modifiers::UTF8_ROUND_CORNERS)
-            .set_content_arrangement(comfy_table::ContentArrangement::Dynamic)
-            .set_header(vec![
-                Cell::new("Narrative System Error")
-                    .fg(TableColor::Red)
-                    .add_attribute(comfy_table::Attribute::Bold),
-                Cell::new(err_type).fg(TableColor::Yellow),
-            ]);
+            .set_content_arrangement(comfy_table::ContentArrangement::Dynamic);
 
         table.add_row(vec![
             Cell::new("Message")
@@ -158,7 +168,7 @@ impl std::fmt::Display for NarrativeError {
             Cell::new(action).fg(TableColor::White),
         ]);
 
-        write!(f, "\n{}\n", table)
+        write!(f, "{}", table)
     }
 }
 
