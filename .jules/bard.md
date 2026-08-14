@@ -7,3 +7,6 @@
 ## 2026-08-11 - [Narrative Generator Documentation Update]
 **Confusion:** Missing documentation for the `NarrativeGenerator`, `NarrativeContext`, `Template`, and `FragmentType` structs. Also lacking examples. Unused variables in examples caused clippy to fail. Duplication of struct doc strings due to placing them before and after derives.
 **Clarification:** Rewrote documentation to include module level, struct, and function level `///` doc strings. Removed duplicate doc strings on `Template` and `FragmentType` and resolved unused variables in doc test examples. Fixed `load_from_files` doc test.
+## 2026-08-14 - [Headless Simulation Prelude Exports]
+**Confusion:** Users attempting to abstract headless simulation logic into functions taking `&mut World` encountered `E0425` (cannot find type `World` in this scope) because standard Bevy ECS types were not exported in the prelude.
+**Clarification:** Re-exported core Bevy ECS types (`World`, `Query`, `Commands`, `Res`, `ResMut`, `Entity`, `Component`) in `scale::prelude` and added module-level `## Examples` documentation to clarify their usage.
