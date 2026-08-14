@@ -32629,3 +32629,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you turn the refugees away at gunpoint (damaging your galactic reputation and causing pop guilt) or accept them and risk crashing your fragile planetary economy?
 
 ---
+
+## Gravity Well Traffic Jams
+
+**Layer:** 2
+
+**Fantasy:** Space isn't an empty highway; it's a series of perilous chokepoints.
+
+**Mechanic:** High volume of ship traffic near a specific gravity well (like a busy trade hub) creates "Spatial Churn." This makes hyperspace jumps in and out take progressively longer and consume more fuel.
+
+**Emergence:** An enemy blockade isn't created by warships, but by intentionally flooding a lane with thousands of cheap, automated cargo drones to create a massive traffic jam, preventing your defense fleet from jumping out.
+
+**Tension:** Centralize trade for efficiency (causing massive churn and slow response times) or decentralize hubs (expensive and hard to defend)?
+
+---
+
+## The Successor's Burden
+
+**Layer:** Cross-layer
+
+**Fantasy:** Inheriting an empire built by someone else, where the old rules don't make sense anymore.
+
+**Mechanic:** When a highly influential Leader or Governor dies, their major "Edicts" (policies) remain locked in place for a duration as "Legacy Edicts." Revoking them immediately costs massive political capital and causes unrest among older pops.
+
+**Emergence:** The brilliant founder who designed the militarized economy dies. You want to shift to a peacetime tech focus, but the "Legacy Edicts" force you to keep producing useless dreadnoughts while your people riot for consumer goods.
+
+**Tension:** Slowly dismantle the legacy (stagnation) or rip the band-aid off (immediate crisis)?
+
+---
+
+## The Scapegoat
+
+**Layer:** 1
+
+**Fantasy:** The dark side of social cohesion. A community banding together by turning on one of their own.
+
+**Mechanic:** When colony-wide mood is critically low, Pops might spontaneously identify a "Scapegoat" (often someone with low social status or weird traits). Harassing or exiling the Scapegoat provides a massive temporary mood boost to the rest of the colony.
+
+**Emergence:** The colony survives a brutal winter because they exiled the only decent doctor, blaming them for a crop failure. Now they have high morale but will die from the next minor illness.
+
+**Tension:** Do you protect the innocent Scapegoat (risking a colony-wide collapse in morale) or allow the mob to relieve their stress through cruelty?
+
+---
