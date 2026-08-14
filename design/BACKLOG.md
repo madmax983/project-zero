@@ -495,7 +495,6 @@ See `design/IDEAS.md` for unspecced concepts.
 
 - [x] `1056` The Dead Hand — `specs/1056-the-dead-hand.md` — completed 2024-05-31
 - [x] `1129` Planetary Rings as Highways — `specs/1129-planetary-rings-as-highways.md` — completed 2026-06-25
-- [ ] `1142` The Scapegoat — `specs/1142-the-scapegoat.md`
 - [ ] `1143` Pulsar Timing — `specs/1143-pulsar-timing.md`
 - [ ] `1147` Accidental Terraforming — `specs/1147-accidental-terraforming.md`
 - [ ] `1148` The Biomass Dividend — `specs/1148-the-biomass-dividend.md`

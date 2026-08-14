@@ -468,10 +468,10 @@ mod symbiotic_parasite_bridge;
 mod biological_stock_market_bridge;
 #[path = "integration/feral_logistics_chronicle.rs"]
 mod feral_logistics_chronicle;
-#[path = "integration/long_night_chronicle.rs"]
-mod long_night_chronicle;
 #[path = "integration/generational_amnesia_bridge.rs"]
 mod generational_amnesia_bridge;
+#[path = "integration/long_night_chronicle.rs"]
+mod long_night_chronicle;
 #[path = "integration/rocket_equation_chronicle.rs"]
 mod rocket_equation_chronicle;
 
