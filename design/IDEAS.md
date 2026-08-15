@@ -32795,3 +32795,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you invest in cheap deception that might backfire politically, or spend real resources on an actual navy?
 
 ---
+## The Gravity Loom
+
+**Layer:** 2
+
+**Fantasy:** Wielding the fundamental forces of the universe to reshape your world, at terrible risk.
+
+**Mechanic:** An orbital megastructure that allows you to alter the local gravity of specific tiles on the planet below. High gravity compresses resources for faster mining or pins enemies down. Low gravity allows massive construction projects or faster movement.
+
+**Emergence:** You increase gravity over a hostile mega-fauna nest to crush them, but the localized gravity well pulls a passing asteroid out of orbit, which crashes directly onto your new gravity zone.
+
+**Tension:** Extreme efficiency and power vs. the constant risk of accidentally triggering localized gravitational catastrophes.
+
+---
+
+## The Entangled Administration
+
+**Layer:** Cross-layer
+
+**Fantasy:** The bureaucracy is so efficient it literally predicts your orders, sometimes incorrectly.
+
+**Mechanic:** A quantum administration system eliminates all communication lag across layers. However, due to quantum entanglement, there is a small chance the system "predicts" your order and executes a probabilistic alternative instead (e.g. you order a defensive fleet to hold, and it attacks instead, because that was a highly probable alternative reality).
+
+**Emergence:** You try to send emergency relief to a starving world. The Entangled Administration probabilistically decides you actually meant to send weapons, sparking an accidental war while your people starve.
+
+**Tension:** Perfect, lag-free control across the galaxy vs. the terrifying reality that the system might randomly do the opposite of what you want.
+
+---
+
+## The Chronal Schism
+
+**Layer:** 2
+
+**Fantasy:** Meeting your own fleet arriving from the past, or the future, and not knowing which is real.
+
+**Mechanic:** Fleets passing through highly unstable spatial anomalies have a chance to undergo a "Chronal Schism," splitting into two identical fleets. One fleet follows your current orders. The other fleet acts based on what you were doing ten years ago (or randomly generates actions it claims are from the future).
+
+**Emergence:** You send your grand armada to defend a border. It splits in an anomaly. The second armada immediately attacks your own core worlds because, ten years ago, you were fighting a civil war and that was its standing order.
+
+**Tension:** Do you destroy the rogue twin of your own fleet (wasting immense resources) or try to corral it and use its outdated logic to your advantage?
+
+---
