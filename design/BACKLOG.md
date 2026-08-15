@@ -490,7 +490,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1013` The Void Echoes — `specs/1013-the-void-echoes.md`
 - [ ] `1021` The Shadow Cabinet — `specs/1021-the-shadow-cabinet.md`
 - [ ] `1032` Open Source Science — `specs/1032-open-source-science.md`
-- [ ] `1030` Gravity Engineering — `specs/1030-gravity-engineering.md` — claimed 2026-02-01
 
 - [x] `1056` The Dead Hand — `specs/1056-the-dead-hand.md` — completed 2024-05-31
 - [x] `1129` Planetary Rings as Highways — `specs/1129-planetary-rings-as-highways.md` — completed 2026-06-25

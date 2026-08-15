@@ -18,7 +18,8 @@ pub fn evaluate_structural_integrity_system(
 
     for event in construction_events.read() {
         if let Ok((mut height, material, mut structure)) = query.get_mut(event.entity) {
-            if !material.0.is_reinforced() && height.floors > base_max_height {
+            if !material.0.is_reinforced() && height.floors > base_max_height
+            {
                 // Progressive Collapse: deduct 50.0 HP per excess floor instead of instant total destruction
                 let excess_floors = height.floors.saturating_sub(base_max_height);
                 height.floors = base_max_height;
@@ -122,7 +123,7 @@ mod tests {
                     building_type: crate::layer1::architecture::building::BuildingType::Housing,
                 },
                 Height { floors: 10 },
-                Material(MaterialType::Metal), // reinforced
+                Material(MaterialType::Stone), // reinforced
                 Structure {
                     current_hp: 100.0,
                     max_hp: 100.0,

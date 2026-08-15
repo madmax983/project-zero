@@ -1,0 +1,1 @@
+- [ ] `1030` Gravity Engineering — `specs/1030-gravity-engineering.md` — claimed 2026-02-01

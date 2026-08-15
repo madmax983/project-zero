@@ -122,7 +122,7 @@ impl MaterialType {
     /// Returns true if the material is considered structurally reinforced.
     #[must_use]
     pub const fn is_reinforced(&self) -> bool {
-        matches!(self, Self::Metal)
+        matches!(self, Self::Metal | Self::Stone)
     }
 
     /// Returns the HP modifier for this material.
