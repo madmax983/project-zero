@@ -281,9 +281,15 @@ pub use prototyping::*;
 pub mod geology;
 pub use geology::*;
 
-/// Oral Tradition system (Nova Feature).
+#[cfg(feature = "nova")]
 pub mod oral_tradition;
+#[cfg(feature = "nova")]
 pub use oral_tradition::*;
+
+#[cfg(not(feature = "nova"))]
+pub mod oral_tradition_stub;
+#[cfg(not(feature = "nova"))]
+pub use oral_tradition_stub::*;
 
 /// Genius Loci system (Nova Feature).
 #[cfg(feature = "nova")]

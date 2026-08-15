@@ -82,7 +82,7 @@ impl std::fmt::Display for NarrativeError {
     /// let err = NarrativeError::MissingContext("YEAR".to_string());
     ///
     /// // The Display trait handles the formatting automatically.
-    /// // Users do not need to call any custom formatting methods like `to_table()`.
+    /// // Users do not need to call any custom formatting methods.
     /// let output = format!("{}", err);
     /// assert!(output.contains("Missing Context"));
     /// assert!(output.contains("YEAR"));
