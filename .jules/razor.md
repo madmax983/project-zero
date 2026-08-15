@@ -43,3 +43,7 @@
 **Bloat:** Unused exports for headless users in prelude
 **Cut:** Removed layer1, World, Query, Commands, Res, ResMut, Entity, Component exports
 **Saved:** 7 lines of code and cognitive load for API consumers
+## [Reduction]
+**Bloat:** 1-variant enum `ProtocolRule` that adds unnecessary abstraction.
+**Cut:** Eliminated the enum. Converted `DeadProtocol` to a unit struct.
+**Saved:** Reduced cognitive load and unnecessary enum pattern matching.
