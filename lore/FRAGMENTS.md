@@ -11423,3 +11423,13 @@ What the primitive cargo cult believes about their scrap fleet.
 - Song
 - Mural
 - Obelisk
+
+## Temporal Smuggling Fragments (Spec 299)
+
+## Fragment Type: [PARADOX_TYPE]
+- temporal dissonance wave
+- chronological scrambling
+- erasure cascade
+- history rewrite
+
+---

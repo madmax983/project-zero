@@ -11546,3 +11546,34 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "The rusted armada fell at [SYSTEM]. [YEAR]. The orbital lanes are choked with [DEBRIS_AMOUNT] tons of metal."
 
 ---
+
+## Temporal Smuggling Templates (Spec 299)
+
+## Template: TEMPORAL_RIFT_OPENED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [RESOURCE]
+
+**Patterns:**
+- "[YEAR]: A rift opened in [COLONY]. We received [RESOURCE] from nowhere. The debt will come due."
+- "We borrowed [RESOURCE] from tomorrow. [COLONY] must repay it in exactly one year. [YEAR]."
+- "[COLONY], [YEAR]: The rift provided [RESOURCE]. We are now indebted to the timeline."
+
+## Template: TEMPORAL_DEBT_PAID
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [RESOURCE]
+
+**Patterns:**
+- "[YEAR]: The loop is closed at [COLONY]. We surrendered the [RESOURCE] to the rift."
+- "We paid the temporal loan. [COLONY] gave back the [RESOURCE] today. [YEAR]."
+- "[COLONY], [YEAR]: The timeline demands its due. [RESOURCE] was returned to the void."
+
+## Template: PARADOX_EVENT_TRIGGERED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [PARADOX_TYPE]
+
+**Patterns:**
+- "[YEAR]: We failed to pay the debt. A [PARADOX_TYPE] struck [COLONY]."
+- "The timeline snapped. [COLONY] suffered a [PARADOX_TYPE] for our unpaid debts. [YEAR]."
+- "[COLONY], [YEAR]: The loop broke. [PARADOX_TYPE] initiated."
+
+---
