@@ -746,7 +746,11 @@ fn push_entity_header<'a>(layout: &mut InspectorLayout<'a>, world: &'a World, en
     layout.push(1, |_, _| {}); // Spacer
 }
 
-fn push_entity_components<'a>(layout: &mut InspectorLayout<'a>, world: &'a World, entity: Entity) {
+fn push_needs_component<'a>(
+    layout: &mut InspectorLayout<'a>,
+    world: &'a World,
+    entity: Entity,
+) -> bool {
     if let Some(needs) = world.get::<Needs>(entity) {
         let bio_opt = world.get::<Biocompatibility>(entity);
         let health_opt = world.get::<Health>(entity);
@@ -758,22 +762,90 @@ fn push_entity_components<'a>(layout: &mut InspectorLayout<'a>, world: &'a World
         layout.push(details_height, move |f, a| {
             render_bio_monitor(f, a, needs, bio_opt, health_opt);
         });
-    } else if let Some(housing) = world.get::<Housing>(entity) {
+        return true;
+    }
+    false
+}
+
+fn push_housing_component<'a>(
+    layout: &mut InspectorLayout<'a>,
+    world: &'a World,
+    entity: Entity,
+) -> bool {
+    if let Some(housing) = world.get::<Housing>(entity) {
         layout.push(3, move |f, a| render_housing_details(f, a, housing));
-    } else if let Some(farm) = world.get::<Farm>(entity) {
+        return true;
+    }
+    false
+}
+
+fn push_farm_component<'a>(
+    layout: &mut InspectorLayout<'a>,
+    world: &'a World,
+    entity: Entity,
+) -> bool {
+    if let Some(farm) = world.get::<Farm>(entity) {
         layout.push(3, move |f, a| render_farm_details(f, a, farm));
-    } else if let Some(stockpile) = world.get::<Stockpile>(entity) {
+        return true;
+    }
+    false
+}
+
+fn push_stockpile_component<'a>(
+    layout: &mut InspectorLayout<'a>,
+    world: &'a World,
+    entity: Entity,
+) -> bool {
+    if let Some(stockpile) = world.get::<Stockpile>(entity) {
         layout.push(6, move |f, a| render_stockpile_details(f, a, stockpile));
-    } else if let Some(progress) = world.get::<RefiningProgress>(entity) {
+        return true;
+    }
+    false
+}
+
+fn push_refining_component<'a>(
+    layout: &mut InspectorLayout<'a>,
+    world: &'a World,
+    entity: Entity,
+) -> bool {
+    if let Some(progress) = world.get::<RefiningProgress>(entity) {
         layout.push(3, move |f, a| render_refining_details(f, a, progress));
-    } else if let Some(obs) = world.get::<Observatory>(entity) {
+        return true;
+    }
+    false
+}
+
+fn push_observatory_component<'a>(
+    layout: &mut InspectorLayout<'a>,
+    world: &'a World,
+    entity: Entity,
+) -> bool {
+    if let Some(obs) = world.get::<Observatory>(entity) {
         layout.push(3, move |f, a| render_observatory_details(f, a, obs, world));
-    } else if let Some(fauna) = world.get::<NocturnalFauna>(entity) {
+        return true;
+    }
+    false
+}
+
+fn push_nocturnal_fauna_component<'a>(
+    layout: &mut InspectorLayout<'a>,
+    world: &'a World,
+    entity: Entity,
+) -> bool {
+    if let Some(fauna) = world.get::<NocturnalFauna>(entity) {
         layout.push(3, move |f, a| {
             render_nocturnal_fauna_details(f, a, fauna, world)
         });
+        return true;
     }
+    false
+}
 
+fn push_structure_component<'a>(
+    layout: &mut InspectorLayout<'a>,
+    world: &'a World,
+    entity: Entity,
+) {
     if let Some(structure) = world.get::<Structure>(entity) {
         let pct = if structure.max_hp > 0.0 {
             ((structure.current_hp / structure.max_hp * 100.0).clamp(0.0, 100.0)) as u16
@@ -798,6 +870,18 @@ fn push_entity_components<'a>(layout: &mut InspectorLayout<'a>, world: &'a World
             );
         });
     }
+}
+
+fn push_entity_components<'a>(layout: &mut InspectorLayout<'a>, world: &'a World, entity: Entity) {
+    let _ = push_needs_component(layout, world, entity)
+        || push_housing_component(layout, world, entity)
+        || push_farm_component(layout, world, entity)
+        || push_stockpile_component(layout, world, entity)
+        || push_refining_component(layout, world, entity)
+        || push_observatory_component(layout, world, entity)
+        || push_nocturnal_fauna_component(layout, world, entity);
+
+    push_structure_component(layout, world, entity);
 }
 
 fn push_power_diagnostics<'a>(layout: &mut InspectorLayout<'a>, world: &'a World, entity: Entity) {

@@ -1,8 +1,8 @@
-use bevy_ecs::prelude::*;
+use crate::layer1::construction::great_works::GreatWork;
 use crate::layer1::construction::great_works::OperationalGreatWork;
 use crate::layer1::energy::PowerConsumer;
 use crate::layer3::resources::EmpireCredits;
-use crate::layer1::construction::great_works::GreatWork;
+use bevy_ecs::prelude::*;
 
 #[derive(Component)]
 pub struct PilgrimShip {
@@ -21,14 +21,14 @@ pub fn tick_nostalgia_engine(
         .any(|(work, consumer)| work.name == "Nostalgia Engine" && consumer.active);
 
     if has_active_engine && (*tick_counter).is_multiple_of(100) {
-        commands.spawn(PilgrimShip { parked: true, fee_rate: 100.0 });
+        commands.spawn(PilgrimShip {
+            parked: true,
+            fee_rate: 100.0,
+        });
     }
 }
 
-pub fn process_pilgrim_fees(
-    query: Query<&PilgrimShip>,
-    credits: Option<ResMut<EmpireCredits>>,
-) {
+pub fn process_pilgrim_fees(query: Query<&PilgrimShip>, credits: Option<ResMut<EmpireCredits>>) {
     let total_fees: f32 = query
         .iter()
         .filter(|ship| ship.parked)
@@ -43,10 +43,10 @@ pub fn process_pilgrim_fees(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use bevy::prelude::*;
     use crate::layer1::construction::great_works::GreatWork;
     use crate::layer1::energy::PowerConsumer;
     use crate::layer3::resources::EmpireCredits;
+    use bevy::prelude::*;
 
     fn setup_app() -> App {
         let mut app = App::new();
@@ -67,7 +67,10 @@ mod tests {
                 phase_costs: vec![],
             },
             OperationalGreatWork,
-            PowerConsumer { demand: 100.0, active: true },
+            PowerConsumer {
+                demand: 100.0,
+                active: true,
+            },
         ));
 
         // Tick 100 times to spawn a ship
@@ -77,7 +80,11 @@ mod tests {
 
         let mut query = app.world_mut().query::<&PilgrimShip>();
         let ships: Vec<_> = query.iter(app.world()).collect();
-        assert_eq!(ships.len(), 1, "Should spawn exactly one PilgrimShip after 100 ticks");
+        assert_eq!(
+            ships.len(),
+            1,
+            "Should spawn exactly one PilgrimShip after 100 ticks"
+        );
         assert!(ships[0].parked);
         assert_eq!(ships[0].fee_rate, 100.0);
     }
@@ -85,7 +92,10 @@ mod tests {
     #[test]
     fn test_parked_pilgrim_ships_generate_credits() {
         let mut app = setup_app();
-        app.world_mut().spawn(PilgrimShip { parked: true, fee_rate: 100.0 });
+        app.world_mut().spawn(PilgrimShip {
+            parked: true,
+            fee_rate: 100.0,
+        });
 
         app.update();
 
