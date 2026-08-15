@@ -327,3 +327,8 @@
 **Concept:** Added `flower_bed_inspiration_system` in `src/experimental/flower_bed_inspiration.rs`. Connects `Trait::Artistic` with `BuildingType::FlowerBed` and `ColonyResources::knowledge`. Artistic pops standing near a Flower Bed passively regenerate `leisure` (drawing inspiration from the beauty) and slowly generate `knowledge` for the colony each tick. However, this hyper-focus drains their `rest` slightly.
 **Fate:** Pending
 **Lesson:** Connects an aesthetic/vanity building (FlowerBed) directly to the colony economy (Knowledge) for specialized pops. It rewards players for creating dedicated gardens for their artists, turning beauty into a functional resource engine.
+
+## [Rainy Day Reading]
+**Concept:** Added `rainy_day_reading_system` in `src/experimental/rainy_day_reading.rs`. Connects `Trait::Intellectual`, `WeatherType::Rain`, and `BuildingType::Library`. Intellectual pops sheltering under a roof near a library during bad weather regenerate leisure rapidly and passively generate a small amount of knowledge for the colony.
+**Fate:** Submitted
+**Lesson:** Connects a personality trait, weather, and a specific building to create emergent behavior for Intellectuals during storms, turning bad weather into a research opportunity.

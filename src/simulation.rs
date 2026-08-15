@@ -1240,6 +1240,8 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
     crate::experimental::subconscious_computing::register(schedule);
     #[cfg(feature = "nova")]
     crate::experimental::adblock_siphoning::register(schedule);
+    #[cfg(feature = "nova")]
+    crate::experimental::rainy_day_reading::register(schedule);
 }
 #[cfg(test)]
 mod tests {
