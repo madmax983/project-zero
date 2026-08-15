@@ -32547,7 +32547,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you accept the staggering economic power of a perfectly automated state, knowing you might lose control of your own empire's actions to a cold, calculating machine?
 
 ---
-## Generational Debt Ships
+## Generational Debt Ships [SPECCED]
 
 **Layer:** 2
 
@@ -32561,7 +32561,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Artifact Religion
+## The Artifact Religion [SPECCED]
 
 **Layer:** 1
 
@@ -32575,7 +32575,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Hyperlane Smuggling Routes
+## Hyperlane Smuggling Routes [SPECCED]
 
 **Layer:** 3
 

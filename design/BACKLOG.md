@@ -631,3 +631,6 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1359` The Echo of the Architects — `specs/1359-the-echo-of-the-architects.md`
 - [ ] `1360` The Automation Paradox — `specs/1360-the-automation-paradox.md`
 - [ ] `1361` The Cargo Cult Escort — `specs/1361-the-cargo-cult-escort.md`
+- [ ] `1362` Generational Debt Ships — `specs/1362-generational-debt-ships.md`
+- [ ] `1363` The Artifact Religion — `specs/1363-the-artifact-religion.md`
+- [ ] `1364` Hyperlane Smuggling Routes — `specs/1364-hyperlane-smuggling-routes.md`
