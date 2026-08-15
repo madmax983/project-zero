@@ -32754,3 +32754,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you invest resources in extremely slow, long-term sabotage that might hit after the strategic landscape has completely changed, or rely on fast, detectable, immediate actions?
 
 ---
+## Orbital Graveyards
+
+**Layer:** 2
+
+**Fantasy:** Honoring the dead while cluttering the sky.
+
+**Mechanic:** When ships are destroyed or major characters die, you can choose to establish "Orbital Graveyards." These provide cultural and mood bonuses to the planet below. However, they take up valuable orbital slots and slowly drift, creating navigational hazards for incoming trade and colony ships.
+
+**Emergence:** Your oldest, most culturally rich world has a massive orbital graveyard. During a critical invasion, your defense fleet is delayed because they have to carefully navigate around the ancient mausoleums to avoid destroying sacred monuments, leading to a disastrous defeat on the ground.
+
+**Tension:** Do you prioritize cultural reverence and mood, or clear the orbit for efficiency and defense?
+
+---
+
+## Solar Wind Surfing
+
+**Layer:** 2
+
+**Fantasy:** Relying on the unpredictable whims of stars for logistics.
+
+**Mechanic:** You can build cheap, unpowered "Solar Sail Cargo Barges." They move completely free of fuel costs, relying entirely on the solar winds of a system. However, solar weather is highly unpredictable.
+
+**Emergence:** A critical shipment of medical supplies is becalmed for months during a solar minimum, causing a colony to suffer a severe plague. Then, a massive solar flare hits, propelling the barge at dangerous speeds straight into a planetary spaceport, destroying both the supplies and the station.
+
+**Tension:** Do you rely on free but unpredictable logistics, or pay the high cost of fueled freighters for reliability?
+
+---
+
+## The Phantom Fleet
+
+**Layer:** 2
+
+**Fantasy:** Deception on a massive scale, using ghost signals to win wars without firing a shot.
+
+**Mechanic:** You can construct "Signal Decoys"—cheap satellites that emit the sensor signatures of massive dreadnoughts. They appear as a massive fleet on enemy scanners but are completely unarmed and fragile.
+
+**Emergence:** You bluff an aggressive neighboring empire into a humiliating retreat by deploying a massive Phantom Fleet. However, your own citizens see the scanner data and believe you have a massive armada. When a small pirate raid attacks and you have no real ships to defend them, the population rebels out of perceived betrayal.
+
+**Tension:** Do you invest in cheap deception that might backfire politically, or spend real resources on an actual navy?
+
+---
