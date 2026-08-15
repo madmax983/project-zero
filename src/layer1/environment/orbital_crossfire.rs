@@ -96,8 +96,9 @@ pub fn mine_scrap(world: &mut World, designation_entity: Entity, work_amount: f3
 
 /// System that processes `OrbitalEvent` components, damaging buildings and creating `ImpactSite`s.
 pub fn impact_system(world: &mut World) {
-    let mut events = Vec::new();
+    // ⚡ Bolt Optimization: Pre-allocated vector capacity based on query size to eliminate dynamic heap reallocation.
     let mut query = world.query::<(Entity, &OrbitalEvent)>();
+    let mut events = Vec::with_capacity(query.iter(world).len());
     for (entity, event) in query.iter(world) {
         events.push((entity, event.target, event.damage, event.heat));
     }

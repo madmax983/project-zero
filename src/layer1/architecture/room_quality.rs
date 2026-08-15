@@ -358,8 +358,9 @@ mod tests {
         }
 
         // ⚡ Bolt: After spawning walls, we need to update the BuildingMap so calculate_room_quality can see them.
-        let mut map_updates = Vec::new();
+        // ⚡ Bolt Optimization: Pre-allocated vector capacity based on query size to eliminate dynamic heap reallocation.
         let mut query = world.query::<(bevy_ecs::entity::Entity, &GridPosition)>();
+        let mut map_updates = Vec::with_capacity(query.iter(&world).len());
         for (entity, pos) in query.iter(&world) {
             map_updates.push(((pos.x, pos.y), entity));
         }
