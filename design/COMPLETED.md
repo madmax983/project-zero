@@ -984,3 +984,5 @@
 - [x] `INT-695` Integration: The Long Night -> Chronicle — completed 2026-11-01
 - [x] `1142` The Scapegoat — `specs/1142-the-scapegoat.md` — completed 2026-11-01
 - [x] `298` The Nostalgia Engine — `specs/298-nostalgia-engine.md` — completed 2026-02-01
+- [x] `INT-1143` Integration: Pulsar Timing — completed 2026-11-01
+- [x] `1143` Pulsar Timing — `specs/1143-pulsar-timing.md` — completed 2026-11-01

@@ -1965,3 +1965,10 @@
 - **Glue added:** Added `long_night_chronicle_bridge` in `src/layer1/core/integration.rs` to generate Chronicle records when The Long Night starts and ends.
 - **Schedule:** Registered the system in `src/layer1/systems/execution.rs`.
 - **Tests:** Added tests in `tests/integration/long_night_chronicle.rs`.
+
+### INT-1143: Pulsar Timing
+- **Date:** 2026-11-01
+- **Systems connected:** `pulsar_rotation_system` and `pulsar_radiation_damage_system` added to `simulation.rs`.
+- **Glue added:** Systems registered in simulation loop to handle pulsar beam rotation and applying damage to ships caught in the beam.
+- **Schedule:** Registered in `register_simulation_extended_systems`
+- **Tests:** `tests/integration/pulsar_integration.rs`

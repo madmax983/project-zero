@@ -46,6 +46,10 @@ pub fn build_simulation_schedule() -> Schedule {
         .add_systems(crate::layer2::planetary_scarring::process_planetary_scars_system);
     register_simulation_core_systems(&mut schedule);
     register_simulation_extended_systems(&mut schedule);
+    schedule.add_systems((
+        crate::layer2::pulsar::pulsar_rotation_system,
+        crate::layer2::pulsar::pulsar_radiation_damage_system,
+    ).chain());
     schedule.add_systems(crate::layer2::void_leviathan::update_leviathan_eclipse_system);
     schedule.add_systems(crate::layer2::propaganda_engine::update_propaganda_system);
     schedule.add_systems((
