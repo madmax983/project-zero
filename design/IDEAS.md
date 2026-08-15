@@ -32712,3 +32712,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you use a cheap, effective psychological trick to manage unrest, knowing that a single glitch could turn your own people against your leadership?
 
 ---
+
+## Architectural Sabotage
+
+**Layer:** 1
+
+**Fantasy:** Buildings with a hidden agenda. The colony trusts its infrastructure, but the infrastructure doesn't trust the colony.
+
+**Mechanic:** Rogue pops or hidden factions can secretly install "Sabotage Nodes" in essential buildings. These nodes don't immediately break the building but instead cause subtle, compounding inefficiencies—like misreporting resource totals, slowly leaking atmospheric pressure, or slightly increasing the risk of accidents.
+
+**Emergence:** You notice food supplies dwindling faster than they should despite having full granaries. By the time you realize the "Sabotage Node" in the main atmospheric processor has been slowly venting oxygen to cause widespread lethargy and poor harvest yields, half the colony is too exhausted to fix it.
+
+**Tension:** Do you spend precious admin resources running deep, paranoid audits of every building, or do you trust the output numbers and focus on expansion?
+
+---
+
+## The Diplomatic Menagerie
+
+**Layer:** Cross-layer
+
+**Fantasy:** Maintaining peace through the exchange and care of extremely demanding, culturally significant alien beasts.
+
+**Mechanic:** As a sign of trust, Layer 3 empires gift you rare, massive alien fauna that must be kept alive and happy on your Layer 1 colony. These beasts require specialized, expensive habitats and specific diets. Their mood is directly tied to your diplomatic standing with the gifting empire.
+
+**Emergence:** A neighboring Warlord gifts you a "Carnivorous Void-Hound." It demands fresh meat daily and a massive open-air enclosure. During a famine, your colonists are starving, but if the Hound dies or its mood drops, the Warlord declares war. The colonists riot against the beast they are forced to feed.
+
+**Tension:** Do you sacrifice your own people's resources and space to maintain an extortionate diplomatic alliance, or let the beast die and face the wrath of an empire?
+
+---
+
+## Sub-Light Subterfuge
+
+**Layer:** 2
+
+**Fantasy:** Exploiting the slow crawl of sub-light travel to plant seeds of destruction years before they sprout.
+
+**Mechanic:** Instead of fast FTL attacks, you can launch "Sub-Light Torpedoes" or "Sleeper Pods" that take in-game years to reach their destination. Because they move so slowly and lack active energy signatures, they are virtually undetectable by standard Layer 2 sensors until they are days away from impact.
+
+**Emergence:** You launch a slow-moving sleeper pod filled with scrap-code toward an enemy's industrial hub. Decades later, during a tense peace negotiation, the pod finally arrives, crippling their manufacturing. The enemy assumes it was a sudden, unprovoked attack from a hidden base, plunging the sector into a war neither side expected.
+
+**Tension:** Do you invest resources in extremely slow, long-term sabotage that might hit after the strategic landscape has completely changed, or rely on fast, detectable, immediate actions?
+
+---
