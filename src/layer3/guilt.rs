@@ -66,8 +66,9 @@ pub fn process_construction_on_ruins_system(world: &mut World) {
     // and if the Building lacks PsychicResonance but the Ruin has it, we copy it over.
 
     // Extract ruin positions and resonances
-    let mut ruin_data = Vec::new();
+    // ⚡ Bolt Optimization: Pre-allocated vector capacity based on query size to eliminate dynamic heap reallocation.
     let mut query = world.query::<(&Ruin, &GridPosition, &PsychicResonance)>();
+    let mut ruin_data = Vec::with_capacity(query.iter(world).len());
     for (_, pos, res) in query.iter(world) {
         ruin_data.push((*pos, res.intensity));
     }
