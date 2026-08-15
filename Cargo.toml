@@ -67,4 +67,4 @@ required-features = ["nova"]
 
 [[example]]
 name = "test_readme_nova"
-required-features = ["nova"]
+# NO required-features, we want it to compile and run with the stub if nova is off
