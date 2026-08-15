@@ -734,3 +734,6 @@ mod phantom_trade_routes_chronicle;
 
 #[path = "integration/magnetic_reversal_chronicle_bridge.rs"]
 mod magnetic_reversal_chronicle_bridge;
+
+#[path = "integration/pulsar_integration.rs"]
+mod pulsar_integration;
