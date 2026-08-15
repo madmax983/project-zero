@@ -269,3 +269,5 @@ pub mod friendly_remittance;
 pub mod flower_bed_inspiration;
 #[cfg(feature = "nova")]
 pub mod night_owl_smuggling;
+#[cfg(feature = "nova")]
+pub mod rainy_day_reading;
