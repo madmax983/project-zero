@@ -6549,7 +6549,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Title Inflation
+## Title Inflation [SPECCED]
 
 **Layer:** 1
 
