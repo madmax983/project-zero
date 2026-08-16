@@ -11433,3 +11433,24 @@ What the primitive cargo cult believes about their scrap fleet.
 - history rewrite
 
 ---
+
+## Pulsar Timing Fragments (Spec 1143)
+
+## Fragment Type: [PULSAR_NAME]
+Flavor names for the deadly rotating pulsars.
+- The Lighthouse
+- The Sweeping Eye
+- The Blind Watcher
+- The Rhythm of Death
+- The Ticking Star
+- The Radiant Clock
+- The Pulse-Beacon
+
+## Fragment Type: [RADIATION_DAMAGE_REPORT]
+How the damage from the pulsar beam is described.
+- the hull boiled away
+- sensory arrays blinded and fused
+- the crew suffered immediate cellular degradation
+- unshielded systems melted into slag
+- the ship was cooked from the inside out
+- critical systems failed under the intense heat

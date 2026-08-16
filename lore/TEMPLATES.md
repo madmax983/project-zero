@@ -11577,3 +11577,29 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[COLONY], [YEAR]: The loop broke. [PARADOX_TYPE] initiated."
 
 ---
+
+## Pulsar Timing Templates (Spec 1143)
+
+## Template: PULSAR_DISCOVERED
+**Generates:** Play event (chronicle during game)
+**Slots:** [COLONY], [YEAR], [PULSAR_NAME], [SYSTEM]
+**Patterns:**
+- "[YEAR]: The rhythmic flashes in [SYSTEM] have a source. Surveyors from [COLONY] designate it [PULSAR_NAME]."
+- "We thought it was a lighthouse. It is a weapon. [COLONY] maps the beam of [PULSAR_NAME]. [YEAR]."
+- "[COLONY], [YEAR]: Navigation hazard confirmed. [PULSAR_NAME] pulses its deadly light in [SYSTEM]."
+
+## Template: SHIP_CAUGHT_IN_BEAM
+**Generates:** Play event (chronicle during game)
+**Slots:** [SHIP_NAME], [YEAR], [PULSAR_NAME], [RADIATION_DAMAGE_REPORT]
+**Patterns:**
+- "[YEAR]: Miscalculated the rotation. [SHIP_NAME] was caught in the beam of [PULSAR_NAME]. [RADIATION_DAMAGE_REPORT]."
+- "The sweep of [PULSAR_NAME] is merciless. [SHIP_NAME] failed to find a shadow in time. [RADIATION_DAMAGE_REPORT]. [YEAR]."
+- "[SHIP_NAME], [YEAR]: We stared into the blinding light of [PULSAR_NAME]. [RADIATION_DAMAGE_REPORT]."
+
+## Template: BEAM_EVADED
+**Generates:** Play event (chronicle during game)
+**Slots:** [SHIP_NAME], [YEAR], [PULSAR_NAME]
+**Patterns:**
+- "[YEAR]: A perfectly timed burn. [SHIP_NAME] slipped past the beam of [PULSAR_NAME]."
+- "They danced with the lighthouse of death. [SHIP_NAME] successfully navigated the shadow of [PULSAR_NAME]. [YEAR]."
+- "[SHIP_NAME], [YEAR]: The radiation swept over our wake. We survived the rotation of [PULSAR_NAME]."
