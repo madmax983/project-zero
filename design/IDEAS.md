@@ -32972,3 +32972,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you take the easy money now, knowing that a completely unpredictable, unstoppable force will demand anachronistic payment from your descendants?
 
 ---
+
+## The Dream Tax
+
+**Layer:** 1
+
+**Fantasy:** Monetizing the subconscious mind, creating a society that never truly rests.
+
+**Mechanic:** A late-game technology allows the colony to install "Dream Scrapers" in residential sectors. These devices extract processing power from the neural activity of sleeping Pops to boost colony-wide research or administration. However, it severely degrades sleep quality, increasing stress and leading to "Nightmare Sickness"—a contagious psychological debuff.
+
+**Emergence:** You activate the Dream Scrapers to meet a critical research deadline. The colony's tech output skyrockets, but within weeks, a wave of Nightmare Sickness sweeps the population. Workers start hallucinating at their stations, leading to industrial accidents, and a "Sleepers Rebellion" forms, demanding the destruction of the scrapers.
+
+**Tension:** Do you exploit the minds of your sleeping citizens for a massive intellectual advantage, knowing it will slowly drive them insane and create violent uprisings?
+
+---
+
+## Mimic Weeds
+
+**Layer:** 1
+
+**Fantasy:** The flora isn't just hostile; it's deceptively intelligent and parasitic.
+
+**Mechanic:** A rare xenoflora variant that visualizes exactly like your most valuable cultivated crops (e.g., high-yield wheat or medicinal herbs). When harvested, they yield a useless or toxic substance. The only way to differentiate them before harvest is through careful, slow "Botanical Scanning" by scientists, which reduces agricultural efficiency.
+
+**Emergence:** Your colony relies heavily on a massive cash crop export. During harvest season, you realize half the crop is Mimic Weed. The "medicines" you exported to a neighboring empire were toxic, plunging you into a diplomatic crisis and destroying your economy simultaneously.
+
+**Tension:** Do you employ slow, expensive scientific scanning to guarantee crop purity, or harvest quickly and blindly, risking catastrophic contamination?
+
+---
+
+## Mercenary Embargo
+
+**Layer:** 3
+
+**Fantasy:** War isn't fought by empires; it's fought by corporations who care more about their bottom line than your survival.
+
+**Mechanic:** Powerful mercenary fleets roam Layer 3, available for hire by any empire. However, these mercenaries form a union. If an empire fails to pay their exorbitant fees, mistreats them in battle, or uses WMDs, the mercenary union can declare a "Mercenary Embargo." No mercenary faction will work for the embargoed empire, and they may actively blockade their trade routes until massive reparations are paid.
+
+**Emergence:** You hire a massive mercenary fleet to win a desperate war, but sacrifice half of them in a reckless maneuver to save your capital. The Mercenary Union declares an embargo on you. Suddenly, your massive empire is defenseless, and you are forced to pay reparations that bankrupt you just to allow merchant ships through your space.
+
+**Tension:** Do you rely on disposable, highly effective mercenary fleets, knowing that abusing them will turn the entire galactic underworld against you?
+
+---
