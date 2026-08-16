@@ -85,41 +85,70 @@ mod tests {
     fn test_emissions_accumulate_byproducts() {
         let mut world = World::new();
 
-        let planet = world.spawn((
-            BiomeType::Ice,
-            AtmosphericByproducts { heat: 0.0, toxins: 0.0 },
-        )).id();
+        let planet = world
+            .spawn((
+                BiomeType::Ice,
+                AtmosphericByproducts {
+                    heat: 0.0,
+                    toxins: 0.0,
+                },
+            ))
+            .id();
 
         world.spawn((
-            crate::layer1::building::Building { building_type: crate::layer1::building::BuildingType::Housing },
-            TerraformEmissions { heat_per_tick: 10.0, toxins_per_tick: 5.0 },
+            crate::layer1::building::Building {
+                building_type: crate::layer1::building::BuildingType::Housing,
+            },
+            TerraformEmissions {
+                heat_per_tick: 10.0,
+                toxins_per_tick: 5.0,
+            },
         ));
 
         let _ = world.run_system_once(accumulate_emissions_system);
 
         let byproducts = world.get::<AtmosphericByproducts>(planet).unwrap();
-        assert_eq!(byproducts.heat, 10.0, "Heat should accumulate from buildings");
-        assert_eq!(byproducts.toxins, 5.0, "Toxins should accumulate from buildings");
+        assert_eq!(
+            byproducts.heat, 10.0,
+            "Heat should accumulate from buildings"
+        );
+        assert_eq!(
+            byproducts.toxins, 5.0,
+            "Toxins should accumulate from buildings"
+        );
     }
 
     #[test]
     fn test_terraforming_biome_shift() {
         let mut world = World::new();
 
-        let planet = world.spawn((
-            BiomeType::Ice,
-            AtmosphericByproducts { heat: 1000.0, toxins: 0.0 },
-        )).id();
+        let planet = world
+            .spawn((
+                BiomeType::Ice,
+                AtmosphericByproducts {
+                    heat: 1000.0,
+                    toxins: 0.0,
+                },
+            ))
+            .id();
 
         world.init_resource::<Events<BiomeShiftEvent>>();
 
         let _ = world.run_system_once(accidental_terraforming_system);
 
         let biome = world.get::<BiomeType>(planet).unwrap();
-        assert_eq!(*biome, BiomeType::Ocean, "High heat on Ice should melt it to Ocean");
+        assert_eq!(
+            *biome,
+            BiomeType::Ocean,
+            "High heat on Ice should melt it to Ocean"
+        );
 
         let events = world.resource::<Events<BiomeShiftEvent>>();
         let mut reader = events.get_cursor();
-        assert_eq!(reader.read(events).count(), 1, "Should emit a BiomeShiftEvent");
+        assert_eq!(
+            reader.read(events).count(),
+            1,
+            "Should emit a BiomeShiftEvent"
+        );
     }
 }
