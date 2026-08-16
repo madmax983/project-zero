@@ -32892,3 +32892,42 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you expend precious military resources during a crisis to shoot down fleeing deserters, or let them go and risk them returning as a superpower centuries later?
 
 ---
+## The Bureaucracy of Silence
+
+**Layer:** 1
+
+**Fantasy:** Maintaining secrecy becomes a logistical nightmare that suffocates productivity.
+
+**Mechanic:** Pops assigned to classified or illegal jobs accumulate a "Secrecy Burden". They refuse to interact with non-cleared pops to avoid spilling secrets. The colony must physically segregate them, building redundant hidden infrastructure (cafeterias, paths).
+
+**Emergence:** Your top-secret weapons program grinds to a halt because the one cleared chef died, and the engineers would rather starve than eat in the public mess hall and risk a security breach.
+
+**Tension:** Do you risk leaks and espionage by integrating your workforce, or cripple your logistics with paranoid, segregated infrastructure?
+
+---
+## The FTL Echo Boom
+
+**Layer:** 2
+
+**Fantasy:** Faster-than-light travel creates a localized sonic boom in the subspace fabric, weaponizing arrivals.
+
+**Mechanic:** Massive fleets dropping out of FTL near a planetary body generate a localized "Echo Boom". This wave disrupts low-orbit satellites and violently shakes the Layer 1 colony below, causing minor structural damage and temporary deafness (a mood debuff) among the population.
+
+**Emergence:** You order an emergency reinforcement fleet to save a besieged world. They jump in right over the capital to maximize surprise, but the resulting Echo Boom shatters the colony's fragile atmospheric dome, killing the very people they came to save.
+
+**Tension:** Do you jump safely at the edge of the system and waste critical time traveling sub-light, or jump dangerously close to the planet and risk collateral damage?
+
+---
+## Quantum-Entangled Saboteurs
+
+**Layer:** Cross-layer
+
+**Fantasy:** A spy network so deep they don't even know they are spies until the switch is flipped.
+
+**Mechanic:** Rival Layer 3 empires can secretly implant "Quantum Triggers" into the neural nets of unsuspecting pops (often refugees or immigrants). These pops live completely normal lives for decades. When the enemy activates the trigger, the pop instantly changes faction alignment and begins sabotaging their current workplace.
+
+**Emergence:** Your most trusted Sector Governor, who has served loyally for fifty years, suddenly vents the primary fusion reactor into the atmosphere the moment war is declared, because they were a sleeper agent the entire time.
+
+**Tension:** Do you deeply vet and heavily restrict immigration, stifling growth, or accept everyone and risk harboring devastating sleeper agents in your core worlds?
+
+---
