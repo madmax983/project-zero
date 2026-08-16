@@ -543,7 +543,7 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::core::integration::crustal_tide_chronicle_bridge,
             crate::layer1::core::integration::propaganda_graffiti_chronicle_bridge,
             crate::layer1::core::integration::petrification_chronicle_bridge,
-            crate::layer1::integration::phantom_shift_chronicle_bridge,
+            crate::layer1::core::integration::phantom_shift_chronicle_bridge,
             crate::layer1::integration::tether_snap_chronicle_bridge,
             crate::layer1::social::generational_knowledge::mark_newborns_system,
             crate::layer1::social::generational_knowledge::apply_generational_knowledge_system
