@@ -4,7 +4,7 @@ use scale::layer1::architecture::structure::Structure;
 use scale::layer1::chronicle::{AddChronicleEvent, EventImportance};
 use scale::layer1::day_night::{DayNightCycle, TimeOfDay};
 use scale::layer1::economy::resources::ColonyResources;
-use scale::layer1::integration::phantom_shift_chronicle_bridge;
+use scale::layer1::core::integration::phantom_shift_chronicle_bridge;
 use scale::layer1::pop::Pop;
 use scale::layer1::unseen_bureaucracy::{
     phantom_shift_system, Desperation, PhantomShiftEvent, ShadowEconomy,

@@ -1899,7 +1899,7 @@
 - **Tests:** `tests/integration/asteroid_crash_chronicle.rs`
 
 ### INT-1004: Orbital Secession -> Chronicle
-- **Date:** $(date +%Y-%m-%d)
+- **Date:** 2026-08-16
 - **Systems connected:** `Changed<SecessionState>` -> `orbital_secession_chronicle_bridge` -> `AddChronicleEvent`
 - **Glue added:** Added `orbital_secession_chronicle_bridge` in `src/layer2/integration.rs` to generate Chronicle records when an Orbital Habitat declares independence.
 - **Schedule:** Registered the system in `src/simulation.rs`.
@@ -1927,7 +1927,7 @@
 - **Tests:** Added tests in `tests/integration/weaponized_tourism_bridge.rs`.
 
 ### INT-319: The Gravity Well Forge -> Chronicle
-- **Date:** $(date +%Y-%m-%d)
+- **Date:** 2026-08-16
 - **Systems connected:** `ForgeCrushEvent` -> `observe_forge_crush_event` -> `AddChronicleEvent`
 - **Glue added:** The bridge `observe_forge_crush_event` was already implemented in `src/layer2/integration.rs` and registered in `src/simulation.rs`. Added an integration test to verify the seam works as expected.
 - **Tests:** `tests/integration/gravity_well_forge_bridge.rs`
@@ -1972,3 +1972,9 @@
 - **Glue added:** Systems registered in simulation loop to handle pulsar beam rotation and applying damage to ships caught in the beam.
 - **Schedule:** Registered in `register_simulation_extended_systems`
 - **Tests:** `tests/integration/pulsar_integration.rs`
+
+### INT-UNSEEN: Unseen Bureaucracy -> Chronicle
+- **Date:** 2026-08-16
+- **Systems connected:** `phantom_shift_system` -> `PhantomShiftEvent` -> `phantom_shift_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** `phantom_shift_chronicle_bridge` translates `PhantomShiftEvent` into a historical `AddChronicleEvent`. Registered in `src/layer1/systems/observation.rs`.
+- **Tests:** `tests/integration/unseen_bureaucracy_bridge.rs`
