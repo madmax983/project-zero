@@ -33014,3 +33014,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you rely on disposable, highly effective mercenary fleets, knowing that abusing them will turn the entire galactic underworld against you?
 
 ---
+
+## The Penal Hulk
+
+**Layer:** 2
+
+**Fantasy:** A roaming, automated prison ship that acts as both a deterrent and a volatile resource.
+
+**Mechanic:** A massive, slow-moving "Penal Hulk" ship periodically enters the system. It offers a huge influx of cheap labor (Prisoner pops) if docked, but docking it permanently increases the local crime rate and unrest on the nearest Layer 1 colony. If destroyed in orbit, it drops massive debris and causes a diplomatic incident with its owner empire.
+
+**Emergence:** You dock the hulk to survive a massive labor shortage during a harvest. The prisoners save the crops, but then immediately form a syndicate that takes over the agricultural district, forcing you to blockade your own food supply.
+
+**Tension:** Do you accept the immediate, desperate labor injection, knowing it will permanently corrupt your colony's social fabric?
+
+---
+
+## The Parasitic Comm-Relay Ship
+
+**Layer:** 2
+
+**Fantasy:** A ship that boosts your communication network but slowly siphons your data for a hidden agenda.
+
+**Mechanic:** A "Parasitic Comm-Relay Ship" can be deployed to a node to massively increase communication bandwidth, reducing delays for commands between Layers. However, it secretly copies all data transmitted through it and occasionally sells this data, causing random, localized diplomatic or economic penalties.
+
+**Emergence:** You rely heavily on the relay ship to coordinate a complex multi-planet defense strategy. The strategy succeeds, but the ship sells the tactical data to a rival empire, who immediately uses it to exploit your defensive blind spots in a subsequent attack.
+
+**Tension:** Do you prioritize fast, efficient communication across your empire, or maintain secure but slow, delayed networks to protect your secrets?
+
+---
+
+## The Deep-Space Refinery Ship
+
+**Layer:** 2
+
+**Fantasy:** A mobile industrial powerhouse that devours asteroids but pollutes the void.
+
+**Mechanic:** A massive "Refinery Ship" can be deployed to asteroid belts. It processes raw ore into high-tier alloys at incredible speeds, far faster than Layer 1 facilities. However, its exhaust creates temporary "Hazard Zones" in orbit that damage any passing trade or military ships, effectively shutting down local hyperlanes while it operates.
+
+**Emergence:** You park the refinery near a rich asteroid belt to quickly build a defensive fleet. The resulting pollution cloud blocks the hyperlane, preventing your newly built fleet from actually leaving the system to respond to an invasion.
+
+**Tension:** Do you prioritize massive, rapid industrial output, knowing it will temporarily cripple your system's logistics and mobility?
+
+---
