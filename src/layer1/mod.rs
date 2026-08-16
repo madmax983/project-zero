@@ -541,3 +541,5 @@ pub mod spatial_compression;
 pub use spatial_compression::*;
 pub mod leader_ascension;
 pub use leader_ascension::*;
+pub mod accidental_terraforming;
+pub use accidental_terraforming::*;
