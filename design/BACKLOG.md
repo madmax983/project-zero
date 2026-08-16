@@ -494,7 +494,6 @@ See `design/IDEAS.md` for unspecced concepts.
 
 - [x] `1056` The Dead Hand — `specs/1056-the-dead-hand.md` — completed 2024-05-31
 - [x] `1129` Planetary Rings as Highways — `specs/1129-planetary-rings-as-highways.md` — completed 2026-06-25
-- [ ] `1147` Accidental Terraforming — `specs/1147-accidental-terraforming.md`
 - [ ] `1148` The Biomass Dividend — `specs/1148-the-biomass-dividend.md`
 - [ ] `1149` The Consultant — `specs/1149-the-consultant.md`
 - [ ] `1151` The Immortal Mascot — `specs/1151-the-immortal-mascot.md`
