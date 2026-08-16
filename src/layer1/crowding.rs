@@ -181,6 +181,40 @@ mod tests {
     }
 
     #[test]
+    #[should_panic(expected = "Grid size overflow or too large")]
+    fn test_crowding_grid_initialization_too_large() {
+        let _ = CrowdingGrid::new(10000, 10000);
+    }
+
+    #[test]
+    fn test_crowding_decay_system() {
+        use bevy_ecs::system::RunSystemOnce;
+        let mut world = World::new();
+        let mut grid = CrowdingGrid::new(10, 10);
+        grid.add_crowding(5, 5, 10);
+        world.insert_resource(grid);
+
+        world.run_system_once(crowding_decay_system).unwrap();
+
+        let grid = world.resource::<CrowdingGrid>();
+        assert_eq!(grid.get(5, 5), 10 - DECAY_RATE);
+    }
+
+    #[test]
+    fn test_crowding_accumulation_system() {
+        use bevy_ecs::system::RunSystemOnce;
+        let mut world = World::new();
+        world.insert_resource(CrowdingGrid::new(10, 10));
+
+        world.spawn((crate::layer1::pop::Pop, GridPosition { x: 5, y: 5 }));
+
+        world.run_system_once(crowding_accumulation_system).unwrap();
+
+        let grid = world.resource::<CrowdingGrid>();
+        assert_eq!(grid.get(5, 5), CROWDING_PER_POP);
+    }
+
+    #[test]
     fn test_crowding_out_of_bounds_safety() {
         // Arrange
         let mut grid = CrowdingGrid::new(10, 10);
