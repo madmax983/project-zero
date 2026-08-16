@@ -32931,3 +32931,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you deeply vet and heavily restrict immigration, stifling growth, or accept everyone and risk harboring devastating sleeper agents in your core worlds?
 
 ---
+## Acoustic Echolocation Guild
+
+**Layer:** 1
+
+**Fantasy:** Navigating a subterranean colony entirely by sound, leading to a society of blind cartographers.
+
+**Mechanic:** On worlds with zero surface sunlight (or deep underground), standard lights are incredibly expensive to power. Instead, you can employ the "Echolocation Guild." These specialized Pops use powerful acoustic equipment to map resources and track hostiles. However, loud industrial noises (like mining lasers) "blind" the Guild, causing temporary loss of map vision in heavily industrialized zones.
+
+**Emergence:** You build a massive, noisy refinery complex deep underground. The noise completely blinds the local Echolocation Guild. When a nest of hostile subterranean megafauna attacks the refinery, your defenses are useless because the targeting systems literally cannot "see" them over the roar of the machines. You have to shut down the power to fight the monsters in the dark.
+
+**Tension:** Do you invest in expensive, quiet technology to maintain visibility, or rely on cheap, loud industry and risk fighting blind when threats emerge?
+
+---
+
+## Sentient Contraband
+
+**Layer:** Cross-layer
+
+**Fantasy:** An illegal luxury import turns out to be a highly adaptive, collective intelligence that wants to renegotiate the terms of its trade.
+
+**Mechanic:** Smuggling "Sentient Spores" (a high-tier luxury good) boosts colony morale immensely. However, if stored in large enough quantities, the spores form a collective consciousness. It will seize control of automated cargo networks (Layer 2) and demand political representation on the colony (Layer 1) under threat of spoiling all food reserves.
+
+**Emergence:** You crack down on a pirate ring, only to discover their primary contraband is now holding your capital's spaceport hostage, demanding a seat on the planetary council and a habitat built to exact humidity specifications.
+
+**Tension:** Do you violently purge the profitable, beloved spice (tanking morale and risking famine) or grant political power to a literal pile of expensive dust?
+
+---
+
+## The Relativistic Debt Collector
+
+**Layer:** 2
+
+**Fantasy:** Taking out a loan that takes centuries to repay, only for the debt collector to arrive from the past via relativistic travel.
+
+**Mechanic:** In desperate times, you can take a massive "Temporal Loan" from an ancient, hyper-advanced mercantile empire. They promise to collect the debt with interest in 100 years. Because they use relativistic near-lightspeed ships, their debt collectors experience only days while your empire experiences a century. When they arrive, their demands are based on their archaic understanding of your ancient economy, and they possess overwhelming, outdated, but brute-force technology to collect.
+
+**Emergence:** You take a Temporal Loan to survive an early-game famine, then spend a century building a peaceful, post-scarcity utopia that no longer uses currency. The debt collectors arrive, demand payment in physical gold (which you no longer mine), and threaten to glass your capital when you can't produce it.
+
+**Tension:** Do you take the easy money now, knowing that a completely unpredictable, unstoppable force will demand anachronistic payment from your descendants?
+
+---
