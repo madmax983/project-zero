@@ -107,7 +107,6 @@ scale = { version = "0.1.0", features = ["nova"] }
 ```
 
 ```rust
-# #![cfg(feature = "nova")]
 use scale::prelude::*;
 
 fn main() {
