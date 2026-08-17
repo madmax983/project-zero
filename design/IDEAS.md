@@ -6563,7 +6563,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Cadet Branch
+## The Cadet Branch [SPECCED]
 
 **Layer:** 3 -> 1
 
@@ -6675,7 +6675,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Potemkin Architecture
+## Potemkin Architecture [SPECCED]
 
 **Layer:** 1
 
@@ -6689,7 +6689,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Warp Wake
+## Warp Wake [SPECCED]
 
 **Layer:** 2
 
@@ -6703,7 +6703,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The World-Shell
+## The World-Shell [SPECCED]
 
 **Layer:** Cross-layer
 
@@ -6717,7 +6717,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Vacuum Agriculture
+## Vacuum Agriculture [SPECCED]
 
 **Layer:** 1
 
@@ -6731,7 +6731,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Civilizational Compost
+## Civilizational Compost [SPECCED]
 
 **Layer:** 1
 
@@ -6745,7 +6745,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Panic Spirals
+## Panic Spirals [SPECCED]
 
 **Layer:** 1
 
@@ -6759,7 +6759,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Gravity-Fed Logistics
+## Gravity-Fed Logistics [SPECCED]
 
 **Layer:** 1
 
@@ -6773,7 +6773,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The 'Recalled' Product
+## The 'Recalled' Product [SPECCED]
 
 **Layer:** 3 -> 1
 
@@ -6787,7 +6787,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## Atmospheric Resonance
+## Atmospheric Resonance [SPECCED]
 
 **Layer:** 1
 
@@ -6801,7 +6801,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The 'Ship of Fools'
+## The 'Ship of Fools' [SPECCED]
 
 **Layer:** 2 -> 1
 
@@ -6827,7 +6827,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Artifact Market
+## The Artifact Market [SPECCED]
 
 **Layer:** Cross-layer (1 -> 2)
 
@@ -19321,7 +19321,7 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 
 ---
 
-## The Artifact Market
+## The Artifact Market [SPECCED]
 
 **Layer:** Cross-layer
 
