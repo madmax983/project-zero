@@ -10,3 +10,6 @@
 ## 2026-08-14 - [Headless Simulation Prelude Exports]
 **Confusion:** Users attempting to abstract headless simulation logic into functions taking `&mut World` encountered `E0425` (cannot find type `World` in this scope) because standard Bevy ECS types were not exported in the prelude.
 **Clarification:** Re-exported core Bevy ECS types (`World`, `Query`, `Commands`, `Res`, `ResMut`, `Entity`, `Component`) in `scale::prelude` and added module-level `## Examples` documentation to clarify their usage.
+## 2026-08-15 - [README CFG Feature Fix]
+**Confusion:** The `# #![cfg(feature = "nova")]` line in the `README.md` example caused a compilation error (`error: expected one of \`!\` or \`[\`, found \`#\``) when users copy-pasted it.
+**Clarification:** Removed the offending line from `README.md` since the warning banner above it is sufficient.
