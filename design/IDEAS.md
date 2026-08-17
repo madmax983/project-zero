@@ -33056,3 +33056,42 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you prioritize massive, rapid industrial output, knowing it will temporarily cripple your system's logistics and mobility?
 
 ---
+## Subspace Drift
+
+**Layer:** 2
+
+**Fantasy:** Navigating treacherous space where the laws of physics slowly unravel, turning routine trade routes into ghost stories.
+
+**Mechanic:** Certain hyperlanes can experience "Subspace Drift," a temporary condition where transit times become highly unpredictable. Ships passing through might arrive instantly, years late, or occasionally duplicate themselves due to quantum anomalies.
+
+**Emergence:** You send a desperate relief fleet to a starving colony. They hit a Subspace Drift and vanish. Ten years later, after the colony has collapsed and been reclaimed by nature, the relief fleet arrives perfectly intact, their supplies now useless, but they refuse to believe they are late.
+
+**Tension:** Do you risk sending critical supplies through a drifting lane to save time, knowing they might vanish entirely or arrive centuries too late?
+
+---
+## Warp Sickness
+
+**Layer:** Cross-layer
+
+**Fantasy:** The psychological toll of traversing the stars faster than light, creating a society deeply scarred by its own mobility.
+
+**Mechanic:** Frequent FTL travel inflicts "Warp Sickness" on biological pops, a condition that slowly degrades their connection to reality. Pops with this trait suffer severe mood penalties when on a planet, yearning for the void, and occasionally experience vivid hallucinations that they spread to others as terrifying rumors.
+
+**Emergence:** Your elite core of interstellar diplomats, crucial for maintaining galactic peace, all develop advanced Warp Sickness. They start hallucinating phantom empires during critical summits and eventually refuse to disembark their ships, forcing you to conduct all diplomacy via unstable hololinks.
+
+**Tension:** Do you constantly rotate your critical personnel to prevent the sickness, losing valuable experience, or let your best leaders slowly lose their minds to the void?
+
+---
+## Stellar Nursery
+
+**Layer:** 2
+
+**Fantasy:** Harvesting the chaotic, violent energy of a star being born to fuel an empire, at great risk to the brave souls who tap it.
+
+**Mechanic:** A "Stellar Nursery" node provides unparalleled, massive energy output if a specialized collection station is built within it. However, the node is prone to sudden, violent protostar ignitions that can instantly vaporize the station and any fleets caught nearby, causing immense local unrest on nearby colonies.
+
+**Emergence:** You build your entire empire's economy around the massive power output of a single Stellar Nursery. A sudden ignition destroys the station, plunging half your worlds into a blackout just as an enemy fleet crosses your border.
+
+**Tension:** Do you centralize your power grid around a highly lucrative but incredibly volatile stellar phenomenon, or rely on safe, decentralized, but expensive planetary power?
+
+---
