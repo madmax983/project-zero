@@ -758,6 +758,8 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         crate::layer1::social::secret_societies::society_action_system,
         crate::layer1::architecture::chrono_vault::handle_seal_vault,
         crate::layer1::architecture::chrono_vault::process_vault_timers,
+        crate::layer1::architecture::potemkin::calculate_intimidation_system,
+        crate::layer1::architecture::potemkin::destroy_potemkin_building_system,
         crate::layer1::memetics::memory_smugglers::process_memory_smuggling_system,
         crate::layer1::memetics::memory_smugglers::process_job_execution_system,
         update_action_timer_system
