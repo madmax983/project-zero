@@ -123,6 +123,9 @@ fn init_simulation_resources(world: &mut World) {
     world.init_resource::<crate::layer2::propaganda_engine::DiplomaticWeight>();
     world.init_resource::<crate::layer2::propaganda_engine::InspectorEvent>();
     world.init_resource::<bevy_ecs::event::Events<crate::layer1::core::chronicle::AddChronicleEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<crate::layer1::architecture::potemkin::PotemkinDestroyedEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<crate::layer1::accidental_terraforming::BiomeShiftEvent>>();
+    world.init_resource::<bevy_ecs::event::Events<crate::layer1::economy::biomass_dividend::RecycleEvent>>();
     world.init_resource::<bevy_ecs::event::Events<
         crate::layer1::administration::sentient_bureaucracy::TaskAdministrativelyOptimizedEvent,
     >>();
@@ -760,6 +763,9 @@ fn register_simulation_extended_systems(schedule: &mut Schedule) {
         crate::layer1::architecture::chrono_vault::process_vault_timers,
         crate::layer1::architecture::potemkin::calculate_intimidation_system,
         crate::layer1::architecture::potemkin::destroy_potemkin_building_system,
+        crate::layer1::core::integration::accidental_terraforming_chronicle_bridge,
+        crate::layer1::core::integration::biomass_dividend_chronicle_bridge,
+        crate::layer1::core::integration::potemkin_chronicle_bridge,
         crate::layer1::memetics::memory_smugglers::process_memory_smuggling_system,
         crate::layer1::memetics::memory_smugglers::process_job_execution_system,
         update_action_timer_system

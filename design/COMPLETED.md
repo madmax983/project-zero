@@ -987,7 +987,10 @@
 - [x] `INT-1143` Integration: Pulsar Timing — completed 2026-11-01
 - [x] `1143` Pulsar Timing — `specs/1143-pulsar-timing.md` — completed 2026-11-01
 - [x] `1147` Accidental Terraforming — `specs/1147-accidental-terraforming.md` — completed 2024-08-16
+- [x] `INT-1147` Integration: Accidental Terraforming -> Chronicle — completed 2026-11-01
 - [x]  Potemkin Architecture —  — completed 2024-07-25
 - [x] `1366` Potemkin Architecture — `specs/1366-potemkin-architecture.md` — completed 2024-07-25
+- [x] `INT-1366` Integration: Potemkin Architecture -> Chronicle — completed 2026-11-01
 
 - [x] `1148` The Biomass Dividend — `specs/1148-the-biomass-dividend.md` — completed 2024-08-17
+- [x] `INT-1148` Integration: The Biomass Dividend -> Chronicle — completed 2026-11-01

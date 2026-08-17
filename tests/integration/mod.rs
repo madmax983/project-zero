@@ -99,3 +99,6 @@ pub mod orbital_junkyard_bridge;
 pub mod weaponized_tourism_bridge;
 pub mod gravity_well_forge_bridge;
 pub mod bureau_of_regrets_bridge;
+pub mod accidental_terraforming_chronicle_bridge;
+pub mod biomass_dividend_chronicle_bridge;
+pub mod potemkin_chronicle_bridge;
