@@ -11454,3 +11454,88 @@ How the damage from the pulsar beam is described.
 - unshielded systems melted into slag
 - the ship was cooked from the inside out
 - critical systems failed under the intense heat
+
+## Magnetic Reversal Fragments (Spec 1139)
+
+## Fragment Type: [POLE_FLIP_NAME]
+- The Great Reversal
+- The Collapse of the Compass
+- The Magnetic Death
+- The Silent Flip
+- The Iron Flip
+
+## Fragment Type: [RADIATION_SPIKE_SYMPTOM]
+- skin burning beneath the clothes
+- geomagnetic sickness
+- the taste of iron in the air
+- sparks behind the eyes
+- a lingering metallic scent
+
+## Fragment Type: [SCRAMBLED_NAVIGATION_EFFECT]
+- ships flying blind
+- the maps twisting into lies
+- migratory beasts walking into the ocean
+- compasses spinning wildly
+- total loss of orientation
+
+## The Scapegoat Fragments (Spec 1142)
+
+## Fragment Type: [SCAPEGOAT_REASON]
+- hoarding rations in secret
+- speaking to the void
+- sabotaging the atmospheric scrubbers
+- carrying the curse of the founders
+- causing the recent machinery failures
+
+## Fragment Type: [PUNISHMENT_METHOD]
+- banished to the deep wastes
+- forced into the airlock
+- stripped of their name and rank
+- sent to the hardest labor shifts
+- cast out with nothing
+
+## Fragment Type: [GUILT_MANIFESTATION]
+- weeping in the dark
+- refusing to look each other in the eye
+- the heavy silence in the mess hall
+- a creeping sense of injustice
+- waking up screaming
+
+## The Nostalgia Engine Fragments (Spec 298)
+
+## Fragment Type: [NOSTALGIA_ENGINE_NAME]
+- The Engine of Memory
+- The Machine of the Past
+- The Heart of Yesterday
+- The Earth-Song Broadcaster
+- The Resonance Forge
+
+## Fragment Type: [PILGRIM_OFFERING]
+- ancient coins
+- scrap metal from the homeworld
+- tears in crystal vials
+- exorbitant orbital docking fees
+- heirlooms of a lost era
+
+## Fragment Type: [PILGRIM_BEHAVIOR]
+- weeping at the hum of the core
+- praying to the exhaust vents
+- staring blindly at the engine
+- singing songs of the old world
+- waiting in silent reverence
+
+## Accidental Terraforming Fragments (Spec 1147)
+
+## Fragment Type: [BYPRODUCT_TYPE]
+- heavy toxic smog
+- unrelenting industrial heat
+- ash-choked air
+- caustic emissions
+- choking greenhouse gases
+
+## Fragment Type: [BIOME_SHIFT_DESC]
+- the ice melting into a dark ocean
+- the green dying to toxic sludge
+- the desert turning to glass
+- the freezing of the equatorial seas
+- the soil turning to dead ash

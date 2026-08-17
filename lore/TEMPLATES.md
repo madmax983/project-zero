@@ -11603,3 +11603,82 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: A perfectly timed burn. [SHIP_NAME] slipped past the beam of [PULSAR_NAME]."
 - "They danced with the lighthouse of death. [SHIP_NAME] successfully navigated the shadow of [PULSAR_NAME]. [YEAR]."
 - "[SHIP_NAME], [YEAR]: The radiation swept over our wake. We survived the rotation of [PULSAR_NAME]."
+
+## Magnetic Reversal Templates (Spec 1139)
+
+## Template: MAGNETIC_REVERSAL_EVENT
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [POLE_FLIP_NAME], [RADIATION_SPIKE_SYMPTOM]
+
+**Patterns:**
+- "[YEAR]: The planet's core shudders. [COLONY] experiences [POLE_FLIP_NAME]. Workers report [RADIATION_SPIKE_SYMPTOM]."
+- "A sudden loss of the shield. It is [POLE_FLIP_NAME]. [COLONY] suffers [RADIATION_SPIKE_SYMPTOM]. [YEAR]."
+- "[COLONY], [YEAR]: [POLE_FLIP_NAME] strikes. The radiation spike causes [RADIATION_SPIKE_SYMPTOM]."
+
+## Template: NAVIGATION_SCRAMBLED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [SCRAMBLED_NAVIGATION_EFFECT]
+
+**Patterns:**
+- "[YEAR]: The magnetic field falls at [COLONY]. The result is [SCRAMBLED_NAVIGATION_EFFECT]."
+- "Total confusion. With the magnetic grid gone, [COLONY] witnesses [SCRAMBLED_NAVIGATION_EFFECT]. [YEAR]."
+
+## The Scapegoat Templates (Spec 1142)
+
+## Template: SCAPEGOAT_BLAMED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [POP_NAME], [SCAPEGOAT_REASON]
+
+**Patterns:**
+- "[YEAR]: The unrest in [COLONY] boils over. [POP_NAME] is accused of [SCAPEGOAT_REASON]."
+- "They needed someone to blame. In [COLONY], they turned on [POP_NAME] for [SCAPEGOAT_REASON]. [YEAR]."
+- "[COLONY], [YEAR]: The mob demands blood. [POP_NAME] is the scapegoat, charged with [SCAPEGOAT_REASON]."
+
+## Template: SCAPEGOAT_PUNISHED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [POP_NAME], [PUNISHMENT_METHOD], [GUILT_MANIFESTATION]
+
+**Patterns:**
+- "[YEAR]: To quell the anger, [POP_NAME] was [PUNISHMENT_METHOD]. Now [COLONY] suffers from [GUILT_MANIFESTATION]."
+- "The punishment of [POP_NAME] was swift: [PUNISHMENT_METHOD]. The unrest is gone, but [GUILT_MANIFESTATION] remains in [COLONY]. [YEAR]."
+- "[COLONY], [YEAR]: [POP_NAME] was [PUNISHMENT_METHOD]. Order is restored, yet there is [GUILT_MANIFESTATION]."
+
+## The Nostalgia Engine Templates (Spec 298)
+
+## Template: NOSTALGIA_ENGINE_ACTIVATED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [NOSTALGIA_ENGINE_NAME]
+
+**Patterns:**
+- "[YEAR]: [NOSTALGIA_ENGINE_NAME] is brought online at [COLONY]. The power drain is immense, but the song of Earth fills the void."
+- "The great dish activates. [COLONY] broadcasts from [NOSTALGIA_ENGINE_NAME]. [YEAR]."
+- "[COLONY], [YEAR]: We trade our power for the past. [NOSTALGIA_ENGINE_NAME] begins its transmission."
+
+## Template: PILGRIM_ARRIVAL
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [PILGRIM_BEHAVIOR], [PILGRIM_OFFERING]
+
+**Patterns:**
+- "[YEAR]: The signal reaches the outer layers. Pilgrim ships arrive at [COLONY], [PILGRIM_BEHAVIOR]. They offer [PILGRIM_OFFERING]."
+- "Drawn by the Earth-Normal frequencies, they come to [COLONY]. The pilgrims are [PILGRIM_BEHAVIOR] and bring [PILGRIM_OFFERING]. [YEAR]."
+- "[COLONY], [YEAR]: The orbit is full. Pilgrims are [PILGRIM_BEHAVIOR], paying their [PILGRIM_OFFERING] just to listen."
+
+## Accidental Terraforming Templates (Spec 1147)
+
+## Template: ACCIDENTAL_TERRAFORMING_WARNING
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [BYPRODUCT_TYPE]
+
+**Patterns:**
+- "[YEAR]: The factories of [COLONY] run too hot. The atmosphere is saturated with [BYPRODUCT_TYPE]."
+- "We are choking our own world. [COLONY] reports dangerous levels of [BYPRODUCT_TYPE]. [YEAR]."
+- "[COLONY], [YEAR]: The cost of industry. The sky is full of [BYPRODUCT_TYPE]."
+
+## Template: BIOME_SHIFT_EVENT
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [BIOME_SHIFT_DESC]
+
+**Patterns:**
+- "[YEAR]: The breaking point. At [COLONY], we witness [BIOME_SHIFT_DESC]. The ecosystem is permanently altered."
+- "The emissions took their toll. [BIOME_SHIFT_DESC] at [COLONY]. There is no going back. [YEAR]."
+- "[COLONY], [YEAR]: A new world, built of our waste. We watch [BIOME_SHIFT_DESC]."
