@@ -1978,3 +1978,25 @@
 - **Systems connected:** `phantom_shift_system` -> `PhantomShiftEvent` -> `phantom_shift_chronicle_bridge` -> `AddChronicleEvent`
 - **Glue added:** `phantom_shift_chronicle_bridge` translates `PhantomShiftEvent` into a historical `AddChronicleEvent`. Registered in `src/layer1/systems/observation.rs`.
 - **Tests:** `tests/integration/unseen_bureaucracy_bridge.rs`
+
+
+### INT-1147: Accidental Terraforming -> Chronicle
+- **Date:** 2026-11-01
+- **Systems connected:** `BiomeShiftEvent` -> `accidental_terraforming_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `accidental_terraforming_chronicle_bridge` in `src/layer1/core/integration.rs`.
+- **Schedule:** Registered the system in `src/simulation.rs`.
+- **Tests:** `tests/integration/accidental_terraforming_chronicle_bridge.rs`
+
+### INT-1148: The Biomass Dividend -> Chronicle
+- **Date:** 2026-11-01
+- **Systems connected:** `RecycleEvent` -> `biomass_dividend_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `biomass_dividend_chronicle_bridge` in `src/layer1/core/integration.rs`.
+- **Schedule:** Registered the system in `src/simulation.rs`.
+- **Tests:** `tests/integration/biomass_dividend_chronicle_bridge.rs`
+
+### INT-1366: Potemkin Architecture -> Chronicle
+- **Date:** 2026-11-01
+- **Systems connected:** `PotemkinDestroyedEvent` -> `potemkin_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `PotemkinDestroyedEvent` in `potemkin.rs`. Added `potemkin_chronicle_bridge` in `src/layer1/core/integration.rs`.
+- **Schedule:** Registered the events and systems in `src/simulation.rs`.
+- **Tests:** `tests/integration/potemkin_chronicle_bridge.rs`

@@ -17,6 +17,12 @@ mod ui_stats;
 
 #[path = "integration/fire_health.rs"]
 mod fire_health;
+#[path = "integration/accidental_terraforming_chronicle_bridge.rs"]
+mod accidental_terraforming_chronicle_bridge;
+#[path = "integration/biomass_dividend_chronicle_bridge.rs"]
+mod biomass_dividend_chronicle_bridge;
+#[path = "integration/potemkin_chronicle_bridge.rs"]
+mod potemkin_chronicle_bridge;
 
 #[path = "integration/hauling_execution.rs"]
 mod hauling_execution;

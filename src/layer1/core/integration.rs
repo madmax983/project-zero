@@ -3514,3 +3514,43 @@ pub fn long_night_chronicle_bridge(
         });
     }
 }
+
+use crate::layer1::accidental_terraforming::BiomeShiftEvent;
+use crate::layer1::architecture::potemkin::PotemkinDestroyedEvent;
+use crate::layer1::economy::biomass_dividend::RecycleEvent;
+
+pub fn accidental_terraforming_chronicle_bridge(
+    mut events: EventReader<BiomeShiftEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for _event in events.read() {
+        chronicle_events.send(AddChronicleEvent {
+            text: "Accidental terraforming caused a biome shift.".to_string(),
+            importance: EventImportance::Major,
+        });
+    }
+}
+
+pub fn biomass_dividend_chronicle_bridge(
+    mut events: EventReader<RecycleEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for _event in events.read() {
+        chronicle_events.send(AddChronicleEvent {
+            text: "A corpse was recycled for biomass rations.".to_string(),
+            importance: EventImportance::Minor,
+        });
+    }
+}
+
+pub fn potemkin_chronicle_bridge(
+    mut events: EventReader<PotemkinDestroyedEvent>,
+    mut chronicle_events: EventWriter<AddChronicleEvent>,
+) {
+    for _event in events.read() {
+        chronicle_events.send(AddChronicleEvent {
+            text: "A Potemkin facade was destroyed.".to_string(),
+            importance: EventImportance::Minor,
+        });
+    }
+}
