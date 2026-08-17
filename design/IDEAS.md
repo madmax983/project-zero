@@ -33056,3 +33056,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you prioritize massive, rapid industrial output, knowing it will temporarily cripple your system's logistics and mobility?
 
 ---
+
+## The Bureaucratic Blindspot
+
+**Layer:** 1
+
+**Fantasy:** A colony grows so complex that some sectors are literally forgotten by the central government, operating entirely off the books.
+
+**Mechanic:** As a colony's administrative sprawl increases, border sectors on the edge of the grid have a chance to enter a "Blindspot" state. In this state, they stop paying taxes and their resource consumption isn't tracked, but they also cannot receive emergency services or construction orders. They develop their own autonomous shadow economy.
+
+**Emergence:** You desperately need alloys to build a fleet, but your central treasury is empty. You pan over to a Blindspot sector you haven't looked at in hours and discover they've independently built a massive, thriving scrap-metal empire outside your control.
+
+**Tension:** Do you violently reintegrate the Blindspot to tax their massive wealth, risking a localized civil war, or leave them alone as an unpredictable, untaxable buffer zone?
+
+---
+
+## The Sub-light Syndicate
+
+**Layer:** 2
+
+**Fantasy:** The slow, generational transit between stars breeds its own distinct culture, creating a sovereign nation that exists entirely in transit.
+
+**Mechanic:** Colony ships or trade fleets that take longer than 50 years (in-game time) to reach their destination develop "Transit Culture." If enough ships share this culture, they form the "Sub-light Syndicate." They begin taxing your own trade routes and occasionally refuse to land, demanding to remain a mobile orbital faction.
+
+**Emergence:** You send a massive colonization fleet to the outer rim. By the time it arrives 80 years later, the descendants on board have forgotten your empire. They declare independence immediately upon entering orbit and demand you pay them for the resources they brought.
+
+**Tension:** Do you invest heavily in fast, expensive FTL drives to maintain cultural cohesion, or rely on cheap, slow generation ships and risk birthing independent rival factions within your own fleets?
+
+---
+
+## The Orbital Oracle
+
+**Layer:** Cross-layer
+
+**Fantasy:** A derelict megastructure that predicts the future with terrifying accuracy, but interpreting it drives your scientists insane.
+
+**Mechanic:** An ancient orbital station can be discovered in Layer 2. By assigning high-level scientists from Layer 1 to study it, you receive "Prophecy Events" (e.g., advance warning of pirate raids or market shifts). However, the scientists studying it suffer extreme, compounding stress damage and eventually gain the "Prophet of Doom" trait, spreading severe unrest when they return to the colony.
+
+**Emergence:** You rely on the Oracle to perfectly defend your borders. Eventually, your entire science division goes mad, returns to the capital, and sparks a massive doomsday cult rebellion because the Oracle showed them the inevitable heat death of the universe.
+
+**Tension:** How much sanity and stability are you willing to sacrifice for a perfect strategic advantage?
+
+---
