@@ -14,7 +14,7 @@ pub fn process_world_eater_system(
     query: Query<&WorldEater>,
 ) {
     for event in events.read() {
-        let FleetCommand::ConsumeTile { fleet, target } = event;
+        let FleetCommand { fleet, target } = event;
         if let Ok(eater) = query.get(*fleet) {
             if let Some(tile) = grid.get(target.x as usize, target.y as usize) {
                 if tile != TerrainType::Void {
@@ -48,7 +48,7 @@ mod tests {
         let eater = app.spawn(WorldEater { efficiency: 100 }).id();
 
         app.resource_mut::<Events<FleetCommand>>()
-            .send(FleetCommand::ConsumeTile {
+            .send(FleetCommand {
                 fleet: eater,
                 target: GridPosition { x: 5, y: 5 },
             });

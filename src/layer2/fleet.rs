@@ -465,11 +465,9 @@ pub fn calculate_speed_modifier(count: u32) -> f32 {
 }
 
 #[derive(bevy_ecs::prelude::Event, Debug, Clone, Copy)]
-pub enum FleetCommand {
-    ConsumeTile {
-        fleet: bevy_ecs::prelude::Entity,
-        target: crate::layer1::map::GridPosition,
-    },
+pub struct FleetCommand {
+    pub fleet: bevy_ecs::prelude::Entity,
+    pub target: crate::layer1::map::GridPosition,
 }
 
 #[derive(bevy_ecs::prelude::Component, Debug, Clone, Copy)]

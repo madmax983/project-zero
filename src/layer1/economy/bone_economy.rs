@@ -12,12 +12,8 @@ pub struct BoneCorpse {
 pub struct BoneExtractor;
 
 #[derive(Component, Default)]
-pub enum BoneExtractorAction {
-    ExtractingBone {
-        target: Entity,
-    },
-    #[default]
-    Idle,
+pub struct BoneExtractorAction {
+    pub target: Option<Entity>,
 }
 
 #[derive(Resource, Default)]
@@ -35,7 +31,7 @@ pub fn extract_bone_system(
     mut unrest: ResMut<UnrestTracker>,
 ) {
     for (mut inventory, mut stress, mut action) in extractors.iter_mut() {
-        if let BoneExtractorAction::ExtractingBone { target } = *action {
+        if let Some(target) = action.target {
             if let Ok(mut corpse) = corpses.get_mut(target) {
                 if corpse.bone_yield > 0.0 {
                     let amount = corpse.bone_yield;
@@ -55,7 +51,7 @@ pub fn extract_bone_system(
                     stress.accumulated_stress += 20.0;
                 }
             }
-            *action = BoneExtractorAction::Idle;
+            action.target = None;
         }
     }
 }
@@ -85,8 +81,8 @@ mod tests {
                 Inventory::default(),
                 StressTracker::default(),
                 BoneExtractor,
-                BoneExtractorAction::ExtractingBone {
-                    target: corpse_entity,
+                BoneExtractorAction {
+                    target: Some(corpse_entity),
                 },
             ))
             .id();
@@ -124,8 +120,8 @@ mod tests {
             Inventory::default(),
             StressTracker::default(),
             BoneExtractor,
-            BoneExtractorAction::ExtractingBone {
-                target: corpse_entity,
+            BoneExtractorAction {
+                target: Some(corpse_entity),
             },
         ));
 

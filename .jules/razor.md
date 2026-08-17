@@ -47,3 +47,7 @@
 **Bloat:** 1-variant enum `ProtocolRule` that adds unnecessary abstraction.
 **Cut:** Eliminated the enum. Converted `DeadProtocol` to a unit struct.
 **Saved:** Reduced cognitive load and unnecessary enum pattern matching.
+## [Reduction]
+**Bloat:** 1-variant enums `BoneExtractorAction` and `FleetCommand` that act like structs but add unnecessary abstraction.
+**Cut:** Eliminated the enums. Converted `BoneExtractorAction` and `FleetCommand` to standard structs.
+**Saved:** Reduced cognitive load and unnecessary enum pattern matching.
