@@ -989,3 +989,5 @@
 - [x] `1147` Accidental Terraforming — `specs/1147-accidental-terraforming.md` — completed 2024-08-16
 - [x]  Potemkin Architecture —  — completed 2024-07-25
 - [x] `1366` Potemkin Architecture — `specs/1366-potemkin-architecture.md` — completed 2024-07-25
+
+- [x] `1148` The Biomass Dividend — `specs/1148-the-biomass-dividend.md` — completed 2024-08-17

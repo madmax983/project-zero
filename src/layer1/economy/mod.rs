@@ -299,3 +299,6 @@ pub use information_black_market::*;
 
 pub mod bio_loom;
 pub use bio_loom::*;
+
+pub mod biomass_dividend;
+pub use biomass_dividend::*;
