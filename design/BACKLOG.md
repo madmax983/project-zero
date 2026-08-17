@@ -1,5 +1,17 @@
 # Backlog
 ## High Priority
+- [ ] `1366` Potemkin Architecture — `specs/1366-potemkin-architecture.md`
+- [ ] `1367` Warp Wake — `specs/1367-warp-wake.md`
+- [ ] `1368` The World-Shell — `specs/1368-the-world-shell.md`
+- [ ] `1369` Vacuum Agriculture — `specs/1369-vacuum-agriculture.md`
+- [ ] `1370` Civilizational Compost — `specs/1370-civilizational-compost.md`
+- [ ] `1371` Panic Spirals — `specs/1371-panic-spirals.md`
+- [ ] `1372` Gravity-Fed Logistics — `specs/1372-gravity-fed-logistics.md`
+- [ ] `1373` The 'Recalled' Product — `specs/1373-recalled-product.md`
+- [ ] `1374` Atmospheric Resonance — `specs/1374-atmospheric-resonance.md`
+- [ ] `1375` The 'Ship of Fools' — `specs/1375-the-ship-of-fools.md`
+- [ ] `1376` The Artifact Market — `specs/1376-the-artifact-market.md`
+- [ ] `1208` The Cadet Branch — `specs/1208-the-cadet-branch.md`
 ## Future / Ideas
 See `design/IDEAS.md` for unspecced concepts.
 - [x] `255` Hypno-Learning — `specs/255-hypno-learning.md` — completed 2026-03-01
