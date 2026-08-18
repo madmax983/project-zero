@@ -41,8 +41,45 @@ pub struct OralTradition {
 
 impl Default for OralTradition {
     fn default() -> Self {
-        eprintln!("⚠️ WARNING: `OralTradition` initialized but the `nova` feature is not enabled.");
-        eprintln!("⚠️ The storytelling mechanics will not be active. Enable `features = [\"nova\"]` in your Cargo.toml.");
+        use crossterm::style::Stylize;
+        eprintln!(
+            "\n{}",
+            "╭── Optional Feature Disabled ────────────────────────────────╮".yellow()
+        );
+        eprintln!(
+            "{} {} {}",
+            "│".yellow(),
+            "⚠️  WARNING: `OralTradition` initialized but             ".yellow(),
+            "│".yellow()
+        );
+        eprintln!(
+            "{} {} {}",
+            "│".yellow(),
+            "   the `nova` feature is not enabled.                   ".yellow(),
+            "│".yellow()
+        );
+        eprintln!(
+            "{} {} {}",
+            "│".yellow(),
+            "                                                        ".yellow(),
+            "│".yellow()
+        );
+        eprintln!(
+            "{} {} {}",
+            "│".yellow(),
+            "The storytelling mechanics will not be active.          ".yellow(),
+            "│".yellow()
+        );
+        eprintln!(
+            "{} {} {}",
+            "│".yellow(),
+            "Enable `features = [\"nova\"]` in Cargo.toml.             ".yellow(),
+            "│".yellow()
+        );
+        eprintln!(
+            "{}",
+            "╰─────────────────────────────────────────────────────────────╯".yellow()
+        );
         Self {
             stories: Vec::new(),
         }
