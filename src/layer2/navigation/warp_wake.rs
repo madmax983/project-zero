@@ -1,16 +1,57 @@
+//! Warp Wakes.
+//!
+//! Space is not empty. When massive fleets tear through the fabric of reality using FTL travel,
+//! they leave behind a turbulent "wake" in the hyperlanes. These wakes act as spatial drag,
+//! severely slowing down subsequent fleets attempting to traverse the same route until the
+//! turbulence dissipates.
+
 use crate::layer2::fleet::MovementSpeed;
 use bevy::prelude::*;
 
+/// A conduit for interstellar travel that can accumulate spatial turbulence.
+///
+/// `Hyperlane`s connect systems together. When heavily trafficked, their `warp_wake_intensity`
+/// increases, causing drag on ships.
+///
+/// ## Examples
+///
+/// ```
+/// use scale::layer2::navigation::warp_wake::Hyperlane;
+///
+/// // Create a pristine hyperlane with no wake
+/// let lane = Hyperlane { warp_wake_intensity: 0.0 };
+/// assert_eq!(lane.warp_wake_intensity, 0.0);
+/// ```
 #[derive(Component)]
 pub struct Hyperlane {
+    /// The current level of spatial drag. Higher values slow down passing fleets.
     pub warp_wake_intensity: f32,
 }
 
+/// Indicates which [`Hyperlane`] a fleet is currently traversing.
+///
+/// By checking the assigned `lane`, the simulation can calculate the local warp wake intensity
+/// and apply the corresponding speed penalty to the fleet's [`MovementSpeed`].
+///
+/// ## Examples
+///
+/// ```
+/// use bevy::prelude::Entity;
+/// use scale::layer2::navigation::warp_wake::CurrentHyperlane;
+///
+/// let fleet_lane = CurrentHyperlane { lane: Entity::PLACEHOLDER };
+/// ```
 #[derive(Component)]
 pub struct CurrentHyperlane {
+    /// The entity ID of the [`Hyperlane`] being traveled.
     pub lane: Entity,
 }
 
+/// Applies the slowing effect of warp wakes to fleet movement speeds.
+///
+/// This system looks up the [`Hyperlane`] each fleet is traveling on and reduces its
+/// current [`MovementSpeed`] based on the `warp_wake_intensity`. The maximum speed penalty
+/// is capped at 90% (a reduction factor of 0.1).
 pub fn apply_warp_wake_system(
     mut fleet_query: Query<(&mut MovementSpeed, &CurrentHyperlane)>,
     lane_query: Query<&Hyperlane>,
@@ -23,6 +64,10 @@ pub fn apply_warp_wake_system(
     }
 }
 
+/// Naturally dissipates warp wakes over time.
+///
+/// Space eventually heals itself. This system slowly reduces the `warp_wake_intensity`
+/// of all [`Hyperlane`]s over time until they return to zero.
 pub fn decay_warp_wake_system(mut lane_query: Query<&mut Hyperlane>) {
     for mut lane in lane_query.iter_mut() {
         if lane.warp_wake_intensity > 0.0 {
@@ -36,7 +81,6 @@ mod tests {
     use super::*;
     use crate::layer2::fleet::{Fleet, MovementSpeed};
     use crate::shared::time::SimulationTime;
-    use bevy::prelude::*;
 
     fn setup_app() -> App {
         let mut app = App::new();
