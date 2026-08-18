@@ -140,6 +140,8 @@ impl Plugin for PlanetarySpinUpPlugin {
                     planetary_rings::apply_planetary_ring_effects_system,
                     orbital_ring::update_shadow_band_system,
                     navigation::chronological_stutter::apply_chronological_stutter_system,
+                    navigation::warp_wake::apply_warp_wake_system,
+                    navigation::warp_wake::decay_warp_wake_system,
                 ),
             );
     }

@@ -13,9 +13,8 @@ fn test_potemkin_chronicle_bridge() {
     app.add_systems(bevy_app::Update, potemkin_chronicle_bridge);
 
     let entity = app.world_mut().spawn_empty().id();
-    app.world_mut().send_event(PotemkinDestroyedEvent {
-        entity,
-    });
+    app.world_mut()
+        .send_event(PotemkinDestroyedEvent { entity });
 
     app.update();
 

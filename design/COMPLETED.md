@@ -995,3 +995,4 @@
 - [x] `1148` The Biomass Dividend — `specs/1148-the-biomass-dividend.md` — completed 2024-08-17
 - [x] `INT-1148` Integration: The Biomass Dividend -> Chronicle — completed 2026-11-01
 - [x] `1149` The Consultant — `specs/1149-the-consultant.md` — completed 2026-02-01
+- [x] `1367` Warp Wake — `specs/1367-warp-wake.md` — completed 2026-08-18

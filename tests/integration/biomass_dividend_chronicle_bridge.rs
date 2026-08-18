@@ -1,8 +1,8 @@
 use bevy_app::App;
 use bevy_ecs::prelude::*;
-use scale::layer1::economy::biomass_dividend::RecycleEvent;
 use scale::layer1::core::chronicle::{AddChronicleEvent, EventImportance};
 use scale::layer1::core::integration::biomass_dividend_chronicle_bridge;
+use scale::layer1::economy::biomass_dividend::RecycleEvent;
 
 #[test]
 fn test_biomass_dividend_chronicle_bridge() {
@@ -14,10 +14,8 @@ fn test_biomass_dividend_chronicle_bridge() {
 
     let target = app.world_mut().spawn_empty().id();
     let processor = app.world_mut().spawn_empty().id();
-    app.world_mut().send_event(RecycleEvent {
-        target,
-        processor,
-    });
+    app.world_mut()
+        .send_event(RecycleEvent { target, processor });
 
     app.update();
 
