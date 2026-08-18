@@ -76,7 +76,6 @@ pub fn decay_warp_wake_system(mut lane_query: Query<&mut Hyperlane>) {
     }
 }
 
-
 pub fn generate_warp_wake_system(
     mut events: EventReader<
         crate::layer2::navigation::chronological_stutter::HyperlaneTransitEvent,

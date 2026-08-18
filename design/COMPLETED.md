@@ -997,3 +997,4 @@
 - [x] `1149` The Consultant — `specs/1149-the-consultant.md` — completed 2026-02-01
 - [x] `INT-1367` Integration: Warp Wake Generation -> Chronicle — completed 2026-11-01
 - [x] `1367` Warp Wake — `specs/1367-warp-wake.md` — completed 2026-08-18
+- [x] `1368` The World-Shell — `specs/1368-the-world-shell.md` — completed 2024-05-31
