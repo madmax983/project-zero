@@ -11539,3 +11539,28 @@ How the damage from the pulsar beam is described.
 - the desert turning to glass
 - the freezing of the equatorial seas
 - the soil turning to dead ash
+
+## The Biomass Dividend Fragments (Spec 1148)
+
+## Fragment Type: [GRIEF_SYMPTOM]
+- weeping uncontrollably at the mess hall
+- refusing all food until starvation
+- violently destroying the recyclers
+- staring blankly at the nutrient paste
+- muttering apologies to the dead
+- experiencing severe psychological breakdown
+
+## Potemkin Architecture Fragments (Spec 1366)
+
+## Fragment Type: [POTEMKIN_DISGUISE]
+- painted canvas walls meant to look like titanium
+- inflatable heavy turrets bobbing in the wind
+- hollow wooden missile silos
+- cardboard barricades with fake warning lights
+- holographic projection of a defensive grid
+
+## Fragment Type: [POTEMKIN_DISCOVERY]
+- laughed at the scattered canvas
+- realized they had feared balloons
+- pushed right through the hollow walls
+- mocked the ruined paper fortresses
