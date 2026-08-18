@@ -33095,3 +33095,29 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you centralize your power grid around a highly lucrative but incredibly volatile stellar phenomenon, or rely on safe, decentralized, but expensive planetary power?
 
 ---
+## Ghost Architecture
+
+**Layer:** 1
+
+**Fantasy:** Buildings with a history, retaining the echoes of their previous purposes and occupants.
+
+**Mechanic:** When a building is demolished or repurposed, it leaves a "Ghost" footprint. New structures built on this footprint gain subtle, unpredictable traits from the previous building. A hospital built over an old prison might have higher patient stress; a tavern built over a former research lab might occasionally give patrons sudden technological insights.
+
+**Emergence:** You try to optimize your layout by bulldozing your original chaotic settlement to build a neat grid. The new optimized factory district inherits the overlapping ghosts of a dozen old residential blocks, resulting in constant bizarre localized mood swings and spontaneous worker strikes based on forgotten grievances.
+
+**Tension:** Do you reuse prime real estate and deal with the inherited ghosts of the past, or expand into raw, untamed wilderness at greater logistical cost?
+
+---
+## The Cassandra Complex
+
+**Layer:** 2
+
+**Fantasy:** A highly accurate predictive AI that no one believes because its warnings sound like apocalyptic madness.
+
+**Mechanic:** A rare orbital event grants you access to an ancient, malfunctioning predictive supercomputer. It perfectly forecasts a major disaster (e.g., an invasion or a devastating solar flare) years in advance. However, acting on this forecast (evacuating planets, building massive defenses) causes immense immediate unrest, as the population believes the ruler has gone insane based on the ravings of a broken machine.
+
+**Emergence:** You receive a Cassandra warning of a massive fleet arriving in 5 years. You strip-mine three planets to build defenses. The population riots, collapsing your economy and overthrowing the government right before the actual invasion fleet arrives, finding your defenses unmanned.
+
+**Tension:** Do you sacrifice your empire's immediate stability and your own political capital to prepare for a disaster no one else can see coming?
+
+---
