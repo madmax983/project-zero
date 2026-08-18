@@ -22,3 +22,6 @@ pub use husbandry::*;
 pub use zero_g_flora::*;
 pub mod pollination;
 pub use pollination::*;
+
+pub mod vacuum;
+pub use vacuum::*;
