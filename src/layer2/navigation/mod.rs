@@ -9,3 +9,6 @@ pub mod stellar_weather;
 pub use chronological_stutter::*;
 pub use inertial::*;
 pub use stellar_weather::*;
+
+pub mod warp_wake;
+pub use warp_wake::*;

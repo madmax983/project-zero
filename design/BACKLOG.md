@@ -1,6 +1,5 @@
 # Backlog
 ## High Priority
-- [ ] `1367` Warp Wake — `specs/1367-warp-wake.md`
 - [ ] `1368` The World-Shell — `specs/1368-the-world-shell.md`
 - [ ] `1369` Vacuum Agriculture — `specs/1369-vacuum-agriculture.md`
 - [ ] `1370` Civilizational Compost — `specs/1370-civilizational-compost.md`
