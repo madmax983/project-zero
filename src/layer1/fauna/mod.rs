@@ -324,6 +324,8 @@ fn handle_attack_state(
     }
 }
 
+pub mod immortal_mascot;
+
 #[cfg(test)]
 mod tests {
     use crate::layer1::execution::MovementTarget;

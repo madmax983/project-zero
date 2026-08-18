@@ -999,3 +999,5 @@
 - [x] `1367` Warp Wake — `specs/1367-warp-wake.md` — completed 2026-08-18
 - [x] `1368` The World-Shell — `specs/1368-the-world-shell.md` — completed 2024-05-31
 - [x] `1369` Vacuum Agriculture — `specs/1369-vacuum-agriculture.md` — completed 2026-08-18
+
+- [x] `1151` The Immortal Mascot — `specs/1151-the-immortal-mascot.md` — completed 2026-02-01
