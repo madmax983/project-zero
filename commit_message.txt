@@ -1,6 +1,3 @@
-feat(integration): implement magnetic reversal chronicle bridge
+feat(layer1): implement immortal mascot system
 
-Implements INT-1139 integration between Magnetic Reversal and Chronicle:
-- Added magnetic_reversal_chronicle_bridge system.
-- Added tests for the bridge.
-- Registered the system and updated IN_PROGRESS/COMPLETED states.
+Implements RED-GREEN phases for the immortal mascot spec (1151). Includes tests for morale boost, exponential aging food consumption, and extreme armor.

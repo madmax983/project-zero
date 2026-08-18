@@ -997,3 +997,5 @@
 - [x] `1149` The Consultant — `specs/1149-the-consultant.md` — completed 2026-02-01
 - [x] `INT-1367` Integration: Warp Wake Generation -> Chronicle — completed 2026-11-01
 - [x] `1367` Warp Wake — `specs/1367-warp-wake.md` — completed 2026-08-18
+
+- [x] `1151` The Immortal Mascot — `specs/1151-the-immortal-mascot.md` — completed 2026-02-01
