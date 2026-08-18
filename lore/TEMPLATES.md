@@ -11682,3 +11682,43 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The breaking point. At [COLONY], we witness [BIOME_SHIFT_DESC]. The ecosystem is permanently altered."
 - "The emissions took their toll. [BIOME_SHIFT_DESC] at [COLONY]. There is no going back. [YEAR]."
 - "[COLONY], [YEAR]: A new world, built of our waste. We watch [BIOME_SHIFT_DESC]."
+
+## The Biomass Dividend Templates (Spec 1148)
+
+## Template: BIOMASS_PROCESSED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [YIELD_AMOUNT]
+
+**Patterns:**
+- "[YEAR]: The silos at [COLONY] were empty. The dead provided [YIELD_AMOUNT] standard units of ration. We do not speak of it."
+- "The recyclers ran through the night at [COLONY]. [YIELD_AMOUNT] units of processed biomass were added to the stores. Survival has a terrible cost. [YEAR]."
+- "[COLONY], [YEAR]: Necessity demanded it. The corpses were rendered into [YIELD_AMOUNT] units of sustenance."
+
+## Template: TAINTED_BIOMASS_CONSUMED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [POP_NAME], [GRIEF_SYMPTOM]
+
+**Patterns:**
+- "[YEAR]: The secret is out. [POP_NAME] realized the source of the rations. They are now [GRIEF_SYMPTOM]."
+- "[COLONY] consumes its own history. The tainted meals have driven [POP_NAME] to [GRIEF_SYMPTOM]. [YEAR]."
+- "[COLONY], [YEAR]: The grief takes hold. After the meals, [POP_NAME] was found [GRIEF_SYMPTOM]."
+
+## Potemkin Architecture Templates (Spec 1366)
+
+## Template: POTEMKIN_BUILT
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [POTEMKIN_DISGUISE]
+
+**Patterns:**
+- "[YEAR]: To deter the raiders, [COLONY] erected [POTEMKIN_DISGUISE]. Let us hope they don't look closely."
+- "We cannot afford steel, so we use deception. [COLONY] is now ringed by [POTEMKIN_DISGUISE]. [YEAR]."
+- "[COLONY], [YEAR]: The skyline is a lie. We inflated [POTEMKIN_DISGUISE] to project strength."
+
+## Template: POTEMKIN_DESTROYED
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [POTEMKIN_DISGUISE], [POTEMKIN_DISCOVERY]
+
+**Patterns:**
+- "[YEAR]: The facade fell at [COLONY]. A single shot popped the [POTEMKIN_DISGUISE]. The attackers [POTEMKIN_DISCOVERY]."
+- "The deception was shattered. Our [POTEMKIN_DISGUISE] was destroyed instantly. The raiders [POTEMKIN_DISCOVERY]. [YEAR]."
+- "[COLONY], [YEAR]: The bluff is called. The [POTEMKIN_DISGUISE] collapsed like paper, and the enemy [POTEMKIN_DISCOVERY]."
