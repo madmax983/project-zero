@@ -142,6 +142,7 @@ impl Plugin for PlanetarySpinUpPlugin {
                     navigation::chronological_stutter::apply_chronological_stutter_system,
                     navigation::warp_wake::apply_warp_wake_system,
                     navigation::warp_wake::decay_warp_wake_system,
+                    navigation::warp_wake::generate_warp_wake_system,
                 ),
             );
     }

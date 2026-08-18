@@ -2000,3 +2000,9 @@
 - **Glue added:** Added `PotemkinDestroyedEvent` in `potemkin.rs`. Added `potemkin_chronicle_bridge` in `src/layer1/core/integration.rs`.
 - **Schedule:** Registered the events and systems in `src/simulation.rs`.
 - **Tests:** `tests/integration/potemkin_chronicle_bridge.rs`
+
+### INT-1367: Warp Wake Generation
+- **Date:** 2026-11-01
+- **Systems connected:** `HyperlaneTransitEvent` -> `generate_warp_wake_system` -> `Hyperlane.warp_wake_intensity`
+- **Glue added:** Added `generate_warp_wake_system` in `src/layer2/navigation/warp_wake.rs`. Registered in `src/layer2/mod.rs`.
+- **Tests:** `tests/integration/warp_wake_bridge.rs`
