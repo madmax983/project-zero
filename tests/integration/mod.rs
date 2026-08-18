@@ -102,3 +102,4 @@ pub mod bureau_of_regrets_bridge;
 pub mod accidental_terraforming_chronicle_bridge;
 pub mod biomass_dividend_chronicle_bridge;
 pub mod potemkin_chronicle_bridge;
+pub mod warp_wake_bridge;

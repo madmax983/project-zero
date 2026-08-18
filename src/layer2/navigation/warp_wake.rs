@@ -31,12 +31,28 @@ pub fn decay_warp_wake_system(mut lane_query: Query<&mut Hyperlane>) {
     }
 }
 
+
+pub fn generate_warp_wake_system(
+    mut events: EventReader<
+        crate::layer2::navigation::chronological_stutter::HyperlaneTransitEvent,
+    >,
+    fleet_query: Query<&CurrentHyperlane>,
+    mut lane_query: Query<&mut Hyperlane>,
+) {
+    for ev in events.read() {
+        if let Ok(current_lane) = fleet_query.get(ev.fleet) {
+            if let Ok(mut lane) = lane_query.get_mut(current_lane.lane) {
+                lane.warp_wake_intensity += 1.0;
+            }
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
     use crate::layer2::fleet::{Fleet, MovementSpeed};
     use crate::shared::time::SimulationTime;
-    use bevy::prelude::*;
 
     fn setup_app() -> App {
         let mut app = App::new();
