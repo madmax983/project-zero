@@ -33121,3 +33121,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you sacrifice your empire's immediate stability and your own political capital to prepare for a disaster no one else can see coming?
 
 ---
+## Whispering Walls
+
+**Layer:** 1
+
+**Fantasy:** The architecture itself starts carrying the psychological weight of the colony's history, echoing past traumas to new residents.
+
+**Mechanic:** Buildings where highly traumatic events occurred (mass starvation, riots, murders) slowly build a hidden "Acoustic Haunting" value. Even after being renovated, pops living or working there occasionally suffer sudden, unexplained mood drops or gain fragmented memories of the past event.
+
+**Emergence:** You finally build a utopian, wealthy colony, but the pops in the central hab block are chronically depressed because it was built on the reinforced foundations of the old quarantine ward from the early game. Players might resort to completely demolishing and rebuilding sectors just to clear the "bad vibes."
+
+**Tension:** Do you reuse highly efficient, upgraded old infrastructure despite its psychic toll, or waste immense resources tearing it down to start fresh for a morale boost?
+
+---
+
+## Orbital Shadowing
+
+**Layer:** Cross-layer
+
+**Fantasy:** The massive Layer 2 megastructures you build directly block the sun for the Layer 1 colonists living beneath them.
+
+**Mechanic:** Large orbital stations, shipyards, or defensive rings constructed in Layer 2 cast permanent, simulated shadows over specific tiles on the Layer 1 planetary map. These shaded tiles suffer massive penalties to solar energy generation and agriculture, but gain a "Perpetual Twilight" mood modifier that some pop cultures prefer.
+
+**Emergence:** You build an intricate, highly productive orbital shipyard, and inadvertently plunge your primary agricultural sector into total darkness, causing a colony-wide famine. A sub-culture of "shade-dwellers" might emerge directly under the station who rebel if you try to move it.
+
+**Tension:** Do you optimize your orbital infrastructure for strategic advantage, or compromise its placement to protect the delicate biosphere below?
+
+---
+
+## Monumental Neglect
+
+**Layer:** 1
+
+**Fantasy:** The grand statues and monuments built to inspire the colony become crumbling reminders of broken promises.
+
+**Mechanic:** Monuments provide massive morale boosts when built, but require a steady, expensive trickle of "Maintenance" (rare resources or dedicated artisan labor) to keep pristine. If maintenance fails, the monument degrades through stages (Weathered, Vandalized, Crumbling). A crumbling monument provides a severe "Broken Promises" mood penalty, far worse than if it had never been built.
+
+**Emergence:** During a resource crisis, you pull artisans off monument duty to mine ore. The resulting degradation of the "Founders Statue" sparks a riot about the loss of cultural heritage, worsening the crisis.
+
+**Tension:** Do you risk building high-tier morale boosters knowing that if the economy ever dips, they will become massive liabilities?
+
+---
