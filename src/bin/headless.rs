@@ -353,9 +353,9 @@ fn handle_command(world: &mut World, input: &str) -> bool {
         #[cfg(not(feature = "nova"))]
         "stories" | "st" | "legends" => {
             print_dashboard_panel(
-                "ERROR",
-                "Feature 'nova' is not enabled. Run with --features nova.",
-                Some(comfy_table::Color::Red),
+                "OPTIONAL FEATURE DISABLED",
+                "Feature 'nova' is not enabled. Run with --features nova to activate storytelling mechanics.",
+                Some(comfy_table::Color::Yellow),
                 Some(comfy_table::Attribute::Bold),
             );
         }
