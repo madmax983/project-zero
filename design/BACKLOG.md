@@ -1,7 +1,6 @@
 # Backlog
 ## High Priority
 
-- [ ] `1369` Vacuum Agriculture — `specs/1369-vacuum-agriculture.md`
 - [ ] `1370` Civilizational Compost — `specs/1370-civilizational-compost.md`
 - [ ] `1371` Panic Spirals — `specs/1371-panic-spirals.md`
 - [ ] `1372` Gravity-Fed Logistics — `specs/1372-gravity-fed-logistics.md`
