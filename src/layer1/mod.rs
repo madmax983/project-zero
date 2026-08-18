@@ -543,3 +543,19 @@ pub mod leader_ascension;
 pub use leader_ascension::*;
 pub mod accidental_terraforming;
 pub use accidental_terraforming::*;
+pub mod consultant;
+pub use consultant::*;
+
+pub struct ConsultantPlugin;
+impl bevy::prelude::Plugin for ConsultantPlugin {
+    fn build(&self, app: &mut bevy::prelude::App) {
+        app.add_systems(
+            bevy::prelude::Update,
+            (
+                consultant::apply_consultant_override,
+                consultant::consultant_worker_impact,
+                consultant::consultant_hazard_escalation,
+            ),
+        );
+    }
+}
