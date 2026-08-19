@@ -11722,3 +11722,83 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[YEAR]: The facade fell at [COLONY]. A single shot popped the [POTEMKIN_DISGUISE]. The attackers [POTEMKIN_DISCOVERY]."
 - "The deception was shattered. Our [POTEMKIN_DISGUISE] was destroyed instantly. The raiders [POTEMKIN_DISCOVERY]. [YEAR]."
 - "[COLONY], [YEAR]: The bluff is called. The [POTEMKIN_DISGUISE] collapsed like paper, and the enemy [POTEMKIN_DISCOVERY]."
+
+## Template: WORLD_SHELL_ACTIVATED
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [WORLD_SHELL_STATE]
+
+**Patterns:**
+- "[COLONY], [YEAR]: The sky turns to iron. The World-Shell is active. We are [WORLD_SHELL_STATE]. Safe, and alone."
+- "[YEAR]: The bombardment cannot reach [COLONY]. Neither can the sun. The shield is [WORLD_SHELL_STATE]."
+- "We are sealed within [COLONY]. The shell is [WORLD_SHELL_STATE]. We hope the food lasts."
+
+## Template: WORLD_SHELL_DEACTIVATED
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR]
+
+**Patterns:**
+- "[COLONY], [YEAR]: The World-Shell drops. We see the stars again. And the enemy ships."
+- "[YEAR]: Energy depleted. The shell falls over [COLONY]. We are vulnerable once more."
+- "The shield of [COLONY] is deactivated. The first freighters arrive, bringing food and sunlight."
+
+## Template: VOID_CROP_PLANTED
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [VOID_CROP_TYPE]
+
+**Patterns:**
+- "[COLONY], [YEAR]: The first fields of [VOID_CROP_TYPE] are sown on the exterior hull."
+- "[YEAR]: Agriculture moves to the void. [VOID_CROP_TYPE] thrives in the hard radiation of [COLONY]'s orbit."
+- "We no longer need air to farm. [VOID_CROP_TYPE] blooms in the vacuum above [COLONY]."
+
+## Template: VOID_CROP_HARVEST_RUINED
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [VOID_CROP_TYPE]
+
+**Patterns:**
+- "[COLONY], [YEAR]: A dome fracture. Oxygen floods the exterior fields. The [VOID_CROP_TYPE] harvest is ruined."
+- "[YEAR]: The air we breathe is poison to the [VOID_CROP_TYPE]. A leak destroys the crop at [COLONY]."
+- "Atmospheric contamination on the hull. The [VOID_CROP_TYPE] wither. [COLONY] faces hunger."
+
+## Template: MASCOT_ADOPTED
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [MASCOT_NAME], [MASCOT_APPEARANCE]
+
+**Patterns:**
+- "[COLONY], [YEAR]: A strange creature, [MASCOT_APPEARANCE], wanders into the settlement. The colonists name it [MASCOT_NAME]. Morale soars."
+- "[YEAR]: The arrival of [MASCOT_NAME], [MASCOT_APPEARANCE], brings joy to [COLONY]. We ignore how much it eats."
+- "Everyone loves [MASCOT_NAME]. The [MASCOT_APPEARANCE] is the new soul of [COLONY]."
+
+## Template: MASCOT_DISPOSAL_RIOT
+
+**Generates:** Play event
+**Slots:** [COLONY], [YEAR], [MASCOT_NAME]
+
+**Patterns:**
+- "[COLONY], [YEAR]: The attempt to dispose of [MASCOT_NAME] sparks outrage. The colony burns in riot."
+- "[YEAR]: We could no longer feed [MASCOT_NAME]. Our attempt to kill it failed. [COLONY] rebels."
+- "The blood of [MASCOT_NAME] will not be shed! The people of [COLONY] take up arms against the Substrate."
+
+## Template: SUB_LIGHT_ARRIVAL
+
+**Generates:** Play event
+**Slots:** [SYSTEM], [YEAR], [SUB_LIGHT_SHIP_NAME], [ANCIENT_EMPIRE_NAME]
+
+**Patterns:**
+- "[SYSTEM], [YEAR]: [SUB_LIGHT_SHIP_NAME] arrives. They claim this space for [ANCIENT_EMPIRE_NAME], five centuries too late."
+- "[YEAR]: A generation ship, [SUB_LIGHT_SHIP_NAME], enters the system. They bring the obsolete laws of [ANCIENT_EMPIRE_NAME]."
+- "Ghosts from the slow dark. [SUB_LIGHT_SHIP_NAME] demands tribute in the name of the dead [ANCIENT_EMPIRE_NAME]."
+
+## Template: SUB_LIGHT_DEMAND_REFUSED
+
+**Generates:** Play event
+**Slots:** [SYSTEM], [YEAR], [SUB_LIGHT_SHIP_NAME], [ANCIENT_EMPIRE_NAME]
+
+**Patterns:**
+- "[SYSTEM], [YEAR]: We refuse the demands of [SUB_LIGHT_SHIP_NAME]. The [ANCIENT_EMPIRE_NAME] declares a holy war with obsolete weapons."
+- "[YEAR]: Tribute denied. The generation ship [SUB_LIGHT_SHIP_NAME] opens fire. A slow, ancient war begins."
+- "We will not yield to ghosts. The [ANCIENT_EMPIRE_NAME] relic attacks our modern fleets."
