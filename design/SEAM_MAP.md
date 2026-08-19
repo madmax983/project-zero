@@ -2012,3 +2012,9 @@
 - **Systems connected:** `EgoStat` -> `ego_stat_chronicle_bridge` -> `AddChronicleEvent`
 - **Glue added:** Added `EgoThresholdReached` marker component and `ego_stat_chronicle_bridge` in `src/layer1/core/integration.rs` to generate a Chronicle event when an `EgoStat` exceeds 50.0. Registered in `src/layer1/systems/observation.rs`.
 - **Tests:** `tests/integration/ego_machine_chronicle_bridge.rs`
+
+### INT-1152: Sub-light Arrival Shock -> Chronicle
+- **Date:** 2026-08-19
+- **Systems connected:** `SubLightArrivalEvent` -> Chronicle (`AddChronicleEvent`)
+- **Glue added:** `sub_light_arrival_chronicle_bridge_system` in `src/layer2/integration.rs`
+- **Tests:** `tests/integration/sub_light_arrival.rs`

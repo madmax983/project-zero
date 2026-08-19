@@ -744,3 +744,6 @@ mod magnetic_reversal_chronicle_bridge;
 
 #[path = "integration/pulsar_integration.rs"]
 mod pulsar_integration;
+
+#[path = "integration/sub_light_arrival.rs"]
+mod sub_light_arrival;
