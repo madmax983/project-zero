@@ -638,3 +638,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1363` The Artifact Religion — `specs/1363-the-artifact-religion.md`
 - [ ] `1364` Hyperlane Smuggling Routes — `specs/1364-hyperlane-smuggling-routes.md`
 - [ ] `1365` Title Inflation — `specs/1365-title-inflation.md`
+- [ ] `1377` The Cassandra Complex — `specs/1377-cassandra-complex.md`
