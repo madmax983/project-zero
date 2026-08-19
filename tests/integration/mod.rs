@@ -103,3 +103,4 @@ pub mod accidental_terraforming_chronicle_bridge;
 pub mod biomass_dividend_chronicle_bridge;
 pub mod potemkin_chronicle_bridge;
 pub mod warp_wake_bridge;
+pub mod ego_machine_chronicle_bridge;

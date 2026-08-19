@@ -2006,3 +2006,9 @@
 - **Systems connected:** `HyperlaneTransitEvent` -> `generate_warp_wake_system` -> `Hyperlane.warp_wake_intensity`
 - **Glue added:** Added `generate_warp_wake_system` in `src/layer2/navigation/warp_wake.rs`. Registered in `src/layer2/mod.rs`.
 - **Tests:** `tests/integration/warp_wake_bridge.rs`
+
+### INT-321: The Ego Machine -> Chronicle
+- **Date:** 2026-11-01
+- **Systems connected:** `EgoStat` -> `ego_stat_chronicle_bridge` -> `AddChronicleEvent`
+- **Glue added:** Added `EgoThresholdReached` marker component and `ego_stat_chronicle_bridge` in `src/layer1/core/integration.rs` to generate a Chronicle event when an `EgoStat` exceeds 50.0. Registered in `src/layer1/systems/observation.rs`.
+- **Tests:** `tests/integration/ego_machine_chronicle_bridge.rs`

@@ -3531,3 +3531,31 @@ pub fn potemkin_chronicle_bridge(
         });
     }
 }
+
+#[derive(bevy_ecs::prelude::Component)]
+pub struct EgoThresholdReached;
+
+/// INT-321: Bridges EgoStat threshold to Chronicle Events
+pub fn ego_stat_chronicle_bridge(
+    mut commands: bevy_ecs::prelude::Commands,
+    mut events: bevy_ecs::event::EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+    query: bevy_ecs::prelude::Query<
+        (
+            bevy_ecs::prelude::Entity,
+            &crate::layer1::tech::ego_machine::EgoStat,
+            Option<&crate::layer1::entities::pop::PopName>,
+        ),
+        bevy_ecs::prelude::Without<EgoThresholdReached>,
+    >,
+) {
+    for (entity, ego, name_opt) in query.iter() {
+        if ego.value > 50.0 {
+            let name = name_opt.map_or("A Pop", |n| n.0.as_str());
+            events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+                text: format!("{} demands a luxury suite, refusing to haul scrap.", name),
+                importance: crate::layer1::core::chronicle::EventImportance::Major,
+            });
+            commands.entity(entity).insert(EgoThresholdReached);
+        }
+    }
+}
