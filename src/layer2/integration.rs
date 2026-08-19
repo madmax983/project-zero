@@ -1254,3 +1254,18 @@ pub fn phantom_trade_routes_chronicle_bridge(
         });
     }
 }
+
+pub fn sub_light_arrival_chronicle_bridge_system(
+    mut events: bevy_ecs::event::EventReader<crate::layer2::sub_light_arrival::SubLightArrivalEvent>,
+    mut chronicle_events: bevy_ecs::event::EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+) {
+    for event in events.read() {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            text: format!(
+                "An ancient sub-light ship from the {} faction has arrived in system {} demanding tribute.",
+                event.faction_id.0, event.arrival_system_id.0
+            ),
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
+        });
+    }
+}

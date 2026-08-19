@@ -686,6 +686,7 @@ fn register_simulation_core_systems(schedule: &mut Schedule) {
 
 #[allow(clippy::too_many_lines)]
 fn register_simulation_extended_systems(schedule: &mut Schedule) {
+    schedule.add_systems(crate::layer2::integration::sub_light_arrival_chronicle_bridge_system);
     #[cfg(feature = "nova")]
     schedule.add_systems(
         crate::experimental::photosynthetic_nourishment::photosynthetic_nourishment_system,
