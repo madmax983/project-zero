@@ -35,6 +35,11 @@ use std::path::Path;
 ///
 /// assert!(matches!(result, Err(NarrativeError::TemplateNotFound(_))));
 /// ```
+/// An error that occurs during narrative generation or loading.
+///
+/// **Note:** Error rendering is handled directly via the [`std::fmt::Display`] trait.
+/// There is no `.to_table()` method. You can format the error nicely simply by
+/// using `println!("{}", e)`.
 pub enum NarrativeError {
     /// A required context variable was not provided when generating a narrative.
     ///

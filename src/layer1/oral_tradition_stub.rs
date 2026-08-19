@@ -90,6 +90,12 @@ impl OralTradition {
     pub fn add_story(&mut self, story: Story) {
         self.stories.push(story);
     }
+
+    /// Processes events from the chronicle into stories.
+    ///
+    /// > **Note:** The `nova` feature is not enabled. This is a stub implementation
+    /// > that does nothing.
+    pub fn process_chronicles(&mut self, _chronicle: &crate::layer1::core::chronicle::Chronicle) {}
 }
 
 impl std::fmt::Display for OralTradition {
