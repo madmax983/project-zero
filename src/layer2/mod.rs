@@ -159,3 +159,5 @@ pub use stolen_fleet::*;
 pub mod ecophagy;
 pub mod propaganda_engine;
 pub mod pulsar;
+
+pub mod sub_light_arrival;

@@ -1001,3 +1001,4 @@
 - [x] `1369` Vacuum Agriculture — `specs/1369-vacuum-agriculture.md` — completed 2026-08-18
 
 - [x] `1151` The Immortal Mascot — `specs/1151-the-immortal-mascot.md` — completed 2026-02-01
+- [x] `1152` Sub-light Arrival Shock — `specs/1152-sub-light-arrival-shock.md` — completed 2026-02-01
