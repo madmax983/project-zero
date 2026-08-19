@@ -189,7 +189,7 @@ pub fn update_render_cache(world: &mut World) {
             }
 
             // Check for Blob
-            if e.get::<crate::layer1::blob::Blob>().is_some() {
+            if e.get::<crate::layer1::entities::blob::Blob>().is_some() {
                 insert_if_higher_priority(&mut cache.entities, *pos, RenderEntity::Blob);
             }
 
