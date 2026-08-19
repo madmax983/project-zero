@@ -33287,3 +33287,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you spend resources to hunt down and scrap the harmless, endearing drones to save your crops, or let them roam free for the morale boost while they slowly dismantle your colony by accident?
 
 ---
+## Memory Inheritance Tax
+
+**Layer:** 1
+
+**Fantasy:** Watching generations of pops gradually forget why they revere or hate certain things, unless you invest in preserving history.
+
+**Mechanic:** When a pop dies, a portion of their Memories can be passed on to offspring or apprentices, but with reduced intensity (decay). Institutions like "Archives" or "Elders" can slow this decay. If decay reaches 0, the memory is lost.
+
+**Emergence:** A colony founded on the trauma of a terrible war eventually forgets the horrors of it, making them more susceptible to warmongering propaganda, unless you maintained a costly Archive.
+
+**Tension:** Do you spend resources to preserve cultural memory (maintaining grudges or reverence) or let history fade to create a blank slate for new ideologies?
+
+---
+
+## Symbiotic Infrastructure Addiction
+
+**Layer:** 2 -> 1
+
+**Fantasy:** The colony becomes so reliant on a specific external buff that its sudden removal causes catastrophic withdrawal.
+
+**Mechanic:** A Layer 2 megastructure (e.g., a "Mood-Stabilizing Satellite") provides a massive, colony-wide buff. However, pops slowly develop a "Dependency" trait. If the structure is destroyed or loses power, dependent pops suffer extreme withdrawal penalties, worse than their baseline before the structure existed.
+
+**Emergence:** You build the satellite to rush a massive industrial project. Years later, an enemy fleet destroys it. Your entire colony, now deeply addicted to the artificial mood stabilization, immediately descends into violent psychosis, tearing apart the very factories they built.
+
+**Tension:** Do you use powerful external buffs for short-term gains, knowing you are creating a fragile, dependent society?
+
+---
+
+## The Ghost Fleet Paradox
+
+**Layer:** Cross-layer
+
+**Fantasy:** Dealing with the delayed consequences of faster-than-light travel and temporal relativity.
+
+**Mechanic:** Fleets traveling via experimental FTL routes sometimes experience "temporal shadow" events. A duplicate "Ghost Fleet" of your ships arrives at the destination *before* the actual fleet, or years after. These ghosts act based on the orders they had when they entered FTL, but are unresponsive to new commands.
+
+**Emergence:** You send a fleet to peacefully colonize a system. A temporal anomaly occurs. A "Ghost Fleet" arrives ten years later, still executing the "colonize" order, but the system is now fully established. The ghosts, confused by the existing infrastructure, start trying to forcibly "colonize" your own cities.
+
+**Tension:** Do you use the risky, high-speed FTL lanes for immediate strategic advantage, knowing you might spawn uncontrollable temporal echoes of your own military?
+
+---
