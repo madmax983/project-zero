@@ -332,3 +332,7 @@
 **Concept:** Added `rainy_day_reading_system` in `src/experimental/rainy_day_reading.rs`. Connects `Trait::Intellectual`, `WeatherType::Rain`, and `BuildingType::Library`. Intellectual pops sheltering under a roof near a library during bad weather regenerate leisure rapidly and passively generate a small amount of knowledge for the colony.
 **Fate:** Submitted
 **Lesson:** Connects a personality trait, weather, and a specific building to create emergent behavior for Intellectuals during storms, turning bad weather into a research opportunity.
+## [Upcycled Art]
+**Concept:** Added `upcycled_art_system` in `src/experimental/upcycled_art.rs`. Connects `Trait::Artistic`, `ClutterGrid`, and `GraffitiMap`. Pops with the Artistic trait who have high `leisure` can convert high `Clutter` on their tile into a `GraffitiType::Mural`.
+**Fate:** Submitted
+**Lesson:** Connects a personality trait with environmental maintenance and beauty systems. It turns a negative factor (trash) into a resource for autonomous beautification, making Artistic pops incredibly useful in messy industrial zones.

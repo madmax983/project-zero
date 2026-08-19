@@ -271,3 +271,5 @@ pub mod flower_bed_inspiration;
 pub mod night_owl_smuggling;
 #[cfg(feature = "nova")]
 pub mod rainy_day_reading;
+#[cfg(feature = "nova")]
+pub mod upcycled_art;
