@@ -47,7 +47,7 @@ pub fn upcycled_art_system(
                         pos_tuple,
                         Graffiti {
                             graffiti_type: GraffitiType::Mural,
-                            decay: 500.0, // Long-lasting
+                            decay: 500.0,  // Long-lasting
                             modifier: 0.2, // Very beautiful
                         },
                     );

@@ -160,4 +160,5 @@ pub mod ecophagy;
 pub mod propaganda_engine;
 pub mod pulsar;
 
+pub mod defector;
 pub mod sub_light_arrival;
