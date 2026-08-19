@@ -33162,3 +33162,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you risk building high-tier morale boosters knowing that if the economy ever dips, they will become massive liabilities?
 
 ---
+
+## The Bureaucratic Game of Telephone
+
+**Layer:** Cross-layer
+
+**Fantasy:** Watching a galaxy-spanning empire slowly misinterpret the needs of its founding colony due to sheer distance and administrative bloat.
+
+**Mechanic:** Edicts and resource requests from Layer 1 take time to reach the Layer 3 capital, passing through Layer 2 relay nodes. Each jump introduces a slight chance of data corruption or "bureaucratic re-interpretation," altering the requested resources or the severity of a crisis.
+
+**Emergence:** A desperate request for medical supplies from a struggling mining colony gets distorted into a demand for luxury goods by the time it reaches the capital. The capital sends rare art instead of medicine, sparking a violent rebellion fueled by the perceived insult.
+
+**Tension:** Do you decentralize power to prevent miscommunication, risking planets seceding, or maintain tight central control while accepting that remote worlds will be governed by corrupted data?
+
+---
+
+## The Martyr's Wake
+
+**Layer:** 1
+
+**Fantasy:** An ordinary pop's death becomes a catalyst for an uncontrollable ideological movement.
+
+**Mechanic:** If a highly social pop dies while performing a dangerous job with critically low morale or during an unaddressed hazard, their death triggers a "Martyrdom" event. Their close friends and family gain a permanent "Grieving Radical" trait, spreading anti-establishment sentiment and refusing to work the job that killed the pop.
+
+**Emergence:** You ignore a minor toxic gas leak in a lower-level mine. A popular foreman dies. Within a week, the entire mining sector goes on a wildcat strike, demanding completely overhauled safety protocols and threatening to sabotage the planetary life support.
+
+**Tension:** Do you ruthlessly suppress the grieving radicals to maintain production, risking a violent uprising, or cave to their demands and permanently cripple your industrial efficiency?
+
+---
+
+## Cultural Osmosis via Trade
+
+**Layer:** Cross-layer
+
+**Fantasy:** The slow, unintended cultural shifting of your planets based on who they trade with, dissolving rigid imperial identities.
+
+**Mechanic:** Trade ships moving between Layer 2 nodes don't just carry goods; they carry cultural traits. A colony heavily trading with a militaristic neighboring empire will slowly see its own Layer 1 pops adopt militaristic behaviors and desires, demanding more defense spending and shifting their utility AI.
+
+**Emergence:** You establish a highly lucrative trade route with a hedonistic empire to fund your war machine. Decades later, your core industrial world has adopted hedonistic traits, leading to massive productivity drops as pops prioritize leisure over factory work, completely stalling your war effort.
+
+**Tension:** Do you isolate your empire to maintain cultural purity and predictable pop behavior, or engage in lucrative galactic trade and accept that your society will fundamentally change?
+
+---
