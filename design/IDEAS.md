@@ -33204,3 +33204,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you isolate your empire to maintain cultural purity and predictable pop behavior, or engage in lucrative galactic trade and accept that your society will fundamentally change?
 
 ---
+
+## Diplomatic Amnesia
+
+**Layer:** Cross-layer
+
+**Fantasy:** Erasing a terrible crime from the galaxy's memory, for a price.
+
+**Mechanic:** A highly illegal megastructure (Memory Loom) can emit a subspace frequency that targets AI databanks and pop memory centers across neighboring systems. It slowly erases the "Memory" of a specific atrocity (like a planetary bombardment), resetting diplomatic penalties over time.
+
+**Emergence:** You try to erase the memory of an invasion, but the machine glitches. Instead of forgetting the war, the neighboring empire forgets *why* they were at peace with you, instantly breaking a century-long alliance and plunging the sector into chaos.
+
+**Tension:** Pay a staggering energy cost and risk a memory glitch to fix a diplomatic disaster, or live with the consequences of your actions?
+
+---
+
+## Bio-Hazard Buoys
+
+**Layer:** 2 -> 1
+
+**Fantasy:** Turning a horrific disaster into a terrifying defensive perimeter.
+
+**Mechanic:** Instead of curing a highly contagious, lethal plague on a space station, the player can intentionally seal it and declare it a "Bio-Hazard Buoy". The station emits a distress/warning signal. Any enemy fleet that attempts to capture or destroy it at close range risks contracting the plague and bringing it back to their own fleets.
+
+**Emergence:** You leave a plague-ship on your border as a deterrent. A well-meaning, neutral humanitarian faction attempts to "rescue" the station, contracts the plague, and accidentally wipes out half the galaxy, and everyone blames you for leaving it there.
+
+**Tension:** Use a horrific bio-weapon as a passive shield (saving military costs), or do the moral thing and purge it (wasting resources and losing a strategic asset)?
+
+---
+
+## Artificial Scarcity Cult
+
+**Layer:** 1
+
+**Fantasy:** Your people invent a useless currency and base their entire self-worth on it.
+
+**Mechanic:** During times of extreme prosperity (all needs met), pops with high social status may invent "Fad Commodities"—completely useless items (like "shiny rocks" or "holographic trading cards"). These items suddenly gain massive artificial value, and pops will stop working essential jobs just to craft or hoard them.
+
+**Emergence:** Your post-scarcity utopia grinds to a halt because all the engineers are skipping their shifts to hunt for "Prismatic Geodes." The colony starves, not because of a lack of food, but because everyone was too busy trading geodes to harvest the farms.
+
+**Tension:** Do you violently outlaw the fad (causing massive depression in a wealthy society) or ride out the economic crash until the trend naturally dies?
+
+---
