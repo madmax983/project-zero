@@ -13,3 +13,7 @@
 ## 2026-08-15 - [README CFG Feature Fix]
 **Confusion:** The `# #![cfg(feature = "nova")]` line in the `README.md` example caused a compilation error (`error: expected one of \`!\` or \`[\`, found \`#\``) when users copy-pasted it.
 **Clarification:** Removed the offending line from `README.md` since the warning banner above it is sufficient.
+
+## 2026-08-19 - [NarrativeError and Headless DX]
+**Confusion:** Users thought NarrativeError had a `.to_table()` method because it outputs a nice table, and users were confused when standard ECS types like World were not easily accessible without a full Bevy prelude import. They also struggled with `E0433` because the struct definitions completely vanished when the nova feature was turned off.
+**Clarification:** I added `process_chronicles` to the oral tradition stub, explicitly documented that NarrativeError relies on the Display trait instead of `.to_table()`, and added examples to the prelude for Bevy ECS re-exports.

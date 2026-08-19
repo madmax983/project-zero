@@ -19,6 +19,24 @@
 //! ```
 
 /// Core ECS types required for headless simulation and querying.
+///
+/// These standard Bevy ECS types are re-exported here so you can easily write
+/// headless systems without needing to remember `use bevy_ecs::prelude::*`.
+///
+/// ## Examples
+///
+/// ```
+/// use scale::prelude::*;
+///
+/// # #[derive(Component)]
+/// # struct Building;
+/// # use bevy_ecs::prelude::Resource;
+/// # #[derive(Resource)]
+/// # struct SimulationTime;
+/// fn my_headless_system(mut query: Query<&mut Building>, time: Res<SimulationTime>) {
+///     // Your headless simulation logic here
+/// }
+/// ```
 pub use bevy_ecs::prelude::{Commands, Component, Entity, Query, Res, ResMut, World};
 
 pub use crate::setup::{setup_world_with_config, SetupConfig};
