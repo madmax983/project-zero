@@ -33246,3 +33246,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you violently outlaw the fad (causing massive depression in a wealthy society) or ride out the economic crash until the trend naturally dies?
 
 ---
+## Weaponized Commutes
+
+**Layer:** 1
+
+**Fantasy:** Your city's layout becomes a passive-aggressive battleground as personal grudges dictate traffic.
+
+**Mechanic:** Pops who intensely dislike each other will intentionally alter their pathfinding to avoid crossing paths, even if it means taking a significantly longer route.
+
+**Emergence:** Two rival faction leaders live in the same hab-block. Their followers start taking convoluted detours to avoid the other faction's "turf," accidentally clogging a previously unused maintenance tunnel and slowing the entire colony's logistics to a crawl.
+
+**Tension:** Do you redesign your perfectly efficient city to accommodate their petty squabbles, or force them together in a bottleneck and risk a massive brawl?
+
+---
+
+## The Saboteur's Dilemma
+
+**Layer:** Cross-layer
+
+**Fantasy:** A captured enemy spy turns out to be more useful than your own workers, creating a massive security risk you willingly ignore.
+
+**Mechanic:** You capture an enemy infiltrator. Instead of executing or imprisoning them, you can assign them to a "Parole" job. They have incredibly high stats but a hidden, fluctuating chance to commit sabotage based on their home empire's standing.
+
+**Emergence:** The paroled spy becomes your best fusion reactor engineer. The reactor has never run better. You know they are a spy, they know you know. But you can't afford to fire them because your own engineers are incompetent. Then war breaks out, and you're sweating every time they walk near the core.
+
+**Tension:** Do you rely on a hyper-competent enemy asset for an immediate economic boost, or play it safe and execute them, suffering with your own mediocre workforce?
+
+---
+
+## Orphaned Drones
+
+**Layer:** 1
+
+**Fantasy:** Feeling unexpected pity for a machine that has outlived its purpose and doesn't know what to do.
+
+**Mechanic:** When a high-tech facility is permanently destroyed, its dedicated maintenance drones might survive. Without a command network, they become "Orphaned," aimlessly wandering the colony attempting to "repair" random objects (often breaking them) or following pops around like lost pets.
+
+**Emergence:** Your massive factory burns down. You now have a swarm of fifty confused drones trying to "weld" the hydroponic tomatoes. Your colonists find it endearing and get a morale boost, but the drones are actively ruining the food supply.
+
+**Tension:** Do you spend resources to hunt down and scrap the harmless, endearing drones to save your crops, or let them roam free for the morale boost while they slowly dismantle your colony by accident?
+
+---
