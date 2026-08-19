@@ -11564,3 +11564,51 @@ How the damage from the pulsar beam is described.
 - realized they had feared balloons
 - pushed right through the hollow walls
 - mocked the ruined paper fortresses
+
+## Fragment Type: [WORLD_SHELL_STATE]
+
+- humming with impenetrable force
+- radiating absolute isolation
+- shimmering with stolen starlight
+- unyielding and silent
+- a perfect, terrible sphere
+
+## Fragment Type: [VOID_CROP_TYPE]
+
+- star-wheat
+- vacuum-vine
+- rad-melons
+- null-tubers
+- zero-g kelp
+
+## Fragment Type: [MASCOT_APPEARANCE]
+
+- a multi-eyed fuzzball
+- a scaled, six-legged puppy
+- a hovering, bioluminescent slug
+- an endearingly clumsy rock-creature
+- a gelatinous cube with a friendly face
+
+## Fragment Type: [MASCOT_NAME]
+
+- Snuffles
+- Lord Nibbles
+- The Great Devourer (ironically)
+- Barnaby
+- Bubbles
+
+## Fragment Type: [SUB_LIGHT_SHIP_NAME]
+
+- The Endless Journey
+- The Ancestor's Breath
+- The Slow Hope
+- The Generation Ark
+- The Slumbering Leviathan
+
+## Fragment Type: [ANCIENT_EMPIRE_NAME]
+
+- The Vola
+- The Orakian Vanguard
+- The First Empire
+- The Precursors of Tova
+- The Zirnite Ascendancy
