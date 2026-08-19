@@ -15,6 +15,7 @@ pub fn register(schedule: &mut Schedule) {
             crate::layer1::core::integration::kinetic_strike_chronicle_bridge,
             crate::layer1::actions::escape::escape_pods_chronicle_bridge,
             crate::layer1::core::integration::subconscious_grid_lockdown_chronicle_bridge,
+            crate::layer1::core::integration::ego_stat_chronicle_bridge,
             crate::layer1::mycelial::detect_tripwire_step,
             crate::layer1::mycelial::aggro_network_entities,
             crate::layer1::social::subversion::run_subversion_spread_system,
