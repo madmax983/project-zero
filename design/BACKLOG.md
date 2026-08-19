@@ -503,7 +503,7 @@ See `design/IDEAS.md` for unspecced concepts.
 
 - [x] `1056` The Dead Hand — `specs/1056-the-dead-hand.md` — completed 2024-05-31
 - [x] `1129` Planetary Rings as Highways — `specs/1129-planetary-rings-as-highways.md` — completed 2026-06-25
-- [ ] `1153` Defector's Regret — `specs/1153-defectors-regret.md`
+
 - [ ] `1154` The Blind Terraformer — `specs/1154-the-blind-terraformer.md`
 - [ ] `1155` Sleep Debt Contagion — `specs/1155-sleep-debt-contagion.md`
 - [ ] `1156` Hyperlane Gentrification — `specs/1156-hyperlane-gentrification.md`
