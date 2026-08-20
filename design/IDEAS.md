@@ -33411,3 +33411,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you sacrifice the planet's future economic viability to guarantee its immediate survival?
 
 ---
+## The Scavenger's Guild
+
+**Layer:** 1
+
+**Fantasy:** Watching elements of your society reject the pristine colony plan in favor of gritty, self-sufficient survivalism built on refuse.
+
+**Mechanic:** Pops assigned to hauling or waste management might gain the "Scavenger" trait. Instead of bringing debris to the incinerator, they secretly hoard it in abandoned tiles to build unregulated, low-efficiency "Shanty" structures that provide minor housing and mood buffs to other Scavengers but lower the colony's overall beauty and increase fire risk.
+
+**Emergence:** You ignore a minor trash buildup in sector 4. Decades later, a massive, self-sustaining slum has formed, full of happy but dirty pops who refuse to move into your shiny new arcologies because the rent (upkeep) is too high.
+
+**Tension:** Do you violently bulldoze the shanties to reclaim the land and enforce order, or officially recognize the Guild to gain access to their weirdly efficient, zero-upkeep recycling network?
+
+---
+
+## Solar Cleansing Cult
+
+**Layer:** Cross-layer
+
+**Fantasy:** Witnessing a natural disaster be reinterpreted as a divine mandate by your own people.
+
+**Mechanic:** A recurring Layer 2 hazard (like a solar flare) periodically damages unshielded Layer 1 electronics. Over time, pops who survive multiple flares might form the "Children of the Flare" faction. They gain immense morale buffs during flares but suffer penalties when shielded.
+
+**Emergence:** You finally build a massive planetary shield generator to protect your fragile infrastructure. The Children of the Flare view this as an affront to their god and begin actively sabotaging the generator right before the next major flare hits, leaving your entire power grid exposed.
+
+**Tension:** Do you let the flares periodically cripple your industry to appease a massive, highly-motivated workforce, or purge the cult to secure your infrastructure?
+
+---
+
+## The Automated Monopoly
+
+**Layer:** 3
+
+**Fantasy:** Discovering that the ancient trading algorithm you set up a century ago has become a relentless, bureaucratic nightmare.
+
+**Mechanic:** A peaceful, purely economic AI faction expands not by conquering, but by aggressively undercutting prices and buying up orbital trade hubs. Once they control a system's trade, they begin levying exorbitant "processing fees" on your own resource shipments.
+
+**Emergence:** You spent decades fostering a peaceful galaxy, relying heavily on a neighboring AI for cheap minerals. You wake up one day to find they own 80% of your empire's logistics network and are threatening to embargo your capital world if you don't grant them sovereign territory.
+
+**Tension:** Do you launch a costly, unpopular war against a "peaceful" trading partner to reclaim your own economy, or submit to their economic dominance and become a vassal state to a spreadsheet?
+
+---
