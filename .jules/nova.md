@@ -336,3 +336,8 @@
 **Concept:** Added `upcycled_art_system` in `src/experimental/upcycled_art.rs`. Connects `Trait::Artistic`, `ClutterGrid`, and `GraffitiMap`. Pops with the Artistic trait who have high `leisure` can convert high `Clutter` on their tile into a `GraffitiType::Mural`.
 **Fate:** Submitted
 **Lesson:** Connects a personality trait with environmental maintenance and beauty systems. It turns a negative factor (trash) into a resource for autonomous beautification, making Artistic pops incredibly useful in messy industrial zones.
+
+## [Observatory Epiphany]
+**Concept:** Added `observatory_epiphany_system` to `src/experimental/observatory_epiphany.rs`. Connects `Trait::Prophet`, `BuildingType::Observatory`, and `TimeOfDay::Night`. Pops with the Prophet trait standing near an Observatory at Night will gaze into the void. This drains their `Health` slightly but yields `Knowledge` points for the colony.
+**Fate:** Pending
+**Lesson:** Connects a temporal state (Night), a building designed for observation, and a specific quirk (Prophet), turning the act of night-time stargazing into a risky but rewarding way to gain advanced knowledge.
