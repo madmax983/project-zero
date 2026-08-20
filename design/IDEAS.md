@@ -33452,3 +33452,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you launch a costly, unpopular war against a "peaceful" trading partner to reclaim your own economy, or submit to their economic dominance and become a vassal state to a spreadsheet?
 
 ---
+
+## The Whisper Campaign
+
+**Layer:** 1
+
+**Fantasy:** A shadow network of discontent spreads beneath the notice of the authorities.
+
+**Mechanic:** Pops with low mood or specific traits generate "Whisper Tokens." When they interact with others, they pass these tokens. Accumulating tokens creates a hidden "Solidarity" buff but decreases "Loyalty."
+
+**Emergence:** A perfectly efficient factory suddenly goes on a wildcat strike because a single disgruntled worker spent a week whispering in the mess hall, completely bypassing the formal faction system.
+
+**Tension:** Do you employ heavy surveillance to catch the whispers early (tanking morale) or ignore them and risk a sudden, unpredicted uprising?
+
+---
+
+## Parasitic Orbital Spores
+
+**Layer:** 2
+
+**Fantasy:** The void itself becomes a contaminated, living hazard.
+
+**Mechanic:** Certain xenoflora on the surface can release spores into low orbit. Trade ships picking up cargo also pick up spores. If a ship travels to a new node, it can trigger a "Spore Bloom," creating a hazardous cloud that damages passing fleets and blocks sensors.
+
+**Emergence:** You export cheap food from a frontier world to your capital. The food freighters carry spores, and soon your capital's orbit is choked with a corrosive, sensor-blocking cloud, isolating your most important world.
+
+**Tension:** Do you quarantine the profitable frontier world (losing resources) or spend massive amounts on orbital scrubbers for every trade hub?
+
+---
+
+## The Ancestral Claim
+
+**Layer:** Cross-layer
+
+**Fantasy:** The past returns to demand what was promised, upending the present.
+
+**Mechanic:** A slow, sub-light generation ship that was launched centuries before your current FTL empire finally arrives at one of your core worlds. The inhabitants possess ancient legal charters granting them ownership of the planet.
+
+**Emergence:** Your bustling, highly developed industrial capital is suddenly confronted by millions of archaic colonists demanding you vacate "their" promised land. Their arrival triggers a massive legal and cultural crisis across the empire.
+
+**Tension:** Do you honor the ancient charter and cede a core world (causing massive economic damage and displacing modern citizens) or forcefully evict your own ancestors, suffering a permanent diplomatic and moral stain?
+
+---
