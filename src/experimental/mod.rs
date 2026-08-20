@@ -273,3 +273,6 @@ pub mod night_owl_smuggling;
 pub mod rainy_day_reading;
 #[cfg(feature = "nova")]
 pub mod upcycled_art;
+
+#[cfg(feature = "nova")]
+pub mod observatory_epiphany;
