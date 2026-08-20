@@ -1005,3 +1005,4 @@
 - [x] `1153` Defector's Regret — `specs/1153-defectors-regret.md` — completed 2026-02-01
 
 - [x] `INT-1152` Integration: Sub-light Arrival Shock -> Chronicle — completed 2026-08-19
+- [x] `1154` The Blind Terraformer — `specs/1154-the-blind-terraformer.md` — completed 2026-02-01
