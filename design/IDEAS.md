@@ -33328,3 +33328,45 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you use the risky, high-speed FTL lanes for immediate strategic advantage, knowing you might spawn uncontrollable temporal echoes of your own military?
 
 ---
+
+## Cult of the Forgotten Administrator
+
+**Layer:** 1
+
+**Fantasy:** A mundane bureaucratic error spirals into a full-blown religious movement.
+
+**Mechanic:** If a colony's administrative AI crashes and a specific pop is randomly assigned to reboot it, the pop gains immense "mystical" status. Over generations, this task becomes a religious ritual, and the pop's descendants form a priesthood that demands tribute to keep the "Machine God" pacified.
+
+**Emergence:** You ignore a minor glitch in a backwater colony. A century later, you try to upgrade their administrative AI, and the local priesthood launches a holy war against the "Heretic Core," shutting down planetary production.
+
+**Tension:** Do you let an inefficient cult run your planetary logistics for stability, or violently purge them to modernize your infrastructure?
+
+---
+
+## Gravity Well Resonance
+
+**Layer:** 2
+
+**Fantasy:** Weaponizing the fabric of spacetime itself to isolate an enemy.
+
+**Mechanic:** Massive fleets spending too much time orbiting a high-gravity world generate a "Gravity Wake." If multiple fleets synchronize their orbits, they can create a resonance field that temporarily collapses local hyperspace lanes, cutting the system off from the rest of the galaxy.
+
+**Emergence:** You amass your entire armada over your capital to defend it. The sheer mass of your fleet accidentally collapses the local hyperlanes, trapping your fleet in the system while the enemy casually conquers your undefended outer colonies.
+
+**Tension:** Do you concentrate your forces for overwhelming local power, or disperse them to avoid inadvertently trapping yourself in a gravity well?
+
+---
+
+## The Echoes of Extinction
+
+**Layer:** 3
+
+**Fantasy:** Unearthing the terrifying reason a precursor civilization vanished, and realizing it's still there.
+
+**Mechanic:** Exploring ruined precursor megastructures yields massive tech boosts but slowly infects your science ships with a dormant, localized "Silence Protocol." This protocol subtly alters the behavior of infected fleets, making them occasionally ignore orders and drift towards the galactic core.
+
+**Emergence:** You strip-mine a precursor ruin and become the dominant military power. Decades later, during a critical battle, half your armada suddenly goes dark, turns around, and silently jumps towards the unknown center of the galaxy, leaving your core worlds defenseless.
+
+**Tension:** Do you greedily harvest precursor technology for an immediate edge, or avoid it, knowing it might contain a dormant, empire-ending failsafe?
+
+---
