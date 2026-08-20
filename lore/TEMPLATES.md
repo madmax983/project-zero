@@ -11802,3 +11802,65 @@ Minor events may be pruned or summarized. Legendary events are always shown.
 - "[SYSTEM], [YEAR]: We refuse the demands of [SUB_LIGHT_SHIP_NAME]. The [ANCIENT_EMPIRE_NAME] declares a holy war with obsolete weapons."
 - "[YEAR]: Tribute denied. The generation ship [SUB_LIGHT_SHIP_NAME] opens fire. A slow, ancient war begins."
 - "We will not yield to ghosts. The [ANCIENT_EMPIRE_NAME] relic attacks our modern fleets."
+
+## Warp Wake Templates (Spec 1367)
+
+### WARP_WAKE_GENERATED
+**Generates:** Play event (chronicle)
+**Slots:** [FLEET_NAME], [YEAR], [SYSTEM]
+**Patterns:**
+- "[YEAR]: [FLEET_NAME] jumped out of [SYSTEM], leaving a heavy warp wake."
+- "The passing of [FLEET_NAME] distorted the local space in [SYSTEM]. [YEAR]."
+- "[SYSTEM], [YEAR]: Travel slows as [FLEET_NAME] leaves a massive wake in the hyperlane."
+
+### MUDDY_HYPERLANE
+**Generates:** Play event (chronicle)
+**Slots:** [COLONY], [YEAR]
+**Patterns:**
+- "[YEAR]: The hyperlanes around [COLONY] are muddy. Traffic grinds to a halt."
+- "Too many ships. Space itself resists us at [COLONY]. [YEAR]."
+- "[COLONY], [YEAR]: The trade routes are choked by warp wakes. Slower than sub-light."
+
+## Defector's Regret Templates (Spec 1153)
+
+### DEFECTOR_ARRIVED
+**Generates:** Play event (chronicle)
+**Slots:** [COLONY], [YEAR], [LEADER_NAME], [RIVAL_EMPIRE]
+**Patterns:**
+- "[YEAR]: [LEADER_NAME] defected from [RIVAL_EMPIRE] to [COLONY], bringing secrets."
+- "A high-profile defection. [LEADER_NAME] arrived at [COLONY] from [RIVAL_EMPIRE]. [YEAR]."
+- "[COLONY], [YEAR]: [LEADER_NAME] sought asylum from [RIVAL_EMPIRE]. We gained their knowledge."
+
+### DEFECTOR_REGRET_SABOTAGE
+**Generates:** Play event (chronicle)
+**Slots:** [COLONY], [YEAR], [LEADER_NAME], [SABOTAGE_TARGET]
+**Patterns:**
+- "[YEAR]: Defector's regret. [LEADER_NAME] was caught sabotaging [SABOTAGE_TARGET] in [COLONY]."
+- "[LEADER_NAME] realized our utopia is not theirs. They attacked [SABOTAGE_TARGET] at [COLONY]. [YEAR]."
+- "[COLONY], [YEAR]: The defector [LEADER_NAME] spread propaganda and damaged [SABOTAGE_TARGET]."
+
+## The Consultant Templates (Spec 1149)
+
+### CONSULTANT_ARRIVES
+**Generates:** Play event (chronicle)
+**Slots:** [COLONY], [YEAR], [CONSULTANT_NAME]
+**Patterns:**
+- "[YEAR]: The Consultant, [CONSULTANT_NAME], arrived at [COLONY] to maximize profit."
+- "[CONSULTANT_NAME] began 'optimizing' [COLONY]. Safety protocols were disabled. [YEAR]."
+- "[COLONY], [YEAR]: The Fixer [CONSULTANT_NAME] took over operations. Efficiency spikes."
+
+### CONSULTANT_BLAMES_WORKERS
+**Generates:** Play event (chronicle)
+**Slots:** [COLONY], [YEAR], [CONSULTANT_NAME]
+**Patterns:**
+- "[YEAR]: After the disaster at [COLONY], [CONSULTANT_NAME] blamed worker inefficiency."
+- "The Consultant [CONSULTANT_NAME] shifted all responsibility to the exhausted crew of [COLONY]. [YEAR]."
+- "[COLONY], [YEAR]: [CONSULTANT_NAME] claims the failure was due to lack of synergy."
+
+### CONSULTANT_DEPARTS
+**Generates:** Play event (chronicle)
+**Slots:** [COLONY], [YEAR], [CONSULTANT_NAME]
+**Patterns:**
+- "[YEAR]: [CONSULTANT_NAME] departed [COLONY], leaving behind broken machines and broken people."
+- "The Consultant [CONSULTANT_NAME] filed their final invoice and left [COLONY] in ruins. [YEAR]."
+- "[COLONY], [YEAR]: Having extracted all possible value, [CONSULTANT_NAME] moved on to their next target."

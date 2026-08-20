@@ -6332,3 +6332,44 @@
 **Replaces:** stolen credits, hacked treasury
 **Code reference:** `PhantomTax` event
 **Usage:** "The phantom tax was siphoned from the core worlds."
+
+## FTL & Transit
+
+### warp wake / muddy space
+**Replaces:** hyperlane congestion, slow FTL travel
+**Code reference:** `Hyperlane.warp_wake_intensity` (Spec 1367)
+**Usage:**
+- "The freighters left a heavy warp wake."
+- "The lane to Sirius is muddy."
+
+## Defectors & Factions
+
+### defector / asylum seeker
+**Replaces:** converted leader, VIP from rival faction
+**Code reference:** `DefectorState` (Spec 1153)
+**Usage:**
+- "The defector brought blueprints for their shields."
+- "Watch the asylum seekers closely."
+
+### defector's regret
+**Replaces:** Ideology clash, defector sabotage
+**Code reference:** `DefectorState.regret_level`
+**Usage:**
+- "He is suffering from defector's regret."
+- "Defector's regret led her to burn the archives."
+
+## Corporate Management
+
+### The Consultant / The Fixer
+**Replaces:** Efficiency-boosting NPC, corporate optimizer
+**Code reference:** `ConsultantMarker` (Spec 1149)
+**Usage:**
+- "The Consultant says we can double the yield."
+- "The Fixer turned off the safety overrides."
+
+### synergy / optimization
+**Replaces:** efficiency buffs, profit-maximizing state
+**Code reference:** `JobPriorities.maximize_profit`
+**Usage:**
+- "We are optimizing the oxygen output."
+- "The Consultant demands more synergy."
