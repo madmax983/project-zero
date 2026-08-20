@@ -639,3 +639,4 @@ See `design/IDEAS.md` for unspecced concepts.
 - [ ] `1364` Hyperlane Smuggling Routes — `specs/1364-hyperlane-smuggling-routes.md`
 - [ ] `1365` Title Inflation — `specs/1365-title-inflation.md`
 - [ ] `1377` The Cassandra Complex — `specs/1377-cassandra-complex.md`
+- [ ] `1378` The Martyr's Wake — `specs/1378-the-martyrs-wake.md`
