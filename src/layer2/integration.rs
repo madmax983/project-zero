@@ -1256,8 +1256,12 @@ pub fn phantom_trade_routes_chronicle_bridge(
 }
 
 pub fn sub_light_arrival_chronicle_bridge_system(
-    mut events: bevy_ecs::event::EventReader<crate::layer2::sub_light_arrival::SubLightArrivalEvent>,
-    mut chronicle_events: bevy_ecs::event::EventWriter<crate::layer1::core::chronicle::AddChronicleEvent>,
+    mut events: bevy_ecs::event::EventReader<
+        crate::layer2::sub_light_arrival::SubLightArrivalEvent,
+    >,
+    mut chronicle_events: bevy_ecs::event::EventWriter<
+        crate::layer1::core::chronicle::AddChronicleEvent,
+    >,
 ) {
     for event in events.read() {
         chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {

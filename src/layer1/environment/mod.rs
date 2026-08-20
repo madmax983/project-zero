@@ -57,3 +57,5 @@ pub mod chrono_stutter;
 pub use chrono_stutter::*;
 pub mod fungal_monoliths;
 pub use fungal_monoliths::*;
+pub mod blind_terraformer;
+pub use blind_terraformer::*;
