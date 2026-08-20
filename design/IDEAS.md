@@ -33370,3 +33370,44 @@ Mark ideas `[SPECCED]` once Architect has written a spec. Mark `[REJECTED]` with
 **Tension:** Do you greedily harvest precursor technology for an immediate edge, or avoid it, knowing it might contain a dormant, empire-ending failsafe?
 
 ---
+## Xenoflora Addiction
+
+**Layer:** 1
+
+**Fantasy:** The sweet lure of an alien paradise hiding a chemical chain.
+
+**Mechanic:** Local flora provides a massive passive mood buff when unharvested near living quarters. However, pops spending too much time near it develop a hidden "Dependency." If the flora is cleared for expansion or dies off, dependent pops suffer a severe, cascading "Withdrawal" debuff that drastically lowers productivity and increases unrest.
+
+**Emergence:** You settle a lush world and enjoy decades of utopian happiness. When you finally need to industrialize and clear the jungles, your entire workforce spirals into violent riots because you took away their alien incense.
+
+**Tension:** Do you preserve the restrictive natural environment for the happiness buff, or bulldoze it and deal with a generation of angry, withdrawing colonists?
+
+---
+
+## Generational Resentment
+
+**Layer:** Cross-layer
+
+**Fantasy:** The slow, inevitable drift between the founders of a world and the children born to it.
+
+**Mechanic:** Pops born on a newly colonized world gain a hidden "Native" tag, while original colonists have the "Founder" tag. Over time, political factions naturally align along these tags. If "Founders" hold too many leadership roles, "Natives" develop a resentment penalty, demanding autonomy from the home empire.
+
+**Emergence:** You carefully curate an elite team of scientists to seed a new research world. 40 years later, their children rebel and secede because they are tired of being ruled by "Earthers" who don't understand the local gravity.
+
+**Tension:** Do you systematically cycle out your experienced, highly-skilled founders to appease the next generation, or enforce their rule and risk a planetary civil war?
+
+---
+
+## The Kessler Syndrome Siege
+
+**Layer:** 2
+
+**Fantasy:** A desperate defensive measure that permanently scars the sky.
+
+**Mechanic:** When defending a planet, you can intentionally detonate your own orbital stations to create a dense "Debris Field." This field heavily damages any incoming fleet attempting a planetary invasion. However, the debris also blocks all outgoing trade ships, colony ships, and sensor arrays indefinitely until a massive cleanup effort is funded.
+
+**Emergence:** Facing overwhelming odds, you blow up your orbital shipyards. The enemy armada is shredded by the shrapnel and retreats. Your planet is saved, but you are now completely cut off from your empire, slowly starving in the dark behind a wall of your own making.
+
+**Tension:** Do you sacrifice the planet's future economic viability to guarantee its immediate survival?
+
+---
