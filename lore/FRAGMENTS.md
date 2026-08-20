@@ -11612,3 +11612,44 @@ How the damage from the pulsar beam is described.
 - The First Empire
 - The Precursors of Tova
 - The Zirnite Ascendancy
+
+## Warp Wake Fragments (Spec 1367)
+
+## Fragment Type: [WAKE_DESCRIPTOR]
+- muddy
+- choked
+- distorted
+- heavy
+- sluggish
+- fractured
+
+## Fragment Type: [WAKE_EFFECT]
+- travel grinds to a halt
+- sensors are blinded by the wake
+- ships struggle against the torn space
+- the hyperlane resembles molasses
+- sub-light is almost faster
+
+## Defector's Regret Fragments (Spec 1153)
+
+## Fragment Type: [DEFECTOR_COMPLAINT]
+- the air tastes of oppression
+- this is not the freedom promised
+- the food is tasteless paste
+- the constant surveillance is intolerable
+- they miss the rigid order of home
+
+## The Consultant Fragments (Spec 1149)
+
+## Fragment Type: [CORPORATE_BUZZWORD]
+- synergy-driven optimization
+- lean paradigm shifting
+- cost-basis reduction
+- human capital deprecation
+- aggressive restructuring
+
+## Fragment Type: [CONSULTANT_EXCUSE]
+- a failure of alignment
+- insufficient worker dedication
+- sub-optimal resource utilization
+- unexpected market friction
