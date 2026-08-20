@@ -2018,3 +2018,10 @@
 - **Systems connected:** `SubLightArrivalEvent` -> Chronicle (`AddChronicleEvent`)
 - **Glue added:** `sub_light_arrival_chronicle_bridge_system` in `src/layer2/integration.rs`
 - **Tests:** `tests/integration/sub_light_arrival.rs`
+
+### INT-1149: Consultant -> Chronicle
+- **Date:** 2026-11-01
+- **Systems connected:** `ConsultantMarker` -> `AddChronicleEvent`
+- **Glue added:** `consultant_chronicle_bridge` in `src/layer1/core/integration.rs`
+- **Schedule:** Layer1SystemSet::Observation
+- **Tests:** `tests/integration/consultant_chronicle.rs` (1 test)

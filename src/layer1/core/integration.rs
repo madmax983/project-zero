@@ -3559,3 +3559,29 @@ pub fn ego_stat_chronicle_bridge(
         }
     }
 }
+#[derive(bevy_ecs::prelude::Component)]
+pub struct ConsultantChronicleEventFired;
+
+pub fn consultant_chronicle_bridge(
+    mut commands: bevy_ecs::prelude::Commands,
+    query: bevy_ecs::prelude::Query<
+        (
+            bevy_ecs::prelude::Entity,
+            &crate::layer1::consultant::ConsultantMarker,
+        ),
+        bevy_ecs::prelude::Without<ConsultantChronicleEventFired>,
+    >,
+    mut chronicle_events: bevy_ecs::event::EventWriter<
+        crate::layer1::core::chronicle::AddChronicleEvent,
+    >,
+) {
+    for (entity, _marker) in query.iter() {
+        chronicle_events.send(crate::layer1::core::chronicle::AddChronicleEvent {
+            text: "The Consultant has arrived. Efficiency is paramount.".to_string(),
+            importance: crate::layer1::core::chronicle::EventImportance::Major,
+        });
+        commands
+            .entity(entity)
+            .insert(ConsultantChronicleEventFired);
+    }
+}
